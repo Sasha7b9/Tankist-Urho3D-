@@ -18,7 +18,7 @@ public:
 private:
     float yaw = 0.0f;
     float pitch = 0.0f;
-    SharedPtr<Node> node = nullptr;
+    SharedPtr<Node> node;
 
     CameraUni(CameraUni const&) : Object(nullptr) {};
     CameraUni operator=(CameraUni const&) {};

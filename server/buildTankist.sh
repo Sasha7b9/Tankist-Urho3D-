@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-build
-rm -r *
+rm -r build
+mkdir build
+cd build
 cp ../../../urho3D/build/lib/libUrho3D.a .
 cp -r ../../../urho3D/bin/CoreData .
 cp -r ../../../urho3D/bin/Data .

@@ -1,0 +1,27 @@
+#pragma once
+
+
+extern Urho3D::Log *gLog;
+extern Urho3D::Network *gNetwork;
+extern Urho3D::FileSystem *gFileSystem;
+extern Urho3D::ResourceCache *gResourceCache;
+extern Urho3D::Scene *gScene;
+extern Urho3D::Time *gTime;
+
+extern Server *gServer;
+extern TypeConnection gTypeConnection;
+
+
+#ifndef _SERVER_
+
+extern Urho3D::UI *gUI;
+extern Urho3D::Input *gInput;
+extern Urho3D::Renderer *gRenderer;
+extern Urho3D::Graphics *gGraphics;
+extern Urho3D::Console *gConsole;
+extern Urho3D::DebugHud *gDebugHud;
+
+extern CameraUni *gCamera;
+extern Client *gClient;
+
+#endif

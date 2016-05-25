@@ -1,0 +1,39 @@
+***** Compilation *****
+
+0. Install Visual Studion 2013
+
+1. Unzip Urho3D-master.zip to c:\Urho3D (its for debug version)
+
+2. Goto Urho3D directory and create build.bat:
+    call cmake_vs2013.bat build -DURHO3D_64BIT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAMPLES=1 
+                                -DURHO3D_D3D11=1 -DURHO3D_LIB_TYPE=SHARED -DURHO3D_DATABASE_ODBC=1 -DURHO3D_PCH=1 -DURHO3D_C++11=1
+    and run it
+
+3. Unzip Urho3D-master.zip to c:\Urho3Drelease (its for release version)
+
+4. Goto Urho3Drelease directory and create build.bat:
+    call cmake_vs2013.bat build -DURHO3D_64BIT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAMPLES=1 
+                                -DURHO3D_D3D11=1 -DURHO3D_LIB_TYPE=SHARED -DURHO3D_DATABASE_ODBC=1 -DURHO3D_PCH=1 -DURHO3D_C++11=1
+    and run it
+
+5. Goto TankistWaT\source\TankistWaT directory and open TankistWat.sln
+
+6. Copy to directory TankistWaT\out files d3dcompiler_47.dll and Urho3D.dll from directory c:\Urho3Drelease\build\bin;
+    file Urho3D.dll from directory c:\Urho3D\build\bin
+
+7. Build x64 Debug and Release versions
+
+8. Now in directory TankistWaT\out contains the following files:
+    TankistWaT - debug version windows x64 client,
+    TankistWaTclient - release version windows x64 client
+
+
+***** Create installator *****
+
+0. Install NSIS.
+1. Run TankistWaT\nsis\TankistWaTclient.nsi scipt
+
+
+***** Upload client to site *****
+
+0. Upload installator TankistWatclient.exe to media/distr/ site directory

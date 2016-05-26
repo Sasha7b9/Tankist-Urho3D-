@@ -77,8 +77,6 @@ Section "Dummy Section" SecDummy
   
   ;ADD YOUR OWN FILES HERE...
   File /r ..\out\*
-  File vcredist_x64.exe
-  File vcredist_x86.exe
   
   ;Store installation folder
   WriteRegStr HKCU "Software\TankistWaT" "" $INSTDIR
@@ -95,12 +93,6 @@ Function .onInit
 
   !insertmacro MUI_LANGDLL_DISPLAY
 
-FunctionEnd
-
-Function .onInstSuccess
-
-    Exec '"$INSTDIR\vcredist_x64.exe"'
-  
 FunctionEnd
 
 ;--------------------------------

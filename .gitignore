@@ -23,6 +23,7 @@ source/Tankist/Tankist/x64
 source/Tankist/Terminal/x64
 
 out/CoreData/Shaders/HLSL/Cache/
+out/distr/CoreData/Shaders/HLSL/Cache/
 
 site/venv/
 site/tankistwat/venv/

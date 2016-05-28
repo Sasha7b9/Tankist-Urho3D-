@@ -14,14 +14,14 @@
   Unicode true
 
   ;Name and file
-  Name "TankistWaT"
-  OutFile "TankistWaTclient.exe"
+  Name "Tankist"
+  OutFile "Tankistclient.exe"
 
   ;Default installation folder
-  InstallDir "c:\Games\TankistWaT"
+  InstallDir "c:\Games\Tankist"
   
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\TankistWaT" ""
+  InstallDirRegKey HKCU "Software\Tankist" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel user
@@ -39,7 +39,7 @@
 
   ;Remember the installer language
   !define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
-  !define MUI_LANGDLL_REGISTRY_KEY "Software\TankistWaT" 
+  !define MUI_LANGDLL_REGISTRY_KEY "Software\Tankist" 
   !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 ;--------------------------------
@@ -76,10 +76,10 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /r ..\out\*
+  File /r ..\out\distr\*
   
   ;Store installation folder
-  WriteRegStr HKCU "Software\TankistWaT" "" $INSTDIR
+  WriteRegStr HKCU "Software\Tankist" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -117,7 +117,7 @@ Section "Uninstall"
 
   RMDir "$INSTDIR"
 
-  DeleteRegKey /ifempty HKCU "Software\TankistWaT"
+  DeleteRegKey /ifempty HKCU "Software\Tankist"
 
 SectionEnd
 

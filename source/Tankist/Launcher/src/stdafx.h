@@ -14,6 +14,8 @@
 
 
 #include <Urho3D/Core/CoreEvents.h>
+#include <Urho3D/Core/Thread.h>
+#include <Urho3D/Core/Timer.h>
 
 #include <Urho3D/Engine/Application.h>
 
@@ -22,7 +24,9 @@
 
 #include <Urho3D/Input/Input.h>
 
+#include <Urho3D/IO/File.h>
 #include <Urho3D/IO/FileSystem.h>
+#include <Urho3D/IO/Log.h>
 
 #include <Urho3D/Resource/Resource.h>
 #include <Urho3D/Resource/ResourceCache.h>
@@ -53,6 +57,8 @@ using Urho3D::Color;
 using Urho3D::Context;
 using Urho3D::Cursor;
 
+using Urho3D::File;
+using Urho3D::FileSystem;
 using Urho3D::Font;
 
 using Urho3D::Graphics;
@@ -60,6 +66,8 @@ using Urho3D::Graphics;
 using Urho3D::Image;
 using Urho3D::Input;
 using Urho3D::IntVector2;
+
+using Urho3D::Log;
 
 using Urho3D::ResourceCache;
 
@@ -71,6 +79,7 @@ using Urho3D::StringHash;
 using Urho3D::Text;
 using Urho3D::Texture2D;
 using Urho3D::Time;
+using Urho3D::Thread;
 
 using Urho3D::UI;
 using Urho3D::UIElement;

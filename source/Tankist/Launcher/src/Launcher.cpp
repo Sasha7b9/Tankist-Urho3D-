@@ -1,13 +1,17 @@
 #include <stdafx.h>
 
 
-#include "TerminalTWT.h"
+#include "Launcher.h"
 #include "Graphics/lSprite.h"
+#include "NetworkThread.h"
 
 
 #pragma warning(disable:4100)
 URHO3D_DEFINE_APPLICATION_MAIN(TerminalTWT)
 #pragma warning(default:4100)
+
+
+NetworkThread thread;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,9 +29,10 @@ void TerminalTWT::Setup()
     gResourceCache = GetSubsystem<ResourceCache>();
     gInput = GetSubsystem<Input>();
     gTime = GetSubsystem<Time>();
+    gFileSystem = GetSubsystem<FileSystem>();
 
     engineParameters_["WindowTitle"] = "Tankist WaT";
-    //engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
+    engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Headless"] = false;
     engineParameters_["Sound"] = false;
@@ -46,20 +51,28 @@ void TerminalTWT::Setup()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void TerminalTWT::Start()
 {
+    gLog = new Log(context_);
+    gLog->SetLevel(Urho3D::LOG_INFO);
+    gLog->Open("launcher.log");
     gGraphics = GetSubsystem<Graphics>();
 
     CreateUI();
 
-    MakeWindow();
+    MakeWindow(StateWindow::Start);
 
     SubscribeToEvents();
+
+    gContext = context_;
+    thread.Run();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void TerminalTWT::Stop()
 {
-
+    gLog->Write(0, "out");
+    gLog->Close();
+    thread.Stop();
 }
 
 
@@ -120,8 +133,10 @@ void TerminalTWT::CreateUI()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TerminalTWT::MakeWindow()
+void TerminalTWT::MakeWindow(StateWindow state)
 {
+    stateWindow = state;
+
     gUIRoot->RemoveChild(progressBar);
     gUIRoot->RemoveChild(textVerifyUpdate);
     gUIRoot->RemoveChild(buttonPlay);
@@ -146,46 +161,26 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
 {
     static float timeEnterComplete = 0.0f;
     static float timeEnterStart = 0.0f;
-    if(stateWindow == StateWindow::Start)
+
+    NetworkThread::State stateThread = thread.GetState();
+
+    if(stateThread == NetworkThread::DownloadFile)
     {
-        if(gTime->GetElapsedTime() - timeEnterStart >= 1.0f)
+        if(stateWindow == StateWindow::Start)
         {
-            stateWindow = StateWindow::UpdateInProcess;
-            progressBar->SetProgress(0.0f);
-            MakeWindow();
-        }
-    }
-    else if(stateWindow == StateWindow::UpdateInProcess)
-    {
-        static float speed = 1.0f;
-
-        float time = gTime->GetTimeStep();
-
-        float delta = time * speed;
-
-        float progress = progressBar->GetProgress();
-
-        progress += delta;
-
-        if(progress >= 1.0f)
-        {
-            progressBar->SetProgress(1.0f);
-            stateWindow = StateWindow::UpdateComplete;
-            MakeWindow();
-            timeEnterComplete = gTime->GetElapsedTime();
+            MakeWindow(StateWindow::UpdateInProcess);
         }
         else
         {
-            progressBar->SetProgress(progress);
+            progressBar->SetBytes(thread.GetBytesAll(), thread.GetBytesRecieved());
+            progressBar->SetParameters(thread.GetPercents() / 100.0f, thread.GetPassedTime(), thread.GetElapsedTime(), thread.GetSpeed());
         }
     }
-    else if(stateWindow == StateWindow::UpdateComplete)
+    else if(stateThread == NetworkThread::ConnectClose)
     {
-        if(gTime->GetElapsedTime() - timeEnterComplete >= 1.0f)
+        if(stateWindow == StateWindow::UpdateInProcess)
         {
-            stateWindow = StateWindow::Start;
-            timeEnterStart = gTime->GetElapsedTime();
-            MakeWindow();
+            MakeWindow(StateWindow::UpdateComplete);
         }
     }
 }

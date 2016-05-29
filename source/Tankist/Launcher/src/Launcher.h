@@ -38,7 +38,7 @@ private:
     SharedPtr<Button> buttonPlay;
 
     void CreateUI();
-    void MakeWindow();
+    void MakeWindow(StateWindow state);
     void SubscribeToEvents();
 
     void HandlePostUpdate(StringHash eventType, VariantMap &eventData);

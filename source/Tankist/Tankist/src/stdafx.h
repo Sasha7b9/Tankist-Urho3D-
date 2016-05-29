@@ -31,6 +31,7 @@
 #include <Urho3D/Input/Input.h>
 
 #include <Urho3D/IO/FileSystem.h>
+#include <Urho3D/IO/File.h>
 #include <Urho3D/IO/Log.h>
 
 #include <Urho3D/Network/Network.h>
@@ -72,6 +73,7 @@ using Urho3D::Cursor;
 
 using Urho3D::DebugHud;
 
+using Urho3D::File;
 using Urho3D::FileSystem;
 
 using Urho3D::Graphics;

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\TerminalTWT.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\stdafx.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -39,11 +36,10 @@
     <ClInclude Include="src\Graphics\ProgressBar.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\NetworkThread.h" />
+    <ClInclude Include="src\Launcher.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TerminalTWT.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -62,10 +58,10 @@
     <ClCompile Include="src\Graphics\ProgressBar.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\NetworkThread.cpp" />
+    <ClCompile Include="src\Launcher.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\doc\TerminalFunctionallity.txt">
-      <Filter>doc</Filter>
-    </Text>
+    <Text Include="..\..\..\doc\LauncherFunctionallity.txt" />
   </ItemGroup>
 </Project>

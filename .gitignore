@@ -20,7 +20,7 @@ log.txt
 source/Tankist/ipch
 source/Tankist/x64
 source/Tankist/Tankist/x64
-source/Tankist/Terminal/x64
+source/Tankist/Launcher/x64
 
 out/CoreData/Shaders/HLSL/Cache/
 out/distr/CoreData/Shaders/HLSL/Cache/

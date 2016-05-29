@@ -17,8 +17,9 @@ public:
     ~ProgressBar();
 
     // progress = [0.0f...1.0f]
-    void SetProgress(float progress);
     float GetProgress() { return progress; }
+    void SetParameters(float progress, float timePassed, float timeElapsed, float speed);
+    void SetBytes(int all, int recieved);
 
 private:
     ProgressBar& operator=(const ProgressBar&)
@@ -28,10 +29,19 @@ private:
 
     SharedPtr<lSprite> sprite;
     SharedPtr<Text> text;
+    SharedPtr<Text> textParameters;
+    SharedPtr<Text> textBytes;
 
     float width = 300.0f;
     float height = 20.0f;
     float progress = 0.0f;
+
+    float timePassed = 0.0f;
+    float timeElapsed = 0.0f;
+    float speed = 0.0f;
+
+    int bytesAll = 0;
+    int bytesRecieved = 0;
 
     void DrawProgress();
 };

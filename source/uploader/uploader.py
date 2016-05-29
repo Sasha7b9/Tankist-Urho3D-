@@ -9,8 +9,8 @@ HOST = ''
 PORT = 1235
 
 PATH = '/media/web/tankistwat/tankistwat/media/distr/'
-PATH_VER = PATH + '\\version.info'
-PATH_FILE = PATH + '\\TankistWaTclient.exe'
+PATH_VER = '../version.info'
+PATH_FILE = PATH + 'TankistWaTclient.exe'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

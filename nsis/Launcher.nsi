@@ -15,7 +15,7 @@
 
   ;Name and file
   Name "TankistLauncher"
-  OutFile "Launcher.exe"
+  OutFile "TankistLauncher.exe"
 
   ;Default installation folder
   InstallDir "c:\Games\Tankist"
@@ -46,7 +46,7 @@
 ;Pages
 
   ; !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-  !insertmacro MUI_PAGE_COMPONENTS
+  ; !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
   
@@ -91,7 +91,11 @@ SectionEnd
 
 Function .onInit
 
-  !insertmacro MUI_LANGDLL_DISPLAY
+;    IfFileExists $INSTDIR\Launcher.exe 0 +2
+;        Exec '"$INSTDIR\Launcher.exe"'
+;        Quit
+    
+    StrCpy $LANGUAGE "1033"
 
 FunctionEnd
 
@@ -101,9 +105,9 @@ FunctionEnd
   ;USE A LANGUAGE STRING IF YOU WANT YOUR DESCRIPTIONS TO BE LANGAUGE SPECIFIC
 
   ;Assign descriptions to sections
-  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} "A test section."
-  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+  ;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  ;  !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} "A test section."
+  ;!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
  
 ;--------------------------------
@@ -113,9 +117,9 @@ Section "Uninstall"
 
   ;ADD YOUR OWN FILES HERE...
 
-  Delete "$INSTDIR\*"
+  ; Delete "$INSTDIR\*"
 
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
 
   DeleteRegKey /ifempty HKCU "Software\Tankist"
 
@@ -126,6 +130,6 @@ SectionEnd
 
 Function un.onInit
 
-  !insertmacro MUI_UNGETLANGUAGE
+  ;!insertmacro MUI_UNGETLANGUAGE
   
 FunctionEnd

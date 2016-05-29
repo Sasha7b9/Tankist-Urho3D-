@@ -15,10 +15,10 @@
 
   ;Name and file
   Name "Tankist"
-  OutFile "Tankistclient.exe"
+  OutFile "TankistInstaller.exe"
 
   ;Default installation folder
-  InstallDir "c:\Games\Tankist"
+  InstallDir "c:\Games\TankistWaT"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\Tankist" ""
@@ -32,7 +32,7 @@
   !define MUI_ABORTWARNING
 
   ;Show all languages, despite user's codepage
-  !define MUI_LANGDLL_ALLLANGUAGES
+  ;!define MUI_LANGDLL_ALLLANGUAGES
 
 ;--------------------------------
 ;Language Selection Dialog Settings
@@ -45,8 +45,8 @@
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-  !insertmacro MUI_PAGE_COMPONENTS
+  ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
+  ;!insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
   
@@ -91,7 +91,8 @@ SectionEnd
 
 Function .onInit
 
-  !insertmacro MUI_LANGDLL_DISPLAY
+    StrCpy $LANGUAGE "1033"
+ ; !insertmacro MUI_LANGDLL_DISPLAY
 
 FunctionEnd
 
@@ -101,9 +102,9 @@ FunctionEnd
   ;USE A LANGUAGE STRING IF YOU WANT YOUR DESCRIPTIONS TO BE LANGAUGE SPECIFIC
 
   ;Assign descriptions to sections
-  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} "A test section."
-  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+  ;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+   ; !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} "A test section."
+  ;!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
  
 ;--------------------------------
@@ -113,9 +114,9 @@ Section "Uninstall"
 
   ;ADD YOUR OWN FILES HERE...
 
-  Delete "$INSTDIR\*"
+  ; Delete "$INSTDIR\*"
 
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
 
   DeleteRegKey /ifempty HKCU "Software\Tankist"
 

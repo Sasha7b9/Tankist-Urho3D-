@@ -179,9 +179,11 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
     }
     else if(stateThread == NetworkThread::ConnectClose)
     {
-        if(stateWindow == StateWindow::UpdateInProcess)
+        if(stateWindow != StateWindow::UpdateComplete)
         {
             MakeWindow(StateWindow::UpdateComplete);
+            WinExec("Tankist.exe", 1);
+            engine_->Exit();
         }
     }
 }

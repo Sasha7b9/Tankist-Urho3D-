@@ -51,40 +51,45 @@ void NetworkThread::ThreadFunction()
 
     URHO3D_LOGINFOF("new version is %s", buff);
 
-    send(sock, "get_size", 8, 0);
-
-    recv(sock, &buff[0], sizeof(buff) - 1, 0);
-
-    int size = atoi(buff) / 10;
-    bytesAll = size;
-
-    URHO3D_LOGINFOF("size new version %d", size);
-
-
-    //--------------------------------------------------------------
-    state = DownloadFile;
-
-    bytesRecieved = 0;
-
-    File file(gContext, "out.exe", Urho3D::FILE_WRITE);
-
-    send(sock, "get_file", 8, 0);
-
-    percents = 0.0f;
-
-    startTime = gTime->GetElapsedTime();
-
-    while(bytesRecieved < size)
+    if(strcmp(buff, _version_) != 0)
     {
-        uint numBytes = (uint)recv(sock, buff, 1024, 0);
-        bytesRecieved += numBytes;
-        file.Write(buff, numBytes);
-        percents = ((float)bytesRecieved / size * 100.0f);
-        speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
-        elapsedTime = (size - bytesRecieved) / speed;
-    }
 
-    file.Close();
+        send(sock, "get_size", 8, 0);
+
+        recv(sock, &buff[0], sizeof(buff) - 1, 0);
+
+        int size = atoi(buff) / 10;
+        bytesAll = size;
+
+        URHO3D_LOGINFOF("size new version %d", size);
+
+
+        //--------------------------------------------------------------
+        state = DownloadFile;
+
+        bytesRecieved = 0;
+
+        File file(gContext, "out.exe", Urho3D::FILE_WRITE);
+
+        send(sock, "get_file", 8, 0);
+
+        percents = 0.0f;
+
+        startTime = gTime->GetElapsedTime();
+
+        while(bytesRecieved < size)
+        {
+            uint numBytes = (uint)recv(sock, buff, 1024, 0);
+            bytesRecieved += numBytes;
+            file.Write(buff, numBytes);
+            percents = ((float)bytesRecieved / size * 100.0f);
+            speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
+            elapsedTime = (size - bytesRecieved) / speed;
+        }
+
+        file.Close();
+
+    }
 
     state = ConnectClose;
 }

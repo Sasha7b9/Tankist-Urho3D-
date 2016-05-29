@@ -182,7 +182,7 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
         if(stateWindow != StateWindow::UpdateComplete)
         {
             MakeWindow(StateWindow::UpdateComplete);
-            WinExec("Tankist.exe", 1);
+            WinExec("TankistInstall.exe", 1);
             engine_->Exit();
         }
     }

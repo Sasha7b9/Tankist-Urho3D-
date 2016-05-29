@@ -36,8 +36,12 @@
     <ClInclude Include="src\Graphics\ProgressBar.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\NetworkThread.h" />
-    <ClInclude Include="src\Launcher.h" />
+    <ClInclude Include="src\Launcher.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NetworkThread.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -58,10 +62,16 @@
     <ClCompile Include="src\Graphics\ProgressBar.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\NetworkThread.cpp" />
-    <ClCompile Include="src\Launcher.cpp" />
+    <ClCompile Include="src\Launcher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NetworkThread.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\doc\LauncherFunctionallity.txt" />
+    <Text Include="..\..\..\doc\LauncherFunctionallity.txt">
+      <Filter>doc</Filter>
+    </Text>
   </ItemGroup>
 </Project>

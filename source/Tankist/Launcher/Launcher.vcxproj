@@ -76,7 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\My\Tankist\source\Tankist\Launcher\src;$(IncludePath)</IncludePath>
-    <OutDir>..\..\..\out\</OutDir>
+    <OutDir>..\..\..\out\launcher\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

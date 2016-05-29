@@ -70,6 +70,7 @@ void TerminalTWT::Start()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void TerminalTWT::Stop()
 {
+    engine_->DumpResources(true);
     gLog->Write(0, "out");
     gLog->Close();
     thread.Stop();

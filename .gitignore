@@ -33,3 +33,5 @@ site/tankistwat/.idea/
 site/tankistwat/forum/migrations/
 site/tankistwat/newsletter/migrations/
 site/tankistwat/books/migrations/
+
+server/build/

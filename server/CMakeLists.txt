@@ -8,7 +8,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 file (GLOB CPPS "../source/Tankist/Tankist/src/*.cpp")
 
-add_definitions(-O3 -std=c++11 -march=native -ffast-math -pthread -Wno-invalid-offsetof)
+add_definitions(-O3 -std=c++11 -march=native -ffast-math -pthread -Wno-invalid-offsetof -D_SERVER_=1)
 
 include_directories(../../urho3D/build/include/ ../../urho3D/build/include/Urho3D/ThirdParty ../source/Tankist/Tankist/src)
 

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import socket
 import sys
 from _thread import *
@@ -6,10 +8,9 @@ from os import path
 HOST = ''
 PORT = 1235
 
-#PATH = '/media/web/tankistwat/tankistwat/media/distr/'
-PATH = 'd:'
+PATH = '/media/web/tankistwat/tankistwat/media/distr/'
 PATH_VER = PATH + '\\version.info'
-PATH_FILE = PATH + '\\Tankistclient.exe'
+PATH_FILE = PATH + '\\TankistWaTclient.exe'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

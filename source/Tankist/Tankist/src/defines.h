@@ -1,12 +1,6 @@
 #pragma once
 
 
-// For main Linux server
-//#define _SERVER_ 1
-
-// For Windows client
-#define _CLIENT_ 1
-
 // Windows version for local network
 //#define _UNIVERSAL_ 1
 

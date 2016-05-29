@@ -130,6 +130,7 @@
       <AdditionalIncludeDirectories>C:\Urho3D-rel\build\include;C:\Urho3D-rel\build\include\Urho3D\ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4820;4514;4710;4711</DisableSpecificWarnings>
       <AdditionalOptions>-MP %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

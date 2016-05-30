@@ -46,11 +46,14 @@ def clientthread(conn):
 
             l = command.split()
 
-            if l[0] == 'get_size':
-                p = path.join('../../out/distr', l[1])
-                print(p)
-                size = path.getsize(p)
-                conn.sendall(bytes(str(size), 'UTF-8'))
+            if l[0] == 'get_file':
+                name = l[1]
+                if l.__len__() > 2:     # for spaces in file names
+                    name += ' ' + l[2]
+                p = path.join('../../out/distr', name)
+                f = open(p, 'rb')
+                dat = f.read(path.getsize(p))
+                conn.sendall(dat)
                 continue
 
             if command == 'get_size':
@@ -68,6 +71,7 @@ def clientthread(conn):
 
                 conn.close()
                 break
+
 
     except socket.error as msg:
         return

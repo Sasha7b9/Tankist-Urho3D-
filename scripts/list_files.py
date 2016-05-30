@@ -20,8 +20,9 @@ files = findFiles('.')
 writeFile = open('files.txt', 'w')
 
 for file in files:
-    text =  file + ' ' + CRC32_from_file(file) + ' ' + str(os.path.getsize(file))
-    print(text)
-    writeFile.write(text + '\n')
+    if file != '.\\files.txt':
+        text =  file + ' ' + CRC32_from_file(file) + ' ' + str(os.path.getsize(file))
+        print(text)
+        writeFile.write(text + '\n')
 
 writeFile.close()

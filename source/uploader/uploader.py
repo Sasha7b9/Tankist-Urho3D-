@@ -32,10 +32,25 @@ def clientthread(conn):
                 data = conn.recv(1024)
             command = data.decode('UTF-8')
 
-            if command == 'version':
-                f = open(PATH_VER, 'r')
-                ver = f.read()
-                conn.sendall(bytes(ver, 'UTF-8'))
+            if command == 'get_list_files_size':
+                size = path.getsize('../../out/distr/files.txt')
+                conn.sendall(bytes(str(size), 'UTF-8'))
+                continue
+
+            if command == 'get_list_files':
+                f = open('../../out/distr/files.txt', 'rb')
+                dat = f.read(path.getsize('../../out/distr/files.txt'))
+                conn.sendall(dat)
+                f.close
+                continue
+
+            l = command.split()
+
+            if l[0] == 'get_size':
+                p = path.join('../../out/distr', l[1])
+                print(p)
+                size = path.getsize(p)
+                conn.sendall(bytes(str(size), 'UTF-8'))
                 continue
 
             if command == 'get_size':

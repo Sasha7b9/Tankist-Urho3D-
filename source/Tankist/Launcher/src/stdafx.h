@@ -87,6 +87,7 @@ using Urho3D::UIElement;
 using Urho3D::XMLFile;
 
 using Urho3D::VariantMap;
+using Urho3D::Vector;
 using Urho3D::Vector3;
 
 using Urho3D::Window;

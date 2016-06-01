@@ -3,10 +3,9 @@
 
 enum TypeApplication
 {
-    None,       // Before initialization
-    Server,     // Online server
-    Client,     // Online client
-    Universal   // Version for local network
+    Type_None,      // Before initialization
+    Type_Server,    // Online server
+    Type_Client     // Online client
 };
 
 

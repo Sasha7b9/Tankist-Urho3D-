@@ -170,12 +170,9 @@ using Urho3D::E_CLIENTDISCONNECTED;
 
 #include "defines.h"
 
-#ifndef _SERVER_
-
+//For client only
 #include "CameraUni.h"
 #include "Client.h"
-
-#endif
 
 #include "Server.h"
 #include "TankistWaT.h"

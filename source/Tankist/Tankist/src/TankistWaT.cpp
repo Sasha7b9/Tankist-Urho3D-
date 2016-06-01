@@ -23,38 +23,33 @@ void TankistWaT::Setup()
 {
     const Vector<String> argumensts = Urho3D::GetArguments();
 
-#ifdef _UNIVERSAL_
-    gTypeConnection = (argumensts.Size() > 0 && argumensts[0] == "-server") ? Connection_Server : Connection_Client;
-#elif  _CLIENT_
-    gTypeConnection = Connection_Client;
-#elif _SERVER_
-    gTypeConnection = Connection_Server;
-#endif
+    uint numArguments = argumensts.Size();
+
+    if (numArguments == 0)
+    {
+        gTypeApplication = Type_Universal;
+    }
+    else
+    {
+        gTypeApplication = (argumensts[0] == "-server") ? Type_Server : Type_Client;
+    }
+
 
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
-
-#ifndef _SERVER_
-    gUI = GetSubsystem<UI>();
-    gInput = GetSubsystem<Input>();
-    gRenderer = GetSubsystem<Renderer>();
-#endif
-
     gResourceCache = GetSubsystem<ResourceCache>();
     gTime = GetSubsystem<Time>();
 
-#ifndef _SERVER_
-    if (gTypeConnection == Connection_Client)
+    if (gTypeApplication != Type_Server)
     {
+        gUI = GetSubsystem<UI>();
+        gInput = GetSubsystem<Input>();
+        gRenderer = GetSubsystem<Renderer>();
         gCamera = new CameraUni(context_);
     }
-#endif
-
-#ifdef _SERVER_
-    engineParameters_["Headless"] = true;
-#endif
-
-    engineParameters_["WindowTitle"] = gTypeConnection == Connection_Server ? "Tankist WaT server" : "Tankist WaT";
+    
+    engineParameters_["Headless"] = gTypeApplication == Type_Server;
+    engineParameters_["WindowTitle"] = "Танкист МК";
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Sound"] = false;
@@ -94,7 +89,7 @@ void TankistWaT::Start()
 
     SubscribeToEvents();
 
-    if (gTypeConnection == Connection_Server)
+    if (gTypeApplication == Type_Server)
     {
 #ifndef _SERVER_
         gCamera = new CameraUni(context_);
@@ -152,7 +147,7 @@ void TankistWaT::SubscribeToEvents()
     SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(TankistWaT, HandlePhysicsPreStep));
     SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(TankistWaT, HandlePostUpdate));
 
-    if (gTypeConnection == Connection_Server)
+    if (gTypeApplication == Type_Server)
     {
         SubscribeToEvent(E_NEWCONNECTION, URHO3D_HANDLER(TankistWaT, HandleNewConnection));
         SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(TankistWaT, HandleCloseConnection));
@@ -166,7 +161,7 @@ void TankistWaT::SubscribeToEvents()
 void TankistWaT::HandlePhysicsPreStep(StringHash, VariantMap &)
 {
     // Client
-    if (gTypeConnection == Connection_Client)
+    if (gTypeApplication == Type_Client)
     {
 #ifndef _SERVER_
         Connection *serverConnection = gNetwork->GetServerConnection();
@@ -259,14 +254,14 @@ Vehicle* TankistWaT::CreateVehicle()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-#ifndef _SERVER_
 void TankistWaT::MoveCamera()
 {
+    if (gTypeApplication != Type_Server)
     gUI->GetCursor()->SetVisible(!gInput->GetMouseButtonDown(MOUSEB_RIGHT));
 
     gCamera->MoveFromMouse();
 
-    if (gTypeConnection == Connection_Client)
+    if (gTypeApplication == Type_Client)
     {
         static bool cameraIsAttached = false;
 
@@ -276,7 +271,6 @@ void TankistWaT::MoveCamera()
         }
     }
 }
-#endif
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 #ifndef _SERVER_

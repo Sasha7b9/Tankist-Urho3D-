@@ -1,8 +1,8 @@
 #include <stdafx.h>
 
-#ifndef _SERVER_
 
 #include "CameraUni.h"
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CameraUni::CameraUni(Context *context) : Object(context)
@@ -56,5 +56,3 @@ bool CameraUni::AttachToNode(Node *node, const Vector3 &shift)
 
     return false;
 }
-
-#endif // _SERVER_

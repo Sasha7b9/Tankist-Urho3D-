@@ -99,6 +99,12 @@ Function .onInit
 
 FunctionEnd
 
+Function  .onInstSuccess
+
+    Exec '"$INSTDIR\Launcher.exe"'
+  
+FunctionEnd
+
 ;--------------------------------
 ;Descriptions
 

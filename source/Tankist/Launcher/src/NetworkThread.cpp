@@ -58,7 +58,7 @@ void NetworkThread::ThreadFunction()
 
         recv(sock, &buff[0], sizeof(buff) - 1, 0);
 
-        int size = atoi(buff) / 10;
+        int size = atoi(buff);
         bytesAll = size;
 
         URHO3D_LOGINFOF("size new version %d", size);
@@ -69,7 +69,7 @@ void NetworkThread::ThreadFunction()
 
         bytesRecieved = 0;
 
-        File file(gContext, "out.exe", Urho3D::FILE_WRITE);
+        File file(gContext, "TankistInstall.exe", Urho3D::FILE_WRITE);
 
         send(sock, "get_file", 8, 0);
 

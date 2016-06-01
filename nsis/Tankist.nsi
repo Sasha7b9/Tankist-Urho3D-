@@ -96,6 +96,12 @@ Function .onInit
 
 FunctionEnd
 
+Function  .onInstSuccess
+
+    Exec '"$INSTDIR\Tankist.exe"'
+  
+FunctionEnd
+
 ;--------------------------------
 ;Descriptions
 

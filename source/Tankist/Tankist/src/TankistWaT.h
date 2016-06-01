@@ -1,11 +1,12 @@
 #pragma once
 
 
-enum TypeConnection
+enum TypeApplication
 {
-    Connection_None,
-    Connection_Server,
-    Connection_Client
+    None,       // Before initialization
+    Server,     // Online server
+    Client,     // Online client
+    Universal   // Version for local network
 };
 
 

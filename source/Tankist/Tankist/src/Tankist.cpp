@@ -2,16 +2,16 @@
 
 
 #include "Vehicle.h"
-#include "TankistWaT.h"
+#include "Tankist.h"
 #include "GlobalVars.h"
 
 #pragma warning(disable:4100)
-URHO3D_DEFINE_APPLICATION_MAIN(TankistWaT)
+URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
 #pragma warning(default:4100)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-TankistWaT::TankistWaT(Context* context) :
+Tankist::Tankist(Context* context) :
     Application(context)
 {
     Vehicle::RegisterObject(context);
@@ -19,42 +19,52 @@ TankistWaT::TankistWaT(Context* context) :
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::Setup()
+void Tankist::Setup()
 {
-    const Vector<String> argumensts = Urho3D::GetArguments();
+    Vector<String> argumensts = Urho3D::GetArguments();
 
-    uint numArguments = argumensts.Size();
-
-    if (numArguments == 0)
+    if (!ParseArguments(argumensts, gTypeApplication, gIPAddress, gNumPort))
     {
-        gTypeApplication = Type_Universal;
+#ifdef _WINDOWS
+        URHO3D_LOGERRORF("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+#else
+        URHO3D_LOGERRORF("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+#endif
+        exit = true;
+    }
+
+    gLog = new Log(context_);
+    gLog->SetLevel(Urho3D::LOG_DEBUG);
+
+    if (gTypeApplication == Type_Client)
+    {
+        gLog->Open("client.log");
     }
     else
     {
-        gTypeApplication = (argumensts[0] == "-server") ? Type_Server : Type_Client;
+        gLog->Open("server.log");
     }
-
 
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
     gResourceCache = GetSubsystem<ResourceCache>();
     gTime = GetSubsystem<Time>();
 
-    if (gTypeApplication != Type_Server)
+    if (gTypeApplication == Type_Client)
     {
         gUI = GetSubsystem<UI>();
         gInput = GetSubsystem<Input>();
         gRenderer = GetSubsystem<Renderer>();
         gCamera = new CameraUni(context_);
     }
-    
+
     engineParameters_["Headless"] = gTypeApplication == Type_Server;
-    engineParameters_["WindowTitle"] = "Танкист МК";
+    engineParameters_["WindowTitle"] = "Tankist WaT";
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Sound"] = false;
-    engineParameters_["WindowWidth"] = 640;
-    engineParameters_["WindowHeight"] = 480;
+    engineParameters_["WindowWidth"] = 800;
+    engineParameters_["WindowHeight"] = 600;
     //engineParameters_["WindowPositionY"] = 20;
     //engineParameters_["WindowPositionX"] = gTypeConnection == Connection_Server ? 20 : 700;
 
@@ -69,21 +79,18 @@ void TankistWaT::Setup()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::Start()
+void Tankist::Start()
 {
-    gLog = new Log(context_);
-    gLog->SetLevel(LOG_INFO);
-    gLog->Open("client.log");
+    if (gTypeApplication == Type_Client)
+    {
+        gGraphics = GetSubsystem<Graphics>();
 
-#ifndef _SERVER_
-    gGraphics = GetSubsystem<Graphics>();
+        SetWindowTitleAndIcon();
 
-    SetWindowTitleAndIcon();
+        CreateConsoleAndDebugHud();
 
-    CreateConsoleAndDebugHud();
-
-    CreateUI();
-#endif
+        CreateUI();
+    }
 
     CreateScene();
 
@@ -91,66 +98,65 @@ void TankistWaT::Start()
 
     if (gTypeApplication == Type_Server)
     {
-#ifndef _SERVER_
+        gServer = new Server(context_);
+        gServer->Start(gNumPort);
+    }
+    
+    if (gTypeApplication == Type_Client)
+    {
         gCamera = new CameraUni(context_);
         gCamera->SetupViewport();
-#endif
-        gServer = new Server(context_);
-        gServer->Start(SERVER_PORT);
-    }
-    else
-    {
-#ifndef _SERVER_
+
         gClient = new Client(context_);
         gClient->ConnectToServer();
-#endif
     }
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::Stop()
+void Tankist::Stop()
 {
+    if (gClient)
+    {
+        gClient->Disconnect();
+    }
+
     engine_->DumpResources(true);
+    engine_->DumpProfiler();
+    engine_->DumpMemory();
     gLog->Write(0, "out");
     gLog->Close();
 
-#ifndef _SERVER_
     SAFE_DELETE(gCamera);
-#endif
-
     SAFE_DELETE(gLog);
-
-#ifndef _SERVER_
     SAFE_DELETE(gClient);
-#endif
-
     SAFE_DELETE(gServer);
     SAFE_DELETE(gScene);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::CreateScene()
+void Tankist::CreateScene()
 {
     #include "CreateScene.inl"
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::SubscribeToEvents()
+void Tankist::SubscribeToEvents()
 {
-#ifndef _SERVER_
-    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(TankistWaT, HandleKeyDown));
-#endif
+    if (gTypeApplication == Type_Client)
+    {
+        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
+    }
 
-    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(TankistWaT, HandlePhysicsPreStep));
-    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(TankistWaT, HandlePostUpdate));
+    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Tankist, HandlePhysicsPreStep));
+    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
 
     if (gTypeApplication == Type_Server)
     {
-        SubscribeToEvent(E_NEWCONNECTION, URHO3D_HANDLER(TankistWaT, HandleNewConnection));
-        SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(TankistWaT, HandleCloseConnection));
+        SubscribeToEvent(E_NEWCONNECTION, URHO3D_HANDLER(Tankist, HandleNewConnection));
+        SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Tankist, HandleCloseConnection));
 
         gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
     }
@@ -158,12 +164,11 @@ void TankistWaT::SubscribeToEvents()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::HandlePhysicsPreStep(StringHash, VariantMap &)
+void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
 {
     // Client
     if (gTypeApplication == Type_Client)
     {
-#ifndef _SERVER_
         Connection *serverConnection = gNetwork->GetServerConnection();
 
         if (serverConnection)
@@ -181,7 +186,6 @@ void TankistWaT::HandlePhysicsPreStep(StringHash, VariantMap &)
             serverConnection->SetControls(controls);
             //serverConnection->SetPosition(cameraNode->GetPosition());
         }
-#endif
     }
     // Server
     else
@@ -212,17 +216,22 @@ void TankistWaT::HandlePhysicsPreStep(StringHash, VariantMap &)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::HandlePostUpdate(StringHash, VariantMap &)
+void Tankist::HandlePostUpdate(StringHash, VariantMap &)
 {
-#ifndef _SERVER_
-    MoveCamera();
-#endif
+    if (gTypeApplication == Type_Client)
+    {
+        MoveCamera();
+    }
+
+    if (exit)
+    {
+        engine_->Exit();
+    }
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-#ifndef _SERVER_
-void TankistWaT::CreateUI()
+void Tankist::CreateUI()
 {
     UIElement* root = gUI->GetRoot();
     XMLFile* uiStyle = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
@@ -237,11 +246,10 @@ void TankistWaT::CreateUI()
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(gGraphics->GetWidth() / 2, gGraphics->GetHeight() / 2);
 }
-#endif
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* TankistWaT::CreateVehicle()
+Vehicle* Tankist::CreateVehicle()
 {
     Node* vehicleNode = gScene->CreateChild("Vehicle");
     vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 15.0f));
@@ -254,7 +262,7 @@ Vehicle* TankistWaT::CreateVehicle()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::MoveCamera()
+void Tankist::MoveCamera()
 {
     if (gTypeApplication != Type_Server)
     gUI->GetCursor()->SetVisible(!gInput->GetMouseButtonDown(MOUSEB_RIGHT));
@@ -273,19 +281,16 @@ void TankistWaT::MoveCamera()
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-#ifndef _SERVER_
-void TankistWaT::SetWindowTitleAndIcon()
+void Tankist::SetWindowTitleAndIcon()
 {
     Image* icon = gResourceCache->GetResource<Image>("Textures/UrhoIcon.png");
     gGraphics->SetWindowIcon(icon);
     //gGraphics->SetWindowTitle("Tankist WaT");
 }
-#endif
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-#ifndef _SERVER_
-void TankistWaT::CreateConsoleAndDebugHud()
+void Tankist::CreateConsoleAndDebugHud()
 {
     XMLFile* xmlFile = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
 
@@ -297,12 +302,10 @@ void TankistWaT::CreateConsoleAndDebugHud()
     gDebugHud = engine_->CreateDebugHud();
     gDebugHud->SetDefaultStyle(xmlFile);
 }
-#endif
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-#ifndef _SERVER_
-void TankistWaT::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
+void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace Urho3D::KeyDown;
 
@@ -437,11 +440,10 @@ void TankistWaT::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         }
     }
 }
-#endif
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::HandleNewConnection(StringHash, VariantMap &eventData)
+void Tankist::HandleNewConnection(StringHash, VariantMap &eventData)
 {
     Connection *newConnection = static_cast<Connection*>(eventData[NewConnection::P_CONNECT].GetPtr());
 
@@ -455,7 +457,7 @@ void TankistWaT::HandleNewConnection(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void TankistWaT::HandleCloseConnection(StringHash, VariantMap &eventData)
+void Tankist::HandleCloseConnection(StringHash, VariantMap &eventData)
 {
     Connection *connection = static_cast<Connection*>(eventData[CloseConnection::P_CONNECT].GetPtr());
     Vehicle *object = serverObjects[connection];
@@ -464,4 +466,63 @@ void TankistWaT::HandleCloseConnection(StringHash, VariantMap &eventData)
         object->Delete();
     }
     serverObjects.Erase(connection);
+
+#ifdef _WINDOWS
+
+    engine_->Exit();
+
+#endif
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool Tankist::ParseArguments(Vector<String> &arguments, TypeApplication &type, String &address, unsigned short &port)
+{
+    if (arguments.Size() == 0)
+    {
+        return false;
+    }
+
+    if (arguments[0] == "-server" && arguments.Size() == 2)
+    {
+        if (arguments[1].Length() > 6 && GetNumPort(arguments[1], port))     // "-port:"
+        {
+            type = Type_Server;
+            return true;
+        }
+    }
+
+    if (arguments[0] == "-client" && arguments.Size() == 3)
+    {
+        if (arguments[1].Length() > 9)   // "-address:"
+        {
+            address = arguments[1].Substring(9);
+
+            if (GetNumPort(arguments[2], port))
+            {
+                type = Type_Client;
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool Tankist::GetNumPort(String &str, unsigned short &port)
+{
+    String strPort = str.Substring(6);
+
+    long int numPort = strtol(strPort.CString(), 0, 10);
+
+    if (numPort == 0L)
+    {
+        return false;
+    }
+
+    port = (unsigned short)numPort;
+
+    return true;
 }

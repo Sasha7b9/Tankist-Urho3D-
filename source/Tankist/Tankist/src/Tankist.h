@@ -12,16 +12,16 @@ enum TypeApplication
 class Vehicle;
 
 
-class TankistWaT : public Application
+class Tankist : public Application
 {
 
 #pragma warning(push)
 #pragma warning(disable:4640)
-    URHO3D_OBJECT(TankistWaT, Application);
+    URHO3D_OBJECT(Tankist, Application);
 #pragma warning(pop)
 
 public:
-    TankistWaT(Context* context);
+    Tankist(Context* context);
     
     virtual void Setup();
     virtual void Start();
@@ -30,14 +30,15 @@ public:
 private:
     void CreateScene();
 
-#ifndef _SERVER_
     void CreateUI();
     void MoveCamera();
     void SetWindowTitleAndIcon();
     void CreateConsoleAndDebugHud();
+    bool ParseArguments(Vector<String> &arguments, TypeApplication &type, String &address, unsigned short &port);
+    bool GetNumPort(String &str, unsigned short &port);
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-#endif
+
     void SubscribeToEvents();
 
     void HandlePostUpdate(StringHash eventType, VariantMap &eventData);
@@ -54,6 +55,8 @@ private:
 
     HashMap<Connection*, WeakPtr<Vehicle>> serverObjects;
 
-    TankistWaT(TankistWaT const&) : Application(nullptr) {};
-    TankistWaT operator=(TankistWaT const &) {};
+    Tankist(Tankist const&) : Application(nullptr) {};
+    Tankist operator=(Tankist const &) {};
+
+    bool exit = false;
 };

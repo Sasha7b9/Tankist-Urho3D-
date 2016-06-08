@@ -24,4 +24,5 @@ Urho3D::DebugHud *gDebugHud = nullptr;
 CameraUni *gCamera = nullptr;
 Client *gClient = nullptr;
 
-
+String gIPAddress = "";
+unsigned short gNumPort = 0;

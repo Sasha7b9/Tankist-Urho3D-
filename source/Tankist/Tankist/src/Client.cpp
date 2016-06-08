@@ -26,7 +26,7 @@ bool Client::ConnectToServer()
 {
     nodeID = 0;
 
-    return GetSubsystem<Network>()->Connect("188.120.239.61", SERVER_PORT, gScene);
+    return GetSubsystem<Network>()->Connect(gIPAddress, gNumPort, gScene);
 }
 
 

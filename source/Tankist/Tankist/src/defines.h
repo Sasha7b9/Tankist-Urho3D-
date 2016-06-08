@@ -1,18 +1,15 @@
 #pragma once
 
 
-// Windows version for local network
-//#define _UNIVERSAL_ 1
-
-
-static const unsigned short SERVER_PORT = 1234;
-
 static const StringHash E_CLIENTOBJECTID("ClientObjectID");
+static const int MSG_CNTRL = 32;
+
 
 static const StringHash P_ID("ID");
 
 
 typedef unsigned int uint;
+typedef unsigned char uint8;
 
 
 #define SAFE_DELETE(x)  \

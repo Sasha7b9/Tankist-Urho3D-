@@ -23,3 +23,6 @@ extern Urho3D::DebugHud *gDebugHud;
 
 extern CameraUni *gCamera;
 extern Client *gClient;
+
+extern String gIPAddress;
+extern unsigned short gNumPort;

@@ -86,7 +86,6 @@ Global
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|Mixed Platforms.Build.0 = Release|x64
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|Win32.ActiveCfg = Release|x64
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|x64.ActiveCfg = Release|x64
-		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|x64.Build.0 = Release|x64
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Mixed Platforms.ActiveCfg = RelWithDebInfo|x64
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Mixed Platforms.Build.0 = RelWithDebInfo|x64
 		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|x64

@@ -8,6 +8,8 @@
 #pragma warning(disable:4626)
 #pragma warning(disable:4640)
 
+#define URHO3D_LOGGING
+
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Core/Timer.h>
@@ -33,6 +35,7 @@
 #include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/IO/File.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/IO/MemoryBuffer.h>
 
 #include <Urho3D/Network/Network.h>
 #include <Urho3D/Network/NetworkEvents.h>
@@ -51,6 +54,8 @@
 #include <Urho3D/UI/UI.h>
 
 #include <Urho3D/DebugNew.h>
+
+#include <windowsx.h>
 
 #pragma warning(pop)
 
@@ -89,6 +94,7 @@ using Urho3D::LogicComponent;
 using Urho3D::Light;
 
 using Urho3D::Material;
+using Urho3D::MemoryBuffer;
 using Urho3D::Model;
 
 using Urho3D::Network;
@@ -98,6 +104,7 @@ using Urho3D::Object;
 using Urho3D::Octree;
 
 using Urho3D::PhysicsWorld;
+using Urho3D::PODVector;
 
 using Urho3D::Quaternion;
 
@@ -175,6 +182,6 @@ using Urho3D::E_CLIENTDISCONNECTED;
 #include "Client.h"
 
 #include "Server.h"
-#include "TankistWaT.h"
+#include "Tankist.h"
 #include "GlobalVars.h"
 

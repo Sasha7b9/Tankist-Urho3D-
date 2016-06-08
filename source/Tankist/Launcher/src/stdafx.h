@@ -12,7 +12,10 @@
 #pragma warning(disable:4710)
 
 
+//#include <Urho3D/AngelScript/Addons.h>
 
+
+#include <Urho3D/Container/Str.h>
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/Thread.h>
 #include <Urho3D/Core/Timer.h>

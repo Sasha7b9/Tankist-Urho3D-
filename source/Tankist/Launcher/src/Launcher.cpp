@@ -174,7 +174,7 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
         else
         {
             progressBar->SetBytes(thread.GetBytesAll(), thread.GetBytesRecieved());
-            progressBar->SetParameters(thread.GetPercents() / 100.0f, thread.GetPassedTime(), thread.GetElapsedTime(), thread.GetSpeed());
+            progressBar->SetParameters(thread.GetPercents() / 100.0f, thread.GetPassedTime(), thread.GetElapsedTime(), thread.GetSpeed(), thread.GetCurrentFile());
         }
     }
     else if(stateThread == NetworkThread::ConnectClose)

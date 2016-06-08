@@ -45,8 +45,9 @@ ProgressBar::~ProgressBar()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void ProgressBar::SetParameters(float progress, float timePassed, float timeElapsed, float speed)
+void ProgressBar::SetParameters(float progress, float timePassed, float timeElapsed, float speed, String currentFile)
 {
+    this->currentFile = currentFile;
     this->progress = progress;
     this->timePassed = timePassed;
     this->timeElapsed = timeElapsed;
@@ -81,7 +82,7 @@ void ProgressBar::DrawProgress()
 
     textParameters->SetText(buffer);
 
-    sprintf_s(buffer, "MBytes: all - %5.1f, recieved - %5.1f", bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f);
+    sprintf_s(buffer, "MBytes: all - %5.1f, recieved - %5.1f %s", bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f, currentFile.CString());
 
     textBytes->SetText(buffer);
 }

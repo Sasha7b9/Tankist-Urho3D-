@@ -7,10 +7,7 @@ from os import path
 
 HOST = ''
 PORT = 1235
-
-PATH = '/media/web/tankistwat/tankistwat/media/distr/'
-PATH_VER = '../version.info'
-PATH_FILE = PATH + 'TankistInstaller.exe'
+PATH = '../../out/distr'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -38,7 +35,7 @@ def clientthread(conn):
                 name = l[1]
                 if l.__len__() > 2:     # for spaces in file names
                     name += ' ' + l[2]
-                p = path.join('../../out/distr', name)
+                p = path.join(PATH, name)
                 size = path.getsize(p)
                 conn.sendall(bytes(str(size), 'UTF-8'))
                 continue
@@ -47,7 +44,7 @@ def clientthread(conn):
                 name = l[1]
                 if l.__len__() > 2:     # for spaces in file names
                     name += ' ' + l[2]
-                p = path.join('../../out/distr', name)
+                p = path.join(PATH, name)
                 f = open(p, 'rb')
                 dat = f.read(path.getsize(p))
                 conn.sendall(dat)

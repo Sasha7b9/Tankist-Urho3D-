@@ -49,6 +49,11 @@ public:
         return bytesRecieved;
     }
 
+    String GetCurrentFile()
+    {
+        return currentFile;
+    }
+
 private:
     State state = Init;
     SOCKET sock;
@@ -58,7 +63,8 @@ private:
     float elapsedTime = 0.0f;
     int bytesAll = 0;
     int bytesRecieved = 0;
+    String currentFile;
 
-    int GetFile(const char *nameIn, char *nameOut = 0);
+    int GetFile(const char *nameIn, const char *nameOut = 0);
     void SendToSocket(const String &message);
 };

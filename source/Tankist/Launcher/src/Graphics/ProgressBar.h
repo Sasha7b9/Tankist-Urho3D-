@@ -18,7 +18,7 @@ public:
 
     // progress = [0.0f...1.0f]
     float GetProgress() { return progress; }
-    void SetParameters(float progress, float timePassed, float timeElapsed, float speed);
+    void SetParameters(float progress, float timePassed, float timeElapsed, float speed, String currentFile);
     void SetBytes(int all, int recieved);
 
 private:
@@ -42,6 +42,8 @@ private:
 
     int bytesAll = 0;
     int bytesRecieved = 0;
+
+    String currentFile;
 
     void DrawProgress();
 };

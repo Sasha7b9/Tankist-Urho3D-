@@ -40,11 +40,14 @@ static void ReadListFiles(char *nameFile, HashMap<String, FileInfo> &map)
 // return size downloading files
 static int PrepareListDownloading(HashMap<String, FileInfo> ourFiles, HashMap<String, FileInfo> newFiles, Vector<String> &listDownloading)
 {
+    uint numOurFiles = ourFiles.Size();
+
     uint size = 0U;
 
     for(HashMap<String, FileInfo>::Iterator i = newFiles.Begin(); i != newFiles.End(); i++)
     {
-        FileInfo info = ourFiles[i->first_];
+        String name = i->first_;
+        FileInfo info = ourFiles[name];
         if(info.crc32 != i->second_.crc32)
         {
             size += i->second_.size;
@@ -122,6 +125,10 @@ void NetworkThread::ThreadFunction()
     {
         String nameFile = downloadingFiles[i];
 
+        URHO3D_LOGINFOF("now downloading file %s", nameFile.CString());
+
+        currentFile = nameFile;
+
         bytesRecieved += GetFile(nameFile.CString());
 
         percents = ((float)bytesRecieved / bytesAll * 100.0f);
@@ -138,8 +145,33 @@ void NetworkThread::ThreadFunction()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-int NetworkThread::GetFile(const char *nameIn, char *nameOut)
+static void CreateDirIfAbsent(const char *name)
 {
+    uint pos = String(name).FindLast('/');
+    if(pos == String::NPOS)
+    {
+        pos = String(name).FindLast('\\');
+    }
+
+    if(pos == String::NPOS)
+    {
+        return;
+    }
+
+    String nameDir = String(name).Substring(0, pos);
+
+    if(!gFileSystem->DirExists(nameDir))
+    {
+        gFileSystem->CreateDir(nameDir);
+    }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
+{
+    nameOut = nameOut ? nameOut : nameIn;
+
     static char buff[1025];
 
     SendToSocket(String("get_file_size ") + String(nameIn));
@@ -150,7 +182,15 @@ int NetworkThread::GetFile(const char *nameIn, char *nameOut)
 
     SendToSocket(String("get_file ") + String(nameIn));
 
-    File file(gContext, nameOut ? nameOut : nameIn, Urho3D::FILE_WRITE);
+    URHO3D_LOGINFOF("Now open file %s", nameIn);
+
+    CreateDirIfAbsent(nameOut);
+
+    File file(gContext, nameOut, Urho3D::FILE_WRITE);
+
+    URHO3D_LOGINFOF("Ending opened file %s", nameIn);
+
+    file.Flush();
 
     int bytesRecv = 0;
 

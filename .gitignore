@@ -16,6 +16,7 @@
 *.*~
 *.sqlite3
 log.txt
+out/launcher/files.txt
 
 source/Tankist/ipch
 source/Tankist/x64

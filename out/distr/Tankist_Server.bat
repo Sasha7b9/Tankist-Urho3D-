@@ -1,1 +1,1 @@
-Tankist.exe -server -port:30000
+run.exe -server -port:30000

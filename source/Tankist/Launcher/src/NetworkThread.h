@@ -8,7 +8,7 @@ public:
     enum State
     {
         Init,
-        DownloadFile,
+        DownloadFiles,
         ConnectClose
     };
 
@@ -51,10 +51,14 @@ public:
 
 private:
     State state = Init;
+    SOCKET sock;
     float startTime = 0.0f;
     float percents = 0.0f;
     float speed = 0.0f;
     float elapsedTime = 0.0f;
     int bytesAll = 0;
     int bytesRecieved = 0;
+
+    int GetFile(const char *nameIn, char *nameOut = 0);
+    void SendToSocket(const String &message);
 };

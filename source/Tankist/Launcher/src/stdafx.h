@@ -67,6 +67,8 @@ using Urho3D::Image;
 using Urho3D::Input;
 using Urho3D::IntVector2;
 
+using Urho3D::HashMap;
+
 using Urho3D::Log;
 
 using Urho3D::ResourceCache;

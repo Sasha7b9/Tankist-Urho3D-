@@ -32,19 +32,16 @@ def clientthread(conn):
                 data = conn.recv(1024)
             command = data.decode('UTF-8')
 
-            if command == 'get_list_files_size':
-                size = path.getsize('../../out/distr/files.txt')
+            l = command.split()
+
+            if l[0] == 'get_file_size':
+                name = l[1]
+                if l.__len__() > 2:     # for spaces in file names
+                    name += ' ' + l[2]
+                p = path.join('../../out/distr', name)
+                size = path.getsize(p)
                 conn.sendall(bytes(str(size), 'UTF-8'))
                 continue
-
-            if command == 'get_list_files':
-                f = open('../../out/distr/files.txt', 'rb')
-                dat = f.read(path.getsize('../../out/distr/files.txt'))
-                conn.sendall(dat)
-                f.close
-                continue
-
-            l = command.split()
 
             if l[0] == 'get_file':
                 name = l[1]
@@ -56,19 +53,7 @@ def clientthread(conn):
                 conn.sendall(dat)
                 continue
 
-            if command == 'get_size':
-                size = path.getsize(PATH_FILE)
-                conn.sendall(bytes(str(size), 'UTF-8'))
-                continue
-
-            if command == 'get_file':
-                f = open(PATH_FILE, 'rb')
-
-                dat = f.read(1024)
-                while len(dat) != 0:
-                    conn.sendall(dat)
-                    dat = f.read(1024)
-
+            if l[0] == 'close_connection':
                 conn.close()
                 break
 

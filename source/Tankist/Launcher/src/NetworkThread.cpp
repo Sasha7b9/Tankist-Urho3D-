@@ -5,6 +5,57 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+struct FileInfo
+{
+    FileInfo(uint c = 0U, uint s = 0U) : crc32(c), size(s) {};
+    uint crc32;
+    uint size;
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void ReadListFiles(char *nameFile, HashMap<String, FileInfo> &map)
+{
+    map.Clear();
+
+    File file(gContext, nameFile, Urho3D::FILE_READ);
+
+    while(!file.IsEof())
+    {
+        String str = file.ReadLine();
+
+        Vector<String> data = str.Split(' ');
+
+        map[data[0]] = {Urho3D::ToUInt(data[1]), Urho3D::ToUInt(data[2])};
+    }
+
+    file.Close();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+// ourFiles - existing files
+// newFiles - files on server
+// listDownloading - files for download
+// return size downloading files
+static int PrepareListDownloading(HashMap<String, FileInfo> ourFiles, HashMap<String, FileInfo> newFiles, Vector<String> &listDownloading)
+{
+    uint size = 0U;
+
+    for(HashMap<String, FileInfo>::Iterator i = newFiles.Begin(); i != newFiles.End(); i++)
+    {
+        FileInfo info = ourFiles[i->first_];
+        if(info.crc32 != i->second_.crc32)
+        {
+            size += i->second_.size;
+            listDownloading.Push(i->first_);
+        }
+    }
+
+    return (int)size;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void NetworkThread::ThreadFunction()
 {
     static char buff[1024];
@@ -13,8 +64,6 @@ void NetworkThread::ThreadFunction()
     {
         URHO3D_LOGERRORF("Winsock not initialized with error %d", WSAGetLastError());
     }
-
-    SOCKET sock;
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -45,51 +94,81 @@ void NetworkThread::ThreadFunction()
         URHO3D_LOGINFO("Connect is ok!");
     }
 
-    send(sock, "version", 7, 0);
+    // Get information about new files
+    GetFile("files.txt", "files_new.txt");
 
-    recv(sock, &buff[0], sizeof(buff) - 1, 0);
+    HashMap<String, FileInfo> newFiles;
 
-    URHO3D_LOGINFOF("new version is %s", buff);
+    ReadListFiles("files_new.txt", newFiles);
 
-    if(strcmp(buff, _version_) != 0)
+    // Get information about our files
+    HashMap<String, FileInfo> ourFiles;
+
+    ReadListFiles("files.txt", ourFiles);
+
+    // Prepare list files for downloading
+    Vector<String> downloadingFiles;
+
+    bytesAll = PrepareListDownloading(ourFiles, newFiles, downloadingFiles);
+
+    // Download new files
+    state = DownloadFiles;
+
+    bytesRecieved = 0;
+
+    startTime = gTime->GetElapsedTime();
+
+    for(uint i = 0; i < downloadingFiles.Size(); i++)
     {
+        String nameFile = downloadingFiles[i];
 
-        send(sock, "get_size", 8, 0);
+        bytesRecieved += GetFile(nameFile.CString());
 
-        recv(sock, &buff[0], sizeof(buff) - 1, 0);
+        percents = ((float)bytesRecieved / bytesAll * 100.0f);
 
-        int size = atoi(buff);
-        bytesAll = size;
+        speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
 
-        URHO3D_LOGINFOF("size new version %d", size);
-
-
-        //--------------------------------------------------------------
-        state = DownloadFile;
-
-        bytesRecieved = 0;
-
-        File file(gContext, "TankistInstall.exe", Urho3D::FILE_WRITE);
-
-        send(sock, "get_file", 8, 0);
-
-        percents = 0.0f;
-
-        startTime = gTime->GetElapsedTime();
-
-        while(bytesRecieved < size)
-        {
-            uint numBytes = (uint)recv(sock, buff, 1024, 0);
-            bytesRecieved += numBytes;
-            file.Write(buff, numBytes);
-            percents = ((float)bytesRecieved / size * 100.0f);
-            speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
-            elapsedTime = (size - bytesRecieved) / speed;
-        }
-
-        file.Close();
-
+        elapsedTime = (bytesAll - bytesRecieved) / speed;
     }
 
+    SendToSocket("close_connection");
+
     state = ConnectClose;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+int NetworkThread::GetFile(const char *nameIn, char *nameOut)
+{
+    static char buff[1025];
+
+    SendToSocket(String("get_file_size ") + String(nameIn));
+
+    recv(sock, buff, sizeof(buff) - 1, 0);
+
+    int size = atoi(buff);
+
+    SendToSocket(String("get_file ") + String(nameIn));
+
+    File file(gContext, nameOut ? nameOut : nameIn, Urho3D::FILE_WRITE);
+
+    int bytesRecv = 0;
+
+    while(bytesRecv < size)
+    {
+        uint numBytes = (uint)recv(sock, buff, 1024, 0);
+        bytesRecv += numBytes;
+        file.Write(buff, numBytes);
+    }
+
+    file.Close();
+
+    return size;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void NetworkThread::SendToSocket(const String &message)
+{
+    send(sock, message.CString(), (int)strlen(message.CString()), 0);
 }

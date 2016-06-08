@@ -165,7 +165,7 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
 
     NetworkThread::State stateThread = thread.GetState();
 
-    if(stateThread == NetworkThread::DownloadFile)
+    if(stateThread == NetworkThread::DownloadFiles)
     {
         if(stateWindow == StateWindow::Start)
         {
@@ -182,7 +182,7 @@ void TerminalTWT::HandlePostUpdate(StringHash , VariantMap &)
         if(stateWindow != StateWindow::UpdateComplete)
         {
             MakeWindow(StateWindow::UpdateComplete);
-            WinExec("TankistInstall.exe", 1);
+            WinExec("run.exe -client -address:188.120.239.61 -port:30000", 1);
             engine_->Exit();
         }
     }

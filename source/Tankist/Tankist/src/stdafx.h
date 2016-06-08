@@ -55,8 +55,6 @@
 
 #include <Urho3D/DebugNew.h>
 
-#include <windowsx.h>
-
 #pragma warning(pop)
 
 

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tankist", "Tankist\Tankist.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launcher.vcxproj", "{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Urho3D", "..\..\..\..\Urho3D-dbg\build\Source\Urho3D\Urho3D.vcxproj", "{23250E20-DBDC-3888-98B0-5DA5D66F272A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -71,6 +73,25 @@ Global
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.RelWithDebInfo|x64.ActiveCfg = Release|x64
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Debug|Win32.ActiveCfg = Debug|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Debug|x64.ActiveCfg = Debug|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.MinSizeRel|Mixed Platforms.Build.0 = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.MinSizeRel|Win32.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.MinSizeRel|x64.Build.0 = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|Mixed Platforms.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|Mixed Platforms.Build.0 = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|Win32.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|x64.ActiveCfg = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.Release|x64.Build.0 = Release|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Mixed Platforms.ActiveCfg = RelWithDebInfo|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Mixed Platforms.Build.0 = RelWithDebInfo|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{23250E20-DBDC-3888-98B0-5DA5D66F272A}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -46,11 +46,14 @@ private:
     /// Acquire wheel components from wheel scene nodes.
     void GetWheelComponents();
 
+    void InitTower();
+
     // Wheel scene nodes.
     WeakPtr<Node> frontLeft;
     WeakPtr<Node> frontRight;
     WeakPtr<Node> rearLeft;
     WeakPtr<Node> rearRight;
+    WeakPtr<Node> nodeTower;
     
     // Steering axle constraints.
     WeakPtr<Constraint> frontLeftAxis;
@@ -62,12 +65,14 @@ private:
     WeakPtr<RigidBody> frontRightBody;
     WeakPtr<RigidBody> rearLeftBody;
     WeakPtr<RigidBody> rearRightBody;
+    WeakPtr<RigidBody> towerBody;
     
     // IDs of the wheel scene nodes for serialization.
     unsigned frontLeftID;
     unsigned frontRightID;
     unsigned rearLeftID;
     unsigned rearRightID;
+    unsigned towerID;
     
     /// Current left/right steering amount (-1 to 1.)
     float steering;

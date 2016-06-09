@@ -28,6 +28,7 @@ void Vehicle::RegisterObject(Context* context)
     URHO3D_ATTRIBUTE("Front Right Node", int, frontRightID, 0, AM_DEFAULT | AM_NODEID);
     URHO3D_ATTRIBUTE("Rear Left Node", int, rearLeftID, 0, AM_DEFAULT | AM_NODEID);
     URHO3D_ATTRIBUTE("Rear Right Node", int, rearRightID, 0, AM_DEFAULT | AM_NODEID);
+    URHO3D_ATTRIBUTE("Tower Node", int, towerID, 0, AM_DEFAULT | AM_NODEID);
 }
 
 
@@ -42,6 +43,9 @@ void Vehicle::ApplyAttributes()
     frontRight = scene->GetNode(frontRightID);
     rearLeft = scene->GetNode(rearLeftID);
     rearRight = scene->GetNode(rearRightID);
+
+    nodeTower = scene->GetNode(towerID);
+
     hullBody = node_->GetComponent<RigidBody>();
 
     GetWheelComponents();
@@ -124,6 +128,8 @@ void Vehicle::Init()
     InitWheel("RearLeft", Vector3(-0.6f, -0.4f, -0.3f), rearLeft, rearLeftID);
     InitWheel("RearRight", Vector3(0.6f, -0.4f, -0.3f), rearRight, rearRightID);
 
+    InitTower();
+
     GetWheelComponents();
 }
 
@@ -161,6 +167,42 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
     wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
     wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the vehicle hull
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Vehicle::InitTower()
+{
+    nodeTower = GetScene()->CreateChild("Tower");
+    nodeTower->SetPosition(node_->LocalToWorld({1.0f, 0.0f, 0.0f}));
+    nodeTower->SetRotation(node_->GetRotation());
+    nodeTower->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+
+    towerID = nodeTower->GetID();
+
+    StaticModel *towerObject = nodeTower->CreateComponent<StaticModel>();
+    RigidBody *towerBody = nodeTower->CreateComponent<RigidBody>();
+    CollisionShape *towerShape = nodeTower->CreateComponent<CollisionShape>();
+    Constraint *towerConstraint = nodeTower->CreateComponent<Constraint>();
+
+    towerObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
+    towerObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    towerObject->SetCastShadows(true);
+    towerShape->SetSphere(1.0f);
+    towerBody->SetFriction(10.0f);
+    towerBody->SetMass(1.0f);
+    towerBody->SetLinearDamping(0.2f);
+    towerBody->SetAngularDamping(0.75f);
+    towerBody->SetCollisionLayer(1);
+
+    towerConstraint->SetConstraintType(CONSTRAINT_HINGE);
+    towerConstraint->SetOtherBody(GetComponent<RigidBody>());
+    towerConstraint->SetWorldPosition(nodeTower->GetPosition());
+    towerConstraint->SetAxis(Vector3::UP);
+    towerConstraint->SetOtherAxis(Vector3::ZERO);
+    towerConstraint->SetLowLimit(Vector2(-180.0f, 0.0f));
+    towerConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
+    towerConstraint->SetDisableCollision(true);
 }
 
 

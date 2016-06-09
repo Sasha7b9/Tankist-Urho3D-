@@ -7,7 +7,7 @@ from os import path
 
 HOST = ''
 PORT = 1235
-PATH = '../../out/distr'
+PATH = '../../server/build'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -21,6 +21,7 @@ except socket.error as msg:
 sock.listen(1000)
 
 def clientthread(conn):
+
     try:
         while True:
             data = bytes('', 'UTF-8')

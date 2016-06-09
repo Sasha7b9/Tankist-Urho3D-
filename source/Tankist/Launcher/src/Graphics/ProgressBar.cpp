@@ -82,7 +82,7 @@ void ProgressBar::DrawProgress()
 
     textParameters->SetText(buffer);
 
-    sprintf_s(buffer, "MBytes: all - %5.1f, recieved - %5.1f %s", bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f, currentFile.CString());
+    sprintf_s(buffer, "%s MBytes: all - %5.1f, recieved - %5.1f %s", currentFile.CString(), bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f);
 
     textBytes->SetText(buffer);
 }

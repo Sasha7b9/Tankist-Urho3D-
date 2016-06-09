@@ -556,7 +556,7 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 void Tankist::CreateInstructions()
 {
     Text *instructionText = gUI->GetRoot()->CreateChild<Text>();
-    instructionText->SetText(L"Нажмите F12 для помощи");
+    instructionText->SetText("Press F12 to help");
     instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 10);
 
     instructionText->SetHorizontalAlignment(Urho3D::HA_LEFT);
@@ -565,8 +565,8 @@ void Tankist::CreateInstructions()
 
     instructionText = gUI->GetRoot()->CreateChild<Text>(INSTRUCTION);
     instructionText->SetText(
-        L"W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - управление\n"
-        L"ESC - выход"
+        "W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - controls\n"
+        "ESC - exit"
         );
     instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(Urho3D::HA_CENTER);

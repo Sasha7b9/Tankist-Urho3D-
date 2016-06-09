@@ -145,6 +145,7 @@ void NetworkThread::ThreadFunction()
 
     SendToSocket("close_connection");
 
+    gFileSystem->Delete("files.txt");
     gFileSystem->Rename("files_new.txt", "files.txt");
 
     state = ConnectClose;

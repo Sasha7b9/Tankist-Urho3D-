@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="src\Core\Math.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\GlobalVars.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="src\Launcher.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\CommonFunctions.cpp" />
     <ClCompile Include="src\Core\Math.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\Graphics\lImage.cpp" />

@@ -13,6 +13,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{0797c59e-fa4f-40c9-9abf-f32673eb5839}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{6ef03981-9aa1-4ecb-a689-f9beda4e17e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="src\NetworkThread.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\CommonFunctions.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -67,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="src\NetworkThread.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CommonFunctions.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

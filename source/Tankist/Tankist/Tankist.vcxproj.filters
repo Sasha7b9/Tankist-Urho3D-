@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\CameraUni.cpp" />
+    <ClCompile Include="src\Client.cpp" />
+    <ClCompile Include="src\GlobalVars.cpp" />
+    <ClCompile Include="src\Server.cpp" />
+    <ClCompile Include="src\stdafx.cpp" />
+    <ClCompile Include="src\Tankist.cpp" />
+    <ClCompile Include="src\Vehicle.cpp" />
+    <ClCompile Include="..\common\CommonFunctions.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CameraUni.h" />
+    <ClInclude Include="src\Client.h" />
+    <ClInclude Include="src\defines.h" />
+    <ClInclude Include="src\GlobalVars.h" />
+    <ClInclude Include="src\Server.h" />
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\Tankist.h" />
+    <ClInclude Include="src\Vehicle.h" />
+    <ClInclude Include="..\common\CommonFunctions.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\CreateScene.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{81afbd66-d8a1-455c-8c7e-11f1fec0f3ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -26,3 +26,5 @@ Client *gClient = nullptr;
 
 String gIPAddress = "";
 unsigned short gNumPort = 0;
+
+Urho3D::Context *gContext = nullptr;

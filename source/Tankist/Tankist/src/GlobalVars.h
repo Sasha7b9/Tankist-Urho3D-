@@ -26,3 +26,5 @@ extern Client *gClient;
 
 extern String gIPAddress;
 extern unsigned short gNumPort;
+
+extern Urho3D::Context *gContext;

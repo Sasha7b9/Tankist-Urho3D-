@@ -4,6 +4,7 @@
 #include "Vehicle.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
+#include "../../common/CommonFunctions.h"
 
 #pragma warning(disable:4100)
 URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
@@ -32,6 +33,8 @@ void Tankist::Setup()
 #endif
         exit = true;
     }
+
+    gContext = context_;
 
     gLog = new Log(context_);
     gLog->SetLevel(Urho3D::LOG_DEBUG);
@@ -100,6 +103,8 @@ void Tankist::Start()
     {
         gServer = new Server(context_);
         gServer->Start(gNumPort);
+
+        CreateListFiles();
     }
     
     if (gTypeApplication == Type_Client)
@@ -526,3 +531,6 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 
     return true;
 }
+
+
+

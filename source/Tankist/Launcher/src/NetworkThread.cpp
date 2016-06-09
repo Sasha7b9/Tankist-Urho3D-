@@ -34,8 +34,6 @@ static void ReadListFiles(char *nameFile, HashMap<String, FileInfo> &map)
             data[2] = data[3];
         }
 
-        data[0].Replace('/', '\\');
-
         FileInfo info = {data[1], Urho3D::ToUInt(data[2])};
 
         map[data[0]] = info;
@@ -146,7 +144,7 @@ void NetworkThread::ThreadFunction()
     SendToSocket("close_connection");
 
     gFileSystem->Delete("files.txt");
-    gFileSystem->Rename("files_new.txt", "files.txt");
+    gFileSystem->Rename("files_new.txt");
 
     state = ConnectClose;
 }
@@ -156,10 +154,6 @@ void NetworkThread::ThreadFunction()
 static void CreateDirIfAbsent(const char *name)
 {
     uint pos = String(name).FindLast('/');
-    if(pos == String::NPOS)
-    {
-        pos = String(name).FindLast('\\');
-    }
 
     if(pos == String::NPOS)
     {

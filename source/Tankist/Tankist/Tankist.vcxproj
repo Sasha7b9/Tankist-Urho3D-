@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\CommonFunctions.cpp" />
     <ClCompile Include="src\CameraUni.cpp" />
     <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\Client.h" />
     <ClInclude Include="src\defines.h" />

@@ -27,8 +27,6 @@ public:
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
     
-    /// Perform post-load after deserialization. Acquire the components from the scene nodes.
-    virtual void ApplyAttributes();
     /// Handle physics world update. Called by LogicComponent base class.
     virtual void FixedUpdate(float timeStep);
     

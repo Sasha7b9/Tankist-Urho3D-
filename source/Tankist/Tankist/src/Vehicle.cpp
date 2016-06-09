@@ -33,26 +33,6 @@ void Vehicle::RegisterObject(Context* context)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::ApplyAttributes()
-{
-    // This function is called on each Serializable after the whole scene has been loaded. Reacquire wheel nodes from ID's
-    // as well as all required physics components
-    Scene* scene = GetScene();
-
-    frontLeft = scene->GetNode(frontLeftID);
-    frontRight = scene->GetNode(frontRightID);
-    rearLeft = scene->GetNode(rearLeftID);
-    rearRight = scene->GetNode(rearRightID);
-
-    nodeTower = scene->GetNode(towerID);
-
-    hullBody = node_->GetComponent<RigidBody>();
-
-    GetWheelComponents();
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::FixedUpdate(float /*timeStep*/)
 {
     if (!frontLeftAxis)

@@ -66,8 +66,8 @@ void Tankist::Setup()
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Sound"] = false;
-    engineParameters_["WindowWidth"] = 800;
-    engineParameters_["WindowHeight"] = 600;
+    engineParameters_["WindowWidth"] = 1024;
+    engineParameters_["WindowHeight"] = 768;
     //engineParameters_["WindowPositionY"] = 20;
     //engineParameters_["WindowPositionX"] = gTypeConnection == Connection_Server ? 20 : 700;
 
@@ -186,6 +186,10 @@ void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
                 controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
+                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E'));
+                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q'));
+                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2));
+                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8));
             }
 
             serverConnection->SetControls(controls);
@@ -214,6 +218,10 @@ void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
                 vehicle->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
                 vehicle->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
                 vehicle->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
+                vehicle->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
+                vehicle->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
+                vehicle->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
+                vehicle->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
             }
         }
     }

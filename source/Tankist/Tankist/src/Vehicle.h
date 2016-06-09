@@ -1,15 +1,21 @@
 #pragma once
 
 
-const int CTRL_FORWARD = 1 << 0;
-const int CTRL_BACK = 1 << 1;
-const int CTRL_LEFT = 1 << 2;
-const int CTRL_RIGHT = 1 << 3;
+const int CTRL_FORWARD      = 1 << 0;
+const int CTRL_BACK         = 1 << 1;
+const int CTRL_LEFT         = 1 << 2;
+const int CTRL_RIGHT        = 1 << 3;
+const int CTRL_TOWER_LEFT   = 1 << 4;
+const int CTRL_TOWER_RIGHT  = 1 << 5;
+const int CTRL_TRUNK_UP     = 1 << 6;
+const int CTRL_TRUNK_DOWN   = 1 << 7;
 
 const float YAW_SENSITIVITY = 0.1f;
-const float ENGINE_POWER = 10.0f;
+const float ENGINE_POWER = 5.0f;
 const float DOWN_FORCE = 10.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
+const float SPEED_TOWER_ROTATION = 8.0f;
+const float SPEED_TRUNK_ROTATION = 10.0f;
 
 /// Vehicle component, responsible for physical movement according to controls.
 class Vehicle : public LogicComponent
@@ -46,12 +52,17 @@ private:
 
     void InitTower();
 
+    void InitTrunk();
+
+    void RotateTrunk(float delta);
+
     // Wheel scene nodes.
     WeakPtr<Node> frontLeft;
     WeakPtr<Node> frontRight;
     WeakPtr<Node> rearLeft;
     WeakPtr<Node> rearRight;
     WeakPtr<Node> nodeTower;
+    WeakPtr<Node> nodeTrunk;
     
     // Steering axle constraints.
     WeakPtr<Constraint> frontLeftAxis;
@@ -71,6 +82,13 @@ private:
     unsigned rearLeftID;
     unsigned rearRightID;
     unsigned towerID;
+    unsigned trunkID;
+
+    float pitchTower = 0.0f;
+
+    float yawTrunkMin = -110.0f;
+    float yawTrunkMax = -35.0f;
+    float yawTrunk = 0.0f;
     
     /// Current left/right steering amount (-1 to 1.)
     float steering;

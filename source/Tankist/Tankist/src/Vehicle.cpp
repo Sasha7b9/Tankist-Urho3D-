@@ -33,7 +33,7 @@ void Vehicle::RegisterObject(Context* context)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::FixedUpdate(float /*timeStep*/)
+void Vehicle::FixedUpdate(float timeStep)
 {
     if (!frontLeftAxis)
     {
@@ -44,14 +44,22 @@ void Vehicle::FixedUpdate(float /*timeStep*/)
     float accelerator = 0.0f;
 
     // Read controls
-    if (controls.buttons_ & CTRL_LEFT)
+    if(controls.buttons_ & CTRL_LEFT)
+    {
         newSteering = -1.0f;
-    if (controls.buttons_ & CTRL_RIGHT)
+    }
+    if(controls.buttons_ & CTRL_RIGHT)
+    {
         newSteering = 1.0f;
-    if (controls.buttons_ & CTRL_FORWARD)
+    }
+    if(controls.buttons_ & CTRL_FORWARD)
+    {
         accelerator = 1.5f;
-    if (controls.buttons_ & CTRL_BACK)
+    }
+    if(controls.buttons_ & CTRL_BACK)
+    {
         accelerator = -0.5f;
+    }
 
     // When steering, wake up the wheel rigidbodies so that their orientation is updated
     if (newSteering != 0.0f)
@@ -61,7 +69,9 @@ void Vehicle::FixedUpdate(float /*timeStep*/)
         steering = steering * 0.95f + newSteering * 0.05f;
     }
     else
+    {
         steering = steering * 0.8f + newSteering * 0.2f;
+    }
 
     // Set front wheel angles
     Quaternion steeringRot(0, steering * MAX_WHEEL_ANGLE, 0);
@@ -74,8 +84,8 @@ void Vehicle::FixedUpdate(float /*timeStep*/)
         // Torques are applied in world space, so need to take the vehicle & wheel rotation into account
         Vector3 torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0f, 0.0f);
 
-        frontLeftBody->ApplyTorque(hullRot * steeringRot * torqueVec);
-        frontRightBody->ApplyTorque(hullRot * steeringRot * torqueVec);
+        //frontLeftBody->ApplyTorque(hullRot * steeringRot * torqueVec);
+        //frontRightBody->ApplyTorque(hullRot * steeringRot * torqueVec);
         rearLeftBody->ApplyTorque(hullRot * torqueVec);
         rearRightBody->ApplyTorque(hullRot * torqueVec);
     }
@@ -83,6 +93,28 @@ void Vehicle::FixedUpdate(float /*timeStep*/)
     // Apply downforce proportional to velocity
     Vector3 localVelocity = hullRot.Inverse() * hullBody->GetLinearVelocity();
     hullBody->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE);
+
+    if(controls.buttons_ & CTRL_TOWER_RIGHT)
+    {
+        pitchTower += SPEED_TOWER_ROTATION * timeStep;
+        nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
+    }
+
+    if(controls.buttons_ & CTRL_TOWER_LEFT)
+    {
+        pitchTower -= SPEED_TOWER_ROTATION * timeStep;
+        nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
+    }
+
+    if(controls.buttons_ & CTRL_TRUNK_DOWN)
+    {
+        RotateTrunk(-SPEED_TRUNK_ROTATION * timeStep);
+    }
+
+    if(controls.buttons_ & CTRL_TRUNK_UP)
+    {
+        RotateTrunk(SPEED_TRUNK_ROTATION * timeStep);
+    }
 }
 
 
@@ -153,36 +185,75 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::InitTower()
 {
-    nodeTower = GetScene()->CreateChild("Tower");
-    nodeTower->SetPosition(node_->LocalToWorld({1.0f, 0.0f, 0.0f}));
-    nodeTower->SetRotation(node_->GetRotation());
-    nodeTower->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+    nodeTower = node_->CreateChild("Tower");
+    nodeTower->SetPosition({0.0f, 0.8f, 0.0f});
+    float scaleHor = 0.8f;
+    nodeTower->SetScale(Vector3(scaleHor, 0.75f, scaleHor));
 
     towerID = nodeTower->GetID();
 
     StaticModel *towerObject = nodeTower->CreateComponent<StaticModel>();
-    RigidBody *towerBody = nodeTower->CreateComponent<RigidBody>();
-    CollisionShape *towerShape = nodeTower->CreateComponent<CollisionShape>();
     Constraint *towerConstraint = nodeTower->CreateComponent<Constraint>();
 
     towerObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
     towerObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
     towerObject->SetCastShadows(true);
-    towerShape->SetSphere(1.0f);
-    towerBody->SetFriction(10.0f);
-    towerBody->SetMass(1.0f);
-    towerBody->SetLinearDamping(0.2f);
-    towerBody->SetAngularDamping(0.75f);
-    towerBody->SetCollisionLayer(1);
 
-    towerConstraint->SetConstraintType(CONSTRAINT_HINGE);
-    towerConstraint->SetOtherBody(GetComponent<RigidBody>());
-    towerConstraint->SetWorldPosition(nodeTower->GetPosition());
     towerConstraint->SetAxis(Vector3::UP);
     towerConstraint->SetOtherAxis(Vector3::ZERO);
     towerConstraint->SetLowLimit(Vector2(-180.0f, 0.0f));
     towerConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
-    towerConstraint->SetDisableCollision(true);
+    towerConstraint->SetDisableCollision(false);
+
+    InitTrunk();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Vehicle::InitTrunk()
+{
+    nodeTrunk = nodeTower->CreateChild("Trunk");
+    nodeTrunk->SetPosition({0.0f, 1.5f, 0.4f});
+    //nodeTrunk->Translate({0.0f, 1.5f, 0.0f});
+    
+    RotateTrunk(-90.0f);
+
+    float scaleHor = 0.23f;
+    nodeTrunk->SetScale({scaleHor, 3.0f, scaleHor});
+
+    trunkID = nodeTrunk->GetID();
+
+    StaticModel *trunkObject = nodeTrunk->CreateComponent<StaticModel>();
+    Constraint *trunkConstraint = nodeTrunk->CreateComponent<Constraint>();
+
+    trunkObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
+    trunkObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    trunkObject->SetCastShadows(true);
+
+    trunkConstraint->SetAxis(Vector3::UP);
+    trunkConstraint->SetOtherAxis(Vector3::ZERO);
+    trunkConstraint->SetDisableCollision(false);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Vehicle::RotateTrunk(float delta)
+{
+    yawTrunk += delta;
+    if(yawTrunk < yawTrunkMin)
+    {
+        yawTrunk = yawTrunkMin;
+        return;
+    }
+    if(yawTrunk > yawTrunkMax)
+    {
+        yawTrunk = yawTrunkMax;
+        return;
+    }
+
+    Quaternion rotate(delta, Vector3::LEFT);
+
+    nodeTrunk->RotateAround({0.0f, 0.0f, 0.4f}, rotate, Urho3D::TS_PARENT);
 }
 
 

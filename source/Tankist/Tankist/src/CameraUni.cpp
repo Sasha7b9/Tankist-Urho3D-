@@ -18,7 +18,7 @@ void CameraUni::SetupViewport()
     Camera *camera = node->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
-    node->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
+    node->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
     SharedPtr<Viewport> viewport(new Viewport(context_, gScene, node->GetComponent<Camera>()));
     GetSubsystem<Renderer>()->SetViewport(0, viewport);

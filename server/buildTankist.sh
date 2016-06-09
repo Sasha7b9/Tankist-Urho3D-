@@ -10,6 +10,5 @@ make -j2
 rm *.*
 rm -r CMakeFiles
 rm Makefile
-cp ../../../../../Downloads/* .
-cp ../../scripts/list_files.py .
-python3 list_files.py
+cp ../../../../../temp/run.exe .
+

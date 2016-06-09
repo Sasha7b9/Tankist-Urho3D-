@@ -124,17 +124,10 @@ void NetworkThread::ThreadFunction()
     for(uint i = 0; i < downloadingFiles.Size(); i++)
     {
         String nameFile = downloadingFiles[i];
-
-        URHO3D_LOGINFOF("now downloading file %s", nameFile.CString());
-
         currentFile = nameFile;
-
         bytesRecieved += GetFile(nameFile.CString());
-
         percents = ((float)bytesRecieved / bytesAll * 100.0f);
-
         speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
-
         elapsedTime = (bytesAll - bytesRecieved) / speed;
     }
 
@@ -176,19 +169,17 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 
     SendToSocket(String("get_file_size ") + String(nameIn));
 
-    recv(sock, buff, sizeof(buff) - 1, 0);
+    uint numBytes = recv(sock, buff, sizeof(buff) - 1, 0);
+
+    buff[numBytes] = '\0';
 
     int size = atoi(buff);
 
     SendToSocket(String("get_file ") + String(nameIn));
 
-    URHO3D_LOGINFOF("Now open file %s", nameIn);
-
     CreateDirIfAbsent(nameOut);
 
     File file(gContext, nameOut, Urho3D::FILE_WRITE);
-
-    URHO3D_LOGINFOF("Ending opened file %s", nameIn);
 
     file.Flush();
 

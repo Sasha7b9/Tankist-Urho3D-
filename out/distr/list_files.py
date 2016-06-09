@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 import sys
 import binascii, zlib, struct
@@ -20,7 +22,7 @@ files = findFiles('.')
 writeFile = open('files.txt', 'w')
 
 for file in files:
-    if file != '.\\files.txt':
+    if file != '.\\files.txt' and file != './files.txt':
         text =  file + ' ' + CRC32_from_file(file) + ' ' + str(os.path.getsize(file))
         print(text)
         writeFile.write(text[2:] + '\n')

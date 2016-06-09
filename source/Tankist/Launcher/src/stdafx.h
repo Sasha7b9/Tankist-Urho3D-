@@ -12,7 +12,7 @@
 #pragma warning(disable:4710)
 
 
-//#include <Urho3D/AngelScript/Addons.h>
+#define URHO3D_LOGGING
 
 
 #include <Urho3D/Container/Str.h>

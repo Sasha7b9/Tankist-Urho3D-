@@ -7,8 +7,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct FileInfo
 {
-    FileInfo(uint c = 0U, uint s = 0U) : crc32(c), size(s) {};
-    uint crc32;
+    FileInfo(String c = "", uint s = 0U) : crc32(c), size(s) {};
+    String crc32;
     uint size;
 };
 
@@ -26,7 +26,19 @@ static void ReadListFiles(char *nameFile, HashMap<String, FileInfo> &map)
 
         Vector<String> data = str.Split(' ');
 
-        map[data[0]] = {Urho3D::ToUInt(data[1]), Urho3D::ToUInt(data[2])};
+        if (data.Size() > 3)
+        {
+            data[0] += ' ';
+            data[0] += data[1];
+            data[1] = data[2];
+            data[2] = data[3];
+        }
+
+        data[0].Replace('/', '\\');
+
+        FileInfo info = {data[1], Urho3D::ToUInt(data[2])};
+
+        map[data[0]] = info;
     }
 
     file.Close();
@@ -40,7 +52,7 @@ static void ReadListFiles(char *nameFile, HashMap<String, FileInfo> &map)
 // return size downloading files
 static int PrepareListDownloading(HashMap<String, FileInfo> ourFiles, HashMap<String, FileInfo> newFiles, Vector<String> &listDownloading)
 {
-    uint numOurFiles = ourFiles.Size();
+//    uint numOurFiles = ourFiles.Size();
 
     uint size = 0U;
 
@@ -133,6 +145,8 @@ void NetworkThread::ThreadFunction()
 
     SendToSocket("close_connection");
 
+    gFileSystem->Rename("files_new.txt", "files.txt");
+
     state = ConnectClose;
 }
 
@@ -165,17 +179,20 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 {
     nameOut = nameOut ? nameOut : nameIn;
 
+    String name = nameIn;
+    name.Replace('\\', '/');
+
     static char buff[1025];
 
-    SendToSocket(String("get_file_size ") + String(nameIn));
+    SendToSocket(String("get_file_size ") + name);
 
-    uint numBytes = recv(sock, buff, sizeof(buff) - 1, 0);
+    uint numBytes = (uint)recv(sock, buff, sizeof(buff) - 1, 0);
 
     buff[numBytes] = '\0';
 
     int size = atoi(buff);
 
-    SendToSocket(String("get_file ") + String(nameIn));
+    SendToSocket(String("get_file ") + name);
 
     CreateDirIfAbsent(nameOut);
 

@@ -4,6 +4,7 @@
 #include "Launcher.h"
 #include "Graphics/lSprite.h"
 #include "NetworkThread.h"
+#include "../../common/CommonFunctions.h"
 
 
 #pragma warning(disable:4100)
@@ -63,6 +64,9 @@ void TerminalTWT::Start()
     SubscribeToEvents();
 
     gContext = context_;
+
+    CreateListFiles();
+
     thread.Run();
 }
 

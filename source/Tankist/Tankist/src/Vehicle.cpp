@@ -213,13 +213,13 @@ void Vehicle::InitTower()
 void Vehicle::InitTrunk()
 {
     nodeTrunk = nodeTower->CreateChild("Trunk");
-    nodeTrunk->SetPosition({0.0f, 1.5f, 0.4f});
+    nodeTrunk->SetPosition({0.0f, 0.75f, 0.4f});
     //nodeTrunk->Translate({0.0f, 1.5f, 0.0f});
     
     RotateTrunk(-90.0f);
 
     float scaleHor = 0.23f;
-    nodeTrunk->SetScale({scaleHor, 3.0f, scaleHor});
+    nodeTrunk->SetScale({scaleHor, 1.5f, scaleHor});
 
     trunkID = nodeTrunk->GetID();
 

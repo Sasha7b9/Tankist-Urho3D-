@@ -29,6 +29,7 @@ public:
     
 private:
     void CreateScene();
+    void CreateInstructions();
 
     void CreateUI();
     void MoveCamera();

@@ -12,6 +12,10 @@ URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static const String INSTRUCTION("instructionText");
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Tankist::Tankist(Context* context) :
     Application(context)
 {
@@ -114,6 +118,8 @@ void Tankist::Start()
 
         gClient = new Client(context_);
         gClient->ConnectToServer();
+
+        CreateInstructions();
     }
 }
 
@@ -186,8 +192,8 @@ void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
                 controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
-                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E'));
-                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q'));
+                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6));
+                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4));
                 controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2));
                 controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8));
             }
@@ -451,6 +457,11 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             screenshot.SavePNG(gFileSystem->GetProgramDir() + "Data/Screenshot_" +
                                Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
         }
+        else if(key == Urho3D::KEY_F12)
+        {
+            UIElement *instr = gUI->GetRoot()->GetChild(INSTRUCTION);
+            instr->SetVisible(!instr->IsVisible());
+        }
     }
 }
 
@@ -541,4 +552,27 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 }
 
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::CreateInstructions()
+{
+    Text *instructionText = gUI->GetRoot()->CreateChild<Text>();
+    instructionText->SetText(L"Нажмите F12 для помощи");
+    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 10);
+
+    instructionText->SetHorizontalAlignment(Urho3D::HA_LEFT);
+    instructionText->SetVerticalAlignment(Urho3D::VA_TOP);
+    instructionText->SetPosition(0, 0);
+
+    instructionText = gUI->GetRoot()->CreateChild<Text>(INSTRUCTION);
+    instructionText->SetText(
+        L"W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - управление\n"
+        L"ESC - выход"
+        );
+    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetTextAlignment(Urho3D::HA_CENTER);
+    instructionText->SetHorizontalAlignment(Urho3D::HA_CENTER);
+    instructionText->SetVerticalAlignment(Urho3D::VA_CENTER);
+    instructionText->SetPosition(0, gUI->GetRoot()->GetHeight() / 4);
+    instructionText->SetVisible(false);
+}
 

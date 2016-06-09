@@ -51,7 +51,9 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/LogicComponent.h>
 
+#include <Urho3D/UI/Font.h>
 #include <Urho3D/UI/UI.h>
+#include <Urho3D/UI/Text.h>
 
 #include <Urho3D/DebugNew.h>
 
@@ -78,6 +80,7 @@ using Urho3D::DebugHud;
 
 using Urho3D::File;
 using Urho3D::FileSystem;
+using Urho3D::Font;
 
 using Urho3D::Graphics;
 
@@ -118,6 +121,7 @@ using Urho3D::String;
 using Urho3D::StringHash;
 
 using Urho3D::Terrain;
+using Urho3D::Text;
 using Urho3D::Time;
 using Urho3D::Thread;
 

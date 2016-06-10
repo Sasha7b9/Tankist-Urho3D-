@@ -104,7 +104,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             float ms = 0.0f;
             file.Close();
             buffer.WriteFloat(ms);
-            connection->SendMessage(MSG_PING, true, true, buffer);
+            //connection->SendMessage(MSG_PING, true, true, buffer);
         }
     }
     else if(msgID == MSG_LOAD_CPU)

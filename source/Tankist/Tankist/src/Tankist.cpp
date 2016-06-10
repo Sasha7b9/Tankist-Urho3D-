@@ -299,7 +299,7 @@ void Tankist::CreateUI()
 
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
-    statisticsWindow->SetPosition(gUIRoot->GetWidth() - 175, 0);
+    statisticsWindow->SetPosition(gUIRoot->GetWidth() - 200, 0);
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
 }
 
@@ -664,10 +664,13 @@ void Tankist::UpdateMessages()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateStatisticWindow()
 {
-    statisticsWindow->SetText(String("speed in = ") + String(bytesInPerSec / 1000.0f) + String(" kB/s\n") +
-                              String("speed out = ") + String(bytesOutPerSec / 1000.0f) + String(" kB/s\n") +
-                              String("load CPU = " + String(loadCPU * 100.0f) + " %\n") +
-                              String("num users = " + String(numClients)));
+    statisticsWindow->SetText(String("speed in = ") + String(bytesInPerSec / 1024.0f) + String(" kB/s\n") +
+                              String("speed out = ") + String(bytesOutPerSec / 1024.0f) + String(" kB/s\n") +
+                              String("load CPU = ") + String(loadCPU * 100.0f) + " %\n" +
+                              String("num users = " + String(numClients)) + "\n" +
+                              String("server in = ") + String(bytesInPerSecServer / 1024.0f) + String(" kB/s\n") +
+                              String("server out = ") + String(bytesOutPerSecServer / 1024.0f) + String(" kB/s\n")
+                              );
 }
 
 
@@ -707,5 +710,21 @@ void Tankist::SetBytesInPerSec(float bytesInPerSec)
 void Tankist::SetBytesOutPerSec(float bytesOutPerSec)
 {
     this->bytesOutPerSec = bytesOutPerSec;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetBytesInPerSecServer(float bytes)
+{
+    bytesInPerSecServer = bytes;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetBytesOutPerSecServer(float bytes)
+{
+    bytesOutPerSecServer = bytes;
     UpdateStatisticWindow();
 }

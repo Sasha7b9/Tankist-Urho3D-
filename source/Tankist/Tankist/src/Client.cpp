@@ -106,6 +106,13 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
         int numClients = msg.ReadInt();
         gTankist->SetNumClients(numClients);
     }
+    else if(msgID == MSG_SERVER_SPEED)
+    {
+        float speedIn = msg.ReadFloat();
+        float speedOut = msg.ReadFloat();
+        gTankist->SetBytesInPerSecServer(speedIn);
+        gTankist->SetBytesOutPerSecServer(speedOut);
+    }
 }
 
 
@@ -121,16 +128,15 @@ void Client::SendMessage(const String &message)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::RequestSystemInformation()
 {
-    VectorBuffer buffer;
-    buffer.WriteFloat(0.0f);
-
     Connection *connection = gNetwork->GetServerConnection();
 
     if(connection)
     {
-        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, true, buffer);
+        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, true, VectorBuffer());
         gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, true, VectorBuffer());
         gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, true, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, true, VectorBuffer());
+
 
         gTankist->SetBytesInPerSec(connection->GetBytesInPerSec());
         gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec());

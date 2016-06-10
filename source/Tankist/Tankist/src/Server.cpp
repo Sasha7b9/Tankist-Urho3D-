@@ -137,6 +137,23 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         buffer.WriteInt(numClients);
         connection->SendMessage(MSG_NUM_CLIENTS, true, true, buffer);
     }
+    else if(msgID == MSG_SERVER_SPEED)
+    {
+        Vector<SharedPtr<Connection>> connections = gNetwork->GetClientConnections();
+
+        float speedIn = 0.0f;
+        float speedOut = 0.0f;
+
+        for(Connection *conn : connections)
+        {
+            speedIn += conn->GetBytesInPerSec();
+            speedOut += conn->GetBytesOutPerSec();
+        }
+
+        buffer.WriteFloat(speedIn);
+        buffer.WriteFloat(speedOut);
+        connection->SendMessage(MSG_SERVER_SPEED, true, true, buffer);
+    }
 }
 
 

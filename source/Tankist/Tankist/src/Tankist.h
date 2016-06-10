@@ -58,6 +58,8 @@ public:
     void SetNumClients(int numClients);
     void SetBytesInPerSec(float bytesInPerSec);
     void SetBytesOutPerSec(float bytesOutPerSec);
+    void SetBytesInPerSecServer(float bytes);
+    void SetBytesOutPerSecServer(float bytes);
     
 private:
     void CreateScene();
@@ -103,6 +105,8 @@ private:
     int numClients = 0;
     float bytesInPerSec = 0.0f;
     float bytesOutPerSec = 0.0f;
+    float bytesInPerSecServer = 0.0f;
+    float bytesOutPerSecServer = 0.0f;
 
     void UpdateStatisticWindow();
 };

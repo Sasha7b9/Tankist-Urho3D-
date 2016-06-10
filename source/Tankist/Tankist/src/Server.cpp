@@ -95,16 +95,19 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 #ifndef WIN32
     else if(msgID == MSG_PING)
     {
-        int rez = system(String(String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping")).CString());
+        int rez = system(String(String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping &")).CString());
 
         if(rez != -1)
         {
-            //File file(gContext, "out.ping", Urho3D::FILE_READ);
-            //float ms = FindMS(file);
-            float ms = 0.0f;
-            //file.Close();
-            buffer.WriteFloat(ms);
-            //connection->SendMessage(MSG_PING, true, true, buffer);
+            File file(gContext, "out.ping", Urho3D::FILE_READ);
+            if(file.IsOpen())
+            {
+                float ms = FindMS(file);
+                float ms = 0.0f;
+                file.Close();
+                buffer.WriteFloat(ms);
+                connection->SendMessage(MSG_PING, true, true, buffer);
+            }
         }
     }
     else if(msgID == MSG_LOAD_CPU)

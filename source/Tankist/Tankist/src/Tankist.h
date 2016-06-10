@@ -71,7 +71,6 @@ private:
     bool GetNumPort(String &str, unsigned short &port);
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-    void HandleEnterMessageEdit(StringHash eventType, VariantMap& eventData);
 
     void SubscribeToEvents();
 

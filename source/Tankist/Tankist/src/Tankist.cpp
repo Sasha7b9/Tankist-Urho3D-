@@ -297,8 +297,6 @@ void Tankist::CreateUI()
     messageEdit->SetStyleAuto();
     messageEdit->SetFixedHeight(18);
 
-    SubscribeToEvent(Urho3D::E_TEXTFINISHED, URHO3D_HANDLER(Tankist, HandleEnterMessageEdit));
-
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
     statisticsWindow->SetPosition(gUIRoot->GetWidth() - 175, 0);
@@ -363,21 +361,6 @@ void Tankist::CreateConsoleAndDebugHud()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleEnterMessageEdit(StringHash, VariantMap&)
-{
-    String text = messageEdit->GetText();
-    if (text.Empty())
-    {
-        return;
-    }
-
-    gClient->SendMessage(text);
-
-    messageEdit->SetText("");
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace Urho3D::KeyDown;
@@ -396,10 +379,33 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             engine_->Exit();
         }
     }
+    else if(key == Urho3D::KEY_RETURN)
+    {
+        if(!messageEdit->HasFocus())
+        {
+            messageEdit->SetFocus(true);
+        }
+        else
+        {
+            String text = messageEdit->GetText();
+            if(text.Empty())
+            {
+                messageEdit->SetFocus(false);
+                return;
+            }
+            else
+            {
+                gClient->SendMessage(text);
+                messageEdit->SetText("");
+            }
+        }
+    }
 
     // Toggle console with F1
-    else if (key == KEY_F1)
+    else if(key == KEY_F1)
+    {
         gConsole->Toggle();
+    }
 
     // Toggle debug HUD with F2
     else if (key == KEY_F2)
@@ -622,6 +628,7 @@ void Tankist::CreateInstructions()
     instructionText->SetText(
         "W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - controls\n"
         "Right button mouse - move camera\n"
+        "Enter - chat\n"
         "ESC - exit"
         );
     instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -659,7 +666,6 @@ void Tankist::UpdateStatisticWindow()
 {
     statisticsWindow->SetText(String("speed in = ") + String(bytesInPerSec / 1000.0f) + String(" kB/s\n") +
                               String("speed out = ") + String(bytesOutPerSec / 1000.0f) + String(" kB/s\n") +
-                              String("ping = " + String(ping) + " ms\n") +
                               String("load CPU = " + String(loadCPU * 100.0f) + " %\n") +
                               String("num users = " + String(numClients)));
 }

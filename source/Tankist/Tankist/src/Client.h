@@ -20,11 +20,13 @@ public:
     bool ConnectToServer();
     void Disconnect();
     bool AttachCameraToNode();
+    void SendMessage(const String &message);
 
 private:
     void HandleClientObjectID(StringHash eventType, VariantMap &eventData);
     void HandleServerConnected(StringHash eventType, VariantMap &eventData);
     void HandleConnectFiled(StringHash eventType, VariantMap &eventData);
+    void HandleNetworkMessage(StringHash eventType, VariantMap &eventData);
 
     unsigned nodeID = 0;
 

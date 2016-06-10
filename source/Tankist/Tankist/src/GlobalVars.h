@@ -29,3 +29,7 @@ extern String gIPAddress;
 extern unsigned short gNumPort;
 
 extern Urho3D::Context *gContext;
+
+extern Vector<String> chatMessages;
+
+extern Tankist *gTankist;

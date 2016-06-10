@@ -31,6 +31,11 @@ public:
 private:
     void HandleClientConnected(StringHash eventType, VariantMap &eventData);
     void HandleClientDisconnectd(StringHash eventType, VariantMap &eventData);
+    void HandleNetworkMessage(StringHash eventType, VariantMap &eventData);
+
+    void SendMessageChat(const String &msg);
+
+    int numClients = 0;
 
     Server(Server const&) : Object(nullptr) {};
     Server operator=(Server const&) {};

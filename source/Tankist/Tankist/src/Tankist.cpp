@@ -104,6 +104,8 @@ void Tankist::Start()
 
     SubscribeToEvents();
 
+    gTankist = this;
+
     if (gTypeApplication == Type_Server)
     {
         gServer = new Server(context_);
@@ -276,14 +278,14 @@ void Tankist::CreateUI()
     chatHistoryText = container->CreateChild<Text>();
     //chatHistoryText->SetStyleAuto();
     chatHistoryText->SetColor(Urho3D::Color::WHITE);
-    chatHistoryText->SetFont(font, 11);
+    chatHistoryText->SetFont(font, 10);
     chatHistoryText->SetMaxHeight(100);
 
     messageEdit = container->CreateChild<LineEdit>();
     messageEdit->SetStyleAuto();
     messageEdit->SetFixedHeight(18);
 
-    SubscribeToEvent(Urho3D::E_TEXTFINISHED, URHO3D_HANDLER(Tankist, HandleKeyDownMessageEdit));
+    SubscribeToEvent(Urho3D::E_TEXTFINISHED, URHO3D_HANDLER(Tankist, HandleEnterMessageEdit));
 }
 
 
@@ -344,7 +346,7 @@ void Tankist::CreateConsoleAndDebugHud()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleKeyDownMessageEdit(StringHash eventType, VariantMap& eventData)
+void Tankist::HandleEnterMessageEdit(StringHash, VariantMap&)
 {
     String text = messageEdit->GetText();
     if (text.Empty())
@@ -352,9 +354,7 @@ void Tankist::HandleKeyDownMessageEdit(StringHash eventType, VariantMap& eventDa
         return;
     }
 
-    messages.Push(text);
-
-    UpdateMessages();
+    gClient->SendMessage(text);
 
     messageEdit->SetText("");
 }
@@ -618,15 +618,15 @@ void Tankist::CreateInstructions()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateMessages()
 {
-    while (messages.Size() > 40)
+    while (chatMessages.Size() > 40)
     {
-        messages.Erase(0);
+        chatMessages.Erase(0);
     }
 
     String allRows;
-    for (uint i = 0; i < messages.Size(); i++)
+    for (uint i = 0; i < chatMessages.Size(); i++)
     {
-        allRows += messages[i] + "\n";
+        allRows += chatMessages[i] + "\n";
     }
 
     chatHistoryText->SetText(allRows);

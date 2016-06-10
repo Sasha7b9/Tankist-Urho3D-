@@ -26,6 +26,8 @@ public:
     virtual void Setup();
     virtual void Start();
     virtual void Stop();
+
+    void UpdateMessages();
     
 private:
     void CreateScene();
@@ -39,7 +41,7 @@ private:
     bool GetNumPort(String &str, unsigned short &port);
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-    void HandleKeyDownMessageEdit(StringHash eventType, VariantMap& eventData);
+    void HandleEnterMessageEdit(StringHash eventType, VariantMap& eventData);
 
     void SubscribeToEvents();
 
@@ -64,8 +66,4 @@ private:
 
     SharedPtr<Text> chatHistoryText;
     SharedPtr<LineEdit> messageEdit;
-
-    Vector<String> messages;
-
-    void UpdateMessages();
 };

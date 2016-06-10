@@ -15,6 +15,7 @@ extern TypeApplication gTypeApplication;
 
 // For client only
 extern Urho3D::UI *gUI;
+extern Urho3D::UIElement *gUIRoot;
 extern Urho3D::Input *gInput;
 extern Urho3D::Renderer *gRenderer;
 extern Urho3D::Graphics *gGraphics;

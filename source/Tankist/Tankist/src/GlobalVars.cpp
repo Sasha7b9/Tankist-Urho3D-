@@ -15,6 +15,7 @@ TypeApplication gTypeApplication = Type_None;
 
 // For client only
 Urho3D::UI *gUI = nullptr;
+Urho3D::UIElement *gUIRoot = nullptr;
 Urho3D::Input *gInput = nullptr;
 Urho3D::Renderer *gRenderer = nullptr;
 Urho3D::Graphics *gGraphics = nullptr;

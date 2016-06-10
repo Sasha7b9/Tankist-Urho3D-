@@ -60,6 +60,7 @@ void Tankist::Setup()
     if (gTypeApplication == Type_Client)
     {
         gUI = GetSubsystem<UI>();
+        gUIRoot = gUI->GetRoot();
         gInput = GetSubsystem<Input>();
         gRenderer = GetSubsystem<Renderer>();
         gCamera = new CameraUni(context_);
@@ -252,10 +253,9 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateUI()
 {
-    UIElement* root = gUI->GetRoot();
     XMLFile* uiStyle = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
-    root->SetDefaultStyle(uiStyle);
+    gUIRoot->SetDefaultStyle(uiStyle);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it can interact with the login UI
@@ -264,6 +264,26 @@ void Tankist::CreateUI()
     gUI->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(gGraphics->GetWidth() / 2, gGraphics->GetHeight() / 2);
+
+    Font *font = gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+
+    SharedPtr<UIElement> container(gUIRoot->CreateChild<UIElement>());
+    container->SetFixedSize(200, 300);
+    container->SetPosition(0, 100);
+    container->SetLayoutMode(Urho3D::LM_VERTICAL);
+    container->SetStyleAuto();
+
+    chatHistoryText = container->CreateChild<Text>();
+    //chatHistoryText->SetStyleAuto();
+    chatHistoryText->SetColor(Urho3D::Color::WHITE);
+    chatHistoryText->SetFont(font, 11);
+    chatHistoryText->SetMaxHeight(100);
+
+    messageEdit = container->CreateChild<LineEdit>();
+    messageEdit->SetStyleAuto();
+    messageEdit->SetFixedHeight(18);
+
+    SubscribeToEvent(Urho3D::E_TEXTFINISHED, URHO3D_HANDLER(Tankist, HandleKeyDownMessageEdit));
 }
 
 
@@ -320,6 +340,23 @@ void Tankist::CreateConsoleAndDebugHud()
 
     gDebugHud = engine_->CreateDebugHud();
     gDebugHud->SetDefaultStyle(xmlFile);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::HandleKeyDownMessageEdit(StringHash eventType, VariantMap& eventData)
+{
+    String text = messageEdit->GetText();
+    if (text.Empty())
+    {
+        return;
+    }
+
+    messages.Push(text);
+
+    UpdateMessages();
+
+    messageEdit->SetText("");
 }
 
 
@@ -578,3 +615,19 @@ void Tankist::CreateInstructions()
     instructionText->SetVisible(false);
 }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::UpdateMessages()
+{
+    while (messages.Size() > 40)
+    {
+        messages.Erase(0);
+    }
+
+    String allRows;
+    for (uint i = 0; i < messages.Size(); i++)
+    {
+        allRows += messages[i] + "\n";
+    }
+
+    chatHistoryText->SetText(allRows);
+}

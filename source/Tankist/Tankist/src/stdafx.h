@@ -51,7 +51,9 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/LogicComponent.h>
 
+#include <Urho3D/UI/UIEvents.h>
 #include <Urho3D/UI/Font.h>
+#include <Urho3D/UI/LineEdit.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/UI/Text.h>
 
@@ -93,6 +95,7 @@ using Urho3D::HashMap;
 using Urho3D::Log;
 using Urho3D::LogicComponent;
 using Urho3D::Light;
+using Urho3D::LineEdit;
 
 using Urho3D::Material;
 using Urho3D::MemoryBuffer;

@@ -39,6 +39,7 @@ private:
     bool GetNumPort(String &str, unsigned short &port);
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
+    void HandleKeyDownMessageEdit(StringHash eventType, VariantMap& eventData);
 
     void SubscribeToEvents();
 
@@ -60,4 +61,11 @@ private:
     Tankist operator=(Tankist const &) {};
 
     bool exit = false;
+
+    SharedPtr<Text> chatHistoryText;
+    SharedPtr<LineEdit> messageEdit;
+
+    Vector<String> messages;
+
+    void UpdateMessages();
 };

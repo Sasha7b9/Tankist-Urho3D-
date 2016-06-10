@@ -45,17 +45,8 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Server::HandleNetworkMessage(StringHash eventType, VariantMap &eventData)
+void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    /*
-    URHO3D_EVENT(E_NETWORKMESSAGE, NetworkMessage)
-    {
-    URHO3D_PARAM(P_CONNECTION, Connection);        // Connection pointer
-    URHO3D_PARAM(P_MESSAGEID, MessageID);          // int
-    URHO3D_PARAM(P_DATA, Data);                    // Buffer
-    }
-    */
-
     using namespace Urho3D::NetworkMessage;
 
     Connection *newConnection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
@@ -102,4 +93,6 @@ void Server::SendMessageChat(const String &msg)
     {
         conn->SendMessage(MSG_CHAT, true, true, buffer);
     }
+
+    URHO3D_LOGINFOF("Chat message : %s", msg);
 }

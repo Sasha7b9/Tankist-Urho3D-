@@ -280,6 +280,7 @@ void Tankist::CreateUI()
     chatHistoryText->SetColor(Urho3D::Color::WHITE);
     chatHistoryText->SetFont(font, 10);
     chatHistoryText->SetMaxHeight(100);
+    chatHistoryText->SetMaxWidth(300);
 
     messageEdit = container->CreateChild<LineEdit>();
     messageEdit->SetStyleAuto();

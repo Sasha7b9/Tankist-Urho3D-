@@ -69,8 +69,10 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         File file(gContext, "out.ping", Urho3D::FILE_READ);
         String valFile = file.ReadLine();
         valFile = file.ReadLine();
+        valFile = file.ReadLine();
+        uint size = file.GetSize();
         Vector<String> list = valFile.Split(' ');
-        URHO3D_LOGINFOF("rez ping %s", valFile.CString());
+        URHO3D_LOGINFOF("size = %d, rez ping %s", size, valFile.CString());
         file.Close();
 
         int i = 0;

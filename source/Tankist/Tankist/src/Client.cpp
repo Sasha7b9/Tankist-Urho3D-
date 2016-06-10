@@ -2,7 +2,6 @@
 
 
 #include "Client.h"
-#include "../../common/CommonDefines.h"
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,13 +83,29 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
     int msgID = eventData[P_MESSAGEID].GetInt();
 
+    const PODVector<uint8> &data = eventData[P_DATA].GetBuffer();
+    MemoryBuffer msg(data);
+
     if (msgID == MSG_CHAT)
     {
-        const PODVector<uint8> &data = eventData[P_DATA].GetBuffer();
-        MemoryBuffer msg(data);
         String text = msg.ReadString();
         chatMessages.Push(text);
         gTankist->UpdateMessages();
+    }
+    else if(msgID == MSG_PING)
+    {
+        float ping = msg.ReadFloat();
+        gTankist->SetPing(ping);
+    }
+    else if(msgID == MSG_LOAD_CPU)
+    {
+        float loadCPU = msg.ReadFloat();
+        gTankist->SetLoadCPU(loadCPU);
+    }
+    else if(msgID == MSG_NUM_CLIENTS)
+    {
+        int numClients = msg.ReadInt();
+        gTankist->SetNumClients(numClients);
     }
 }
 
@@ -105,12 +120,20 @@ void Client::SendMessage(const String &message)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-String Client::GetStatistics()
+void Client::RequestSystemInformation()
 {
+    VectorBuffer buffer;
+    buffer.WriteFloat(0.0f);
+
     Connection *connection = gNetwork->GetServerConnection();
 
+    if(connection)
+    {
+        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, true, buffer);
+        gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, true, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, true, VectorBuffer());
 
-
-    return String("in = ") + String(connection->GetBytesInPerSec() / 1000.0f) + String(" kB/s\n") +
-        String("out = ") + String(connection->GetBytesOutPerSec() / 1000.0f) + String(" kB/s");
+        gTankist->SetBytesInPerSec(connection->GetBytesInPerSec());
+        gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec());
+    }
 }

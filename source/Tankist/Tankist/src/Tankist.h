@@ -28,6 +28,12 @@ public:
     virtual void Stop();
 
     void UpdateMessages();
+
+    void SetPing(float pingMS);
+    void SetLoadCPU(float loadCPU);
+    void SetNumClients(int numClients);
+    void SetBytesInPerSec(float bytesInPerSec);
+    void SetBytesOutPerSec(float bytesOutPerSec);
     
 private:
     void CreateScene();
@@ -68,4 +74,12 @@ private:
     SharedPtr<LineEdit> messageEdit;
 
     SharedPtr<Text> statisticsWindow;
+
+    float ping = 0.0f;
+    float loadCPU = 0.0f;
+    int numClients = 0;
+    float bytesInPerSec = 0.0f;
+    float bytesOutPerSec = 0.0f;
+
+    void UpdateStatisticWindow();
 };

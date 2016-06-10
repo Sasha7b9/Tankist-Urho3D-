@@ -240,10 +240,19 @@ void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandlePostUpdate(StringHash, VariantMap &)
 {
+    static float prevTime = 0.0f;
+
+    float curTime = gTime->GetElapsedTime();
+
+    if((curTime - prevTime) > 1.0f)
+    {
+        gClient->RequestSystemInformation();
+        prevTime = curTime;
+    }
+
     if (gTypeApplication == Type_Client)
     {
         MoveCamera();
-        statisticsWindow->SetText(gClient->GetStatistics());
     }
 
     if (exit)
@@ -292,7 +301,7 @@ void Tankist::CreateUI()
 
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
-    statisticsWindow->SetPosition(gUIRoot->GetWidth() - 150, 0);
+    statisticsWindow->SetPosition(gUIRoot->GetWidth() - 175, 0);
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
 }
 
@@ -642,4 +651,55 @@ void Tankist::UpdateMessages()
         chatHistoryText->SetText(allRows);
 
     } while (chatHistoryText->GetHeight() > 0.8 * gUIRoot->GetHeight());
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::UpdateStatisticWindow()
+{
+    statisticsWindow->SetText(String("speed in = ") + String(bytesInPerSec / 1000.0f) + String(" kB/s\n") +
+                              String("speed out = ") + String(bytesOutPerSec / 1000.0f) + String(" kB/s\n") +
+                              String("ping = " + String(ping) + " ms\n") +
+                              String("load CPU = " + String(loadCPU * 100.0f) + " %\n") +
+                              String("num users = " + String(numClients)));
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetPing(float pingMS)
+{
+    this->ping = pingMS;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetLoadCPU(float loadCPU)
+{
+    this->loadCPU = loadCPU;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetNumClients(int numClients)
+{
+    this->numClients = numClients;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetBytesInPerSec(float bytesInPerSec)
+{
+    this->bytesInPerSec = bytesInPerSec;
+    UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::SetBytesOutPerSec(float bytesOutPerSec)
+{
+    this->bytesOutPerSec = bytesOutPerSec;
+    UpdateStatisticWindow();
 }

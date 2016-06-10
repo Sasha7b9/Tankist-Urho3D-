@@ -2,7 +2,6 @@
 
 
 #include "Server.h"
-#include "../../common/CommonDefines.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,13 +52,37 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
     int msgID = eventData[P_MESSAGEID].GetInt();
 
+    const PODVector<uint8> &data = eventData[P_DATA].GetBuffer();
+    MemoryBuffer msg(data);
+
+    VectorBuffer buffer;
+
     if (msgID == MSG_CHAT)
     {
-        const PODVector<uint8> &data = eventData[P_DATA].GetBuffer();
-        MemoryBuffer msg(data);
         String text = msg.ReadString();
-
         SendMessageChat(newConnection->GetAddress() + " : " + text);
+    }
+    else if(msgID == MSG_PING)
+    {
+        buffer.WriteFloat(1.0f);
+        newConnection->SendMessage(MSG_PING, true, true, buffer);
+    }
+    else if(msgID == MSG_LOAD_CPU)
+    {
+#ifndef WIN32
+        uint numCPU = Urho3D::GetNumLogicalCPUs();
+        system("uptime > out.uptime");
+        File file(gContext, "out.uptime", Urho3D::FILE_READ);
+        Vector<String> list = file.ReadLine().Split(' ');
+        file.Close();
+        buffer.WriteFloat(ToFloat(list[list.Size() - 3]) / (float)numCPU);
+        newConnection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
+#endif
+    }
+    else if(msgID == MSG_NUM_CLIENTS)
+    {
+        buffer.WriteInt(numClients);
+        newConnection->SendMessage(MSG_NUM_CLIENTS, true, true, buffer);
     }
 }
 

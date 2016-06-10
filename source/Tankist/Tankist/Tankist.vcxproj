@@ -33,7 +33,6 @@
     <ClCompile Include="src\Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\CommonDefines.h" />
     <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\Client.h" />

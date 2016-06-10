@@ -24,9 +24,6 @@
     <ClInclude Include="..\common\CommonFunctions.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\CommonDefines.h">
-      <Filter>common</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\CreateScene.inl" />

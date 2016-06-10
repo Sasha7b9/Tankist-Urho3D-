@@ -21,7 +21,9 @@ public:
     void Disconnect();
     bool AttachCameraToNode();
     void SendMessage(const String &message);
-    String GetStatistics();
+
+    // Request ping, load cpu, number clients
+    void RequestSystemInformation();
 
 private:
     void HandleClientObjectID(StringHash eventType, VariantMap &eventData);

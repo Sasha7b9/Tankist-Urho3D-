@@ -1,5 +1,23 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4100)
+#pragma warning(disable:4640)
+
+#include <Urho3D/IO/Log.h>
+#include <Urho3D/Network/Network.h>
+#include <Urho3D/IO/FileSystem.h>
+#include <Urho3D/Resource/ResourceCache.h>
+#include <Urho3D/UI/UI.h>
+#include <Urho3D/Input/Input.h>
+#include <Urho3D/Graphics/Renderer.h>
+
+#include <Tankist.h>
+#include <CameraUni.h>
+#include <Client.h>
+
+
+#pragma warning(pop)
 
 // For server and client
 extern Urho3D::Log *gLog;

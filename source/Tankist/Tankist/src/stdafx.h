@@ -8,7 +8,9 @@
 #pragma warning(disable:4626)
 #pragma warning(disable:4640)
 
-#define URHO3D_LOGGING
+
+#include "defines.h"
+
 
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/Object.h>
@@ -179,8 +181,6 @@ using Urho3D::E_CLIENTCONNECTED;
 using Urho3D::E_CONNECTFAILED;
 using Urho3D::E_CLIENTDISCONNECTED;
 
-
-#include "defines.h"
 
 //For client only
 #include "CameraUni.h"

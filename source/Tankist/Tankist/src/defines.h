@@ -1,5 +1,11 @@
 #pragma once
 
+#define URHO3D_LOGGING
+
+#include <Urho3D/Math/StringHash.h>
+
+using Urho3D::StringHash;
+
 
 static const StringHash E_CLIENTOBJECTID("ClientObjectID");
 static const int MSG_CHAT = 32;         // Chat message

@@ -1,6 +1,30 @@
 #pragma once
 
 
+#pragma warning(push)
+#pragma warning(disable:4100)
+
+#include <Urho3D/Engine/Application.h>
+#include <Urho3D/Container/Vector.h>
+#include <Urho3D/Container/HashMap.h>
+#include <Urho3D/Network/Connection.h>
+#include <Urho3D/Container/Ptr.h>
+#include <Urho3D/UI/Text.h>
+#include <Urho3D/UI/LineEdit.h>
+
+#pragma warning(pop)
+
+
+using Urho3D::Application;
+using Urho3D::Vector;
+using Urho3D::HashMap;
+using Urho3D::Connection;
+using Urho3D::WeakPtr;
+using Urho3D::SharedPtr;
+using Urho3D::Text;
+using Urho3D::LineEdit;
+
+
 enum TypeApplication
 {
     Type_None,      // Before initialization

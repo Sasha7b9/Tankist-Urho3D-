@@ -1,15 +1,60 @@
+#ifdef WIN32
+
 #include <stdafx.h>
 
+#endif
+
+#ifndef WIN32
+
+#pragma warning(push)
+#pragma warning(disable:4365)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
+#pragma warning(disable:4640)
+
+#include "defines.h"
+
+#include <Urho3D/Network/NetworkEvents.h>
+#include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/Object.h>
+#include <Urho3D/Core/Variant.h>
+#include <Urho3D/Math/StringHash.h>
+#include <Urho3D/Container/Str.h>
+#include <Urho3D/IO/VectorBuffer.h>
+#include <Urho3D/IO/File.h>
+#include <Urho3D/Container/Vector.h>
+#include <Urho3D/IO/VectorBuffer.h>
+#include <Urho3D/IO/MemoryBuffer.h>
+#include <Urho3D/Network/Connection.h>
+
+using Urho3D::Context;
+using Urho3D::Object;
+using Urho3D::StringHash;
+using Urho3D::VariantMap;
+using Urho3D::String;
+using Urho3D::VectorBuffer;
+using Urho3D::File;
+using Urho3D::PODVector;
+using Urho3D::VectorBuffer;
+using Urho3D::MemoryBuffer;
+using Urho3D::Connection;
 
 #include "Server.h"
+
+#include <GlobalVars.h>
+
+#pragma warning(pop)
+
+#endif
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Server::Server(Context *context) : Object(context)
 {
-    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnectd));
-    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
+    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnectd));
+    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
 }
 
 
@@ -35,42 +80,12 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
     SendEvent(E_NEWCONNECTION, eData);
 
     char message[] = "Tankist WaT server";
+
     newConnection->SendMessage(0, true, true, VectorBuffer(message, (uint)strlen(message)));
 
     numClients++;
 
     SendMessageChat("Connected " + newConnection->GetAddress() + ", all - " + String(numClients));
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-static float FindMS(File &file)
-{
-    while(!file.IsEof())
-    {
-        String str = file.ReadLine();
-        URHO3D_LOGINFOF("%s", str.CString());
-        Vector<String> list = str.Split(' ');
-        if(list.Contains("ms"))
-        {
-            uint i = 0;
-            for(; i < list.Size(); i++)
-            {
-                if(list[i] == "ms")
-                {
-                    break;
-                }
-            }
-
-            str = list[i - 1];
-            Vector<String> l = str.Split('=');
-            if(l.Size() == 2)
-            {
-                return ToFloat(l[1]);
-            }
-        }
-    }
-    return 0.0f;
 }
 
 
@@ -93,27 +108,9 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         String text = msg.ReadString();
         SendMessageChat(connection->GetAddress() + " : " + text);
     }
-/*
-    else if(msgID == MSG_PING)
-    {
-        String command = String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping &");
-        int rez = system(command.CString());
-        URHO3D_LOGINFOF("%s", command.CString());
-        if(rez != -1)
-        {
-            File file(gContext, "out.ping", Urho3D::FILE_READ);
-            if(file.IsOpen())
-            {
-                float ms = FindMS(file);
-                file.Close();
-                buffer.WriteFloat(ms);
-                connection->SendMessage(MSG_PING, true, true, buffer);
-            }
-        }
-    }
-*/
     else if(msgID == MSG_LOAD_CPU)
     {
+#ifndef WIN32
         uint numCPU = Urho3D::GetNumPhysicalCPUs();
         int rez = system("uptime > out.uptime");
         File file(gContext, "out.uptime", Urho3D::FILE_READ);
@@ -121,6 +118,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         file.Close();
         buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / (float)numCPU));
         connection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
+#endif
     }
     else if(msgID == MSG_NUM_CLIENTS)
     {

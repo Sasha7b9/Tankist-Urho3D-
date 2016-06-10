@@ -96,7 +96,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 #ifndef WIN32
     else if(msgID == MSG_PING)
     {
-        String command = String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping &")
+        String command = String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping &");
         int rez = system(command.CString());
         URHO3D_LOGINFOF("%s", command.CString());
         if(rez != -1)

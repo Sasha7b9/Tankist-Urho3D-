@@ -94,5 +94,5 @@ void Server::SendMessageChat(const String &msg)
         conn->SendMessage(MSG_CHAT, true, true, buffer);
     }
 
-    URHO3D_LOGINFOF("Chat message : %s", msg);
+    URHO3D_LOGINFOF("Chat message : %s", msg.CString());
 }

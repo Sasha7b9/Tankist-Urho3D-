@@ -102,3 +102,15 @@ void Client::SendMessage(const String &message)
     buffer.WriteString(message);
     gNetwork->GetServerConnection()->SendMessage(MSG_CHAT, true, true, buffer);
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+String Client::GetStatistics()
+{
+    Connection *connection = gNetwork->GetServerConnection();
+
+
+
+    return String("in = ") + String(connection->GetBytesInPerSec() / 1000.0f) + String(" kB/s\n") +
+        String("out = ") + String(connection->GetBytesOutPerSec() / 1000.0f) + String(" kB/s");
+}

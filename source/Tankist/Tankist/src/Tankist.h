@@ -66,4 +66,6 @@ private:
 
     SharedPtr<Text> chatHistoryText;
     SharedPtr<LineEdit> messageEdit;
+
+    SharedPtr<Text> statisticsWindow;
 };

@@ -243,6 +243,7 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
     if (gTypeApplication == Type_Client)
     {
         MoveCamera();
+        statisticsWindow->SetText(gClient->GetStatistics());
     }
 
     if (exit)
@@ -281,12 +282,18 @@ void Tankist::CreateUI()
     chatHistoryText->SetFont(font, 10);
     chatHistoryText->SetMaxHeight(100);
     chatHistoryText->SetMaxWidth(300);
+    chatHistoryText->SetWordwrap(true);
 
     messageEdit = container->CreateChild<LineEdit>();
     messageEdit->SetStyleAuto();
     messageEdit->SetFixedHeight(18);
 
     SubscribeToEvent(Urho3D::E_TEXTFINISHED, URHO3D_HANDLER(Tankist, HandleEnterMessageEdit));
+
+    statisticsWindow = gUIRoot->CreateChild<Text>();
+    statisticsWindow->SetStyleAuto();
+    statisticsWindow->SetPosition(gUIRoot->GetWidth() - 150, 0);
+    statisticsWindow->SetColor(Urho3D::Color::BLACK);
 }
 
 
@@ -619,16 +626,20 @@ void Tankist::CreateInstructions()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateMessages()
 {
-    while (chatMessages.Size() > 40)
+    do
     {
-        chatMessages.Erase(0);
-    }
+        if (chatHistoryText->GetHeight() > 0.8 * gUIRoot->GetHeight())
+        {
+            chatMessages.Erase(0);
+        }
 
-    String allRows;
-    for (uint i = 0; i < chatMessages.Size(); i++)
-    {
-        allRows += chatMessages[i] + "\n";
-    }
+        String allRows;
+        for (uint i = 0; i < chatMessages.Size(); i++)
+        {
+            allRows += chatMessages[i] + "\n";
+        }
 
-    chatHistoryText->SetText(allRows);
+        chatHistoryText->SetText(allRows);
+
+    } while (chatHistoryText->GetHeight() > 0.8 * gUIRoot->GetHeight());
 }

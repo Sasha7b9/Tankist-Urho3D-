@@ -21,6 +21,7 @@ public:
     void Disconnect();
     bool AttachCameraToNode();
     void SendMessage(const String &message);
+    String GetStatistics();
 
 private:
     void HandleClientObjectID(StringHash eventType, VariantMap &eventData);

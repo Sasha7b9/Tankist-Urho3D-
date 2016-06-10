@@ -39,6 +39,7 @@ def clientthread(conn):
                 p = path.join(PATH, name)
                 size = path.getsize(p)
                 conn.sendall(bytes(str(size), 'UTF-8'))
+                print('size file ' + p + ' is ' + str(size))
                 continue
 
             if l[0] == 'get_file':

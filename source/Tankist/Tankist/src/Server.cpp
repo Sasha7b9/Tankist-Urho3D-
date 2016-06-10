@@ -87,7 +87,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         {
             Vector<String> l = list[i - 1].Split('=');
 
-            float value = ToFloat(l[l.Size() - 1]));
+            float value = ToFloat(l[l.Size() - 1]);
 
             URHO3D_LOGINFOF("write value %f", value);
 

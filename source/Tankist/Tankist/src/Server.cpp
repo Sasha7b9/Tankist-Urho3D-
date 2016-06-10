@@ -49,6 +49,7 @@ static float FindMS(File &file)
     while(!file.IsEof())
     {
         String str = file.ReadLine();
+        URHO3D_LOGINFOF("%s", str.CString());
         Vector<String> list = str.Split(' ');
         if(list.Contains("ms"))
         {

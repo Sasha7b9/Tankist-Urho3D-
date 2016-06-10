@@ -103,7 +103,6 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             if(file.IsOpen())
             {
                 float ms = FindMS(file);
-                float ms = 0.0f;
                 file.Close();
                 buffer.WriteFloat(ms);
                 connection->SendMessage(MSG_PING, true, true, buffer);

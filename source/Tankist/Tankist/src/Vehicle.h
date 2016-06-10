@@ -43,6 +43,8 @@ public:
     Controls controls;
 
     void Delete();
+
+    unsigned towerID;
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
@@ -81,7 +83,6 @@ private:
     unsigned frontRightID;
     unsigned rearLeftID;
     unsigned rearRightID;
-    unsigned towerID;
     unsigned trunkID;
 
     float pitchTower = 0.0f;

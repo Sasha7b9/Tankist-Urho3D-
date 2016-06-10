@@ -475,7 +475,8 @@ void Tankist::HandleNewConnection(StringHash, VariantMap &eventData)
     serverObjects[newConnection] = vehicle;
 
     VariantMap remoteEventData;
-    remoteEventData[P_ID] = vehicle->GetNode()->GetID();
+    //remoteEventData[P_ID] = vehicle->GetNode()->GetID();
+    remoteEventData[P_ID] = vehicle->towerID;
     newConnection->SendRemoteEvent(E_CLIENTOBJECTID, true, remoteEventData);
 }
 

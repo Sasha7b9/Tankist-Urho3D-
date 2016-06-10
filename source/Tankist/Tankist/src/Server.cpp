@@ -65,7 +65,6 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 #ifndef WIN32
     else if(msgID == MSG_PING)
     {
-        /*
         int rez = system(String(String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping")).CString());
         File file(gContext, "out.ping", Urho3D::FILE_READ);
         String valFile = file.ReadLine();
@@ -94,9 +93,8 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             URHO3D_LOGINFOF("write value %f", value);
 
             buffer.WriteFloat(value);
-            connection->SendMessage(MSG_PING, true, true, buffer);
+     //       connection->SendMessage(MSG_PING, true, true, buffer);
         }
-        */
     }
     else if(msgID == MSG_LOAD_CPU)
     {

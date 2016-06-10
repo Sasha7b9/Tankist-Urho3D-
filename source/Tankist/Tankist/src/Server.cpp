@@ -79,6 +79,8 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             }
         }
 
+        URHO3D_LOGINFOF("i ms = %d, rez = %d", i, rez);
+
         if(rez != -1 && i != 0)
         {
             Vector<String> l = list[i - 1].Split('=');

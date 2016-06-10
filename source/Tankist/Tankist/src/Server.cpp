@@ -100,7 +100,8 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         if(rez != -1)
         {
             File file(gContext, "out.ping", Urho3D::FILE_READ);
-            float ms = FindMS(file);
+            //float ms = FindMS(file);
+            float ms = 0.0f;
             file.Close();
             buffer.WriteFloat(ms);
             connection->SendMessage(MSG_PING, true, true, buffer);

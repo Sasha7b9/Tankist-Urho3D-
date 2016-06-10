@@ -40,7 +40,6 @@ void Client::Disconnect()
         serverConnnection->Disconnect();
         gScene->Clear(true, false);
         nodeID = 0;
-        serverConnnection = false;
     }
 }
 

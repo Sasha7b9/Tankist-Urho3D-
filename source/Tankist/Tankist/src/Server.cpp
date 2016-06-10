@@ -48,7 +48,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
     using namespace Urho3D::NetworkMessage;
 
-    Connection *newConnection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
+    Connection *connection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
 
     int msgID = eventData[P_MESSAGEID].GetInt();
 
@@ -60,29 +60,47 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     if (msgID == MSG_CHAT)
     {
         String text = msg.ReadString();
-        SendMessageChat(newConnection->GetAddress() + " : " + text);
+        SendMessageChat(connection->GetAddress() + " : " + text);
     }
+#ifndef WIN32
     else if(msgID == MSG_PING)
     {
-        buffer.WriteFloat(1.0f);
-        newConnection->SendMessage(MSG_PING, true, true, buffer);
+        int rez = system(String(String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping")).CString());
+        File file(gContext, "out.ping", Urho3D::FILE_READ);
+        Vector<String> list = file.ReadLine().Split(' ');
+        file.Close();
+
+        int i = 0;
+        for(; i < list.Size(); i++)
+        {
+            if(list[i] == "ms")
+            {
+                break;
+            }
+        }
+
+        if(rez != -1 && i != 0)
+        {
+            Vector<String> l = list[i - 1].Split('=');
+            buffer.WriteFloat(ToFloat(l[l.Size() - 1]));
+            connection->SendMessage(MSG_PING, true, true, buffer);
+        }
     }
     else if(msgID == MSG_LOAD_CPU)
     {
-#ifndef WIN32
-        uint numCPU = Urho3D::GetNumLogicalCPUs();
-        system("uptime > out.uptime");
+        uint numCPU = Urho3D::GetNumPhysicalCPUs();
+        int rez = system("uptime > out.uptime");
         File file(gContext, "out.uptime", Urho3D::FILE_READ);
         Vector<String> list = file.ReadLine().Split(' ');
         file.Close();
-        buffer.WriteFloat(ToFloat(list[list.Size() - 3]) / (float)numCPU);
-        newConnection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
-#endif
+        buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / (float)numCPU));
+        connection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
     }
+#endif
     else if(msgID == MSG_NUM_CLIENTS)
     {
         buffer.WriteInt(numClients);
-        newConnection->SendMessage(MSG_NUM_CLIENTS, true, true, buffer);
+        connection->SendMessage(MSG_NUM_CLIENTS, true, true, buffer);
     }
 }
 

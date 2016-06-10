@@ -28,9 +28,8 @@ private:
     {};
 
     SharedPtr<lSprite> sprite;
+    SharedPtr<Text> textPercents;
     SharedPtr<Text> text;
-    SharedPtr<Text> textParameters;
-    SharedPtr<Text> textBytes;
 
     float width = 300.0f;
     float height = 20.0f;

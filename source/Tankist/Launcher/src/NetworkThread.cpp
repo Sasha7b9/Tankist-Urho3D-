@@ -135,10 +135,7 @@ void NetworkThread::ThreadFunction()
     {
         String nameFile = downloadingFiles[i];
         currentFile = nameFile;
-        bytesRecieved += GetFile(nameFile.CString());
-        percents = ((float)bytesRecieved / bytesAll * 100.0f);
-        speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
-        elapsedTime = (bytesAll - bytesRecieved) / speed;
+        GetFile(nameFile.CString());
     }
 
     SendToSocket("close_connection");
@@ -205,8 +202,13 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
     while(bytesRecv < size)
     {
         uint numBytes = (uint)recv(sock, buff, 1024, 0);
-        bytesRecv += numBytes;
         file.Write(buff, numBytes);
+
+        bytesRecv += numBytes;
+        bytesRecieved += numBytes;
+        percents = ((float)bytesRecieved / bytesAll * 100.0f);
+        speed = bytesRecieved / (gTime->GetElapsedTime() - startTime);
+        elapsedTime = (bytesAll - bytesRecieved) / speed;
     }
 
     file.Close();

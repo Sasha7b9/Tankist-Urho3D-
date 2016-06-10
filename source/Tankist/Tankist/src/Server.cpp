@@ -85,8 +85,10 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     numClients++;
 
-    SendMessageChat("Connected " + newConnection->GetAddress() + ", all - " + String(numClients));
+    SendMessageChat(newConnection->GetAddress() + " enter");
 }
+
+static String prevAddress;
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -106,7 +108,17 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     if (msgID == MSG_CHAT)
     {
         String text = msg.ReadString();
-        SendMessageChat(connection->GetAddress() + " : " + text);
+        String address = connection->GetAddress();
+
+        if(prevAddress != address)
+        {
+            SendMessageChat(address + ": " + text);
+            prevAddress = address;
+        }
+        else
+        {
+            SendMessageChat(text);
+        }
     }
     else if(msgID == MSG_LOAD_CPU)
     {
@@ -143,7 +155,7 @@ void Server::HandleClientDisconnectd(StringHash, VariantMap &eventData)
 
     numClients--;
 
-    SendMessageChat("Disconnected " + conn->GetAddress() + ", all - " + String(numClients));
+    SendMessageChat(conn->GetAddress() + " leave");
 }
 
 

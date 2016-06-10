@@ -13,25 +13,18 @@ ProgressBar::ProgressBar(Context *context) : UIElement(context)
 
     Font *font = gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
+    textPercents = new Text(context);
+    textPercents->SetFont(font);
+    textPercents->SetFixedSize((int)height, (int)height);
+    textPercents->SetPosition((int)width + 3, 2);
+    AddChild(textPercents);
+
     text = new Text(context);
     text->SetFont(font);
-    text->SetFixedSize((int)height, (int)height);
-    text->SetPosition((int)width + 3, 2);
+    text->SetPosition(-100, -60);
     AddChild(text);
 
-    textParameters = new Text(context);
-    textParameters->SetFont(font);
-    textParameters->SetFixedSize((int)height, 100);
-    textParameters->SetPosition(-100, -30);
-    AddChild(textParameters);
-
-    textBytes = new Text(context);
-    textBytes->SetFont(font);
-    textBytes->SetFixedSize((int)height, 100);
-    textBytes->SetPosition(-100, -60);
-    AddChild(textBytes);
-
-    SetWidth(sprite->GetWidth() + text->GetWidth());
+    SetWidth(sprite->GetWidth() + textPercents->GetWidth());
 
     DrawProgress();
 }
@@ -73,16 +66,16 @@ void ProgressBar::DrawProgress()
     sprite->Clear(Color::GRAY);
     sprite->FillRectangle(0, 0, (int)(width * progress), (int)height, Color::BLUE);
 
-    char buffer[1000];
-    sprintf_s(buffer, "%5.1f%%", progress * 100.0f);
+    char buffer[100];
+    sprintf_s(buffer, 99, "%5.1f%%", progress * 100.0f);
 
-    text->SetText(buffer);
+    textPercents->SetText(String(buffer));
 
-    sprintf_s(buffer, "speed %5.1f kbps, time: passed %5.1f s, elapsed %5.1f s", speed / 1024.0f, timePassed, timeElapsed);
+    sprintf_s(buffer, 99, "Size: all %5.1fMB, recieved %5.1fMB\n", bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f);
+    String str1(buffer);
 
-    textParameters->SetText(buffer);
+    sprintf_s(buffer, 99, "Speed %5.1fkB/s, time: passed %5.1fs, elapsed %5.1fs", speed / 1024.0f, timePassed, timeElapsed);
+    String str2(buffer);
 
-    sprintf_s(buffer, "%s MBytes: all - %5.1f, recieved - %5.1f %s", currentFile.CString(), bytesAll / 1024.0f / 1024.0f, bytesRecieved / 1024.0f / 1024.0f);
-
-    textBytes->SetText(buffer);
+    text->SetText(currentFile + String("\n") + str1 + str2);
 }

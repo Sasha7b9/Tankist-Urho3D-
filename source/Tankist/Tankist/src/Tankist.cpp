@@ -566,6 +566,7 @@ void Tankist::CreateInstructions()
     instructionText = gUI->GetRoot()->CreateChild<Text>(INSTRUCTION);
     instructionText->SetText(
         "W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - controls\n"
+        "Right button mouse - move camera\n"
         "ESC - exit"
         );
     instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);

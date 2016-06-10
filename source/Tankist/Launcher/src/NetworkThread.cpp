@@ -181,7 +181,12 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 
     SendToSocket(String("get_file_size ") + name);
 
-    uint numBytes = (uint)recv(sock, buff, sizeof(buff) - 1, 0);
+    int numBytes = -1;
+
+    while ((numBytes = recv(sock, buff, sizeof(buff) - 1, 0)) == -1)
+    {
+        URHO3D_LOGWARNING("Can not recieve data from server");
+    }
 
     buff[numBytes] = '\0';
 

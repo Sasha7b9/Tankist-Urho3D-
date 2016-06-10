@@ -44,6 +44,36 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+static float FindMS(File &file)
+{
+    while(!file.IsEof())
+    {
+        String str = file.ReadLine();
+        Vector<String> list = str.Split(' ');
+        if(list.Contains("ms"))
+        {
+            uint i = 0;
+            for(; i < list.Size(); i++)
+            {
+                if(list[i] == "ms")
+                {
+                    break;
+                }
+            }
+
+            str = list[i - 1];
+            Vector<String> l = str.Split('=');
+            if(l.Size() == 2)
+            {
+                return ToFloat(l[1]);
+            }
+        }
+    }
+    return 0.0f;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
     using namespace Urho3D::NetworkMessage;
@@ -66,40 +96,14 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     else if(msgID == MSG_PING)
     {
         int rez = system(String(String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping")).CString());
-        File file(gContext, "out.ping", Urho3D::FILE_READ);
-        String valFile = file.ReadLine();
-        valFile = file.ReadLine();
-        uint size = file.GetSize();
-        Vector<String> list = valFile.Split(' ');
-        URHO3D_LOGINFOF("size = %d, rez ping %s", size, valFile.CString());
-        file.Close();
 
-        int i = 0;
-        for(; i < list.Size(); i++)
+        if(rez != -1)
         {
-            if(list[i] == "ms")
-            {
-                break;
-            }
-        }
-
-        URHO3D_LOGINFOF("i ms = %d, rez = %d", i, rez);
-
-        if(rez != -1 && i != 0)
-        {
-            Vector<String> l = list[i - 1].Split('=');
-
-            uint index = l.Size() - 1;
-
-            if(index > 0)
-            {
-                float value = ToFloat(l[l.Size() - 1]);
-
-                URHO3D_LOGINFOF("write value %f", value);
-
-                buffer.WriteFloat(value);
-                connection->SendMessage(MSG_PING, true, true, buffer);
-            }
+            File file(gContext, "out.ping", Urho3D::FILE_READ);
+            float ms = FindMS(file);
+            file.Close();
+            buffer.WriteFloat(ms);
+            connection->SendMessage(MSG_PING, true, true, buffer);
         }
     }
     else if(msgID == MSG_LOAD_CPU)

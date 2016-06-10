@@ -69,7 +69,6 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         File file(gContext, "out.ping", Urho3D::FILE_READ);
         String valFile = file.ReadLine();
         valFile = file.ReadLine();
-        valFile = file.ReadLine();
         uint size = file.GetSize();
         Vector<String> list = valFile.Split(' ');
         URHO3D_LOGINFOF("size = %d, rez ping %s", size, valFile.CString());
@@ -90,12 +89,17 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         {
             Vector<String> l = list[i - 1].Split('=');
 
-            float value = ToFloat(l[l.Size() - 1]);
+            uint index = l.Size() - 1;
 
-            URHO3D_LOGINFOF("write value %f", value);
+            if(index > 0)
+            {
+                float value = ToFloat(l[l.Size() - 1]);
 
-            buffer.WriteFloat(value);
-     //       connection->SendMessage(MSG_PING, true, true, buffer);
+                URHO3D_LOGINFOF("write value %f", value);
+
+                buffer.WriteFloat(value);
+                connection->SendMessage(MSG_PING, true, true, buffer);
+            }
         }
     }
     else if(msgID == MSG_LOAD_CPU)

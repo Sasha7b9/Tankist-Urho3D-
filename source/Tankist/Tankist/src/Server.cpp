@@ -93,7 +93,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         String text = msg.ReadString();
         SendMessageChat(connection->GetAddress() + " : " + text);
     }
-#ifndef WIN32
+/*
     else if(msgID == MSG_PING)
     {
         String command = String("ping ") + connection->GetAddress() + String(" -c 1 > out.ping &");
@@ -111,6 +111,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             }
         }
     }
+*/
     else if(msgID == MSG_LOAD_CPU)
     {
         uint numCPU = Urho3D::GetNumPhysicalCPUs();
@@ -121,7 +122,6 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / (float)numCPU));
         connection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
     }
-#endif
     else if(msgID == MSG_NUM_CLIENTS)
     {
         buffer.WriteInt(numClients);

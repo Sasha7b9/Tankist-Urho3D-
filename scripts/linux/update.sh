@@ -7,7 +7,6 @@ cp ../../temp/TankistLauncher.exe /media/web/tankistwat/tankistwat/media/distr
 ./stopTankist.sh
 ./buildTankist.sh
 ./runTankist.sh
-./runUploader.sh
 
 
 

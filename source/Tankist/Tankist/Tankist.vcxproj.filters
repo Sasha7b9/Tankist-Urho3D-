@@ -26,9 +26,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\CreateScene.inl" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="common">
       <UniqueIdentifier>{81afbd66-d8a1-455c-8c7e-11f1fec0f3ed}</UniqueIdentifier>
     </Filter>

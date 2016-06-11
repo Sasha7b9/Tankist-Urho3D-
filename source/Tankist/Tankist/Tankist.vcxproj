@@ -45,9 +45,6 @@
     <ClInclude Include="src\Tankist.h" />
     <ClInclude Include="src\Vehicle.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="src\CreateScene.inl" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{02B4EDF3-3C95-4AD2-B1FF-F8D92AD04992}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

@@ -68,6 +68,8 @@ void TerminalTWT::Start()
     CreateListFiles();
 
     thread.Run();
+
+    thread.SetPriority(2);
 }
 
 

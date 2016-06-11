@@ -123,12 +123,12 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     else if(msgID == MSG_LOAD_CPU)
     {
 #ifndef WIN32
-        uint numCPU = Urho3D::GetNumPhysicalCPUs();
+        // uint numCPU = Urho3D::GetNumPhysicalCPUs(); On virtual server not work
         int rez = system("uptime > out.uptime");
         File file(gContext, "out.uptime", Urho3D::FILE_READ);
         Vector<String> list = file.ReadLine().Split(' ');
         file.Close();
-        buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / (float)numCPU));
+        buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / /* (float)numCPU */ 2.0f));
         connection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
 #endif
     }

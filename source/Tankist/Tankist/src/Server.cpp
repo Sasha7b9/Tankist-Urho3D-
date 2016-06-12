@@ -132,7 +132,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         File file(gContext, "out.uptime", Urho3D::FILE_READ);
         Vector<String> list = file.ReadLine().Split(' ');
         file.Close();
-        buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / /* (float)numCPU */ 2.0f));
+        buffer.WriteFloat((rez == -1) || (list.Size() == 0) ? 0.0f : (ToFloat(list[list.Size() - 3]) / /* (float)numCPU */ 2.0f));
         connection->SendMessage(MSG_LOAD_CPU, true, true, buffer);
 #endif
     }

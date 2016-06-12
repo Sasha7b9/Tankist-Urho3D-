@@ -7,10 +7,7 @@
 #ifndef WIN32
 
 #pragma warning(push)
-#pragma warning(disable:4365)
-#pragma warning(disable:4625)
-#pragma warning(disable:4626)
-#pragma warning(disable:4640)
+#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
 
 #include "defines.h"
 
@@ -48,13 +45,15 @@ using Urho3D::Connection;
 #endif
 
 
+using namespace Urho3D;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Server::Server(Context *context) : Object(context)
 {
-    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
-    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnectd));
-    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
+    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnectd));
+    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
 }
 
 
@@ -74,14 +73,11 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     newConnection->SetScene(gScene);
 
-    VariantMap &eData = GetEventDataMap();
-    eData[NewConnection::P_CONNECT] = newConnection;
+    Vehicle* vehicle = gGame->ClientConnected(newConnection);
 
-    SendEvent(E_NEWCONNECTION, eData);
-
-    char message[] = "Tankist WaT server";
-
-    newConnection->SendMessage(0, true, true, VectorBuffer(message, (uint)strlen(message)));
+    VariantMap remoteEventData;
+    remoteEventData[P_ID] = vehicle->towerID;
+    newConnection->SendRemoteEvent(E_CLIENTOBJECTID, true, remoteEventData);
 
     numClients++;
 

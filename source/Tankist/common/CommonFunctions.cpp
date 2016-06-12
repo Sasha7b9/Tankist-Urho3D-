@@ -2,14 +2,16 @@
 
 #include "CommonFunctions.h"
 
+using namespace Urho3D;
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void CreateListFiles()
 {
     Vector<String> files;
 
-    gFileSystem->ScanDir(files, ".", "*", Urho3D::SCAN_FILES | Urho3D::SCAN_HIDDEN, true);
+    gFileSystem->ScanDir(files, ".", "*", SCAN_FILES | SCAN_HIDDEN, true);
 
-    File file(gContext, "files.txt", Urho3D::FILE_WRITE);
+    File file(gContext, "files.txt", FILE_WRITE);
 
     files.Remove(".");
     files.Remove("..");

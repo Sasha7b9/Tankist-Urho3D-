@@ -1,6 +1,22 @@
 #pragma once
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma warning(push)        
+#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
+
+#include <Urho3D/Scene/LogicComponent.h>
+#include <Urho3D/Input/Controls.h>
+#include <Urho3D/Physics/Constraint.h>
+#include <Urho3D/Physics/RigidBody.h>
+#include <Urho3D/Core/Context.h>
+
+using namespace Urho3D;
+
+#pragma warning(pop)
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const int CTRL_FORWARD      = 1 << 0;
 const int CTRL_BACK         = 1 << 1;
 const int CTRL_LEFT         = 1 << 2;
@@ -17,18 +33,20 @@ const float MAX_WHEEL_ANGLE = 22.5f;
 const float SPEED_TOWER_ROTATION = 8.0f;
 const float SPEED_TRUNK_ROTATION = 10.0f;
 
-/// Vehicle component, responsible for physical movement according to controls.
-class Vehicle : public LogicComponent
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Vehicle component, responsible for physical movement according to controls.
+class Vehicle : public Urho3D::LogicComponent
 {
 
 #pragma warning(push)
 #pragma warning(disable:4640)
-    URHO3D_OBJECT(Vehicle, LogicComponent)
+    URHO3D_OBJECT(Vehicle, Urho3D::LogicComponent)
 #pragma warning(pop)
 
 public:
     /// Construct.
-    Vehicle(Context* context);
+    Vehicle(Urho3D::Context* context);
     
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);

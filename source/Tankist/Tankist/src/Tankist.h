@@ -2,15 +2,17 @@
 
 
 #pragma warning(push)
-#pragma warning(disable:4100)
+#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
 
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Container/Vector.h>
 #include <Urho3D/Container/HashMap.h>
 #include <Urho3D/Network/Connection.h>
 #include <Urho3D/Container/Ptr.h>
+#include <Urho3D/Container/Str.h>
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/LineEdit.h>
+#include <Urho3D/Core/Context.h>
 
 #pragma warning(pop)
 
@@ -25,6 +27,8 @@ using Urho3D::Text;
 using Urho3D::LineEdit;
 using Urho3D::StringHash;
 using Urho3D::VariantMap;
+using Urho3D::Context;
+using Urho3D::String;
 
 
 enum TypeApplication
@@ -60,6 +64,7 @@ public:
     void SetBytesOutPerSec(float bytesOutPerSec);
     void SetBytesInPerSecServer(float bytes);
     void SetBytesOutPerSecServer(float bytes);
+    void Exit();
     
 private:
     void CreateScene();
@@ -72,23 +77,13 @@ private:
     bool ParseArguments(Vector<String> &arguments, TypeApplication &type, String &address, unsigned short &port);
     bool GetNumPort(String &str, unsigned short &port);
 
+    // Handlers
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-
-    void SubscribeToEvents();
-
     void HandlePostUpdate(StringHash eventType, VariantMap &eventData);
-    void HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData);
-
-    // Client functions
-    void ConnectToServer();
-
     // Server functions
-    void HandleNewConnection(StringHash eventType, VariantMap &eventData);
     void HandleCloseConnection(StringHash eventType, VariantMap &eventData);
 
-    Vehicle* CreateVehicle();
-
-    HashMap<Connection*, WeakPtr<Vehicle>> serverObjects;
+    void SubscribeToEvents();
 
     Tankist(Tankist const&) : Application(nullptr) {};
     Tankist operator=(Tankist const &) {};

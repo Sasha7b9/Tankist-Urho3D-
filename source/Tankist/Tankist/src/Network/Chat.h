@@ -1,11 +1,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4100)
-#pragma warning(disable:4365)
-#pragma warning(disable:4625)
-#pragma warning(disable:4626)
-#pragma warning(disable:4640)
+#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
 
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Core/Context.h>

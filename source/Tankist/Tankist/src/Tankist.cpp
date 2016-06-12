@@ -13,10 +13,6 @@ URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static const String INSTRUCTION("instructionText");
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Tankist::Tankist(Context* context) :
     Application(context)
 {
@@ -127,6 +123,9 @@ void Tankist::Start()
 
         gChat = new Chat(gContext);
     }
+
+    gGame = new Game(gContext);
+    gGame->Start();
 }
 
 
@@ -144,6 +143,7 @@ void Tankist::Stop()
     gLog->Write(0, "out");
     gLog->Close();
 
+    SAFE_DELETE(gGame);
     SAFE_DELETE(gCamera);
     SAFE_DELETE(gLog);
     SAFE_DELETE(gClient);
@@ -229,100 +229,13 @@ void Tankist::SubscribeToEvents()
         SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
     }
 
-    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Tankist, HandlePhysicsPreStep));
     SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
 
     if (gTypeApplication == Type_Server)
     {
-        SubscribeToEvent(E_NEWCONNECTION, URHO3D_HANDLER(Tankist, HandleNewConnection));
         SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Tankist, HandleCloseConnection));
 
         gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
-    }
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandlePhysicsPreStep(StringHash, VariantMap &)
-{
-    // Client
-    if (gTypeApplication == Type_Client)
-    {
-        Connection *serverConnection = gNetwork->GetServerConnection();
-
-        if (serverConnection)
-        {
-            Controls controls;
-
-            if (!gUI->GetFocusElement())
-            {
-                controls.Set(CTRL_FORWARD, gInput->GetKeyDown('W'));
-                controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
-                controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
-                controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
-                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6));
-                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4));
-                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2));
-                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8));
-            }
-
-            serverConnection->SetControls(controls);
-            //serverConnection->SetPosition(cameraNode->GetPosition());
-        }
-    }
-    // Server
-    else
-    {
-        if (gNetwork->IsServerRunning())
-        {
-            const Vector<SharedPtr<Connection>> &connections = gNetwork->GetClientConnections();
-
-            for (uint i = 0; i < connections.Size(); ++i)
-            {
-                Connection *connection = connections[i];
-                WeakPtr<Vehicle> vehicle = serverObjects[connection];
-                if (!vehicle)
-                {
-                    continue;
-                }
-
-                const Controls &controls = connection->GetControls();
-
-                vehicle->controls.Set(CTRL_FORWARD, ((controls.buttons_ & CTRL_FORWARD) > 0));
-                vehicle->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
-                vehicle->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
-                vehicle->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
-                vehicle->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
-                vehicle->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
-            }
-        }
-    }
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandlePostUpdate(StringHash, VariantMap &)
-{
-    static float prevTime = 0.0f;
-
-    float curTime = gTime->GetElapsedTime();
-
-    if((curTime - prevTime) > 1.0f)
-    {
-        gClient->RequestSystemInformation();
-        prevTime = curTime;
-    }
-
-    if (gTypeApplication == Type_Client)
-    {
-        MoveCamera();
-    }
-
-    if (exit)
-    {
-        engine_->Exit();
     }
 }
 
@@ -352,19 +265,6 @@ void Tankist::CreateUI()
     statisticsWindow->SetStyleAuto();
     statisticsWindow->SetPosition(gUIRoot->GetWidth() - 200, 0);
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* Tankist::CreateVehicle()
-{
-    Node* vehicleNode = gScene->CreateChild("Vehicle");
-    vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 15.0f));
-
-    Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>();
-    vehicle->Init();
-
-    return vehicle;
 }
 
 
@@ -408,199 +308,6 @@ void Tankist::CreateConsoleAndDebugHud()
 
     gDebugHud = engine_->CreateDebugHud();
     gDebugHud->SetDefaultStyle(xmlFile);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
-{
-    using namespace Urho3D::KeyDown;
-
-    int key = eventData[P_KEY].GetInt();
-
-    // Close console (if open) or exit when ESC is pressed
-    if (key == KEY_ESC)
-    {
-        if (gConsole->IsVisible())
-        {
-            gConsole->SetVisible(false);
-        }
-        else
-        {
-            engine_->Exit();
-        }
-    }
-    else if(key == Urho3D::KEY_RETURN)
-    {
-        if(!gConsole->IsVisible())
-        {
-            if(!gChat->IsActive())
-            {
-                gChat->SetActive(true);
-            }
-            else
-            {
-                gChat->PressEnter();
-            }
-        }
-    }
-
-    // Toggle console with F1
-    else if(key == KEY_F1)
-    {
-        gConsole->Toggle();
-    }
-
-    // Toggle debug HUD with F2
-    else if (key == KEY_F2)
-    {
-        if (gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == DEBUGHUD_SHOW_ALL_MEMORY)
-        {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_ALL);
-        }
-        else
-        {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
-        }
-    }
-    else if (key == KEY_F3)
-    {
-        if (gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == DEBUGHUD_SHOW_ALL)
-        {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_ALL_MEMORY);
-        }
-        else
-        {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
-        }
-    }
-
-    // Common rendering quality controls, only when UI has no focused element
-    else if (!gUI->GetFocusElement())
-    {
-        // Texture quality
-        if (key == '1')
-        {
-            int quality = gRenderer->GetTextureQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-            {
-                quality = QUALITY_LOW;
-            }
-            gRenderer->SetTextureQuality(quality);
-        }
-
-        // Material quality
-        else if (key == '2')
-        {
-            int quality = gRenderer->GetMaterialQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-            {
-                quality = QUALITY_LOW;
-            }
-            gRenderer->SetMaterialQuality(quality);
-        }
-
-        // Specular lighting
-        else if (key == '3')
-        {
-            gRenderer->SetSpecularLighting(!gRenderer->GetSpecularLighting());
-        }
-
-        // Shadow rendering
-        else if (key == '4')
-        {
-            gRenderer->SetDrawShadows(!gRenderer->GetDrawShadows());
-        }
-
-        // Shadow map resolution
-        else if (key == '5')
-        {
-            int shadowMapSize = gRenderer->GetShadowMapSize();
-            shadowMapSize *= 2;
-            if (shadowMapSize > 2048)
-            {
-                shadowMapSize = 512;
-            }
-            gRenderer->SetShadowMapSize(shadowMapSize);
-        }
-
-        // Shadow depth and filtering quality
-        else if (key == '6')
-        {
-            ShadowQuality quality = gRenderer->GetShadowQuality();
-            quality = (ShadowQuality)(quality + 1);
-            if (quality > SHADOWQUALITY_BLUR_VSM)
-            {
-                quality = SHADOWQUALITY_SIMPLE_16BIT;
-            }
-            gRenderer->SetShadowQuality(quality);
-        }
-
-        // Occlusion culling
-        else if (key == '7')
-        {
-            bool occlusion = gRenderer->GetMaxOccluderTriangles() > 0;
-            occlusion = !occlusion;
-            gRenderer->SetMaxOccluderTriangles(occlusion ? 5000 : 0);
-        }
-
-        // Instancing
-        else if (key == '8')
-        {
-            gRenderer->SetDynamicInstancing(!gRenderer->GetDynamicInstancing());
-        }
-
-        // Take screenshot
-        else if (key == '9')
-        {
-            Image screenshot(context_);
-            gGraphics->TakeScreenShot(screenshot);
-            // Here we save in the Data folder with date and time appended
-            screenshot.SavePNG(gFileSystem->GetProgramDir() + "Data/Screenshot_" +
-                               Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
-        }
-        else if(key == Urho3D::KEY_F12)
-        {
-            UIElement *instr = gUI->GetRoot()->GetChild(INSTRUCTION);
-            instr->SetVisible(!instr->IsVisible());
-        }
-    }
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleNewConnection(StringHash, VariantMap &eventData)
-{
-    Connection *newConnection = static_cast<Connection*>(eventData[NewConnection::P_CONNECT].GetPtr());
-
-    Vehicle *vehicle = CreateVehicle();
-    serverObjects[newConnection] = vehicle;
-
-    VariantMap remoteEventData;
-    //remoteEventData[P_ID] = vehicle->GetNode()->GetID();
-    remoteEventData[P_ID] = vehicle->towerID;
-    newConnection->SendRemoteEvent(E_CLIENTOBJECTID, true, remoteEventData);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleCloseConnection(StringHash, VariantMap &eventData)
-{
-    Connection *connection = static_cast<Connection*>(eventData[CloseConnection::P_CONNECT].GetPtr());
-    Vehicle *object = serverObjects[connection];
-    if (object)
-    {
-        object->Delete();
-    }
-    serverObjects.Erase(connection);
-
-#ifdef _WINDOWS
-
-    engine_->Exit();
-
-#endif
 }
 
 
@@ -750,4 +457,11 @@ void Tankist::SetBytesOutPerSecServer(float bytes)
 {
     bytesOutPerSecServer = bytes;
     UpdateStatisticWindow();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::Exit()
+{
+    engine_->Exit();
 }

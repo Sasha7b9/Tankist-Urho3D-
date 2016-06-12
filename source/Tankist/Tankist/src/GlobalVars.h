@@ -1,8 +1,8 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4100)
-#pragma warning(disable:4640)
+#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
+
 
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Network/Network.h>
@@ -11,12 +11,17 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Input/Input.h>
 #include <Urho3D/Graphics/Renderer.h>
+#include <Urho3D/Engine/Console.h>
+#include <Urho3D/Engine/DebugHud.h>
+#include <Urho3D/Graphics/Graphics.h>
+#include <Urho3D/Scene/Scene.h>
 
 #include "Tankist.h"
 #include "CameraUni.h"
 #include "Network/Client.h"
 #include "Network/Chat.h"
 #include "Network/Server.h"
+#include "Game.h"
 
 
 #pragma warning(pop)
@@ -45,7 +50,7 @@ extern Urho3D::DebugHud *gDebugHud;
 extern CameraUni *gCamera;
 extern Client *gClient;
 
-extern String gIPAddress;
+extern Urho3D::String gIPAddress;
 extern unsigned short gNumPort;
 
 extern Urho3D::Context *gContext;
@@ -53,3 +58,5 @@ extern Urho3D::Context *gContext;
 extern Tankist *gTankist;
 
 extern Chat *gChat;
+
+extern Game *gGame;

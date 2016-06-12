@@ -18,6 +18,8 @@
     <ClCompile Include="src\Network\Server.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="src\TankistHandlers.cpp" />
+    <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CameraUni.h" />
@@ -38,6 +40,7 @@
     <ClInclude Include="src\Network\Server.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

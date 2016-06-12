@@ -120,6 +120,10 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             SendMessageChat(text);
         }
     }
+    else if(msgID == MSG_PING)
+    {
+        connection->SendMessage(MSG_PING, true, true, buffer);
+    }
     else if(msgID == MSG_LOAD_CPU)
     {
 #ifndef WIN32

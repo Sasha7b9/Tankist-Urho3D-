@@ -725,9 +725,10 @@ void Tankist::UpdateMessages()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateStatisticWindow()
 {
-    statisticsWindow->SetText(Urho3D::ToString("%d users online\n", numClients) +
+    statisticsWindow->SetText(Urho3D::ToString("%d users online\n\n", numClients) +
                               String("speed in = ") + String(bytesInPerSec / 1024.0f) + String(" kB/s\n") +
                               String("speed out = ") + String(bytesOutPerSec / 1024.0f) + String(" kB/s\n") +
+                              String("ping = ") + String(ping * 1000.0f) + String(" ms\n\n") +
                               String("load server CPU = ") + String(loadCPU * 100.0f) + " %\n" +
                               String("server in = ") + String(bytesInPerSecServer / 1024.0f) + String(" kB/s\n") +
                               String("server out = ") + String(bytesOutPerSecServer / 1024.0f) + String(" kB/s\n")

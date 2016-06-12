@@ -93,8 +93,7 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
     }
     else if(msgID == MSG_PING)
     {
-        float ping = msg.ReadFloat();
-        gTankist->SetPing(ping);
+        gTankist->SetPing(gTime->GetElapsedTime() - timePing);
     }
     else if(msgID == MSG_LOAD_CPU)
     {
@@ -133,6 +132,7 @@ void Client::RequestSystemInformation()
     if(connection)
     {
         gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, true, VectorBuffer());
+        timePing = gTime->GetElapsedTime();
         gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, true, VectorBuffer());
         gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, true, VectorBuffer());
         gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, true, VectorBuffer());

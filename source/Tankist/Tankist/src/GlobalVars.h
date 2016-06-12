@@ -12,9 +12,11 @@
 #include <Urho3D/Input/Input.h>
 #include <Urho3D/Graphics/Renderer.h>
 
-#include <Tankist.h>
-#include <CameraUni.h>
-#include <Client.h>
+#include "Tankist.h"
+#include "CameraUni.h"
+#include "Network/Client.h"
+#include "Network/Chat.h"
+#include "Network/Server.h"
 
 
 #pragma warning(pop)
@@ -48,6 +50,6 @@ extern unsigned short gNumPort;
 
 extern Urho3D::Context *gContext;
 
-extern Vector<String> chatMessages;
-
 extern Tankist *gTankist;
+
+extern Chat *gChat;

@@ -23,6 +23,8 @@ using Urho3D::WeakPtr;
 using Urho3D::SharedPtr;
 using Urho3D::Text;
 using Urho3D::LineEdit;
+using Urho3D::StringHash;
+using Urho3D::VariantMap;
 
 
 enum TypeApplication
@@ -50,8 +52,6 @@ public:
     virtual void Setup();
     virtual void Start();
     virtual void Stop();
-
-    void UpdateMessages();
 
     void SetPing(float pingMS);
     void SetLoadCPU(float loadCPU);
@@ -94,9 +94,6 @@ private:
     Tankist operator=(Tankist const &) {};
 
     bool exit = false;
-
-    SharedPtr<Text> chatHistoryText;
-    SharedPtr<LineEdit> messageEdit;
 
     SharedPtr<Text> statisticsWindow;
 

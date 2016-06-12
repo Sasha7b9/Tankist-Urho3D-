@@ -87,9 +87,7 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
     if (msgID == MSG_CHAT)
     {
-        String text = msg.ReadString();
-        chatMessages.Push(text);
-        gTankist->UpdateMessages();
+        gChat->AddMessage(msg.ReadString());
     }
     else if(msgID == MSG_PING)
     {
@@ -116,7 +114,7 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::SendMessage(const String &message)
+void Client::TranslateMessage(const String &message)
 {
     VectorBuffer buffer;
     buffer.WriteString(message);

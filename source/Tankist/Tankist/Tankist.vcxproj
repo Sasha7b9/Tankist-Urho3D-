@@ -21,9 +21,12 @@
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
     <ClCompile Include="src\CameraUni.cpp" />
-    <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
-    <ClCompile Include="src\Server.cpp">
+    <ClCompile Include="src\Network\Chat.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Network\Client.cpp" />
+    <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\stdafx.cpp">
@@ -37,10 +40,11 @@
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="src\CameraUni.h" />
-    <ClInclude Include="src\Client.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\GlobalVars.h" />
-    <ClInclude Include="src\Server.h" />
+    <ClInclude Include="src\Network\Chat.h" />
+    <ClInclude Include="src\Network\Client.h" />
+    <ClInclude Include="src\Network\Server.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />
     <ClInclude Include="src\Vehicle.h" />

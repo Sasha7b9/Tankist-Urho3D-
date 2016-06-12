@@ -184,9 +184,9 @@ using Urho3D::E_CLIENTDISCONNECTED;
 
 //For client only
 #include "CameraUni.h"
-#include "Client.h"
+#include "Network/Client.h"
 
-#include "Server.h"
+#include "Network/Server.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
 

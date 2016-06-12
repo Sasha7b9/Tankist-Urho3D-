@@ -5,6 +5,7 @@
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "../../common/CommonFunctions.h"
+#include <Network/Chat.h>
 
 #pragma warning(disable:4100)
 URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
@@ -123,6 +124,8 @@ void Tankist::Start()
         gClient->ConnectToServer();
 
         CreateInstructions();
+
+        gChat = new Chat(gContext);
     }
 }
 
@@ -146,6 +149,7 @@ void Tankist::Stop()
     SAFE_DELETE(gClient);
     SAFE_DELETE(gServer);
     SAFE_DELETE(gScene);
+    SAFE_DELETE(gChat);
 }
 
 
@@ -338,26 +342,11 @@ void Tankist::CreateUI()
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(gGraphics->GetWidth() / 2, gGraphics->GetHeight() / 2);
 
-    Font *font = gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
-
     SharedPtr<UIElement> container(gUIRoot->CreateChild<UIElement>());
     container->SetFixedSize(200, 300);
     container->SetPosition(0, 100);
     container->SetLayoutMode(Urho3D::LM_VERTICAL);
     container->SetStyleAuto();
-
-    chatHistoryText = container->CreateChild<Text>();
-    //chatHistoryText->SetStyleAuto();
-    chatHistoryText->SetColor(Urho3D::Color::WHITE);
-    chatHistoryText->SetFont(font, 10);
-    chatHistoryText->SetMaxHeight(100);
-    chatHistoryText->SetMaxWidth(300);
-    chatHistoryText->SetWordwrap(true);
-
-    messageEdit = container->CreateChild<LineEdit>();
-    messageEdit->SetStyleAuto();
-    messageEdit->SetFixedHeight(18);
-    messageEdit->SetVisible(false);
 
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
@@ -443,24 +432,15 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
     }
     else if(key == Urho3D::KEY_RETURN)
     {
-        if(!messageEdit->HasFocus())
+        if(!gConsole->IsVisible())
         {
-            messageEdit->SetVisible(true);
-            messageEdit->SetFocus(true);
-        }
-        else
-        {
-            String text = messageEdit->GetText();
-            if(text.Empty())
+            if(!gChat->IsActive())
             {
-                messageEdit->SetFocus(false);
-                messageEdit->SetVisible(false);
-                return;
+                gChat->SetActive(true);
             }
             else
             {
-                gClient->SendMessage(text);
-                messageEdit->SetText("");
+                gChat->PressEnter();
             }
         }
     }
@@ -702,28 +682,6 @@ void Tankist::CreateInstructions()
     instructionText->SetPosition(0, gUI->GetRoot()->GetHeight() / 4);
     instructionText->SetVisible(false);
 }
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::UpdateMessages()
-{
-    do
-    {
-        if (chatHistoryText->GetHeight() > 0.8 * gUIRoot->GetHeight())
-        {
-            chatMessages.Erase(0);
-        }
-
-        String allRows;
-        for (uint i = 0; i < chatMessages.Size(); i++)
-        {
-            allRows += chatMessages[i] + "\n";
-        }
-
-        chatHistoryText->SetText(allRows);
-
-    } while (chatHistoryText->GetHeight() > 0.8 * gUIRoot->GetHeight());
-}
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateStatisticWindow()

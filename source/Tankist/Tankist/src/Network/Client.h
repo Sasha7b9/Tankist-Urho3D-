@@ -20,7 +20,7 @@ public:
     bool ConnectToServer();
     void Disconnect();
     bool AttachCameraToNode();
-    void SendMessage(const String &message);
+    void TranslateMessage(const String &message);
 
     // Request ping, load cpu, number clients
     void RequestSystemInformation();

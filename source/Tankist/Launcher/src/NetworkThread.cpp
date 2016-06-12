@@ -73,39 +73,8 @@ void NetworkThread::ThreadFunction()
 {
     static char buff[1024];
 
-    if(WSAStartup(0x202, (WSADATA*)&buff[0]))
-    {
-        URHO3D_LOGERRORF("Winsock not initialized with error %d", WSAGetLastError());
-    }
-
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-
-    if(sock == INVALID_SOCKET)
-    {
-        URHO3D_LOGERRORF("socket() error %d", WSAGetLastError());
-    }
-
-    sockaddr_in destAddr;
-    destAddr.sin_family = AF_INET;
-    destAddr.sin_port = htons(UPDATE_PORT);
-
-    if(inet_addr(UPDATE_ADDR) != INADDR_NONE)
-    {
-        destAddr.sin_addr.s_addr = inet_addr(UPDATE_ADDR);
-    }
-    else
-    {
-        URHO3D_LOGERROR("Invalid address");
-    }
-
-    if(connect(sock, (sockaddr*)&destAddr, sizeof(destAddr)))
-    {
-        URHO3D_LOGERRORF("Connect error %d", WSAGetLastError());
-    }
-    else
-    {
-        URHO3D_LOGINFO("Connect is ok!");
-    }
+    socket.Init();
+    socket.Connect(UPDATE_ADDR, UPDATE_PORT);
 
     // Get information about new files
     GetFile("files.txt", "files_new.txt");
@@ -180,9 +149,9 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 
     int numBytes = -1;
 
-    while ((numBytes = recv(sock, buff, sizeof(buff) - 1, 0)) == -1)
+    while((numBytes = socket.Recieve(buff, sizeof(buff) - 1)) == -1)
     {
-        URHO3D_LOGWARNING("Can not recieve data from server");
+        URHO3D_LOGWARNING("Can not receive data from server");
     }
 
     buff[numBytes] = '\0';
@@ -192,7 +161,7 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
     SendToSocket(String("get_file ") + name);
 
     CreateDirIfAbsent(nameOut);
-
+    
     File file(gContext, nameOut, Urho3D::FILE_WRITE);
 
     file.Flush();
@@ -201,7 +170,8 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 
     while(bytesRecv < size)
     {
-        uint numBytes = (uint)recv(sock, buff, 1024, 0);
+        uint numBytes = (uint)socket.Recieve(buff, 1024);
+
         file.Write(buff, numBytes);
 
         bytesRecv += numBytes;
@@ -220,5 +190,5 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void NetworkThread::SendToSocket(const String &message)
 {
-    send(sock, message.CString(), (int)strlen(message.CString()), 0);
+    socket.Transmit(message.CString(), (int)strlen(message.CString()));
 }

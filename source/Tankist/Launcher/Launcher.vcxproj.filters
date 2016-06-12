@@ -16,6 +16,9 @@
     <Filter Include="common">
       <UniqueIdentifier>{6ef03981-9aa1-4ecb-a689-f9beda4e17e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common\Network">
+      <UniqueIdentifier>{86a807b9-f409-437d-ad13-ee3325acb5c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -26,9 +29,6 @@
     </ClInclude>
     <ClInclude Include="src\Core\Math.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\defines.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\lSprite.h">
       <Filter>Graphics</Filter>
@@ -47,6 +47,18 @@
     </ClInclude>
     <ClInclude Include="..\common\CommonFunctions.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\Socket.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\defines.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\NewClient.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\NewServer.h">
+      <Filter>common\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +88,15 @@
     </ClCompile>
     <ClCompile Include="..\common\CommonFunctions.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\Socket.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\NewClient.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\NewServer.cpp">
+      <Filter>common\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

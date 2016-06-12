@@ -10,6 +10,9 @@
 
 #pragma warning(pop)
 
+#define UPDATE_ADDR "188.120.239.61"
+#define UPDATE_PORT 1235
+
 
 static const Urho3D::StringHash E_CLIENTOBJECTID("ClientObjectID");
 static const int MSG_CHAT = 32;         // Chat message
@@ -25,6 +28,8 @@ static const Urho3D::String INSTRUCTION("instructionText");
 
 typedef unsigned int uint;
 typedef unsigned char uint8;
+
+typedef void (*pFuncVV)(void);
 
 
 #define PORT_GAME       30000   // Using for game

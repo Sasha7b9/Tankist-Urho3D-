@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "Network/Socket.h"
+
+
 class NetworkThread : public Thread
 {
 public:
@@ -56,7 +59,8 @@ public:
 
 private:
     State state = Init;
-    SOCKET sock;
+    //SOCKET sock;
+    SocketClient socket;
     float startTime = 0.0f;
     float percents = 0.0f;
     float speed = 0.0f;

@@ -20,10 +20,18 @@
     </ClCompile>
     <ClCompile Include="src\TankistHandlers.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="..\common\Network\Socket.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\NewClient.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\NewServer.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CameraUni.h" />
-    <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />
@@ -41,6 +49,18 @@
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="..\common\Network\Socket.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\defines.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\NewClient.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\NewServer.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

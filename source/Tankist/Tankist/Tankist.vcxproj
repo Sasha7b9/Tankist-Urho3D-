@@ -20,6 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
+    <ClCompile Include="..\common\Network\NewClient.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\NewServer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\Socket.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\CameraUni.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -45,8 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
+    <ClInclude Include="..\common\defines.h" />
+    <ClInclude Include="..\common\Network\NewClient.h" />
+    <ClInclude Include="..\common\Network\NewServer.h" />
+    <ClInclude Include="..\common\Network\Socket.h" />
     <ClInclude Include="src\CameraUni.h" />
-    <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Network\Chat.h" />
@@ -184,7 +196,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\My\Tankist\source\Tankist\Tankist\src;C:\Urho3D-rel\build\include;C:\Urho3D-rel\build\include\Urho3D\ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\My\Tankist\source\Tankist\Tankist\src;C:\Urho3D-rel\build\include;C:\Urho3D-rel\build\include\Urho3D\ThirdParty;C:\My\Tankist\source\Tankist\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4668;4820;4514;4710;4711</DisableSpecificWarnings>
       <AdditionalOptions>-MP %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

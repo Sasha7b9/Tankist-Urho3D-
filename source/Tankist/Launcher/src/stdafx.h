@@ -10,6 +10,7 @@
 #pragma warning(disable:4640)
 #pragma warning(disable:4668)
 #pragma warning(disable:4710)
+#pragma warning(disable:4312)
 
 
 #define URHO3D_LOGGING

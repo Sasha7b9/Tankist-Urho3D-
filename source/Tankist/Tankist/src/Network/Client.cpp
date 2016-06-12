@@ -71,7 +71,7 @@ void Client::HandleConnectFiled(StringHash, VariantMap &)
     float timeStart = gTime->GetElapsedTime();
     ConnectToServer();
     static int count = 0;
-    URHO3D_LOGINFOF("Filed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
+    LOG_ERROR2("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
 }
 
 

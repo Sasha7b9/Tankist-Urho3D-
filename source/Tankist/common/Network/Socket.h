@@ -13,18 +13,24 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-#endif
+#endif  // AF_IPX
 
 #else
 
-#endif
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+#endif  // WIN32
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class SocketClient
+class SocketClientTCP
 {
 public:
-    SocketClient();
+    SocketClientTCP();
+
     bool Init();
     bool Connect(const char *address, u_short port);
     void Transmit(const char *data, int size);
@@ -38,4 +44,46 @@ private:
     SOCKET sock;
     sockaddr_in destAddr;
 #endif
+};
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class SocketServerTCP
+{
+public:
+    SocketServerTCP();
+
+    // funcOnConnect call on connect new client
+    // funcOnDisconnect call on disconnect client
+    // funcOnRecieve call on recieved data
+    // buffer - buffer for recieved data
+    // sizeBuffer - size of buffer
+    bool Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVI funcOnRecieve, void *buffer, int sizeBuffer);
+    bool Listen(u_short port);
+    void Transmit(const char *data, int size);
+    void Close()
+    {
+        run = false;
+    }
+
+private:
+    char buff[1024];
+
+    pFuncVIpCI funcOnConnect;   // num client(socket), address, port
+    pFuncVI funcOnDisconnect;   // num client(socket)
+    pFuncVI funcOnRecieve;      // num recieved bytes
+    int sizeBuffer;
+    void *buffer;
+    bool run = false;
+
+#ifdef WIN32
+
+#else
+
+    struct sockaddr_in address;
+    int sock;
+    int sockServer;
+    int bytesRead;
+
+#endif  //WIN32
 };

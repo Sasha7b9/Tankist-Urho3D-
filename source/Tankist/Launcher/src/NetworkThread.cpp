@@ -74,7 +74,7 @@ void NetworkThread::ThreadFunction()
     static char buff[1024];
 
     socket.Init();
-    socket.Connect(UPDATE_ADDR, UPDATE_PORT);
+    socket.Connect(ADDR_SERVER, PORT_UPDATE);
 
     // Get information about new files
     GetFile("files.txt", "files_new.txt");
@@ -151,7 +151,7 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 
     while((numBytes = socket.Recieve(buff, sizeof(buff) - 1)) == -1)
     {
-        URHO3D_LOGWARNING("Can not receive data from server");
+        LOG_WARNING("Can not receive data from server");
     }
 
     buff[numBytes] = '\0';

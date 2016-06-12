@@ -357,6 +357,7 @@ void Tankist::CreateUI()
     messageEdit = container->CreateChild<LineEdit>();
     messageEdit->SetStyleAuto();
     messageEdit->SetFixedHeight(18);
+    messageEdit->SetVisible(false);
 
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
@@ -444,6 +445,7 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
     {
         if(!messageEdit->HasFocus())
         {
+            messageEdit->SetVisible(true);
             messageEdit->SetFocus(true);
         }
         else
@@ -452,6 +454,7 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             if(text.Empty())
             {
                 messageEdit->SetFocus(false);
+                messageEdit->SetVisible(false);
                 return;
             }
             else

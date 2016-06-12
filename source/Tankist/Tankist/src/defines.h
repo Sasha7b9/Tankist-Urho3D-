@@ -2,7 +2,12 @@
 
 #define URHO3D_LOGGING
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
 #include <Urho3D/Math/StringHash.h>
+
+#pragma warning(pop)
 
 using Urho3D::StringHash;
 

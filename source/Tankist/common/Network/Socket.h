@@ -58,7 +58,7 @@ public:
     // funcOnRecieve call on recieved data
     // buffer - buffer for recieved data
     // sizeBuffer - size of buffer
-    bool Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVI funcOnRecieve, void *buffer, int sizeBuffer);
+    bool Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer);
     bool Listen(u_short port);
     void Transmit(const char *data, int size);
     void Close()
@@ -71,19 +71,11 @@ private:
 
     pFuncVIpCI funcOnConnect;   // num client(socket), address, port
     pFuncVI funcOnDisconnect;   // num client(socket)
-    pFuncVI funcOnRecieve;      // num recieved bytes
-    int sizeBuffer;
-    void *buffer;
+    pFuncVpCI funcOnRecieve;    // num recieved bytes
+    size_t sizeBuffer;
     bool run = false;
 
-#ifdef WIN32
+    sockaddr_in address;
 
-#else
-
-    struct sockaddr_in address;
-    int sock;
-    int sockServer;
-    int bytesRead;
-
-#endif  //WIN32
+    int sockServer;             // Using for Windows - (SOCKET)sockServer
 };

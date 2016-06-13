@@ -20,14 +20,14 @@
     </ClCompile>
     <ClCompile Include="src\TankistHandlers.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="..\common\Network\Socket.cpp">
-      <Filter>common</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\NewClient.cpp">
-      <Filter>common</Filter>
+      <Filter>common\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\common\Network\NewServer.cpp">
-      <Filter>common</Filter>
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\Socket.cpp">
+      <Filter>common\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,17 +49,17 @@
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="..\common\Network\Socket.h">
-      <Filter>common</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\NewClient.h">
-      <Filter>common</Filter>
+      <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\NewServer.h">
-      <Filter>common</Filter>
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\Socket.h">
+      <Filter>common\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +68,9 @@
     </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{a1773823-5867-488d-93c1-f3fc7c797076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\Network">
+      <UniqueIdentifier>{bf14e1d3-541b-49f2-afc3-d516e8c163fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

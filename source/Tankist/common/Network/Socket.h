@@ -4,6 +4,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "defines.h"
 
+#pragma warning(push)
+#pragma warning(disable:4265 4571 4625 4626)
+
+#include <thread>
+
+#pragma warning(pop)
+
 #ifdef WIN32
 
 #ifndef AF_IPX
@@ -23,6 +30,27 @@
 #include <arpa/inet.h>
 
 #endif  // WIN32
+
+
+class SocketServerTCP;
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class NewServer
+{
+public:
+    NewServer();
+
+    void Init();
+    bool Bind(u_short port);
+    //bool SendMessage(uint8 numMessage, char* data, int size);
+    void Close();
+
+    void FuncOnConnect(int, char*, int);
+
+private:
+    SocketServerTCP socket;
+};
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +86,7 @@ public:
     // funcOnRecieve call on recieved data
     // buffer - buffer for recieved data
     // sizeBuffer - size of buffer
-    bool Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer);
+    bool Init(NewServer::pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer);
     bool Listen(u_short port);
     void Transmit(const char *data, int size);
     void Close()

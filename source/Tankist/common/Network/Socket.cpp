@@ -5,8 +5,6 @@
 
 #include <Urho3D/IO/Log.h>
 
-#include <thread>
-
 #pragma warning(pop)
 
 

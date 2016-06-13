@@ -33,6 +33,8 @@ typedef void    (*pFuncVI)(int);
 typedef void    (*pFuncVpCI)(char*, int);
 typedef void    (*pFuncVU8pCI)(uint8, char*, int);
 typedef void    (*pFuncVIpCI)(int, char*, int);
+typedef void    (*pFuncVIU8pCI)(int, uint8, char*, int);
+typedef void    (*pFuncVIU8pU8I)(int, uint8, uint8*, int);
 
 
 #define PORT_GAME       30000   // Using for game

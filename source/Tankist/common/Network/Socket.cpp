@@ -91,12 +91,9 @@ SocketServerTCP::SocketServerTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketServerTCP::Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer)
+bool SocketServerTCP::Init(SocketParam *sockParam)
 {
-    this->funcOnConnect = funcOnConnect;
-    this->funcOnDisconnect = funcOnDisconnect;
-    this->funcOnRecieve = funcOnRecieve;
-    this->sizeBuffer = sizeBuffer;
+    this->sockParam = sockParam;
 
 #ifdef WIN32
 
@@ -131,23 +128,23 @@ bool SocketServerTCP::Init(pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, p
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ExchangeTaks(int sock, bool run, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer)
+static void ExchangeTaks(int sock, SocketParam *sockParam)
 {
-    char *buffer = new char[sizeBuffer];
+    char *buffer = new char[sockParam->sizeBuffer];
 
 #ifdef WIN32
 
-    while (run)
+    while (sockParam->run)
     {
-        int numBytes = recv((SOCKET)sock, buffer, (int)sizeBuffer, 0);
+        int numBytes = recv((SOCKET)sock, buffer, (int)sockParam->sizeBuffer, 0);
 
         if(numBytes == SOCKET_ERROR)
         {
-            funcOnDisconnect(sock);
+            sockParam->funcOnDisconnect(sock);
             break;
         }
 
-        funcOnRecieve(buffer, numBytes);
+        sockParam->funcOnReceive(buffer, numBytes);
     }
 
     closesocket((SOCKET)sock);
@@ -174,7 +171,7 @@ static void ExchangeTaks(int sock, bool run, pFuncVI funcOnDisconnect, pFuncVpCI
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void AcceptTask(int sockServer, bool &run, pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, int sizeBuffer)
+static void AcceptTask(int sockServer, SocketParam *sockParam)
 {
     std::thread *t;
 
@@ -183,7 +180,7 @@ static void AcceptTask(int sockServer, bool &run, pFuncVIpCI funcOnConnect, pFun
 
 #ifdef WIN32
 
-    while(run)
+    while(sockParam->run)
     {
         SOCKET newSock = accept((SOCKET)sockServer, (sockaddr*)&addrClient, &lenClient);
 
@@ -194,9 +191,9 @@ static void AcceptTask(int sockServer, bool &run, pFuncVIpCI funcOnConnect, pFun
 
             LOG_INFO1("%s connect", hst->h_name);
 
-            t = new std::thread(ExchangeTaks, (int)newSock, run, funcOnDisconnect, funcOnRecieve, sizeBuffer);
+            t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 
-            funcOnConnect((int)newSock, hst->h_name, addrClient.sin_port);
+            sockParam->funcOnConnect((int)newSock, hst->h_name, addrClient.sin_port);
         }
         else
         {
@@ -260,7 +257,7 @@ bool SocketServerTCP::Listen(u_short port)
 
 #endif  // WIN32
 
-    run = true;
+    sockParam->run = true;
 
-    std::thread t(AcceptTask, sockServer, run, funcOnConnect, funcOnDisconnect, funcOnRecieve, sizeBuffer);
+    std::thread t(AcceptTask, sockServer, sockParam);
 }

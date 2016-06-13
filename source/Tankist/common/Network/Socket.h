@@ -32,24 +32,14 @@
 #endif  // WIN32
 
 
-class SocketServerTCP;
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class NewServer
+struct SocketParam
 {
-public:
-    NewServer();
-
-    void Init();
-    bool Bind(u_short port);
-    //bool SendMessage(uint8 numMessage, char* data, int size);
-    void Close();
-
-    void FuncOnConnect(int, char*, int);
-
-private:
-    SocketServerTCP socket;
+    pFuncVIpCI  funcOnConnect;          // num client(socket), address, port
+    pFuncVI     funcOnDisconnect;       // num client(socket)
+    pFuncVIpCI  funcOnReceive;          // num client, num recieved bytes
+    size_t      sizeBuffer;
+    bool        run;
 };
 
 
@@ -86,24 +76,21 @@ public:
     // funcOnRecieve call on recieved data
     // buffer - buffer for recieved data
     // sizeBuffer - size of buffer
-    bool Init(NewServer::pFuncVIpCI funcOnConnect, pFuncVI funcOnDisconnect, pFuncVpCI funcOnRecieve, size_t sizeBuffer);
+    bool Init(SocketParam *sockParam);
     bool Listen(u_short port);
     void Transmit(const char *data, int size);
     void Close()
     {
-        run = false;
+        if(sockParam)
+        {
+            sockParam->run = false;
+            sockParam = nullptr;
+        }
     }
 
 private:
     char buff[1024];
-
-    pFuncVIpCI funcOnConnect;   // num client(socket), address, port
-    pFuncVI funcOnDisconnect;   // num client(socket)
-    pFuncVpCI funcOnRecieve;    // num recieved bytes
-    size_t sizeBuffer;
-    bool run = false;
-
+    SocketParam *sockParam = nullptr;
     sockaddr_in address;
-
     int sockServer;             // Using for Windows - (SOCKET)sockServer
 };

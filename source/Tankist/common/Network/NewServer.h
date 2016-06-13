@@ -6,4 +6,31 @@
 #include <WinSock2.h>
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+struct ServerParam
+{
+    pFuncVIpCI      funcOnConnect;
+    pFuncVI         funcOnDisconnect;
+    pFuncVIU8pCI    funcOnReceive;      // num client, type message, data, size data
+    u_short         port;
+};
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class NewServer
+{
+public:
+    NewServer();
+
+    void Init(ServerParam *servParam);
+    bool SendMessage(int numClient, uint8 typeMessage, char* data, int size);
+    void Close();
+
+    pFuncVIpCI      funcOnConnect;
+    pFuncVI         funcOnDisconnect;
+    pFuncVIU8pU8I   funcOnRecieve;
+
+private:
+    SocketServerTCP *socket;
+    SocketParam     socketParam;
+};

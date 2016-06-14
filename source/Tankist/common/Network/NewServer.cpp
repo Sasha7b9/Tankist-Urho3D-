@@ -3,6 +3,7 @@
 
 #include <Urho3D/Container/HashMap.h>
 
+
 using Urho3D::HashMap;
 
 
@@ -20,9 +21,9 @@ enum StateRecieve
 //  Samle              |    3    |   10  | b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 |
 
 
-struct SocketData
+struct ClientData
 {
-    SocketData(int num, NewServer *serv) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
+    ClientData(int num, NewServer *serv) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
     uint8 data[SIZE_BUFFER];
     int numClient;
     StateRecieve stateRecieve;
@@ -32,23 +33,15 @@ struct SocketData
     NewServer *server;
 };
 
-struct ServerData
-{
-    ServerData(int numClient, NewServer *serv) : server(serv)
-    {
-        datas[numClient] = SocketData(numClient, serv);
-    }
-    NewServer *server;
-    HashMap<int, SocketData> datas;
-};
 
-
-static HashMap<NewServer*, ServerData> datas;
+static HashMap<NewServer*, HashMap<int, ClientData>> datas;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void CallbackOnConnect(NewServer *server, int numClient, char *address, int port)
 {
+
+
     datas[server] = ServerData(numClient, server);
     server->funcOnConnect(numClient, address, port);
 }

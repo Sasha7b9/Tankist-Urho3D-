@@ -11,9 +11,9 @@ NewClient::NewClient()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void NewClient::Init(pFuncVU8pCI funcOnRecieve)
+void NewClient::Init(pFuncVU8pVI funcOnRecieve)
 {
-    
+    socket.Init(funcOnRecieve);
 }
 
 

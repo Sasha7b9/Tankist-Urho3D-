@@ -29,6 +29,9 @@
     <ClCompile Include="..\common\Network\Socket.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
+    <ClCompile Include="src\Network\NewChat.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CameraUni.h" />
@@ -60,6 +63,9 @@
     </ClInclude>
     <ClInclude Include="..\common\Network\Socket.h">
       <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\NewChat.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

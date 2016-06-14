@@ -1,45 +1,18 @@
 #pragma once
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "defines.h"
-
-#pragma warning(push)
-#pragma warning(disable:4265 4571 4625 4626)
-
-#include <thread>
-
-#pragma warning(pop)
-
-#ifdef WIN32
-
-#ifndef AF_IPX
-
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#include <WinSock2.h>
-
-#pragma comment(lib, "ws2_32.lib")
-
-#endif  // AF_IPX
-
-#else
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#endif  // WIN32
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SocketParam
 {
-    pFuncVIpCI  funcOnConnect;          // num client(socket), address, port
-    pFuncVI     funcOnDisconnect;       // num client(socket)
-    pFuncVIpCI  funcOnReceive;          // num client, num recieved bytes
-    size_t      sizeBuffer;
-    bool        run;
+    pFuncVpVIpCI    funcOnConnect;          // *NewServer, num client(socket), address, port
+    pFuncVpVI       funcOnDisconnect;       // *NewServer, num client(socket)
+    pFuncVpVIpVI    funcOnReceive;          // *NewServer, num client, num recieved bytes
+    size_t          sizeBuffer;
+    void            *server;
+    bool            run;
 };
 
 
@@ -49,7 +22,7 @@ class SocketClientTCP
 public:
     SocketClientTCP();
 
-    bool Init();
+    bool Init(pFuncVpVI funcOnRecieve);
     bool Connect(const char *address, u_short port);
     void Transmit(const char *data, int size);
     int Recieve(char *buffer, int sizeBuffer);
@@ -59,8 +32,9 @@ private:
     char buff[1024];
 
 #ifdef WIN32
-    SOCKET sock;
+    SOCKET      sock;
     sockaddr_in destAddr;
+    pFuncVpVI   funcOnRecieve;
 #endif
 };
 
@@ -78,7 +52,7 @@ public:
     // sizeBuffer - size of buffer
     bool Init(SocketParam *sockParam);
     bool Listen(u_short port);
-    void Transmit(const char *data, int size);
+    void Transmit(const void *data, int size);
     void Close()
     {
         if(sockParam)

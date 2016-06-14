@@ -30,11 +30,16 @@ typedef unsigned char uint8;
 
 typedef void    (*pFuncVV)(void);
 typedef void    (*pFuncVI)(int);
+typedef void    (*pFuncVpVI)(void*, int);
 typedef void    (*pFuncVpCI)(char*, int);
 typedef void    (*pFuncVU8pCI)(uint8, char*, int);
 typedef void    (*pFuncVIpCI)(int, char*, int);
+typedef void    (*pFuncVpVIpCI)(void*, int, char*, int);
 typedef void    (*pFuncVIU8pCI)(int, uint8, char*, int);
 typedef void    (*pFuncVIU8pU8I)(int, uint8, uint8*, int);
+typedef void    (*pFuncVpVIpVI)(void*, int, void*, int);
+typedef void    (*pFuncVIU8pVI)(int, uint8, void*, int);
+typedef void    (*pFuncVpC)(char*);
 
 
 #define PORT_GAME       30000   // Using for game

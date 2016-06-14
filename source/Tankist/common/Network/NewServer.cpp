@@ -1,10 +1,7 @@
+#include <stdafx.h>
+
+
 #include "NewServer.h"
-
-
-#include <Urho3D/Container/HashMap.h>
-
-
-using Urho3D::HashMap;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,32 +20,38 @@ enum StateRecieve
 
 struct ClientData
 {
-    ClientData(int num, NewServer *serv) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
+    ClientData() : server(nullptr), stateRecieve(WAIT_MSG) {};
+    ClientData(void *serv, int num) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
     uint8 data[SIZE_BUFFER];
     int numClient;
     StateRecieve stateRecieve;
     int recvBytes;              // Number all accepted bytes - type message + 1 + length buffer
     int lengthBuffer;           // length message without type and another one byte  (10 in sample)
     uint8 typeMessage;
-    NewServer *server;
+    void *server;
 };
 
 
-static HashMap<NewServer*, HashMap<int, ClientData>> datas;
+static HashMap<void*, HashMap<int, ClientData>> datas;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void CallbackOnConnect(NewServer *server, int numClient, char *address, int port)
+static void CallbackOnConnect(void *server, int numClient, char *address, int port)
 {
+    if (datas.Find(server) == datas.End())      // If map for this server does not exist
+    {
+        HashMap<int, ClientData> newServer;
+        datas[server] = newServer;              // Create new map for this server
+    }
 
+    datas[server][numClient] = ClientData(server, numClient);
 
-    datas[server] = ServerData(numClient, server);
-    server->funcOnConnect(numClient, address, port);
+    ((NewServer*)server)->param.funcOnConnect(numClient, address, port);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ProcessNextByte(SocketData &data, uint8 b)
+static void ProcessNextByte(ClientData &data, uint8 b)
 {
     if(data.stateRecieve == WAIT_MSG)
     {
@@ -65,7 +68,7 @@ static void ProcessNextByte(SocketData &data, uint8 b)
 
             if(data.lengthBuffer == 0)
             {
-                data.server->funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
+                ((NewServer*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
                 data.stateRecieve = WAIT_MSG;
             }
         }
@@ -76,7 +79,7 @@ static void ProcessNextByte(SocketData &data, uint8 b)
 
             if(data.recvBytes - 2 == data.lengthBuffer)
             {
-                data.server->funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
+                ((NewServer*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
                 data.stateRecieve = WAIT_MSG;
             }
         }
@@ -85,28 +88,26 @@ static void ProcessNextByte(SocketData &data, uint8 b)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnReceive(NewServer *server, int numClient, uint8 *buffer, int size)
+static void CallbackOnReceive(void *server, int numClient, void *buffer, int size)
 {
-    ServerData &servData = datas[server];
-    SocketData &sockData = servData.datas[numClient];
+    ClientData data = datas[server][numClient];
 
-    uint8 *pointer = buffer;
+    uint8 *pointer = (uint8*)buffer;
 
     for(int i = 0; i < size; i++)
     {
-        ProcessNextByte(sockData, *pointer);
+        ProcessNextByte(data, *pointer);
         pointer++;
     }
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnDisconnect(NewServer *server, int numClient)
+static void CallbackOnDisconnect(void *server, int numClient)
 {
-    ServerData &servData = datas[server];
-    servData.datas.Erase(numClient);
+    datas[server].Erase(numClient);
 
-    server->funcOnDisconnect(numClient);
+    ((NewServer*)server)->param.funcOnDisconnect(numClient);
 }
 
 
@@ -120,12 +121,13 @@ NewServer::NewServer()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void NewServer::Init(ServerParam *servParam)
 {
-    socketParam.funcOnConnect = servParam->funcOnConnect;
-    socketParam.funcOnDisconnect = servParam->funcOnDisconnect;
-    socketParam.funcOnReceive = (pFuncVIpCI)(&NewServer::FuncOnRecieve);
-    socketParam.sizeBuffer = 1024;
+    param = *servParam;
 
-    //funcOnReceive = servParam->funcOnReceive;
+    socketParam.funcOnConnect = CallbackOnConnect;
+    socketParam.funcOnDisconnect = CallbackOnDisconnect;
+    socketParam.funcOnReceive = CallbackOnReceive;
+    socketParam.sizeBuffer = SIZE_BUFFER;
+    socketParam.server = (void*)this;
 
     socket->Init(&socketParam);
 
@@ -146,11 +148,4 @@ bool NewServer::SendMessage(int numClient, uint8 typeMessage, char* data, int si
 void NewServer::Close()
 {
     socket->Close();
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void NewServer::FuncOnRecieve(int numClient, char* data, int size)
-{
-
 }

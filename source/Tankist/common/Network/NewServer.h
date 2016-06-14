@@ -3,7 +3,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Socket.h"
-#include <WinSock2.h>
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@ struct ServerParam
 {
     pFuncVIpCI      funcOnConnect;
     pFuncVI         funcOnDisconnect;
-    pFuncVIU8pCI    funcOnReceive;      // num client, type message, data, size data
+    pFuncVIU8pVI    funcOnRecieve;      // client ID, type message, data, size data
     u_short         port;
 };
 
@@ -26,9 +26,7 @@ public:
     bool SendMessage(int numClient, uint8 typeMessage, char* data, int size);
     void Close();
 
-    pFuncVIpCI      funcOnConnect;
-    pFuncVI         funcOnDisconnect;
-    pFuncVIU8pU8I   funcOnRecieve;
+    ServerParam     param;
 
 private:
     SocketServerTCP *socket;

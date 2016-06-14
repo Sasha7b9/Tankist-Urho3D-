@@ -59,7 +59,6 @@ public:
 
 private:
     State state = Init;
-    //SOCKET sock;
     SocketClientTCP socket;
     float startTime = 0.0f;
     float percents = 0.0f;

@@ -1,19 +1,8 @@
-#pragma warning(push)
-#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
+#include <stdafx.h>
 
-#include <Urho3D/UI/UIElement.h>
-#include <Urho3D/UI/Font.h>
-
-using Urho3D::UIElement;
-using Urho3D::Font;
 
 #include "Chat.h"
 
-#include "GlobalVars.h"
-
-#pragma warning(pop)
-
-#include "defines.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

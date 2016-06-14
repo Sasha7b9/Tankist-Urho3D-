@@ -1,10 +1,6 @@
+#include <stdafx.h>
+
 #include "Game.h"
-
-
-#include <Urho3D/Physics/PhysicsEvents.h>
-
-using namespace Urho3D;
-
 #include "GlobalVars.h"
 #include "defines.h"
 
@@ -48,10 +44,10 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
                 controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
-                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E') | gInput->GetKeyDown(KEY_KP_6));
-                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q') | gInput->GetKeyDown(KEY_KP_4));
-                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(KEY_KP_2));
-                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(KEY_KP_8));
+                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6));
+                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4));
+                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2));
+                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8));
             }
 
             serverConnection->SetControls(controls);

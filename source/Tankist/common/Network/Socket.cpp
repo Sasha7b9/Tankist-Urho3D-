@@ -1,11 +1,6 @@
+#include <stdafx.h>
+
 #include "Socket.h"
-
-#pragma warning(push)
-#pragma warning(disable:4100 4251 4265 4266 4267 4275 4312 4365 4571 4625 4626 4640)
-
-#include <Urho3D/IO/Log.h>
-
-#pragma warning(pop)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,8 +11,10 @@ SocketClientTCP::SocketClientTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketClientTCP::Init()
+bool SocketClientTCP::Init(pFuncVpVI funcOnRecieve)
 {
+    this->funcOnRecieve = funcOnRecieve;
+
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))
     {
         LOG_ERROR1("Winsock not initialized with error %d", WSAGetLastError());
@@ -140,11 +137,11 @@ static void ExchangeTaks(int sock, SocketParam *sockParam)
 
         if(numBytes == SOCKET_ERROR)
         {
-            sockParam->funcOnDisconnect(sock);
+            sockParam->funcOnDisconnect(sockParam->server, sock);
             break;
         }
 
-        sockParam->funcOnReceive(buffer, numBytes);
+        sockParam->funcOnReceive(sockParam->server, sock, buffer, numBytes);
     }
 
     closesocket((SOCKET)sock);
@@ -193,7 +190,7 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
 
             t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 
-            sockParam->funcOnConnect((int)newSock, hst->h_name, addrClient.sin_port);
+            sockParam->funcOnConnect(sockParam->server, (int)newSock, hst->h_name, addrClient.sin_port);
         }
         else
         {
@@ -260,4 +257,11 @@ bool SocketServerTCP::Listen(u_short port)
     sockParam->run = true;
 
     std::thread t(AcceptTask, sockServer, sockParam);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void SocketServerTCP::Transmit(const void *data, int size)
+{
+    send((SOCKET)sockServer, (const char*)data, size, 0);
 }

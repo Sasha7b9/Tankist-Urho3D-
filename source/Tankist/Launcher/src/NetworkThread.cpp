@@ -68,12 +68,20 @@ static int PrepareListDownloading(HashMap<String, FileInfo> ourFiles, HashMap<St
     return (int)size;
 }
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+static void CallbackOnRecieve(void *, int)
+{
+
+}
+
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void NetworkThread::ThreadFunction()
 {
     static char buff[1024];
 
-    socket.Init();
+    socket.Init(CallbackOnRecieve);
     socket.Connect(ADDR_SERVER, PORT_UPDATE);
 
     // Get information about new files

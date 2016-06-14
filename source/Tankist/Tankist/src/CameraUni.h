@@ -1,15 +1,6 @@
 #pragma once
 
 
-#include <Urho3D/Scene/Node.h>
-#include <Urho3D/Math/Vector3.h>
-#include <Urho3D/Core/Object.h>
-
-using Urho3D::Node;
-using Urho3D::Vector3;
-using Urho3D::Object;
-
-
 class CameraUni : public Object
 {
 #pragma warning(push)

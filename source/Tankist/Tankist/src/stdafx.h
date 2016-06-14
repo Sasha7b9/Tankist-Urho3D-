@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
+#pragma warning(disable:4100 4251 4265 4266 4275 4365 4571 4625 4626 4640)
 
 
 #include "defines.h"
@@ -55,6 +55,21 @@
 #include <Urho3D/UI/Text.h>
 
 #include <Urho3D/DebugNew.h>
+
+#include <thread>
+
+#ifdef WIN32
+
+#pragma comment(lib, "ws2_32.lib")
+
+#else
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+#endif
 
 #pragma warning(pop)
 

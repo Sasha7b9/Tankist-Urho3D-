@@ -2,21 +2,6 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma warning(push)        
-#pragma warning(disable:4100 4251 4266 4275 4365 4625 4626 4640)
-
-#include <Urho3D/Scene/LogicComponent.h>
-#include <Urho3D/Input/Controls.h>
-#include <Urho3D/Physics/Constraint.h>
-#include <Urho3D/Physics/RigidBody.h>
-#include <Urho3D/Core/Context.h>
-
-using namespace Urho3D;
-
-#pragma warning(pop)
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const int CTRL_FORWARD      = 1 << 0;
 const int CTRL_BACK         = 1 << 1;
 const int CTRL_LEFT         = 1 << 2;

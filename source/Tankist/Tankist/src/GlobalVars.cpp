@@ -1,7 +1,7 @@
 #include <stdafx.h>
 
 
-using namespace Urho3D;
+#include <GlobalVars.h>
 
 
 // For server and client

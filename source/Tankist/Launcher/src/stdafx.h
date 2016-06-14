@@ -2,15 +2,7 @@
 
 
 #pragma warning(push)
-#pragma warning(disable:4100)
-#pragma warning(disable:4365)
-#pragma warning(disable:4514)
-#pragma warning(disable:4625)
-#pragma warning(disable:4626)
-#pragma warning(disable:4640)
-#pragma warning(disable:4668)
-#pragma warning(disable:4710)
-#pragma warning(disable:4312)
+#pragma warning(disable:4100 4265 4312 4365 4514 4625 4626 4640 4668 4710 4571)
 
 
 #define URHO3D_LOGGING
@@ -45,7 +37,7 @@
 
 #include <d3d9types.h>
 
-
+#include <thread>
 #include <cstdio>
 
 

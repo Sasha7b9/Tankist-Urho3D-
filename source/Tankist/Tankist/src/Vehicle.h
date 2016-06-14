@@ -21,17 +21,17 @@ const float SPEED_TRUNK_ROTATION = 10.0f;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Vehicle component, responsible for physical movement according to controls.
-class Vehicle : public Urho3D::LogicComponent
+class Vehicle : public LogicComponent
 {
 
 #pragma warning(push)
 #pragma warning(disable:4640)
-    URHO3D_OBJECT(Vehicle, Urho3D::LogicComponent)
+    URHO3D_OBJECT(Vehicle, LogicComponent)
 #pragma warning(pop)
 
 public:
     /// Construct.
-    Vehicle(Urho3D::Context* context);
+    Vehicle(Context* context);
     
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);

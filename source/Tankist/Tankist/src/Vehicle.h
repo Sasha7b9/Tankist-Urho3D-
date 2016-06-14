@@ -26,7 +26,7 @@ class Vehicle : public LogicComponent
 
 #pragma warning(push)
 #pragma warning(disable:4640)
-    URHO3D_OBJECT(Vehicle, LogicComponent)
+    URHO3D_OBJECT(Vehicle, LogicComponent);
 #pragma warning(pop)
 
 public:

@@ -6,6 +6,7 @@
 
 #include "defines.h"
 
+#include <Urho3D/Container/Ptr.h>
 
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/Object.h>

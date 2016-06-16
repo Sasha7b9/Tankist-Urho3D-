@@ -1,21 +1,15 @@
 #include <stdafx.h>
 
 
-#include "NewServer.h"
+#include "ServerTCP.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static const int SIZE_BUFFER = 1024;
-
-enum StateRecieve
-{
-    WAIT_MSG,
-    RECIEVE_MSG
-};
+static const int SIZE_BUFFER = 1024 * 10;
 
 //                      type msg  length
-//  Structure message: |    0    |   1   | ...............
-//  Samle              |    3    |   10  | b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 |
+//  Structure message: |    0    |   1   |   2   |   3   |   4   |  ...............
+//  Samle              |    3    |   10  |   0   |   0   |   0   |  b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 |
 
 
 struct ClientData
@@ -25,7 +19,7 @@ struct ClientData
     uint8 data[SIZE_BUFFER];
     int numClient;
     StateRecieve stateRecieve;
-    int recvBytes;              // Number all accepted bytes - type message + 1 + length buffer
+    int recvBytes;              // Number all accepted bytes - type message + 4 + length buffer
     int lengthBuffer;           // length message without type and another one byte  (10 in sample)
     uint8 typeMessage;
     void *server;
@@ -58,15 +52,15 @@ static void ProcessNextByte(ClientData &data, uint8 b)
         data.typeMessage = b;
         data.recvBytes = 1;
         data.stateRecieve = RECIEVE_MSG;
+        data.lengthBuffer = 0;
     }
     else if(data.stateRecieve == RECIEVE_MSG)
     {
-        if(data.recvBytes == 1)
+        if(data.recvBytes < 5)
         {
-            data.lengthBuffer = b;
-            data.recvBytes = 2;
-
-            if(data.lengthBuffer == 0)
+            data.lengthBuffer += ((int)b) << (data.recvBytes - 1);
+            data.recvBytes++;
+            if(data.recvBytes == 5 && data.lengthBuffer == 0)
             {
                 ((NewServer*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
                 data.stateRecieve = WAIT_MSG;

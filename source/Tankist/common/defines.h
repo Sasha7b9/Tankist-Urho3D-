@@ -40,12 +40,27 @@ typedef void    (*pFuncVIU8pU8I)(int, uint8, uint8*, int);
 typedef void    (*pFuncVpVIpVI)(void*, int, void*, int);
 typedef void    (*pFuncVIU8pVI)(int, uint8, void*, int);
 typedef void    (*pFuncVpC)(char*);
+typedef void    (*pFuncVU8pVI)(uint8, void*, int);
 
 
 #define PORT_GAME       30000   // Using for game
 #define PORT_UPDATE     1235    // Using for updates
 #define PORT_CHAT       30002   // Using for chat
 #define PORT_VOICE_CHAT 30003   // Using for voice chat
+
+
+enum StateRecieve
+{
+    WAIT_MSG,
+    RECIEVE_MSG
+};
+
+
+union BitSet32
+{
+    int data32;
+    uint8 b[4];
+};
 
 
 #define SAFE_DELETE(x)  \

@@ -54,10 +54,10 @@
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Network\NewClient.h">
+    <ClInclude Include="..\common\Network\ClientTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Network\NewServer.h">
+    <ClInclude Include="..\common\Network\ServerTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,10 +92,10 @@
     <ClCompile Include="..\common\Network\Socket.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Network\NewClient.cpp">
+    <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Network\NewServer.cpp">
+    <ClCompile Include="..\common\Network\ServerTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
   </ItemGroup>

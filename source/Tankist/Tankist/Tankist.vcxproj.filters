@@ -20,17 +20,17 @@
     </ClCompile>
     <ClCompile Include="src\TankistHandlers.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="..\common\Network\NewClient.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\NewServer.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\Socket.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\NewChat.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\ClientTCP.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\ServerTCP.cpp">
+      <Filter>common\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,17 +55,17 @@
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Network\NewClient.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Network\NewServer.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\Network\Socket.h">
       <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\NewChat.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\ClientTCP.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\ServerTCP.h">
+      <Filter>common\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

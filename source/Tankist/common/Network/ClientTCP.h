@@ -14,6 +14,8 @@ public:
     bool SendMessage(uint8 numMessage, char* data, int size);
     void Close();
 
+    pFuncVU8pVI FuncOnRecieve;
+
 private:
     SocketClientTCP socket;
 };

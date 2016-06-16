@@ -144,9 +144,9 @@
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="..\common\defines.h" />
+    <ClInclude Include="..\common\Network\ClientTCP.h" />
+    <ClInclude Include="..\common\Network\ServerTCP.h" />
     <ClInclude Include="..\common\Network\Socket.h" />
-    <ClInclude Include="..\common\Network\NewClient.h" />
-    <ClInclude Include="..\common\Network\NewServer.h" />
     <ClInclude Include="src\Core\Math.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Graphics\lImage.h" />
@@ -158,11 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
+    <ClCompile Include="..\common\Network\ClientTCP.cpp" />
+    <ClCompile Include="..\common\Network\ServerTCP.cpp" />
     <ClCompile Include="..\common\Network\Socket.cpp" />
-    <ClCompile Include="..\common\Network\NewClient.cpp" />
-    <ClCompile Include="..\common\Network\NewServer.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Core\Math.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\Graphics\lImage.cpp" />

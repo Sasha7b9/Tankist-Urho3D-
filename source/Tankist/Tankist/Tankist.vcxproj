@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
-    <ClCompile Include="..\common\Network\NewClient.cpp">
+    <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\common\Network\NewServer.cpp">
+    <ClCompile Include="..\common\Network\ServerTCP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\common\Network\Socket.cpp">
@@ -56,8 +56,8 @@
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
     <ClInclude Include="..\common\defines.h" />
-    <ClInclude Include="..\common\Network\NewClient.h" />
-    <ClInclude Include="..\common\Network\NewServer.h" />
+    <ClInclude Include="..\common\Network\ClientTCP.h" />
+    <ClInclude Include="..\common\Network\ServerTCP.h" />
     <ClInclude Include="..\common\Network\Socket.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\Game.h" />

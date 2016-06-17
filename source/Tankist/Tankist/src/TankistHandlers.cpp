@@ -187,4 +187,9 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
     {
         engine_->Exit();
     }
+
+    if(gChat)
+    {
+        gChat->UpdateChat();
+    }
 }

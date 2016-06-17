@@ -32,6 +32,7 @@ public:
     void SetActive(bool active);
     void PressEnter();
     void AddMessage(const String &message);
+    void UpdateChat();
 
 private:
     Type type;

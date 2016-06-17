@@ -40,11 +40,11 @@ Chat::Chat(Context *context, Type type) : Object(context)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int /*sizeBuffer*/)
+static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int sizeBuffer)
 {
     if(typeMessage == MSG_CHAT)
     {
-        gChat->AddMessage(String((char*)buffer));
+        gChat->AddMessage(String((char*)buffer, sizeBuffer));
     }
 }
 
@@ -104,25 +104,36 @@ void Chat::PressEnter()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Chat::AddMessage(const String &message)
+void Chat::UpdateChat()
 {
-    messages.Push(message);
+    if(messages.Size() == 0)
+    {
+        return;
+    }
+
 
     do
     {
-        if (historyText->GetHeight() > 0.8f * gUIRoot->GetHeight())
+        if(historyText->GetHeight() > 0.8f * gUIRoot->GetHeight())
         {
             messages.Erase(0);
         }
         String allRows;
-        for (uint i = 0; i < messages.Size(); i++)
+        for(uint i = 0; i < messages.Size(); i++)
         {
             allRows += messages[i] + "\n";
         }
 
         historyText->SetText(allRows);
 
-    } while (historyText->GetHeight() > 0.8f * gUIRoot->GetHeight());
+    } while(historyText->GetHeight() > 0.8f * gUIRoot->GetHeight());
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Chat::AddMessage(const String &message)
+{
+    messages.Push(message);
 }
 
 
@@ -159,14 +170,20 @@ static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
     URHO3D_LOGINFOF("Chat from %s:%d connected", address, (int)port);
 
     clients.Push(DataClient(clientID, address, port));
+
     chat->SendToAll(String(address) + String(" enter"));
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnRecieve(int /*clientID*/, uint8 /*typeMessage*/, void * /*data*/, int /*sizeData*/)
+static void ServerCallbackOnRecieve(int clientID, uint8 typeMessage, void *data, int sizeData)
 {
-
+    if(typeMessage == MSG_CHAT)
+    {
+        String message((char*)data, sizeData);
+        chat->SendToAll(message);
+        gChatLog->WriteMessage(message);
+    }
 }
 
 

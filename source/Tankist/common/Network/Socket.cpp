@@ -179,13 +179,11 @@ static void ExchangeTaks(int sock, SocketParam *sockParam)
     while (sockParam->run)
     {
         int numBytes = recv((SOCKET)sock, buffer, (int)sockParam->sizeBuffer, 0);
-
         if(numBytes == SOCKET_ERROR)
         {
             sockParam->funcOnDisconnect(sockParam->server, sock);
             break;
         }
-
         sockParam->funcOnReceive(sockParam->server, sock, buffer, numBytes);
     }
 

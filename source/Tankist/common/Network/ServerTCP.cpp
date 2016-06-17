@@ -20,7 +20,7 @@ struct ClientData
     int numClient;
     StateRecieve stateRecieve;
     int recvBytes;              // Number all accepted bytes - type message + 4 + length buffer
-    int lengthBuffer;           // length message without type and another one byte  (10 in sample)
+    BitSet32 lengthBuffer;      // length message without type and another one byte  (10 in sample)
     uint8 typeMessage;
     void *server;
 };
@@ -52,15 +52,15 @@ static void ProcessNextByte(ClientData &data, uint8 b)
         data.typeMessage = b;
         data.recvBytes = 1;
         data.stateRecieve = RECIEVE_MSG;
-        data.lengthBuffer = 0;
+        data.lengthBuffer.data32 = 0;
     }
     else if(data.stateRecieve == RECIEVE_MSG)
     {
         if(data.recvBytes < 5)
         {
-            data.lengthBuffer += ((int)b) << (data.recvBytes - 1);
+            data.lengthBuffer.b[data.recvBytes - 1] = b;
             data.recvBytes++;
-            if(data.recvBytes == 5 && data.lengthBuffer == 0)
+            if(data.recvBytes == 5 && data.lengthBuffer.data32 == 0)
             {
                 ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
                 data.stateRecieve = WAIT_MSG;
@@ -71,9 +71,9 @@ static void ProcessNextByte(ClientData &data, uint8 b)
             data.data[data.recvBytes - 5] = b;
             data.recvBytes++;
 
-            if(data.recvBytes - 5 == data.lengthBuffer)
+            if(data.recvBytes - 5 == data.lengthBuffer.data32)
             {
-                ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
+                ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer.data32);
                 data.stateRecieve = WAIT_MSG;
             }
         }
@@ -84,7 +84,7 @@ static void ProcessNextByte(ClientData &data, uint8 b)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackOnReceive(void *server, int numClient, void *buffer, int size)
 {
-    ClientData data = datas[server][numClient];
+    ClientData &data = datas[server][numClient];
 
     uint8 *pointer = (uint8*)buffer;
 

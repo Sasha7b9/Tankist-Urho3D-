@@ -113,10 +113,7 @@ void Tankist::Start()
         CreateListFiles();
 
         gChat = new Chat(gContext, Chat::Chat_Server);
-        if (!gChat->Listen(PORT_CHAT))
-        {
-            LOG_ERROR("Can not server chat connect ot listen");
-        }
+        gChat->Listen(PORT_CHAT);
     }
     
     if (gTypeApplication == Type_Client)
@@ -130,10 +127,7 @@ void Tankist::Start()
         CreateInstructions();
 
         gChat = new Chat(gContext, Chat::Chat_Client);
-        if(!gChat->Connect(gIPAddress.CString(), PORT_CHAT))
-        {
-            LOG_ERROR("Can not connect client chat");
-        }
+        gChat->Connect(gIPAddress.CString(), PORT_CHAT);
     }
 
     gGame = new Game(gContext);

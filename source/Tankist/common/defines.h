@@ -70,39 +70,15 @@ union BitSet32
     if(x) delete x;     \
     x = nullptr;
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-#define LOG_INFO(x)     \
-    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGINFO(x)
+#define LOG_INFO(message) Urho3D::Log::Write(Urho3D::LOG_INFO, message);
+#define LOG_INFOF(format, ...) Urho3D::Log::Write(Urho3D::LOG_INFO, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-#define LOG_INFO1(format, y)                         \
-    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);    \
-    URHO3D_LOGINFOF(format, y)
+#define LOG_DEBUG(message) Urho3D::Log::Write(Urho3D::LOG_DEBUG, message);
+#define LOG_DEBUGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_DEBUG, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-#define LOG_INFO2(format, y1, y2)                   \
-    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);     \
-    URHO3D_LOGINFOF(format, y1, y2)
+#define LOG_WARNING(message) Urho3D::Log::Write(Urho3D::LOG_WARNING, message);
+#define LOG_WARNINGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_WARNING, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-#define LOG_DEBUG1(format, x)   \
-    URHO3D_LOGDEBUGF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGDEBUGF(format, x)
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-#define LOG_WARNING(x)  \
-    URHO3D_LOGWARNINGF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGWARNING(x)
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-#define LOG_ERROR(x)    \
-    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGERROR(x)
-
-#define LOG_ERROR1(format, x)    \
-    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGERRORF(format, x)
-
-#define LOG_ERROR2(format, x, y)   \
-    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
-    URHO3D_LOGERRORF(format, x, y)
+#define LOG_ERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message);
+#define LOG_ERRORF(format, ...) Urho3D::Log::Write(Urho3D::LOG_ERROR, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
     

@@ -52,10 +52,18 @@ bool Chat::Connect(const char *address, uint16 port)
     if (type == Chat_Client)
     {
         client.Init(CallbackClientOnRecieve);
-        return client.Connect(address, port);
+        if(client.Connect(address, port))
+        {
+            URHO3D_LOGINFOF("Connected chat on %s:%d", address, (int)port);
+            return true;
+        }
+
+        LOG_ERRORF("Can not connect chat on %s:%d", address, (int)port);
     }
-   
-    LOG_INFO("Call Chat::Client() for server");
+    else
+    {
+        LOG_WARNING("Call Chat::Client() for server");
+    }
 
     return false;
 }
@@ -147,7 +155,7 @@ static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
 {
     clients.Push(DataClient(clientID, address, port));
     chat->SendToAll(String(address) + String(" enter"));
-    LOG_INFO1("Connect chat client from %s", address);
+    LOG_INFOF("Connect chat client from %s", address);
 }
 
 
@@ -187,7 +195,13 @@ bool Chat::Listen(uint16 port)
         param.funcOnRecieve = ServerCallbackOnRecieve;
         param.port = port;
 
-        return server.Init(param);
+        if(server.Init(param))
+        {
+            URHO3D_LOGINFOF("Started chat on port %d", (int)port);
+            return true;
+        }
+
+        LOG_ERRORF("Can not start chat on port %d", (int)port);
     }
     else
     {

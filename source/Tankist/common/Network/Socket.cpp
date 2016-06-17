@@ -17,7 +17,7 @@ bool SocketClientTCP::Init(pFuncVpVI funcOnRecieve)
 
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))
     {
-        LOG_ERROR1("Winsock not initialized with error %d", WSAGetLastError());
+        LOG_ERRORF("Winsock not initialized with error %d", WSAGetLastError());
         return false;
     }
 
@@ -25,7 +25,7 @@ bool SocketClientTCP::Init(pFuncVpVI funcOnRecieve)
 
     if(sock == INVALID_SOCKET)
     {
-        LOG_ERROR1("ocket() error %d", WSAGetLastError());
+        LOG_ERRORF("ocket() error %d", WSAGetLastError());
         return false;
     }
 
@@ -45,13 +45,13 @@ bool SocketClientTCP::Connect(const char *address, u_short port)
     }
     else
     {
-        LOG_ERROR1("Invalid address %s", address);
+        LOG_ERRORF("Invalid address %s", address);
         return false;
     }
 
     if(connect(sock, (sockaddr*)&destAddr, sizeof(destAddr)))
     {
-        LOG_ERROR1("Connect error %d", WSAGetLastError());
+        LOG_ERRORF("Connect error %d", WSAGetLastError());
         return false;
     }
 
@@ -96,14 +96,14 @@ bool SocketServerTCP::Init(SocketParam *sockParam)
 
     if(WSAStartup(0x0202, (WSADATA*) &buff[0]))
     {
-        LOG_ERROR1("Error WSAStartup %d", WSAGetLastError());
+        LOG_ERRORF("Error WSAStartup %d", WSAGetLastError());
         return false;
     }
 
     sockServer = (int)socket(AF_INET, SOCK_STREAM, 0);
     if (sockServer == 0)
     {
-        LOG_ERROR1("Erorr socket() %d", WSAGetLastError());
+        LOG_ERRORF("Erorr socket() %d", WSAGetLastError());
         WSACleanup();
         return false;
     }
@@ -186,7 +186,7 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
         if (hst)
         {
 
-            LOG_INFO1("%s connect", hst->h_name);
+            LOG_INFOF("%s connect", hst->h_name);
 
             t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 
@@ -194,7 +194,7 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
         }
         else
         {
-            LOG_ERROR1("accept() error %d", WSAGetLastError());
+            LOG_ERRORF("accept() error %d", WSAGetLastError());
         }
     }
 
@@ -205,7 +205,7 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
         int newSock = accept(sockServer, (sockaddr*)&addrClient, &lenClient);
         if(newsock < 0)
         {
-            LOG_ERROR1("accept() failed: %d", errno)
+            LOG_ERRORF("accept() failed: %d", errno)
         }
         else
         {
@@ -229,14 +229,14 @@ bool SocketServerTCP::Listen(uint16 port)
 
     if(bind((SOCKET)sockServer, (sockaddr*)&address, sizeof(address)))
     {
-        LOG_ERROR1("Error bind() %d", WSAGetLastError());
+        LOG_ERRORF("Error bind() %d", WSAGetLastError());
         WSACleanup();
         return false;
     }
 
     if(listen((SOCKET)sockServer, 100))
     {
-        LOG_ERROR1("Error listen() %d", WSAGetLastError());
+        LOG_ERRORF("Error listen() %d", WSAGetLastError());
         closesocket((SOCKET)sockServer);
         WSACleanup();
         return false;

@@ -57,7 +57,6 @@ void Client::Disconnect()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
 {
-    LOG_INFO1("%s", __FUNCTION__);
     nodeID = eventData[P_ID].GetUInt();
 }
 
@@ -72,7 +71,6 @@ bool Client::AttachCameraToNode()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerConnected(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
     serverIsConnected = true;
 }
 
@@ -80,25 +78,25 @@ void Client::HandleServerConnected(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerDisconnected(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleConnectFailed(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
     float timeStart = gTime->GetElapsedTime();
     ConnectToServer();
     static int count = 0;
-    LOG_ERROR2("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
+    LOG_ERRORF("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 
     using namespace Urho3D::NetworkMessage;
 
@@ -167,54 +165,54 @@ void Client::RequestSystemInformation()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientConnected(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientDisconnected(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientIdentity(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientSceneLoaded(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkUpdate(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkUpdateSent(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleRemoteEventData(StringHash, VariantMap &)
 {
-    LOG_INFO1("%s", __FUNCTION__);
+    LOG_INFOF("%s", __FUNCTION__);
 }

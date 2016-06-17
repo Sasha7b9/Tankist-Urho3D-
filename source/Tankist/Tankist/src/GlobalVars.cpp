@@ -38,3 +38,5 @@ Tankist *gTankist = nullptr;
 Chat *gChat = nullptr;
 
 Game *gGame = nullptr;
+
+ChatLog *gChatLog = nullptr;

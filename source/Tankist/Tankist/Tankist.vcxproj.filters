@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\CameraUni.cpp" />
-    <ClCompile Include="src\GlobalVars.cpp" />
-    <ClCompile Include="src\stdafx.cpp" />
-    <ClCompile Include="src\Tankist.cpp" />
-    <ClCompile Include="src\Vehicle.cpp" />
     <ClCompile Include="..\common\CommonFunctions.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -15,8 +10,6 @@
     <ClCompile Include="src\Network\Server.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="src\TankistHandlers.cpp" />
-    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="..\common\Network\Socket.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
@@ -29,13 +22,32 @@
     <ClCompile Include="src\Network\Chat.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="src\CameraUni.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GlobalVars.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tankist.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TankistHandlers.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vehicle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChatLog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\CameraUni.h" />
-    <ClInclude Include="src\GlobalVars.h" />
-    <ClInclude Include="src\stdafx.h" />
-    <ClInclude Include="src\Tankist.h" />
-    <ClInclude Include="src\Vehicle.h" />
     <ClInclude Include="..\common\CommonFunctions.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -45,7 +57,6 @@
     <ClInclude Include="src\Network\Server.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.h" />
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -61,6 +72,27 @@
     <ClInclude Include="src\Network\Chat.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="src\CameraUni.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GlobalVars.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tankist.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vehicle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChatLog.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -71,6 +103,9 @@
     </Filter>
     <Filter Include="common\Network">
       <UniqueIdentifier>{bf14e1d3-541b-49f2-afc3-d516e8c163fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{59ba811c-a0e0-4214-bebe-7036cda8608c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

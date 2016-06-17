@@ -38,7 +38,7 @@ void Tankist::Setup()
     gContext = context_;
 
     gLog = new Log(context_);
-    gLog->SetLevel(Urho3D::LOG_DEBUG);
+    gLog->SetLevel(Urho3D::LOG_INFO);
 
     if (gTypeApplication == Type_Client)
     {
@@ -103,6 +103,8 @@ void Tankist::Start()
 
     gTankist = this;
 
+    gChatLog = new ChatLog(context_);
+
     if (gTypeApplication == Type_Server)
     {
         gServer = new Server(context_);
@@ -128,7 +130,10 @@ void Tankist::Start()
         CreateInstructions();
 
         gChat = new Chat(gContext, Chat::Chat_Client);
-        gChat->Connect(gIPAddress.CString(), PORT_CHAT);
+        if(!gChat->Connect(gIPAddress.CString(), PORT_CHAT))
+        {
+            LOG_ERROR("Can not connect client chat");
+        }
     }
 
     gGame = new Game(gContext);
@@ -157,6 +162,7 @@ void Tankist::Stop()
     SAFE_DELETE(gServer);
     SAFE_DELETE(gScene);
     SAFE_DELETE(gChat);
+    SAFE_DELETE(gChatLog);
 }
 
 

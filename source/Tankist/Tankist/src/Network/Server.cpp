@@ -158,7 +158,7 @@ void Server::SendMessageChat(const String &msg)
         conn->SendMessage(MSG_CHAT, true, true, buffer);
     }
 
-    LOG_INFO1("Chat message : %s", msg.CString());
+    gChatLog->WriteMessage(msg);
 }
 
 

@@ -179,7 +179,6 @@ static void ServerCallbackOnDisconnect(int clientID)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Chat::Listen(uint16 port)
 {
-    LOG_INFO2("%s(%d)", __FUNCTION__, port);
     if (type == Chat_Server)
     {
         ServerParam param;

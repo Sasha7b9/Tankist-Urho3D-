@@ -7,6 +7,7 @@
 #include "Network/Chat.h"
 #include "Network/Server.h"
 #include "Game.h"
+#include "ChatLog.h"
 
 
 // For server and client
@@ -43,3 +44,5 @@ extern Tankist *gTankist;
 extern Chat *gChat;
 
 extern Game *gGame;
+
+extern ChatLog *gChatLog;

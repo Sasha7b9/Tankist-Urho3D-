@@ -30,6 +30,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\CameraUni.cpp" />
+    <ClCompile Include="src\ChatLog.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -57,6 +58,7 @@
     <ClInclude Include="..\common\Network\ServerTCP.h" />
     <ClInclude Include="..\common\Network\Socket.h" />
     <ClInclude Include="src\CameraUni.h" />
+    <ClInclude Include="src\ChatLog.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Network\Client.h" />

@@ -67,4 +67,5 @@ private:
     SocketParam *sockParam = nullptr;
     sockaddr_in address;
     int sockServer;             // Using for Windows - (SOCKET)sockServer
+    std::thread *t = nullptr;
 };

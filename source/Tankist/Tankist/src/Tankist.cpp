@@ -28,9 +28,9 @@ void Tankist::Setup()
     if (!ParseArguments(argumensts, gTypeApplication, gIPAddress, gNumPort))
     {
 #ifdef _WINDOWS
-        URHO3D_LOGERRORF("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+        LOG_ERROR("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
 #else
-        URHO3D_LOGERRORF("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+        LOG_ERROR("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
 #endif
         exit = true;
     }
@@ -109,6 +109,12 @@ void Tankist::Start()
         gServer->Start(gNumPort);
 
         CreateListFiles();
+
+        gChat = new Chat(gContext, Chat::Chat_Server);
+        if (!gChat->Listen(PORT_CHAT))
+        {
+            LOG_ERROR("Can not server chat connect ot listen");
+        }
     }
     
     if (gTypeApplication == Type_Client)
@@ -121,7 +127,8 @@ void Tankist::Start()
 
         CreateInstructions();
 
-        gChat = new Chat(gContext);
+        gChat = new Chat(gContext, Chat::Chat_Client);
+        gChat->Connect(gIPAddress.CString(), PORT_CHAT);
     }
 
     gGame = new Game(gContext);
@@ -226,17 +233,10 @@ void Tankist::SubscribeToEvents()
 {
     if (gTypeApplication == Type_Client)
     {
-        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
+        SubscribeToEvent(Urho3D::E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
     }
 
-    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
-
-    if (gTypeApplication == Type_Server)
-    {
-        SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Tankist, HandleCloseConnection));
-
-        gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
-    }
+    SubscribeToEvent(Urho3D::E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
 }
 
 

@@ -99,6 +99,10 @@ bool SocketServerTCP::Init(SocketParam *sockParam)
         LOG_ERROR1("Error WSAStartup %d", WSAGetLastError());
         return false;
     }
+    else
+    {
+        LOG_INFO("WSAStartup is ok!");
+    }
 
     sockServer = (int)socket(AF_INET, SOCK_STREAM, 0);
     if (sockServer == 0)
@@ -106,6 +110,10 @@ bool SocketServerTCP::Init(SocketParam *sockParam)
         LOG_ERROR1("Erorr socket() %d", WSAGetLastError());
         WSACleanup();
         return false;
+    }
+    else
+    {
+        LOG_INFO("socket() is ok!");
     }
 
 #else
@@ -219,8 +227,10 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketServerTCP::Listen(u_short port)
+bool SocketServerTCP::Listen(uint16 port)
 {
+    LOG_INFO2("%s(%d)", __FUNCTION__, port);
+
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -256,12 +266,14 @@ bool SocketServerTCP::Listen(u_short port)
 
     sockParam->run = true;
 
-    std::thread t(AcceptTask, sockServer, sockParam);
+    std::thread *t = new std::thread(AcceptTask, sockServer, sockParam);
+
+    return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void SocketServerTCP::Transmit(const void *data, int size)
+void SocketServerTCP::Transmit(const void *data, uint size)
 {
-    send((SOCKET)sockServer, (const char*)data, size, 0);
+    send((SOCKET)sockServer, (const char*)data, (int)size, 0);
 }

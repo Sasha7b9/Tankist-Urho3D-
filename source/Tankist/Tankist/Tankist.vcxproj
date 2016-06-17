@@ -34,11 +34,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp" />
-    <ClCompile Include="src\Network\Chat.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Network\Client.cpp" />
-    <ClCompile Include="src\Network\NewChat.cpp" />
+    <ClCompile Include="src\Network\Chat.cpp" />
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -62,9 +59,8 @@
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
-    <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Client.h" />
-    <ClInclude Include="src\Network\NewChat.h" />
+    <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Server.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />

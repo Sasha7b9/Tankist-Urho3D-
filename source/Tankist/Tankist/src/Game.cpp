@@ -22,7 +22,7 @@ void Game::Start()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::SubscribeToEvents()
 {
-    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
+    SubscribeToEvent(Urho3D::E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
 }
 
 
@@ -98,7 +98,10 @@ void Game::ClientDisconnected(Connection *connection)
 
 #ifdef _WINDOWS
 
-    gTankist->Exit();
+    if (objects.Size() == 0)
+    {
+        gTankist->Exit();
+    }
 
 #endif
 }

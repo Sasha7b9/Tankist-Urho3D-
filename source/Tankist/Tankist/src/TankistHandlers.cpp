@@ -188,12 +188,3 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
         engine_->Exit();
     }
 }
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::HandleCloseConnection(StringHash, VariantMap &eventData)
-{
-    Connection *connection = static_cast<Connection*>(eventData[CloseConnection::P_CONNECT].GetPtr());
-
-    gGame->ClientDisconnected(connection);
-}

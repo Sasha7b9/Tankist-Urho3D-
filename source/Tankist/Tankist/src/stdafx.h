@@ -183,16 +183,6 @@ using Urho3D::QUALITY_LOW;
 using Urho3D::AM_DEFAULT;
 using Urho3D::AM_NODEID;
 
-using Urho3D::E_KEYDOWN;
-using Urho3D::E_PHYSICSPRESTEP;
-using Urho3D::E_POSTUPDATE;
-using Urho3D::E_SERVERCONNECTED;
-using Urho3D::E_NETWORKMESSAGE;
-using Urho3D::E_CLIENTCONNECTED;
-using Urho3D::E_CONNECTFAILED;
-using Urho3D::E_CLIENTDISCONNECTED;
-
-
 //For client only
 #include "CameraUni.h"
 #include "Network/Client.h"

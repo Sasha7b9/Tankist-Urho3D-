@@ -25,8 +25,9 @@ static const Urho3D::StringHash P_ID("ID");
 static const Urho3D::String INSTRUCTION("instructionText");
 
 
-typedef unsigned int uint;
-typedef unsigned char uint8;
+typedef unsigned int    uint;
+typedef unsigned short  uint16;
+typedef unsigned char   uint8;
 
 typedef void    (*pFuncVV)(void);
 typedef void    (*pFuncVI)(int);
@@ -34,7 +35,9 @@ typedef void    (*pFuncVpVI)(void*, int);
 typedef void    (*pFuncVpCI)(char*, int);
 typedef void    (*pFuncVU8pCI)(uint8, char*, int);
 typedef void    (*pFuncVIpCI)(int, char*, int);
+typedef void    (*pFuncVIpCU16)(int, char*, uint16);
 typedef void    (*pFuncVpVIpCI)(void*, int, char*, int);
+typedef void    (*pFuncVpVIpCU16)(void*, int, char*, uint16);
 typedef void    (*pFuncVIU8pCI)(int, uint8, char*, int);
 typedef void    (*pFuncVIU8pU8I)(int, uint8, uint8*, int);
 typedef void    (*pFuncVpVIpVI)(void*, int, void*, int);
@@ -69,33 +72,37 @@ union BitSet32
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 #define LOG_INFO(x)     \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGINFO(x)
 
 #define LOG_INFO1(format, y)                         \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);    \
+    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);    \
     URHO3D_LOGINFOF(format, y)
+
+#define LOG_INFO2(format, y1, y2)                   \
+    URHO3D_LOGINFOF("                              %s:%d", __FILE__, __LINE__);     \
+    URHO3D_LOGINFOF(format, y1, y2)
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 #define LOG_DEBUG1(format, x)   \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGDEBUGF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGDEBUGF(format, x)
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 #define LOG_WARNING(x)  \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGWARNINGF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGWARNING(x)
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 #define LOG_ERROR(x)    \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGERROR(x)
 
 #define LOG_ERROR1(format, x)    \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGERRORF(format, x)
 
 #define LOG_ERROR2(format, x, y)   \
-    URHO3D_LOGINFOF("%s:%d", __FILE__, __LINE__);   \
+    URHO3D_LOGERRORF("                              %s:%d", __FILE__, __LINE__);   \
     URHO3D_LOGERRORF(format, x, y)
     

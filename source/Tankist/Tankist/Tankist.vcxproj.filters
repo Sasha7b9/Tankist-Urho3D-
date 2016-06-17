@@ -9,9 +9,6 @@
     <ClCompile Include="..\common\CommonFunctions.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="src\Network\Chat.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="src\Network\Client.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -23,14 +20,14 @@
     <ClCompile Include="..\common\Network\Socket.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
-    <ClCompile Include="src\Network\NewChat.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\common\Network\ServerTCP.cpp">
       <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Chat.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,9 +38,6 @@
     <ClInclude Include="src\Vehicle.h" />
     <ClInclude Include="..\common\CommonFunctions.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Network\Chat.h">
-      <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\Client.h">
       <Filter>Network</Filter>
@@ -58,14 +52,14 @@
     <ClInclude Include="..\common\Network\Socket.h">
       <Filter>common\Network</Filter>
     </ClInclude>
-    <ClInclude Include="src\Network\NewChat.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\Network\ClientTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\ServerTCP.h">
       <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\Chat.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

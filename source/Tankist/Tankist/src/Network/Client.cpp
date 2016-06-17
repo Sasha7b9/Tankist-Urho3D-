@@ -7,11 +7,21 @@
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Client::Client(Context *context) : Object(context)
 {
-    SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(Client, HandleClientObjectID));
-    SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
-    SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(Client, HandleConnectFiled));
-    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
     gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
+    SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(Client, HandleClientObjectID));
+
+    SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
+    SubscribeToEvent(Urho3D::E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));
+    SubscribeToEvent(Urho3D::E_CONNECTFAILED, URHO3D_HANDLER(Client, HandleConnectFailed));
+    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Client, HandleClientObjectID));
+    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Client, HandleClientDisconnected));
+    SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Client, HandleClientIdentity));
+    SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Client, HandleClientSceneLoaded));
+    //SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
+    //SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Client, HandleNetworkUpdate));
+    //SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Client, HandleNetworkUpdateSent));
+    SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Client, HandleNetworkSceneLoadFailed));
+    SubscribeToEvent(Urho3D::E_REMOTEEVENTDATA, URHO3D_HANDLER(Client, HandleRemoteEventData));
 }
 
 
@@ -47,6 +57,7 @@ void Client::Disconnect()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
 {
+    LOG_INFO1("%s", __FUNCTION__);
     nodeID = eventData[P_ID].GetUInt();
 }
 
@@ -61,13 +72,22 @@ bool Client::AttachCameraToNode()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerConnected(StringHash, VariantMap &)
 {
+    LOG_INFO1("%s", __FUNCTION__);
     serverIsConnected = true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleConnectFiled(StringHash, VariantMap &)
+void Client::HandleServerDisconnected(StringHash, VariantMap &)
 {
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleConnectFailed(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
     float timeStart = gTime->GetElapsedTime();
     ConnectToServer();
     static int count = 0;
@@ -78,6 +98,8 @@ void Client::HandleConnectFiled(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
+    LOG_INFO1("%s", __FUNCTION__);
+
     using namespace Urho3D::NetworkMessage;
 
     int msgID = eventData[P_MESSAGEID].GetInt();
@@ -139,4 +161,60 @@ void Client::RequestSystemInformation()
         gTankist->SetBytesInPerSec(connection->GetBytesInPerSec());
         gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec());
     }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleClientConnected(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleClientDisconnected(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleClientIdentity(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleClientSceneLoaded(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleNetworkUpdate(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleNetworkUpdateSent(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleRemoteEventData(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
 }

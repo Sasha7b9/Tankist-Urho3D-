@@ -4,14 +4,14 @@
 #include "Socket.h"
 
 
-class NewClient
+class ClientTCP
 {
 public:
-    NewClient();
+    ClientTCP();
 
     void Init(pFuncVU8pVI funcOnRecieve);
-    bool Connect(char *address, u_short port);
-    bool SendMessage(uint8 numMessage, char* data, int size);
+    bool Connect(const char *address, uint16 port);
+    void SendMessage(uint8 numMessage, void* data, uint size);
     void Close();
 
     pFuncVU8pVI FuncOnRecieve;

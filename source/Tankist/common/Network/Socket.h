@@ -7,9 +7,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct SocketParam
 {
-    pFuncVpVIpCI    funcOnConnect;          // *NewServer, num client(socket), address, port
-    pFuncVpVI       funcOnDisconnect;       // *NewServer, num client(socket)
-    pFuncVpVIpVI    funcOnReceive;          // *NewServer, num client, num recieved bytes
+    pFuncVpVIpCU16  funcOnConnect;          // *ServerTCP, num client(socket), address, port
+    pFuncVpVI       funcOnDisconnect;       // *ServerTCP, num client(socket)
+    pFuncVpVIpVI    funcOnReceive;          // *ServerTCP, num client, num recieved bytes
     size_t          sizeBuffer;
     void            *server;
     bool            run;
@@ -51,8 +51,8 @@ public:
     // buffer - buffer for recieved data
     // sizeBuffer - size of buffer
     bool Init(SocketParam *sockParam);
-    bool Listen(u_short port);
-    void Transmit(const void *data, int size);
+    bool Listen(uint16 port);
+    void Transmit(const void *data, uint size);
     void Close()
     {
         if(sockParam)

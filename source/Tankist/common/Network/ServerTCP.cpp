@@ -30,7 +30,7 @@ static HashMap<void*, HashMap<int, ClientData>> datas;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void CallbackOnConnect(void *server, int numClient, char *address, int port)
+static void CallbackOnConnect(void *server, int numClient, char *address, uint16 port)
 {
     if (datas.Find(server) == datas.End())      // If map for this server does not exist
     {
@@ -40,7 +40,7 @@ static void CallbackOnConnect(void *server, int numClient, char *address, int po
 
     datas[server][numClient] = ClientData(server, numClient);
 
-    ((NewServer*)server)->param.funcOnConnect(numClient, address, port);
+    ((ServerTCP*)server)->param.funcOnConnect(numClient, address, port);
 }
 
 
@@ -62,7 +62,7 @@ static void ProcessNextByte(ClientData &data, uint8 b)
             data.recvBytes++;
             if(data.recvBytes == 5 && data.lengthBuffer == 0)
             {
-                ((NewServer*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
+                ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, 0);
                 data.stateRecieve = WAIT_MSG;
             }
         }
@@ -73,7 +73,7 @@ static void ProcessNextByte(ClientData &data, uint8 b)
 
             if(data.recvBytes - 2 == data.lengthBuffer)
             {
-                ((NewServer*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
+                ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
                 data.stateRecieve = WAIT_MSG;
             }
         }
@@ -101,21 +101,21 @@ static void CallbackOnDisconnect(void *server, int numClient)
 {
     datas[server].Erase(numClient);
 
-    ((NewServer*)server)->param.funcOnDisconnect(numClient);
+    ((ServerTCP*)server)->param.funcOnDisconnect(numClient);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-NewServer::NewServer()
+ServerTCP::ServerTCP()
 {
     socket = new SocketServerTCP();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void NewServer::Init(ServerParam *servParam)
+bool ServerTCP::Init(const ServerParam &servParam)
 {
-    param = *servParam;
+    param = servParam;
 
     socketParam.funcOnConnect = CallbackOnConnect;
     socketParam.funcOnDisconnect = CallbackOnDisconnect;
@@ -123,14 +123,24 @@ void NewServer::Init(ServerParam *servParam)
     socketParam.sizeBuffer = SIZE_BUFFER;
     socketParam.server = (void*)this;
 
-    socket->Init(&socketParam);
+    if (!socket->Init(&socketParam))
+    {
+        LOG_ERROR("Can not init socket");
+        return false;
+    }
 
-    socket->Listen(servParam->port);
+    if (!socket->Listen(servParam.port))
+    {
+        LOG_ERROR("Can not connect socket to port");
+        return false;
+    }
+
+    return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool NewServer::SendMessage(int numClient, uint8 typeMessage, char* data, int size)
+void ServerTCP::SendMessage(int numClient, uint8 typeMessage, void* data, uint size)
 {
     socket->Transmit((const char*)&numClient, 4);
     socket->Transmit((const char*)&typeMessage, 1);
@@ -139,7 +149,7 @@ bool NewServer::SendMessage(int numClient, uint8 typeMessage, char* data, int si
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void NewServer::Close()
+void ServerTCP::Close()
 {
     socket->Close();
 }

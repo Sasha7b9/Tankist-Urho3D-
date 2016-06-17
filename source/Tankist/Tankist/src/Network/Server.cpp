@@ -4,9 +4,21 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Server::Server(Context *context) : Object(context)
 {
-    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnectd));
-    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+    gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
+    SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Server, HandleCloseConnection));
+
+    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
+    SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Server, HandleServerConnected));
+    SubscribeToEvent(Urho3D::E_SERVERDISCONNECTED, URHO3D_HANDLER(Server, HandleServerDisconnected));
+    SubscribeToEvent(Urho3D::E_CONNECTFAILED, URHO3D_HANDLER(Server, HandleConnectFailed));
+    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnected));
+    SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Server, HandleClientIdentity));
+    SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Server, HandleClientSceneLoaded));
+//    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+//    SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Server, HandleNetworkUpdate));
+//    SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Server, HandleNetworkUpdateSent));
+    SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Server, HandleNetworkSceneLoadFailed));
+    SubscribeToEvent(Urho3D::E_REMOTEEVENTDATA, URHO3D_HANDLER(Server, HandleRemoteEventData));
 }
 
 
@@ -20,6 +32,8 @@ void Server::Start(unsigned short port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 {
+    LOG_INFO1("%s", __FUNCTION__);
+
     using namespace Urho3D::ClientConnected;
 
     Connection *newConnection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
@@ -43,6 +57,8 @@ static String prevAddress;
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
+    LOG_INFO1("%s", __FUNCTION__);
+
     using namespace Urho3D::NetworkMessage;
 
     Connection *connection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
@@ -111,8 +127,10 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Server::HandleClientDisconnectd(StringHash, VariantMap &eventData)
+void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 {
+    LOG_INFO1("%s", __FUNCTION__);
+
     using namespace Urho3D::ClientDisconnected;
 
     VariantMap &eData = GetEventDataMap();
@@ -140,5 +158,79 @@ void Server::SendMessageChat(const String &msg)
         conn->SendMessage(MSG_CHAT, true, true, buffer);
     }
 
-    URHO3D_LOGINFOF("Chat message : %s", msg.CString());
+    LOG_INFO1("Chat message : %s", msg.CString());
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleCloseConnection(StringHash, VariantMap &eventData)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+
+    Connection *connection = static_cast<Connection*>(eventData[CloseConnection::P_CONNECT].GetPtr());
+
+    gGame->ClientDisconnected(connection);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleServerConnected(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleServerDisconnected(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleConnectFailed(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleClientIdentity(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleClientSceneLoaded(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleNetworkUpdate(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleNetworkUpdateSent(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleRemoteEventData(StringHash, VariantMap &)
+{
+    LOG_INFO1("%s", __FUNCTION__);
 }

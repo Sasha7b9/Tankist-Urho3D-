@@ -7,23 +7,25 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ServerTCP;
+
 struct ServerParam
 {
-    pFuncVIpCI      funcOnConnect;
+    pFuncVIpCU16    funcOnConnect;
     pFuncVI         funcOnDisconnect;
     pFuncVIU8pVI    funcOnRecieve;      // client ID, type message, data, size data
-    u_short         port;
+    uint16          port;
 };
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class NewServer
+class ServerTCP
 {
 public:
-    NewServer();
+    ServerTCP();
 
-    void Init(ServerParam *servParam);
-    bool SendMessage(int numClient, uint8 typeMessage, char* data, int size);
+    bool Init(const ServerParam &servParam);
+    void SendMessage(int numClient, uint8 typeMessage, void* data, uint size);
     void Close();
 
     ServerParam     param;

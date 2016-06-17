@@ -14,7 +14,7 @@ static BitSet32 lengthBuffer;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void ProcessingNextByte(uint8 byte)
+static void ProcessingNextByte(void *clientTCP, uint8 byte)
 {
     if(stateRecieve == WAIT_MSG)
     {
@@ -31,7 +31,19 @@ static void ProcessingNextByte(uint8 byte)
             recvBytes++;
             if(recvBytes == 5 && lengthBuffer.data32 == 0)
             {
-                
+                ((ClientTCP*)clientTCP)->FuncOnRecieve(typeMessage, buffer, 0);
+                stateRecieve = WAIT_MSG;
+            }
+        }
+        else
+        {
+            buffer[recvBytes - 5] = byte;
+            recvBytes++;
+
+            if(recvBytes - 5 == lengthBuffer.data32)
+            {
+                ((ClientTCP*)clientTCP)->FuncOnRecieve(typeMessage, buffer, lengthBuffer.data32);
+                stateRecieve = WAIT_MSG;
             }
         }
     }
@@ -39,13 +51,13 @@ static void ProcessingNextByte(uint8 byte)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnRecieve(void *buffer, int sizeBuffer)
+static void CallbackOnRecieve(void *clientTCP, void *buffer, int sizeBuffer)
 {
     uint8 *pointer = (uint8*)buffer;
 
     for(int i = 0; i < sizeBuffer; i++)
     {
-        ProcessingNextByte(*pointer);
+        ProcessingNextByte(clientTCP, *pointer);
         pointer++;
     }
 }
@@ -59,24 +71,26 @@ ClientTCP::ClientTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void ClientTCP::Init(pFuncVU8pVI /*funcOnRecieve*/)
+bool ClientTCP::Init(pFuncVU8pVI funcOnRecieve)
 {
-
-    socket.Init(CallbackOnRecieve);
+    FuncOnRecieve = funcOnRecieve;
+    return socket.Init(SocketClientTCP::Socket_Asynch, CallbackOnRecieve, this);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool ClientTCP::Connect(const char * /*address*/, uint16 /*port*/)
+bool ClientTCP::Connect(const char *address, uint16 port)
 {
-    return false;
+    return socket.Connect(address, port);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void ClientTCP::SendMessage(uint8 /*numMessage*/, void* /*data*/, uint /*size*/)
+void ClientTCP::SendMessage(uint8 numMessage, void *data, uint size)
 {
-
+    socket.Transmit((void*)&numMessage, 1);
+    socket.Transmit((void*)&size, 4);
+    socket.Transmit(data, (int)size);
 }
 
 

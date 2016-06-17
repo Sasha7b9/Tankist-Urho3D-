@@ -44,6 +44,7 @@ typedef void    (*pFuncVpVIpVI)(void*, int, void*, int);
 typedef void    (*pFuncVIU8pVI)(int, uint8, void*, int);
 typedef void    (*pFuncVpC)(char*);
 typedef void    (*pFuncVU8pVI)(uint8, void*, int);
+typedef void    (*pFuncVpVpVI)(void*, void*, int);
 
 
 #define PORT_GAME       30000   // Using for game
@@ -70,15 +71,15 @@ union BitSet32
     if(x) delete x;     \
     x = nullptr;
 
-#define LOG_INFO(message) Urho3D::Log::Write(Urho3D::LOG_INFO, message);
+#define LOG_INFO(message) Urho3D::Log::Write(Urho3D::LOG_INFO, message + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 #define LOG_INFOF(format, ...) Urho3D::Log::Write(Urho3D::LOG_INFO, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-#define LOG_DEBUG(message) Urho3D::Log::Write(Urho3D::LOG_DEBUG, message);
+#define LOG_DEBUG(message) Urho3D::Log::Write(Urho3D::LOG_DEBUG, message + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 #define LOG_DEBUGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_DEBUG, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-#define LOG_WARNING(message) Urho3D::Log::Write(Urho3D::LOG_WARNING, message);
+#define LOG_WARNING(message) Urho3D::Log::Write(Urho3D::LOG_WARNING, message + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 #define LOG_WARNINGF(format, ...) Urho3D::Log::Write(Urho3D::LOG_WARNING, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 
-#define LOG_ERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message);
+#define LOG_ERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 #define LOG_ERRORF(format, ...) Urho3D::Log::Write(Urho3D::LOG_ERROR, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
     

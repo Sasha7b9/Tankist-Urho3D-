@@ -9,7 +9,7 @@ static const int SIZE_BUFFER = 1024 * 10;
 
 //                      type msg  length
 //  Structure message: |    0    |   1   |   2   |   3   |   4   |  ...............
-//  Samle              |    3    |   10  |   0   |   0   |   0   |  b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 |
+//  Sample             |    3    |   10  |   0   |   0   |   0   |  b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 |
 
 
 struct ClientData
@@ -68,10 +68,10 @@ static void ProcessNextByte(ClientData &data, uint8 b)
         }
         else
         {
-            data.data[data.recvBytes - 2] = b;
+            data.data[data.recvBytes - 5] = b;
             data.recvBytes++;
 
-            if(data.recvBytes - 2 == data.lengthBuffer)
+            if(data.recvBytes - 5 == data.lengthBuffer)
             {
                 ((ServerTCP*)data.server)->param.funcOnRecieve(data.numClient, data.typeMessage, data.data, data.lengthBuffer);
                 data.stateRecieve = WAIT_MSG;
@@ -142,9 +142,9 @@ bool ServerTCP::Init(const ServerParam &servParam)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ServerTCP::SendMessage(int numClient, uint8 typeMessage, void* data, uint size)
 {
-    socket->Transmit((const char*)&numClient, 4);
-    socket->Transmit((const char*)&typeMessage, 1);
-    socket->Transmit(data, size);
+    send((SOCKET)numClient, (char*)&typeMessage, 1, 0);
+    send((SOCKET)numClient, (char*)&size, 4, 0);
+    send((SOCKET)numClient, (char*)data, (int)size, 0);
 }
 
 

@@ -11,8 +11,31 @@ SocketClientTCP::SocketClientTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketClientTCP::Init(pFuncVpVI funcOnRecieve)
+SocketClientTCP::~SocketClientTCP()
 {
+    Close();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool SocketClientTCP::Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *clientTCP)
+{
+    this->type = type;
+    this->clientTCP = clientTCP;
+
+    if(type == Socket_Synch && funcOnRecieve)
+    {
+        LOG_ERROR("Error create SocketClientTCP - an synch type socket funcOnRecieve it isn't used");
+        return false;
+    }
+
+    if(type == Socket_Asynch && funcOnRecieve == 0)
+    {
+        LOG_ERROR("Error create SocketClientTCP - an asynch type socket has to use funcOnRecieve");
+        return false;
+    }
+
+
     this->funcOnRecieve = funcOnRecieve;
 
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))
@@ -34,7 +57,18 @@ bool SocketClientTCP::Init(pFuncVpVI funcOnRecieve)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketClientTCP::Connect(const char *address, u_short port)
+static void CallbackOnRecieve(int sock, void *buffer, int sizeBuffer, bool &run, pFuncVpVpVI funcOnRecieve, void *clientTCP)
+{
+    while(run)
+    {
+        int numBytes = recv((SOCKET)sock, (char*)buffer, sizeBuffer, 0);
+        funcOnRecieve(clientTCP, buffer, numBytes);
+    }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool SocketClientTCP::Connect(const char *address, uint16 port)
 {
     destAddr.sin_family = AF_INET;
     destAddr.sin_port = htons(port);
@@ -55,20 +89,31 @@ bool SocketClientTCP::Connect(const char *address, u_short port)
         return false;
     }
 
+    if(type == Socket_Asynch)
+    {
+        t = new std::thread(CallbackOnRecieve, sock, (void*)buff, 1024, run, funcOnRecieve, clientTCP);
+    }
+
     return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void SocketClientTCP::Transmit(const char *data, int size)
+void SocketClientTCP::Transmit(void *data, int size)
 {
-    send(sock, data, size, 0);
+    send(sock, (char*)data, size, 0);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 int SocketClientTCP::Recieve(char *buffer, int sizeBuffer)
 {
+    if(type == Socket_Asynch)
+    {
+        LOG_ERROR("Call Recieve method for asynch socket");
+        return 0;
+    }
+
     return recv(sock, buffer, sizeBuffer, 0);
 }
 
@@ -76,7 +121,7 @@ int SocketClientTCP::Recieve(char *buffer, int sizeBuffer)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketClientTCP::Close()
 {
-
+    run = false;
 }
 
 
@@ -181,20 +226,19 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
     {
         SOCKET newSock = accept((SOCKET)sockServer, (sockaddr*)&addrClient, &lenClient);
 
-        HOSTENT *hst = gethostbyaddr((char*)&addrClient.sin_addr.s_addr, 4, AF_INET);
-
-        if (hst)
+        if(newSock != INVALID_SOCKET)
         {
-
-            LOG_INFOF("%s connect", hst->h_name);
+            uint longAddr = addrClient.sin_addr.S_un.S_addr;
+            char buffAddr[30];
+            sprintf_s(buffAddr, 19, "%d.%d.%d.%d", longAddr & 0xff, (longAddr >> 8) & 0xff, (longAddr >> 16) & 0xff, (longAddr >> 24) & 0xff);
 
             t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 
-            sockParam->funcOnConnect(sockParam->server, (int)newSock, hst->h_name, addrClient.sin_port);
+            sockParam->funcOnConnect(sockParam->server, (int)newSock, buffAddr, addrClient.sin_port);
         }
         else
         {
-            LOG_ERRORF("accept() error %d", WSAGetLastError());
+            LOG_ERRORF("Failed accept() with error %d", WSAGetLastError());
         }
     }
 
@@ -265,5 +309,7 @@ bool SocketServerTCP::Listen(uint16 port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketServerTCP::Transmit(const void *data, uint size)
 {
-    send((SOCKET)sockServer, (const char*)data, (int)size, 0);
+    int numBytes = send((SOCKET)sockServer, (const char*)data, (int)size, 0);
+
+    LOG_INFOF("socket = %d, Transferred %d, pass %d, error %d", sockServer, size, numBytes, WSAGetLastError());
 }

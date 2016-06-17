@@ -70,18 +70,11 @@ static int PrepareListDownloading(HashMap<String, FileInfo> ourFiles, HashMap<St
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnRecieve(void *, int)
-{
-
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
 void NetworkThread::ThreadFunction()
 {
     static char buff[1024];
 
-    socket.Init(CallbackOnRecieve);
+    socket.Init(SocketClientTCP::Socket_Synch, nullptr, nullptr);
     socket.Connect(ADDR_SERVER, PORT_UPDATE);
 
     // Get information about new files
@@ -198,5 +191,5 @@ int NetworkThread::GetFile(const char *nameIn, const char *nameOut)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void NetworkThread::SendToSocket(const String &message)
 {
-    socket.Transmit(message.CString(), (int)strlen(message.CString()));
+    socket.Transmit((void*)message.CString(), (int)strlen(message.CString()));
 }

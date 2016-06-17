@@ -21,20 +21,32 @@ class SocketClientTCP
 {
 public:
     SocketClientTCP();
+    ~SocketClientTCP();
 
-    bool Init(pFuncVpVI funcOnRecieve);
-    bool Connect(const char *address, u_short port);
-    void Transmit(const char *data, int size);
+    enum TypeSocket
+    {
+        Socket_Synch,
+        Socket_Asynch
+    };
+
+    // At type asynch funcOnRecieve has to be nullptr
+    bool Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *clientTCP);
+    bool Connect(const char *address, uint16 port);
+    void Transmit(void *data, int size);
     int Recieve(char *buffer, int sizeBuffer);
     void Close();
 
 private:
     char buff[1024];
+    std::thread *t = nullptr;
+    TypeSocket type;
+    bool run = true;
+    void *clientTCP;
 
 #ifdef WIN32
     SOCKET      sock;
     sockaddr_in destAddr;
-    pFuncVpVI   funcOnRecieve;
+    pFuncVpVpVI   funcOnRecieve;
 #endif
 };
 
@@ -66,6 +78,6 @@ private:
     char buff[1024];
     SocketParam *sockParam = nullptr;
     sockaddr_in address;
-    int sockServer;             // Using for Windows - (SOCKET)sockServer
+    int sockServer = 0;             // Using for Windows - (SOCKET)sockServer
     std::thread *t = nullptr;
 };

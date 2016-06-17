@@ -40,9 +40,12 @@ Chat::Chat(Context *context, Type type) : Object(context)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void CallbackClientOnRecieve(uint8 /*typeMessage*/, void * /*buffer*/, int /*sizeBuffer*/)
+static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int /*sizeBuffer*/)
 {
-
+    if(typeMessage == MSG_CHAT)
+    {
+        gChat->AddMessage(String((char*)buffer));
+    }
 }
 
 
@@ -153,9 +156,10 @@ static Vector<DataClient> clients;
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
 {
+    URHO3D_LOGINFOF("Chat from %s:%d connected", address, (int)port);
+
     clients.Push(DataClient(clientID, address, port));
     chat->SendToAll(String(address) + String(" enter"));
-    LOG_INFOF("Connect chat client from %s", address);
 }
 
 

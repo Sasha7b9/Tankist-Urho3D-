@@ -1,11 +1,21 @@
 #include "stdafx.h"
 
 
-#include "AudioCapturer.h"
 #include "bass.h"
+#include "AudioCapturer.h"
 
 
 #pragma comment(lib, "bass.lib")
+
+
+#define SAMPLERATE 8000
+//#define ADJUSTRATE      // Adjust the output rate (in case input and output devices are going at slightly different speeds)
+
+static HSTREAM chan = 0;
+static DWORD prebuf = 0;
+static DWORD targbuf = 0;
+static DWORD rate = 0;
+static HRECORD rchan = 0;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,6 +69,7 @@ void DisplayDeviceInfo(BASS_DEVICEINFO *di)
 
 AudioCapturer::AudioCapturer()
 {
+    /*
     BASS_DEVICEINFO di;
     int a;
     LOG_INFO("Output Devices\n");
@@ -73,22 +84,149 @@ AudioCapturer::AudioCapturer()
         LOG_INFOF("%d: ", a);
         DisplayDeviceInfo(&di);
     }
+    */
+
+    if(HIWORD(BASS_GetVersion()) != BASSVERSION)
+    {
+        LOG_ERRORF("An incorrect version of bass.dll. Required %d, available %d", BASSVERSION, BASS_GetVersion());
+    }
+
+    //Init();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
+{
+    if(gChat)
+    {
+        uint8 *pointer = (uint8*)buffer;
+
+        do
+        {
+            uint sendBytes = length;
+            if(sendBytes > 1000)
+            {
+                sendBytes = 1000;
+            }
+
+            gChat->SendAudioData(pointer, sendBytes);
+
+            pointer += sendBytes;
+            length -= sendBytes;
+
+        } while(length);
+    }
+
+    return true;
+
+    /*
+    DWORD bl;
+
+    BASS_StreamPutData(chan, buffer, length);                   // Feed recorded data to output stream
+
+    bl = BASS_ChannelGetData(chan, NULL, BASS_DATA_AVAILABLE);  // Get output buffer level
+
+    if(prebuf)                              // Prebuffering
+    {
+        if(bl >= prebuf + length)           // Gone 1 block past the prebuffering target
+        {
+            prebuf = 0;                     // Finished prebuffering
+            BASS_ChannelPlay(chan, FALSE);  // Start the output
+        }
+    }
+    return true;
+    */
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void AudioCapturer::PlayData(void *buffer, uint length)
+{
+    DWORD bl;
+
+    BASS_StreamPutData(chan, buffer, length);
+
+    bl = BASS_ChannelGetData(chan, NULL, BASS_DATA_AVAILABLE);
+
+    if(prebuf)
+    {
+        if(bl >= prebuf + length)
+        {
+            prebuf = 0;
+            BASS_ChannelPlay(chan, FALSE);
+        }
+    }
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool AudioCapturer::Start()
 {
-    int device = BASS_RecordGetDevice();
+    Init();
 
-    LOG_INFOF("device bass = %d", device);
+    if(!BASS_RecordInit(-1))
+    {
+        LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+        BASS_RecordFree();
+        BASS_Free();
+        return false;
+    }
 
-    return false;
+    rchan = BASS_RecordStart(SAMPLERATE, 2, MAKELONG(0, 10), RecordingCallback, 0);
+
+    if(rchan == 0)
+    {
+        LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+        BASS_RecordFree();
+        BASS_Free();
+        return false;
+    }
+
+    return true;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool AudioCapturer::Init()
+{
+    BASS_INFO bi;
+
+    BASS_SetConfig(BASS_CONFIG_VISTA_TRUEPOS, 0);       // Allosw lower latency on Vista and newer
+
+    if(!BASS_Init(-1, SAMPLERATE, BASS_DEVICE_LATENCY, 0, NULL))
+    {
+        LOG_ERROR("Can't initialize audio output");
+        return false;
+    }
+
+    BASS_GetInfo(&bi);
+
+    chan = BASS_StreamCreate(SAMPLERATE, 2, 0, STREAMPROC_PUSH, 0);
+
+    if(chan == 0)
+    {
+        LOG_ERRORF("Can't create stream with error code %d", BASS_ErrorGetCode());
+        return false;
+    }
+
+    rate = SAMPLERATE;
+
+    prebuf = (DWORD)BASS_ChannelSeconds2Bytes(chan, bi.minbuf / 1000.0f);  // prebuffer at least "minbuf" worth of data
+
+    if(prebuf == -1)
+    {
+        LOG_ERRORF("Error %d", BASS_ErrorGetCode());
+        return false;
+    }
+
+    return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void AudioCapturer::Stop()
 {
-
+    BASS_RecordFree();
+    BASS_Free();
 }

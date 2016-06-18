@@ -31,6 +31,7 @@ extern Urho3D::Renderer *gRenderer;
 extern Urho3D::Graphics *gGraphics;
 extern Urho3D::Console *gConsole;
 extern Urho3D::DebugHud *gDebugHud;
+extern Urho3D::Audio *gAudio;
 
 extern CameraUni *gCamera;
 extern Client *gClient;

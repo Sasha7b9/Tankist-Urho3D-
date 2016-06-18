@@ -49,6 +49,11 @@ void Tankist::Setup()
         gLog->Open("server.log");
     }
 
+    gAudioCapturer = new AudioCapturer();
+    gAudioCapturer->Start();
+
+    gAudio = GetSubsystem<Audio>();
+
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
     gResourceCache = GetSubsystem<ResourceCache>();
@@ -128,9 +133,6 @@ void Tankist::Start()
 
         gChat = new Chat(gContext, Chat::Chat_Client);
         gChat->Connect(gIPAddress.CString(), PORT_CHAT);
-
-        gAudioCapturer = new AudioCapturer();
-        gAudioCapturer->Start();
     }
 
     gGame = new Game(gContext);
@@ -145,6 +147,8 @@ void Tankist::Stop()
     {
         gClient->Disconnect();
     }
+
+    gAudioCapturer->Stop();
 
     engine_->DumpResources(true);
     engine_->DumpProfiler();

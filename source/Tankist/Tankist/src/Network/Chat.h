@@ -34,6 +34,7 @@ public:
     void AddMessage(const String &message);     // Show message on display
     void SendToServer(const String &message);
     void UpdateChat();
+    void SendAudioData(void *buffer, uint sizeBuffer);
 
 private:
     Type type;

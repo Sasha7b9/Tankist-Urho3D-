@@ -6,6 +6,8 @@
 
 #include "defines.h"
 
+#include <Urho3D/Audio/Audio.h>
+
 #include <Urho3D/Container/Ptr.h>
 
 #include <Urho3D/Core/CoreEvents.h>
@@ -76,6 +78,7 @@
 
 
 using Urho3D::Application;
+using Urho3D::Audio;
 
 using Urho3D::BiasParameters;
 using Urho3D::BoundingBox;

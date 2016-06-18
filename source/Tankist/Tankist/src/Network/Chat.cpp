@@ -105,6 +105,13 @@ void Chat::SendToServer(const String &message)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+void Chat::SendAudioData(void *buffer, uint sizeBuffer)
+{
+    client.SendMessage(MSG_VOICE_CHAT, buffer, sizeBuffer);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::UpdateChat()
 {
     if(messages.Size() == 0)
@@ -181,6 +188,10 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
     {
         String message((char*)data, (uint)sizeData);
         gChat->SendToAll(message);
+    }
+    else if(typeMessage == MSG_VOICE_CHAT)
+    {
+        gAudioCapturer->PlayData(data, (uint)sizeData);
     }
 }
 

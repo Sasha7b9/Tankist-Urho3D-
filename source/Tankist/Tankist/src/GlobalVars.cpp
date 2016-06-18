@@ -24,6 +24,7 @@ Renderer *gRenderer = nullptr;
 Graphics *gGraphics = nullptr;
 Console *gConsole = nullptr;
 DebugHud *gDebugHud = nullptr;
+Audio *gAudio = nullptr;
 
 CameraUni *gCamera = nullptr;
 Client *gClient = nullptr;

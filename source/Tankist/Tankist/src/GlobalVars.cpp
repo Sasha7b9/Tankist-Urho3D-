@@ -40,3 +40,5 @@ Chat *gChat = nullptr;
 Game *gGame = nullptr;
 
 ChatLog *gChatLog = nullptr;
+
+AudioCapturer *gAudioCapturer = nullptr;

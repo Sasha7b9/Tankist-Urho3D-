@@ -8,6 +8,7 @@
 #include "Network/Server.h"
 #include "Game.h"
 #include "ChatLog.h"
+#include "Audio/AudioCapturer.h"
 
 
 // For server and client
@@ -46,3 +47,5 @@ extern Chat *gChat;
 extern Game *gGame;
 
 extern ChatLog *gChatLog;
+
+extern AudioCapturer *gAudioCapturer;

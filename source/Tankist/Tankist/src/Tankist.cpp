@@ -128,6 +128,9 @@ void Tankist::Start()
 
         gChat = new Chat(gContext, Chat::Chat_Client);
         gChat->Connect(gIPAddress.CString(), PORT_CHAT);
+
+        gAudioCapturer = new AudioCapturer();
+        gAudioCapturer->Start();
     }
 
     gGame = new Game(gContext);

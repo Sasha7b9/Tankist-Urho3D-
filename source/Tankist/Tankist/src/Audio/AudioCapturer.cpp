@@ -27,7 +27,7 @@ struct OpusEncoder *enc = nullptr;
 struct OpusDecoder *dec = nullptr;
 
 static void CreateEncodeDecode();
-// Encode voice data. bufIn - input buffer, sizeInOut - length input/output buffer. Return otput buffer.
+// Encode voice data. bufIn - input buffer, sizeInOut - length input/output buffer. Return output buffer. If data not ready, return 0.
 static void* OPUS_Encode(void *bufIn, int *sizeInOut);
 
 
@@ -115,26 +115,61 @@ void CreateEncodeDecode()
 
     enc = opus_encoder_create(8000, 2, OPUS_APPLICATION_AUDIO, &error);
 
-    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(5));
+    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(10));
     opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+
+    dec = opus_decoder_create(8000, 2, &error);
+
+    opus_decoder_ctl(dec, OPUS_SET_COMPLEXITY(10));
+    opus_decoder_ctl(dec, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
+{
+    static uint8 buffer[10000];
+    int numBytes = opus_decode(dec, (uint8*)bufIn, *sizeInOut, (opus_int16*)buffer, 320, 0);
+    
+    *sizeInOut = numBytes;
+    return buffer;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void* OPUS_Encode(void *buffIn, int *sizeInOut)
 {
+    static const int SIZE_BUFFER = 160;
+
     static uint8 bufferIn[10000];
     static uint8 bufferOut[10000];
 
-    int numBytes = opus_encode(enc, (opus_int16*)buffIn, (*sizeInOut) / 2, bufferOut, 10000);
+    static int bytesInInput = 0;
+    uint8 *pointerIn = bufferIn;
 
-    if(numBytes < 0)
+    memcpy(bufferIn + bytesInInput, buffIn, (size_t)*sizeInOut);
+    bytesInInput += *sizeInOut;
+
+    int encodeBytes = 0;
+
+    while(bytesInInput >= (SIZE_BUFFER * 4))
     {
-        LOG_ERRORF("Error %d in opus_encode()", numBytes);
-        return bufferIn;
+        encodeBytes += opus_encode(enc, (opus_int16*)pointerIn, SIZE_BUFFER, bufferOut + encodeBytes, 5000);
+        pointerIn += SIZE_BUFFER * 4;
+        bytesInInput -= SIZE_BUFFER * 4;
+    }
+    
+    if(encodeBytes <= 0)
+    {
+        return 0;
     }
 
-    *sizeInOut = numBytes;
+    if(bytesInInput)
+    {
+        memcpy(bufferIn, pointerIn, (size_t)bytesInInput);
+    }
+
+    *sizeInOut = encodeBytes;
 
     return bufferOut;
 }
@@ -144,6 +179,7 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
 {
     static int counter = 0;
+    static int compressedBytes = 0;
     static float prevTime = 0.0f;
     static uint maxSize = 0;
     static uint minSize = 0xffffffff;
@@ -166,11 +202,12 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
     if((gTime->GetElapsedTime() - prevTime) >= 1.0f)
     {
         prevTime = gTime->GetElapsedTime();
-        LOG_INFOF("counter = %d, max size = %d, min size = %d, all bytes = %d, timeRun = %f s", counter, maxSize, minSize, allBytes, timeRun);
+        LOG_INFOF("counter = %d, max size = %d, min size = %d, bytes - all/compressed = %d/%d = %f, timeRun = %f s", counter, maxSize, minSize, allBytes, compressedBytes, (float)allBytes / compressedBytes, timeRun);
         counter = 0;
         maxSize = 0;
         minSize = 0xffffffff;
         allBytes = 0;
+        compressedBytes = 0;
     }
 
     if(gChat)
@@ -185,32 +222,15 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
                 sendBytes = 1000;
             }
 
-            int numBytes = sendBytes;
+            int numBytes = (int)sendBytes;
 
-            //****************************************************************************************************************
+            void* data = OPUS_Encode(pointer, &numBytes);
 
-            //void* data = OPUS_Encode(pointer, &numBytes);
-
-            static uint8 bufferIn[10000];
-            static uint8 bufferOut[10000];
-
-            numBytes = opus_encode(enc, (opus_int16*)pointer, numBytes / 2, bufferOut, 10000);
-
-            if(numBytes < 0)
+            if(data != 0)
             {
-                LOG_ERRORF("Error %d in opus_encode()", numBytes);
-                
+                compressedBytes += numBytes;
+                gChat->SendAudioData(data, (uint)numBytes);
             }
-
-            //*sizeInOut = numBytes;
-
-            //return bufferOut;
-
-            //*****************************************************************************************************************
-
-            gChat->SendAudioData(bufferOut, numBytes);
-
-            //gChat->SendAudioData(pointer, sendBytes);
 
             pointer += sendBytes;
             length -= sendBytes;

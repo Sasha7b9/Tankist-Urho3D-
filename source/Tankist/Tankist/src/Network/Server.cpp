@@ -14,7 +14,7 @@ Server::Server(Context *context) : Object(context)
     SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnected));
     SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Server, HandleClientIdentity));
     SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Server, HandleClientSceneLoaded));
-//    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
 //    SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Server, HandleNetworkUpdate));
 //    SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Server, HandleNetworkUpdateSent));
     SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Server, HandleNetworkSceneLoadFailed));
@@ -57,8 +57,6 @@ static String prevAddress;
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    LOG_INFOF("%s", __FUNCTION__);
-
     using namespace Urho3D::NetworkMessage;
 
     Connection *connection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());

@@ -17,7 +17,7 @@ Client::Client(Context *context) : Object(context)
     SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Client, HandleClientDisconnected));
     SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Client, HandleClientIdentity));
     SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Client, HandleClientSceneLoaded));
-    //SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
+    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
     //SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Client, HandleNetworkUpdate));
     //SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Client, HandleNetworkUpdateSent));
     SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Client, HandleNetworkSceneLoadFailed));
@@ -96,8 +96,6 @@ void Client::HandleConnectFailed(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    LOG_INFOF("%s", __FUNCTION__);
-
     using namespace Urho3D::NetworkMessage;
 
     int msgID = eventData[P_MESSAGEID].GetInt();

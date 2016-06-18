@@ -103,14 +103,14 @@ void Tankist::Start()
 
     gTankist = this;
 
-    gChatLog = new ChatLog(context_);
-
     if (gTypeApplication == Type_Server)
     {
         gServer = new Server(context_);
         gServer->Start(gNumPort);
 
         CreateListFiles();
+
+        gChatLog = new ChatLog(context_);
 
         gChat = new Chat(gContext, Chat::Chat_Server);
         gChat->Listen(PORT_CHAT);

@@ -4,15 +4,9 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static Chat *chat = nullptr;
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Chat::Chat(Context *context, Type type) : Object(context)
 {
     this->type = type;
-
-    chat = this;
 
     if (type == Chat_Client)
     {
@@ -177,8 +171,6 @@ static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
     URHO3D_LOGINFOF("Chat from %s:%d connected", address, (int)port);
 
     clients.Push(DataClient(clientID, address, port));
-
-    chat->SendToAll(String(address) + String(" enter"));
 }
 
 
@@ -188,7 +180,7 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
     if(typeMessage == MSG_CHAT)
     {
         String message((char*)data, (uint)sizeData);
-        chat->SendToAll(message);
+        gChat->SendToAll(message);
     }
 }
 
@@ -196,6 +188,8 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnDisconnect(int clientID)
 {
+    LOG_INFOF("%s enter");
+
     String message;
 
     for (DataClient &client : clients)
@@ -207,7 +201,9 @@ static void ServerCallbackOnDisconnect(int clientID)
             break;
         }
     }
-    chat->SendToAll(message);
+    gChat->SendToAll(message);
+
+    LOG_INFOF("%s leave");
 }
 
 
@@ -242,9 +238,10 @@ bool Chat::Listen(uint16 port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToAll(const String &message)
 {
+    gChatLog->WriteMessage(message);
+
     for (DataClient &client : clients)
     {
         server.SendMessage(client.clientID, MSG_CHAT, (void*)message.CString(), message.Length());
-        gChatLog->WriteMessage(message);
     }
 }

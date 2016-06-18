@@ -22,4 +22,5 @@ ChatLog::~ChatLog()
 void ChatLog::WriteMessage(const String &message)
 {
     file->WriteLine(message);
+    file->Flush();
 }

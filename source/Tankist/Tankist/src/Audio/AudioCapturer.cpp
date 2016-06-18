@@ -115,13 +115,15 @@ void CreateEncodeDecode()
 
     enc = opus_encoder_create(8000, 2, OPUS_APPLICATION_AUDIO, &error);
 
-    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(10));
+    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(5));
+    //opus_encoder_ctl(enc, OPUS_SET_BITRATE(32000));
     opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
 
     dec = opus_decoder_create(8000, 2, &error);
 
-    opus_decoder_ctl(dec, OPUS_SET_COMPLEXITY(10));
-    opus_decoder_ctl(dec, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+    //opus_decoder_ctl(dec, OPUS_SET_COMPLEXITY(5));
+    //opus_encoder_ctl(enc, OPUS_SET_BITRATE(32000));
+    //opus_decoder_ctl(dec, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
 }
 
 
@@ -129,9 +131,15 @@ void CreateEncodeDecode()
 void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
 {
     static uint8 buffer[10000];
-    int numBytes = opus_decode(dec, (uint8*)bufIn, *sizeInOut, (opus_int16*)buffer, 320, 0);
+
+    int numBytes = opus_decode(dec, (uint8*)bufIn, *sizeInOut, (opus_int16*)buffer, 2000, 0);
+
+    if(numBytes < 0)
+    {
+        LOG_ERRORF("Error decode with code %d", numBytes);
+    }
     
-    *sizeInOut = numBytes;
+    *sizeInOut = numBytes * 4;
     return buffer;
 }
 
@@ -139,7 +147,7 @@ void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void* OPUS_Encode(void *buffIn, int *sizeInOut)
 {
-    static const int SIZE_BUFFER = 160;
+    static const int SIZE_BUFFER = 320;
 
     static uint8 bufferIn[10000];
     static uint8 bufferOut[10000];
@@ -152,11 +160,18 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 
     int encodeBytes = 0;
 
-    while(bytesInInput >= (SIZE_BUFFER * 4))
+#define LENGTH (SIZE_BUFFER * 4)
+
+    while(bytesInInput >= LENGTH)
     {
-        encodeBytes += opus_encode(enc, (opus_int16*)pointerIn, SIZE_BUFFER, bufferOut + encodeBytes, 5000);
-        pointerIn += SIZE_BUFFER * 4;
-        bytesInInput -= SIZE_BUFFER * 4;
+        int nextBytes = opus_encode(enc, (opus_int16*)pointerIn, SIZE_BUFFER, bufferOut + encodeBytes, 5000);
+        if(nextBytes < 0)
+        {
+            LOG_ERRORF("Error encode %d", nextBytes);
+        }
+        encodeBytes += nextBytes;
+        pointerIn += LENGTH;
+        bytesInInput -= LENGTH;
     }
     
     if(encodeBytes <= 0)
@@ -178,38 +193,6 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
 {
-    static int counter = 0;
-    static int compressedBytes = 0;
-    static float prevTime = 0.0f;
-    static uint maxSize = 0;
-    static uint minSize = 0xffffffff;
-    static uint allBytes = 0;
-    static float timeRun = 0.0f;
-
-    float timeEnter = gTime->GetElapsedTime();
-
-    counter++;
-    allBytes += length;
-    if(length > maxSize)
-    {   
-        maxSize = length;
-    }
-    else if(length < minSize)
-    {
-        minSize = length;
-    }
-
-    if((gTime->GetElapsedTime() - prevTime) >= 1.0f)
-    {
-        prevTime = gTime->GetElapsedTime();
-        LOG_INFOF("counter = %d, max size = %d, min size = %d, bytes - all/compressed = %d/%d = %f, timeRun = %f s", counter, maxSize, minSize, allBytes, compressedBytes, (float)allBytes / compressedBytes, timeRun);
-        counter = 0;
-        maxSize = 0;
-        minSize = 0xffffffff;
-        allBytes = 0;
-        compressedBytes = 0;
-    }
-
     if(gChat)
     {
         uint8 *pointer = (uint8*)buffer;
@@ -226,9 +209,8 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
 
             void* data = OPUS_Encode(pointer, &numBytes);
 
-            if(data != 0)
+            if(data)
             {
-                compressedBytes += numBytes;
                 gChat->SendAudioData(data, (uint)numBytes);
             }
 
@@ -238,27 +220,7 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
         } while(length);
     }
 
-    timeRun += (gTime->GetElapsedTime() - timeEnter);
-
     return true;
-
-    /*
-    DWORD bl;
-
-    BASS_StreamPutData(chan, buffer, length);                   // Feed recorded data to output stream
-
-    bl = BASS_ChannelGetData(chan, NULL, BASS_DATA_AVAILABLE);  // Get output buffer level
-
-    if(prebuf)                              // Prebuffering
-    {
-        if(bl >= prebuf + length)           // Gone 1 block past the prebuffering target
-        {
-            prebuf = 0;                     // Finished prebuffering
-            BASS_ChannelPlay(chan, FALSE);  // Start the output
-        }
-    }
-    return true;
-    */
 }
 
 

@@ -191,10 +191,9 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
     }
     else if(typeMessage == MSG_VOICE_CHAT)
     {
-        int size = sizeData;
-        void *buf = gAudioCapturer->OPUS_Decode(data, &size);
+        void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
 
-        gAudioCapturer->PlayData(buf, (uint)size);
+        gAudioCapturer->PlayData(buf, (uint)sizeData);
     }
 }
 

@@ -23,6 +23,14 @@ static DWORD rate = 0;
 static HRECORD rchan = 0;
 
 
+struct OpusEncoder *enc = nullptr;
+struct OpusDecoder *dec = nullptr;
+
+static void CreateEncodeDecode();
+// Encode voice data. bufIn - input buffer, sizeInOut - length input/output buffer. Return otput buffer.
+static void* OPUS_Encode(void *bufIn, int *sizeInOut);
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void DisplayDeviceInfo(BASS_DEVICEINFO *di)
 {
@@ -101,17 +109,70 @@ AudioCapturer::AudioCapturer()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void AudioCapturer::CreateEncodeDecode()
+void CreateEncodeDecode()
 {
     int error = 0;
 
     enc = opus_encoder_create(8000, 2, OPUS_APPLICATION_AUDIO, &error);
+
+    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(5));
+    opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void* OPUS_Encode(void *buffIn, int *sizeInOut)
+{
+    static uint8 bufferIn[10000];
+    static uint8 bufferOut[10000];
+
+    int numBytes = opus_encode(enc, (opus_int16*)buffIn, (*sizeInOut) / 2, bufferOut, 10000);
+
+    if(numBytes < 0)
+    {
+        LOG_ERRORF("Error %d in opus_encode()", numBytes);
+        return bufferIn;
+    }
+
+    *sizeInOut = numBytes;
+
+    return bufferOut;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
 {
+    static int counter = 0;
+    static float prevTime = 0.0f;
+    static uint maxSize = 0;
+    static uint minSize = 0xffffffff;
+    static uint allBytes = 0;
+    static float timeRun = 0.0f;
+
+    float timeEnter = gTime->GetElapsedTime();
+
+    counter++;
+    allBytes += length;
+    if(length > maxSize)
+    {   
+        maxSize = length;
+    }
+    else if(length < minSize)
+    {
+        minSize = length;
+    }
+
+    if((gTime->GetElapsedTime() - prevTime) >= 1.0f)
+    {
+        prevTime = gTime->GetElapsedTime();
+        LOG_INFOF("counter = %d, max size = %d, min size = %d, all bytes = %d, timeRun = %f s", counter, maxSize, minSize, allBytes, timeRun);
+        counter = 0;
+        maxSize = 0;
+        minSize = 0xffffffff;
+        allBytes = 0;
+    }
+
     if(gChat)
     {
         uint8 *pointer = (uint8*)buffer;
@@ -124,13 +185,40 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
                 sendBytes = 1000;
             }
 
-            gChat->SendAudioData(pointer, sendBytes);
+            int numBytes = sendBytes;
+
+            //****************************************************************************************************************
+
+            //void* data = OPUS_Encode(pointer, &numBytes);
+
+            static uint8 bufferIn[10000];
+            static uint8 bufferOut[10000];
+
+            numBytes = opus_encode(enc, (opus_int16*)pointer, numBytes / 2, bufferOut, 10000);
+
+            if(numBytes < 0)
+            {
+                LOG_ERRORF("Error %d in opus_encode()", numBytes);
+                
+            }
+
+            //*sizeInOut = numBytes;
+
+            //return bufferOut;
+
+            //*****************************************************************************************************************
+
+            gChat->SendAudioData(bufferOut, numBytes);
+
+            //gChat->SendAudioData(pointer, sendBytes);
 
             pointer += sendBytes;
             length -= sendBytes;
 
         } while(length);
     }
+
+    timeRun += (gTime->GetElapsedTime() - timeEnter);
 
     return true;
 
@@ -179,22 +267,25 @@ bool AudioCapturer::Start()
 {
     Init();
 
-    if(!BASS_RecordInit(-1))
+    if(gTypeApplication == Type_Client)
     {
-        LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
-        BASS_RecordFree();
-        BASS_Free();
-        return false;
-    }
+        if(!BASS_RecordInit(-1))
+        {
+            LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+            BASS_RecordFree();
+            BASS_Free();
+            return false;
+        }
 
-    rchan = BASS_RecordStart(SAMPLERATE, 2, MAKELONG(0, 10), RecordingCallback, 0);
+        rchan = BASS_RecordStart(SAMPLERATE, 2, MAKELONG(0, 10), RecordingCallback, 0);
 
-    if(rchan == 0)
-    {
-        LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
-        BASS_RecordFree();
-        BASS_Free();
-        return false;
+        if(rchan == 0)
+        {
+            LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+            BASS_RecordFree();
+            BASS_Free();
+            return false;
+        }
     }
 
     return true;

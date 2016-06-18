@@ -12,6 +12,7 @@
 *.suo
 *.dll
 *.pyc
+*.exp
 *.*~
 *.*~
 *.sqlite3

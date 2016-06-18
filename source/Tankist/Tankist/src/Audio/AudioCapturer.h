@@ -12,8 +12,4 @@ public:
 
 private:
     bool Init();
-    void CreateEncodeDecode();
-
-    struct OpusEncoder *enc = nullptr;
-    struct OpusDecoder *dec = nullptr;
 };

@@ -1,11 +1,16 @@
 #include "stdafx.h"
 
 
-#include "bass.h"
+#include <bass.h>
+#include <opus.h>
 #include "AudioCapturer.h"
 
 
 #pragma comment(lib, "bass.lib")
+#pragma comment(lib, "opus.lib")
+#pragma comment(lib, "silk_common.lib")
+#pragma comment(lib, "silk_float.lib")
+#pragma comment(lib, "celt.lib")
 
 
 #define SAMPLERATE 8000
@@ -91,7 +96,16 @@ AudioCapturer::AudioCapturer()
         LOG_ERRORF("An incorrect version of bass.dll. Required %d, available %d", BASSVERSION, BASS_GetVersion());
     }
 
-    //Init();
+    CreateEncodeDecode();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void AudioCapturer::CreateEncodeDecode()
+{
+    int error = 0;
+
+    enc = opus_encoder_create(8000, 2, OPUS_APPLICATION_AUDIO, &error);
 }
 
 

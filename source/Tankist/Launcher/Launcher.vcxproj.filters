@@ -48,9 +48,6 @@
     <ClInclude Include="..\common\CommonFunctions.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Network\Socket.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -58,6 +55,12 @@
       <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\ServerTCP.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\SocketClientTCP.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\SocketServerTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,13 +92,16 @@
     <ClCompile Include="..\common\CommonFunctions.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Network\Socket.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\common\Network\ServerTCP.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\SocketClientTCP.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\SocketServerTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
   </ItemGroup>

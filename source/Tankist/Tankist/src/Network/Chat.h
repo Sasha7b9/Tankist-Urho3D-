@@ -31,7 +31,8 @@ public:
     bool IsActive();
     void SetActive(bool active);
     void PressEnter();
-    void AddMessage(const String &message);
+    void AddMessage(const String &message);     // Show message on display
+    void SendToServer(const String &message);
     void UpdateChat();
 
 private:

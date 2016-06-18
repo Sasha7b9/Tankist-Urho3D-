@@ -10,9 +10,6 @@
     <ClCompile Include="src\Network\Server.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Network\Socket.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
@@ -46,6 +43,24 @@
     <ClCompile Include="src\ChatLog.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Network\Messenger.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\AudioCapturer.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\AudioChat.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\AudioPlayer.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\SocketClientTCP.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Network\SocketServerTCP.cpp">
+      <Filter>common\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -59,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="..\common\defines.h">
       <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Network\Socket.h">
-      <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\ClientTCP.h">
       <Filter>common\Network</Filter>
@@ -93,6 +105,24 @@
     <ClInclude Include="src\ChatLog.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Network\Messenger.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\AudioCapturer.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\AudioChat.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\AudioPlayer.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\SocketClientTCP.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Network\SocketServerTCP.h">
+      <Filter>common\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -106,6 +136,9 @@
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{59ba811c-a0e0-4214-bebe-7036cda8608c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{5b2de937-77c7-4bb1-b1f7-382ce8130131}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -32,6 +32,8 @@ void Server::Start(unsigned short port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 {
+    LOG_INFO("New client connected");
+
     using namespace Urho3D::ClientConnected;
 
     Connection *newConnection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
@@ -46,7 +48,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     numClients++;
 
-    SendMessageChat(newConnection->GetAddress() + " enter");
+    gChat->SendToAll(newConnection->GetAddress() + " enter");
 }
 
 static String prevAddress;
@@ -68,22 +70,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
     VectorBuffer buffer;
 
-    if (msgID == MSG_CHAT)
-    {
-        String text = msg.ReadString();
-        String address = connection->GetAddress();
-
-        if(prevAddress != address)
-        {
-            SendMessageChat(address + ": " + text);
-            prevAddress = address;
-        }
-        else
-        {
-            SendMessageChat(text);
-        }
-    }
-    else if(msgID == MSG_PING)
+    if(msgID == MSG_PING)
     {
         connection->SendMessage(MSG_PING, true, true, buffer);
     }
@@ -139,22 +126,7 @@ void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 
     numClients--;
 
-    SendMessageChat(conn->GetAddress() + " leave");
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Server::SendMessageChat(const String &msg)
-{
-    VectorBuffer buffer;
-    buffer.WriteString(msg);
-    Vector<SharedPtr<Connection>> connections = gNetwork->GetClientConnections();
-    for (Connection *conn : connections)
-    {
-        conn->SendMessage(MSG_CHAT, true, true, buffer);
-    }
-
-    gChatLog->WriteMessage(msg);
+    gChat->SendToAll(conn->GetAddress() + " leave");
 }
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Network/Socket.h"
+#include "Network/SocketClientTCP.h"
 
 
 class NetworkThread : public Thread

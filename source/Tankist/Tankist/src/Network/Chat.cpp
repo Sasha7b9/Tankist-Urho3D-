@@ -44,7 +44,7 @@ static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int sizeBuf
 {
     if(typeMessage == MSG_CHAT)
     {
-        gChat->AddMessage(String((char*)buffer, sizeBuffer));
+        gChat->AddMessage(String((char*)buffer, (uint)sizeBuffer));
     }
 }
 
@@ -100,6 +100,13 @@ void Chat::PressEnter()
         client.SendMessage(MSG_CHAT, (void*)text.CString(), text.Length());
         messageEdit->SetText("");
     }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Chat::SendToServer(const String &message)
+{
+    client.SendMessage(MSG_CHAT, (void*)message.CString(), message.Length());
 }
 
 
@@ -176,13 +183,12 @@ static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnRecieve(int clientID, uint8 typeMessage, void *data, int sizeData)
+static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *data, int sizeData)
 {
     if(typeMessage == MSG_CHAT)
     {
-        String message((char*)data, sizeData);
+        String message((char*)data, (uint)sizeData);
         chat->SendToAll(message);
-        gChatLog->WriteMessage(message);
     }
 }
 
@@ -239,5 +245,6 @@ void Chat::SendToAll(const String &message)
     for (DataClient &client : clients)
     {
         server.SendMessage(client.clientID, MSG_CHAT, (void*)message.CString(), message.Length());
+        gChatLog->WriteMessage(message);
     }
 }

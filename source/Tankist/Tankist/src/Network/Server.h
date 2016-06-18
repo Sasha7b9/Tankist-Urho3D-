@@ -39,8 +39,6 @@ private:
     void HandleNetworkSceneLoadFailed(StringHash eventType, VariantMap &eventData);
     void HandleRemoteEventData(StringHash eventType, VariantMap &eventData);
 
-    void SendMessageChat(const String &msg);
-
     int numClients = 0;
 
     Server(Server const&) : Object(nullptr) {};

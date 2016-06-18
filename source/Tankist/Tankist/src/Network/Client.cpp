@@ -105,11 +105,7 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
     const PODVector<uint8> &data = eventData[P_DATA].GetBuffer();
     MemoryBuffer msg(data);
 
-    if (msgID == MSG_CHAT)
-    {
-        gChat->AddMessage(msg.ReadString());
-    }
-    else if(msgID == MSG_PING)
+    if(msgID == MSG_PING)
     {
         gTankist->SetPing(gTime->GetElapsedTime() - timePing);
     }

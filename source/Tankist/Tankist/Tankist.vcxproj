@@ -26,9 +26,11 @@
     <ClCompile Include="..\common\Network\ServerTCP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\common\Network\Socket.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="..\common\Network\SocketClientTCP.cpp" />
+    <ClCompile Include="..\common\Network\SocketServerTCP.cpp" />
+    <ClCompile Include="src\Audio\AudioCapturer.cpp" />
+    <ClCompile Include="src\Audio\AudioChat.cpp" />
+    <ClCompile Include="src\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\CameraUni.cpp" />
     <ClCompile Include="src\ChatLog.cpp" />
     <ClCompile Include="src\Game.cpp">
@@ -37,6 +39,7 @@
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Chat.cpp" />
+    <ClCompile Include="src\Network\Messenger.cpp" />
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -56,13 +59,18 @@
     <ClInclude Include="..\common\defines.h" />
     <ClInclude Include="..\common\Network\ClientTCP.h" />
     <ClInclude Include="..\common\Network\ServerTCP.h" />
-    <ClInclude Include="..\common\Network\Socket.h" />
+    <ClInclude Include="..\common\Network\SocketClientTCP.h" />
+    <ClInclude Include="..\common\Network\SocketServerTCP.h" />
+    <ClInclude Include="src\Audio\AudioCapturer.h" />
+    <ClInclude Include="src\Audio\AudioChat.h" />
+    <ClInclude Include="src\Audio\AudioPlayer.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\ChatLog.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
+    <ClInclude Include="src\Network\Messenger.h" />
     <ClInclude Include="src\Network\Server.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />

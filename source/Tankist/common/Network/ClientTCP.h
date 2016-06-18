@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Socket.h"
+#include "SocketClientTCP.h"
 
 
 class ClientTCP

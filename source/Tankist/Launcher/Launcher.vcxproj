@@ -147,7 +147,8 @@
     <ClInclude Include="..\common\defines.h" />
     <ClInclude Include="..\common\Network\ClientTCP.h" />
     <ClInclude Include="..\common\Network\ServerTCP.h" />
-    <ClInclude Include="..\common\Network\Socket.h" />
+    <ClInclude Include="..\common\Network\SocketClientTCP.h" />
+    <ClInclude Include="..\common\Network\SocketServerTCP.h" />
     <ClInclude Include="src\Core\Math.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Graphics\lImage.h" />
@@ -161,7 +162,8 @@
     <ClCompile Include="..\common\CommonFunctions.cpp" />
     <ClCompile Include="..\common\Network\ClientTCP.cpp" />
     <ClCompile Include="..\common\Network\ServerTCP.cpp" />
-    <ClCompile Include="..\common\Network\Socket.cpp" />
+    <ClCompile Include="..\common\Network\SocketClientTCP.cpp" />
+    <ClCompile Include="..\common\Network\SocketServerTCP.cpp" />
     <ClCompile Include="src\Core\Math.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\Graphics\lImage.cpp" />

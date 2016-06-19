@@ -7,7 +7,7 @@
 enum StateGame
 {
     InProcess,
-    WindowGameESC
+    State_WindowGameESC
 };
 
 

@@ -24,12 +24,12 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         {
             if(gGame->GetState() == InProcess)
             {
-                gWindowGameESC->SetVisible(true);
-                gGame->SetState(WindowGameESC);
+                gWindowGameESC->Show();
+                gGame->SetState(State_WindowGameESC);
             }
             else
             {
-                gWindowGameESC->SetVisible(false);
+                gWindowGameESC->Hide();
                 gGame->SetState(InProcess);
             }
         }

@@ -61,6 +61,9 @@
     <ClCompile Include="..\common\Network\SocketServerTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\WindowGameESC.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -123,6 +126,9 @@
     <ClInclude Include="..\common\Network\SocketServerTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUI\WindowGameESC.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -139,6 +145,9 @@
     </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{5b2de937-77c7-4bb1-b1f7-382ce8130131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{3fc16836-c795-4edb-af92-11b257e6c803}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

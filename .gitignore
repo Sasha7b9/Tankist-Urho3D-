@@ -28,6 +28,7 @@ source/Tankist/Launcher/x64
 
 out/CoreData/
 out/Data/
+out/TankistData/
 out/CoreData/Shaders/HLSL/Cache/
 out/distr/CoreData/Shaders/HLSL/Cache/
 out/distr/files.txt

@@ -51,6 +51,7 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/LogicComponent.h>
 
+#include <Urho3D/UI/Button.h>
 #include <Urho3D/UI/UIEvents.h>
 #include <Urho3D/UI/Font.h>
 #include <Urho3D/UI/LineEdit.h>
@@ -83,6 +84,7 @@ using Urho3D::Audio;
 
 using Urho3D::BiasParameters;
 using Urho3D::BoundingBox;
+using Urho3D::Button;
 
 using Urho3D::Camera;
 using Urho3D::CascadeParameters;

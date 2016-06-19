@@ -146,8 +146,6 @@ void Tankist::Start()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Stop()
 {
-    gWindowGameESC->Remove();
-
     if (gClient)
     {
         gClient->Disconnect();
@@ -278,10 +276,7 @@ void Tankist::CreateUI()
     statisticsWindow->SetPosition(gUIRoot->GetWidth() - 200, 0);
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
 
-    SharedPtr<UIElement> layout = gUI->LoadLayout(gResourceCache->GetResource<XMLFile>("UI/Elements/WindowGameESC.xml"));
-    gUIRoot->AddChild(layout);
-    gWindowGameESC = layout;
-    gWindowGameESC->SetVisible(false);
+    gWindowGameESC = new WindowGameESC(context_);
 }
 
 

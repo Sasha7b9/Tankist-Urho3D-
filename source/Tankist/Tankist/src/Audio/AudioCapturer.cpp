@@ -115,9 +115,9 @@ void CreateEncodeDecode()
 
     enc = opus_encoder_create(8000, 2, OPUS_APPLICATION_AUDIO, &error);
 
-    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(5));
-    //opus_encoder_ctl(enc, OPUS_SET_BITRATE(32000));
-    opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
+    opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(1));
+    opus_encoder_ctl(enc, OPUS_SET_BITRATE(6000));
+    opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_MUSIC));
 
     dec = opus_decoder_create(8000, 2, &error);
 
@@ -193,6 +193,20 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
 {
+    static float prevTime = 0.0f;
+    static int allBytes = 0;
+    static int recvBytes = 0;
+
+    if(gTime->GetElapsedTime() - prevTime >= 1.0f)
+    {
+        LOG_INFOF("bytes : all - %d, transmitted - %d", allBytes, recvBytes);
+        prevTime = gTime->GetElapsedTime();
+        allBytes = 0;
+        recvBytes = 0;
+    }
+
+    allBytes += length;
+
     if(gChat)
     {
         uint8 *pointer = (uint8*)buffer;
@@ -208,6 +222,8 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
             int numBytes = (int)sendBytes;
 
             void* data = OPUS_Encode(pointer, &numBytes);
+
+            recvBytes += numBytes;
 
             if(data)
             {

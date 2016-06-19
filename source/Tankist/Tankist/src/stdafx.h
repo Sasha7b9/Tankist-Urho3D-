@@ -56,6 +56,7 @@
 #include <Urho3D/UI/LineEdit.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/UI/Text.h>
+#include <Urho3D/UI/Window.h>
 
 #include <Urho3D/DebugNew.h>
 
@@ -152,6 +153,7 @@ using Urho3D::VectorBuffer;
 using Urho3D::Viewport;
 
 using Urho3D::WeakPtr;
+using Urho3D::Window;
 
 using Urho3D::UI;
 using Urho3D::UIElement;

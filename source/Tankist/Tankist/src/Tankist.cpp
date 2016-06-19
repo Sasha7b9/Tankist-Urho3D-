@@ -57,6 +57,9 @@ void Tankist::Setup()
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
     gResourceCache = GetSubsystem<ResourceCache>();
+
+    gResourceCache->AddResourceDir(gFileSystem->GetProgramDir() + "TankistData");
+
     gTime = GetSubsystem<Time>();
 
     if (gTypeApplication == Type_Client)
@@ -143,6 +146,8 @@ void Tankist::Start()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Stop()
 {
+    gWindowGameESC->Remove();
+
     if (gClient)
     {
         gClient->Disconnect();
@@ -250,7 +255,7 @@ void Tankist::SubscribeToEvents()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateUI()
 {
-    XMLFile* uiStyle = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XMLFile* uiStyle = gResourceCache->GetResource<XMLFile>("UI/TankistStyle.xml");
     // Set style to the UI root so that elements will inherit it
     gUIRoot->SetDefaultStyle(uiStyle);
 
@@ -272,6 +277,11 @@ void Tankist::CreateUI()
     statisticsWindow->SetStyleAuto();
     statisticsWindow->SetPosition(gUIRoot->GetWidth() - 200, 0);
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
+
+    SharedPtr<UIElement> layout = gUI->LoadLayout(gResourceCache->GetResource<XMLFile>("UI/Elements/WindowGameESC.xml"));
+    gUIRoot->AddChild(layout);
+    gWindowGameESC = layout;
+    gWindowGameESC->SetVisible(false);
 }
 
 
@@ -306,7 +316,7 @@ void Tankist::SetWindowTitleAndIcon()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateConsoleAndDebugHud()
 {
-    XMLFile* xmlFile = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XMLFile* xmlFile = gResourceCache->GetResource<XMLFile>("UI/TankistStyle.xml");
 
     Console* console = engine_->CreateConsole();
     gConsole = GetSubsystem<Console>();
@@ -376,7 +386,7 @@ void Tankist::CreateInstructions()
 {
     Text *instructionText = gUI->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Press F12 to help");
-    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 10);
+    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/CRL.ttf"), 10);
 
     instructionText->SetHorizontalAlignment(Urho3D::HA_LEFT);
     instructionText->SetVerticalAlignment(Urho3D::VA_TOP);
@@ -389,7 +399,7 @@ void Tankist::CreateInstructions()
         "Enter - enter/leave chat\n"
         "ESC - exit"
         );
-    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
     instructionText->SetTextAlignment(Urho3D::HA_CENTER);
     instructionText->SetHorizontalAlignment(Urho3D::HA_CENTER);
     instructionText->SetVerticalAlignment(Urho3D::VA_CENTER);

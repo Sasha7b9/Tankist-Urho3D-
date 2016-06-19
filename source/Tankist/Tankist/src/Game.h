@@ -4,6 +4,12 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Vehicle.h"
 
+enum StateGame
+{
+    InProcess,
+    WindowGameESC
+};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Game : public Object
@@ -20,6 +26,15 @@ public:
     void Start();
     void ClientDisconnected(Connection *connection);
     Vehicle* ClientConnected(Connection *connection);
+    StateGame GetState()
+    {
+        return state;
+    }
+
+    void SetState(StateGame state)
+    {
+        this->state = state;
+    }
 
 private:
     Game(Game const&) : Object(nullptr) {};
@@ -32,4 +47,6 @@ private:
     void HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData);
 
     Vehicle* CreateVehicle();
+
+    StateGame state = InProcess;
 };

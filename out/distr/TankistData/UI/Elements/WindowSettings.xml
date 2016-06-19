@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<element type="Window">
+	<attribute name="Name" value="WindowsSettings" />
+	<attribute name="Position" value="500 300" />
+	<attribute name="Size" value="600 500" />
+	<element type="Text">
+		<attribute name="Name" value="tSettings" />
+		<attribute name="Position" value="0 50" />
+		<attribute name="Horiz Alignment" value="Center" />
+		<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Font Size" value="20" />
+		<attribute name="Text" value="НАСТРОЙКИ" />
+	</element>
+	<element>
+		<attribute name="Name" value="lSettings" />
+		<attribute name="Position" value="170 110" />
+		<attribute name="Size" value="307 47" />
+		<attribute name="Layout Mode" value="Horizontal" />
+		<attribute name="Layout Spacing" value="10" />
+		<element>
+			<attribute name="Name" value="lNames" />
+			<attribute name="Max Size" value="70 2147483647" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="3" />
+			<element type="Text">
+				<attribute name="Name" value="tLanguage" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Язык" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tBrightness" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Яркость" />
+			</element>
+		</element>
+		<element>
+			<attribute name="Name" value="lElements" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="3" />
+			<element>
+				<attribute name="Name" value="ddlbBrightness" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="3" />
+				<element type="DropDownList">
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Image Rect" value="0 64 16 80" />
+					<attribute name="Hover Image Offset" value="16 0" />
+					<attribute name="Tiled" value="true" />
+					<attribute name="Pressed Image Offset" value="0 0" />
+					<attribute name="Selection" value="-1" />
+					<attribute name="Resize Popup" value="true" />
+					<element internal="true" style="none">
+						<element type="Text" internal="true" style="none">
+							<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						</element>
+					</element>
+					<element popup="true" type="Window" internal="true" style="none">
+						<attribute name="Priority" value="2147483647" />
+						<element type="ListView" internal="true" style="none">
+							<element type="BorderImage" internal="true" style="none">
+								<element internal="true" style="none" />
+							</element>
+						</element>
+					</element>
+				</element>
+				<element>
+					<attribute name="Name" value="layerButtons" />
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Layout Mode" value="Horizontal" />
+					<attribute name="Layout Spacing" value="1" />
+					<element type="Button">
+						<attribute name="Name" value="ButtonLess" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Image Rect" value="212 106 234 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+					</element>
+					<element type="Button">
+						<attribute name="Name" value="ButtonMore" />
+						<attribute name="Min Size" value="22 0" />
+						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Image Rect" value="234 106 256 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+					</element>
+				</element>
+			</element>
+			<element>
+				<attribute name="Name" value="DropDownListButtons" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="3" />
+				<element type="DropDownList">
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Image Rect" value="0 64 16 80" />
+					<attribute name="Hover Image Offset" value="16 0" />
+					<attribute name="Tiled" value="true" />
+					<attribute name="Pressed Image Offset" value="0 0" />
+					<attribute name="Selection" value="-1" />
+					<attribute name="Resize Popup" value="true" />
+					<element internal="true" style="none">
+						<element type="Text" internal="true" style="none">
+							<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						</element>
+					</element>
+					<element popup="true" type="Window" internal="true" style="none">
+						<attribute name="Priority" value="2147483647" />
+						<element type="ListView" internal="true" style="none">
+							<element type="BorderImage" internal="true" style="none">
+								<element internal="true" style="none" />
+							</element>
+						</element>
+					</element>
+				</element>
+				<element>
+					<attribute name="Name" value="layerButtons" />
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Layout Mode" value="Horizontal" />
+					<attribute name="Layout Spacing" value="1" />
+					<element type="Button">
+						<attribute name="Name" value="ButtonLess" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Image Rect" value="212 106 234 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+					</element>
+					<element type="Button">
+						<attribute name="Name" value="ButtonMore" />
+						<attribute name="Min Size" value="22 0" />
+						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Image Rect" value="234 106 256 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+					</element>
+				</element>
+			</element>
+		</element>
+	</element>
+	<element type="Button">
+		<attribute name="Name" value="bExit" />
+		<attribute name="Position" value="0 400" />
+		<attribute name="Size" value="200 50" />
+		<attribute name="Horiz Alignment" value="Center" />
+		<attribute name="Pressed Child Offset" value="1 1" />
+		<element type="Text">
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Vert Alignment" value="Center" />
+			<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Font Size" value="15" />
+			<attribute name="Text" value="Вернуться в игру" />
+		</element>
+	</element>
+</element>

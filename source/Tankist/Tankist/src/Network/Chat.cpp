@@ -16,7 +16,7 @@ Chat::Chat(Context *context, Type type) : Object(context)
         container->SetLayoutMode(Urho3D::LM_VERTICAL);
         container->SetStyleAuto();
 
-        Font *font = gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+        Font *font = gResourceCache->GetResource<Font>("Fonts/CRL.ttf");
 
         historyText = container->CreateChild<Text>();
         historyText->SetColor(Urho3D::Color::WHITE);

@@ -43,3 +43,5 @@ Game *gGame = nullptr;
 ChatLog *gChatLog = nullptr;
 
 AudioCapturer *gAudioCapturer = nullptr;
+
+UIElement *gWindowGameESC = nullptr;

@@ -50,3 +50,5 @@ extern Game *gGame;
 extern ChatLog *gChatLog;
 
 extern AudioCapturer *gAudioCapturer;
+
+extern UIElement *gWindowGameESC;

@@ -22,7 +22,16 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         }
         else
         {
-            engine_->Exit();
+            if(gGame->GetState() == InProcess)
+            {
+                gWindowGameESC->SetVisible(true);
+                gGame->SetState(WindowGameESC);
+            }
+            else
+            {
+                gWindowGameESC->SetVisible(false);
+                gGame->SetState(InProcess);
+            }
         }
     }
     else if(key == Urho3D::KEY_RETURN)

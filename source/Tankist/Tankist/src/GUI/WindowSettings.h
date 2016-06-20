@@ -3,6 +3,7 @@
 
 class WindowSettings : public Object
 {
+
 #pragma warning(push)
 #pragma warning(disable:4640)
     URHO3D_OBJECT(WindowSettings, Object)
@@ -19,6 +20,8 @@ private:
     WindowSettings operator=(WindowSettings const&) {};
 
     SharedPtr<UIElement> window;
+
+    void FillDropDownListResolutions();
 
     void HandleButtonApplyChanges(StringHash, VariantMap&);
     void HandleButtonReturnToGame(StringHash, VariantMap&);

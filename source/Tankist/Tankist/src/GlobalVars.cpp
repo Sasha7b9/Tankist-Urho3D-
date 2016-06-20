@@ -42,3 +42,4 @@ ChatLog *gChatLog = nullptr;
 AudioCapturer *gAudioCapturer = nullptr;
 WindowGameESC *gWindowGameESC = nullptr;
 WindowSettings *gWindowSettings = nullptr;
+Settings *gSet = nullptr;

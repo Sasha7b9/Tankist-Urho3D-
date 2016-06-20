@@ -67,6 +67,12 @@
     <ClCompile Include="src\GUI\WindowSettings.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Elements\DropDownListButtons.cpp">
+      <Filter>GUI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -135,6 +141,12 @@
     <ClInclude Include="src\GUI\WindowSettings.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUI\Elements\DropDownListButtons.h">
+      <Filter>GUI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -154,6 +166,9 @@
     </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{3fc16836-c795-4edb-af92-11b257e6c803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Elements">
+      <UniqueIdentifier>{ee3d8181-5b6a-4b98-bffb-43997907c563}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

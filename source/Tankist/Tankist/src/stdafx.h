@@ -14,6 +14,7 @@
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/Core/Thread.h>
+#include <Urho3D/Core/Variant.h>
 
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Engine/Console.h>
@@ -60,6 +61,7 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/Window.h>
+#include <Urho3D/UI/DropDownList.h>
 
 #include <Urho3D/DebugNew.h>
 
@@ -100,6 +102,7 @@ using Urho3D::Controls;
 using Urho3D::Cursor;
 
 using Urho3D::DebugHud;
+using Urho3D::DropDownList;
 
 using Urho3D::File;
 using Urho3D::FileSystem;
@@ -150,7 +153,9 @@ using Urho3D::Text;
 using Urho3D::Time;
 using Urho3D::Thread;
 
+using Urho3D::Variant;
 using Urho3D::VariantMap;
+using Urho3D::VariantType;
 using Urho3D::Vector;
 using Urho3D::Vector2;
 using Urho3D::Vector3;

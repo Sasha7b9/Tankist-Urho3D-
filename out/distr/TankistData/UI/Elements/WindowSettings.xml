@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <element type="Window">
 	<attribute name="Name" value="WindowsSettings" />
-	<attribute name="Position" value="500 352" />
+	<attribute name="Position" value="427 609" />
 	<attribute name="Size" value="600 500" />
 	<attribute name="Is Movable" value="true" />
 	<element type="Text">
@@ -19,6 +19,7 @@
 		<attribute name="Name" value="lSettings" />
 		<attribute name="Position" value="160 110" />
 		<attribute name="Size" value="350 47" />
+		<attribute name="Is Enabled" value="true" />
 		<attribute name="Layout Mode" value="Horizontal" />
 		<attribute name="Layout Spacing" value="10" />
 		<element>

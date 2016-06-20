@@ -17,6 +17,10 @@ Tankist::Tankist(Context* context) :
     Application(context)
 {
     Vehicle::RegisterObject(context);
+
+    gContext = context_;
+
+    gSet = new Settings();
 }
 
 
@@ -34,8 +38,6 @@ void Tankist::Setup()
 #endif
         exit = true;
     }
-
-    gContext = context_;
 
     gLog = new Log(context_);
     gLog->SetLevel(Urho3D::LOG_INFO);
@@ -76,8 +78,8 @@ void Tankist::Setup()
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"] = false;
     engineParameters_["Sound"] = false;
-    engineParameters_["WindowWidth"] = 1024;
-    engineParameters_["WindowHeight"] = 768;
+    engineParameters_["WindowWidth"] = gSet->Get(WINDOW_WIDTH);
+    engineParameters_["WindowHeight"] = gSet->Get(WINDOW_HEIGHT);
     //engineParameters_["WindowPositionY"] = 20;
     //engineParameters_["WindowPositionX"] = gTypeConnection == Connection_Server ? 20 : 700;
 
@@ -153,6 +155,7 @@ void Tankist::Stop()
     if (gClient)
     {
         gClient->Disconnect();
+        gSet->Save();
     }
 
     gAudioCapturer->Stop();

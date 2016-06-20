@@ -37,6 +37,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp" />
+    <ClCompile Include="src\GUI\Elements\DropDownListButtons.cpp" />
     <ClCompile Include="src\GUI\WindowGameESC.cpp" />
     <ClCompile Include="src\GUI\WindowSettings.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -70,12 +72,14 @@
     <ClInclude Include="src\ChatLog.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
+    <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />
     <ClInclude Include="src\GUI\WindowGameESC.h" />
     <ClInclude Include="src\GUI\WindowSettings.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Messenger.h" />
     <ClInclude Include="src\Network\Server.h" />
+    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />
     <ClInclude Include="src\Vehicle.h" />

@@ -22,6 +22,41 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
 
     Button *bReturnToGame = (Button*)window->GetChild("bReturnToGame", true);
     SubscribeToEvent(bReturnToGame, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonReturnToGame));
+
+    FillDropDownListResolutions();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void WindowSettings::FillDropDownListResolutions()
+{
+    UIElement *ddlb = window->GetChild("ddlbResolution", true);
+
+    PODVector<UIElement*> elements;
+    ddlb->GetChildren(elements, true);
+
+    for(UIElement *element : elements)
+    {
+        if(element->GetType() == "DropDownList")
+        {
+            DropDownList* list = (DropDownList*)element;
+
+            PODVector<IntVector2> resolutions = gGraphics->GetResolutions();
+
+            for(IntVector2 &resolution : resolutions)
+            {
+                String res = String(resolution.x_) + " x " + String(resolution.y_);
+
+                LOG_INFOF("%s", res.CString());
+
+                Text *text = list->CreateChild<Text>();
+                text->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
+                text->SetText(res);
+
+                list->AddItem(text);
+            }
+        }
+    }
 }
 
 

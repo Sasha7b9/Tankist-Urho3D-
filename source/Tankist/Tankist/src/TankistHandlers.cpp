@@ -215,10 +215,10 @@ void Tankist::HandleLanguageChanged(StringHash, VariantMap&)
         if(element->GetType() == "Text")
         {
             String name = element->GetName();
-            if(name != "" && name != "DDL_Placeholder_Text" && name != "LE_Text")
+            if(!name.Empty() && name != "DDL_Placeholder_Text" && name != "LE_Text")
             {
                 String text = gLocale->Get(name);
-                if(text != String::EMPTY && text != name)
+                if(!text.Empty())
                 {
                     ((Text*)element)->SetText(text);
                 }

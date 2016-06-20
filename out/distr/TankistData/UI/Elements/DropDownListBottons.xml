@@ -38,8 +38,8 @@
 		<attribute name="Layout Spacing" value="1" />
 		<element type="Button">
 			<attribute name="Name" value="ButtonLess" />
-			<attribute name="Min Size" value="22 0" />
-			<attribute name="Max Size" value="22 2147483647" />
+			<attribute name="Min Size" value="22 22" />
+			<attribute name="Max Size" value="22 22" />
 			<attribute name="Image Rect" value="212 106 234 128" />
 			<attribute name="Hover Image Offset" value="-44 0" />
 			<attribute name="Pressed Image Offset" value="0 -22" />

@@ -9,5 +9,8 @@
     "tReturnToGame":    { "en":"Return to game",    "ru":"Вернуться в игру" },
     "tBrightness":      { "en":"Brightness",        "ru":"Яркость" },
     "tResolution":      { "en":"Resolution",        "ru":"Разрешение" },
-    "tFullscreen":      { "en":"Fullscreen",        "ru":"Полн. экран" }
+    "tFullscreen":      { "en":"Fullscreen",        "ru":"Полный экран" },
+    "tGameVolume":      { "en":"Game volume",       "ru":"Громкость игры" },
+    "tChatVolume":      { "en":"Chat volume",       "ru":"Громкость чата" },
+    "tMicLevel":        { "en":"Microphone level",  "ru":"Уровень микрофона" }
 }

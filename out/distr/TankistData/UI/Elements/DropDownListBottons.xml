@@ -6,6 +6,7 @@
 	<attribute name="Layout Mode" value="Horizontal" />
 	<attribute name="Layout Spacing" value="3" />
 	<element type="DropDownList">
+		<attribute name="Name" value="DropDownList" />
 		<attribute name="Vert Alignment" value="Center" />
 		<attribute name="Image Rect" value="0 64 16 80" />
 		<attribute name="Hover Image Offset" value="16 0" />

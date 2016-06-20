@@ -21,9 +21,12 @@ private:
 
     SharedPtr<UIElement> window;
 
+    DropDownListButtons *ddlbResolution;
+
     void FillDropDownListResolutions();
+    void FillControlsFromSettings();
 
     void HandleButtonApplyChanges(StringHash, VariantMap&);
     void HandleButtonReturnToGame(StringHash, VariantMap&);
-    void HandleCheckBoxFullscreen(StringHash, VariantMap&);
+    void HandleChangedScreenMode(StringHash, VariantMap&);
 };

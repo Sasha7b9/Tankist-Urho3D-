@@ -4,8 +4,6 @@
 #define WINDOW_WIDTH    0,      0
 #define WINDOW_HEIGHT   0,      1
 #define FULLSCREEN      true,   2
-#define DESKTOP_WIDTH   0,      3
-#define DESKTOP_HEIGHT  0,      4
 
 
 class Settings
@@ -25,9 +23,15 @@ public:
 
     void Save();
 
+    bool FirstStart()
+    {
+        return firstStart;
+    }
+
 private:
     void SetDefault();
     void ReadFromFile(File &file, Vector<Variant> &set);
 
     Vector<Variant> settings;
+    bool firstStart = true;
 };

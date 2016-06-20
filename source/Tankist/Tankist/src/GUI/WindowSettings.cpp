@@ -17,49 +17,44 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
 
     Hide();
 
+    SubscribeToEvent(Urho3D::E_SCREENMODE, URHO3D_HANDLER(WindowSettings, HandleChangedScreenMode));
+
     Button *bApplyChanges = (Button*)window->GetChild("bApplyChanges", true);
     SubscribeToEvent(bApplyChanges, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonApplyChanges));
 
     Button *bReturnToGame = (Button*)window->GetChild("bReturnToGame", true);
     SubscribeToEvent(bReturnToGame, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonReturnToGame));
 
-    CheckBox *chbFullscreen = (CheckBox*)window->GetChild("chbFullscreen", true);
-    SubscribeToEvent(chbFullscreen, Urho3D::E_TOGGLED, URHO3D_HANDLER(WindowSettings, HandleCheckBoxFullscreen));
+    ddlbResolution = new DropDownListButtons(context_, window, "ddlbResolution");
 
     FillDropDownListResolutions();
+
+    FillControlsFromSettings();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::FillDropDownListResolutions()
 {
-    UIElement *ddlb = window->GetChild("ddlbResolution", true);
+    PODVector<IntVector2> resolutions = gGraphics->GetResolutions();
 
-    PODVector<UIElement*> elements;
-    ddlb->GetChildren(elements, true);
-
-    for(UIElement *element : elements)
+    for(IntVector2 &resolution : resolutions)
     {
-        if(element->GetType() == "DropDownList")
-        {
-            DropDownList* list = (DropDownList*)element;
-
-            PODVector<IntVector2> resolutions = gGraphics->GetResolutions();
-
-            for(IntVector2 &resolution : resolutions)
-            {
-                String res = String(resolution.x_) + " x " + String(resolution.y_);
-
-                LOG_INFOF("%s", res.CString());
-
-                Text *text = list->CreateChild<Text>();
-                text->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
-                text->SetText(res);
-
-                list->AddItem(text);
-            }
-        }
+        String res = String(resolution.x_) + " x " + String(resolution.y_);
+        ddlbResolution->AddItem(res);
     }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void WindowSettings::FillControlsFromSettings()
+{
+    CheckBox *chbFullscreen = (CheckBox*)window->GetChild("chbFullscreen", true);
+
+    chbFullscreen->SetChecked(gSet->Get(FULLSCREEN));
+
+    String currentResolution = String(gSet->Get(WINDOW_WIDTH)) + " x " + String(gSet->Get(WINDOW_HEIGHT));
+    ddlbResolution->SetCurrentItem(currentResolution);
 }
 
 
@@ -80,7 +75,44 @@ void WindowSettings::Show()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::HandleButtonApplyChanges(StringHash, VariantMap&)
 {
+    // Screen mode
+    bool fullscreen = gSet->Get(FULLSCREEN);
+    int width = gSet->Get(WINDOW_WIDTH);
+    int height = gSet->Get(WINDOW_HEIGHT);
 
+    CheckBox *chbFullscreen = (CheckBox*)window->GetChild("chbFullscreen", true);
+    bool newFullscreen = chbFullscreen->IsChecked();
+
+    String resolution;
+    ddlbResolution->CurrentItem(resolution);
+    Vector<String> numbers = resolution.Split(' ');
+
+    int newWidth = ToInt(numbers[0]);
+    int newHeight = ToInt(numbers[2]);
+
+    if(fullscreen != newFullscreen || width != newWidth || height != newHeight)
+    {
+        if(newFullscreen != fullscreen)
+        {
+            gGraphics->ToggleFullscreen();
+        }
+
+        gSet->Set(FULLSCREEN, newFullscreen);
+        gSet->Set(WINDOW_WIDTH, newWidth);
+        gSet->Set(WINDOW_HEIGHT, newHeight);
+
+        gGraphics->SetMode(newWidth, newHeight);
+
+        if(!gGraphics->GetFullscreen())
+        {
+            IntVector2 desktopResolution = gGraphics->GetDesktopResolution();
+
+            int posX = desktopResolution.x_ / 2 - gSet->Get(WINDOW_WIDTH) / 2;
+            int posY = desktopResolution.y_ / 2 - gSet->Get(WINDOW_HEIGHT) / 2;
+
+            gGraphics->SetWindowPosition(posX, posY);
+        }
+    }
 }
 
 
@@ -92,7 +124,12 @@ void WindowSettings::HandleButtonReturnToGame(StringHash, VariantMap&)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void WindowSettings::HandleCheckBoxFullscreen(StringHash, VariantMap&)
+void WindowSettings::HandleChangedScreenMode(StringHash, VariantMap& eventData)
 {
+    using namespace Urho3D::ScreenMode;
 
+    int width = gUIRoot->GetWidth();
+    int height = gUIRoot->GetHeight();
+
+    window->SetPosition(width / 2 - window->GetWidth() / 2, height / 2 - window->GetHeight() / 2);
 }

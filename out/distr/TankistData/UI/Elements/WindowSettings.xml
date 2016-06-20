@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <element type="Window">
 	<attribute name="Name" value="WindowsSettings" />
-	<attribute name="Position" value="561 322" />
+	<attribute name="Position" value="884 497" />
 	<attribute name="Size" value="600 500" />
 	<attribute name="Is Movable" value="true" />
 	<element type="Text">
@@ -64,6 +64,7 @@
 				<attribute name="Layout Mode" value="Horizontal" />
 				<attribute name="Layout Spacing" value="3" />
 				<element type="DropDownList">
+					<attribute name="Name" value="DropDownList" />
 					<attribute name="Vert Alignment" value="Center" />
 					<attribute name="Image Rect" value="0 64 16 80" />
 					<attribute name="Hover Image Offset" value="16 0" />
@@ -116,6 +117,7 @@
 				<attribute name="Layout Mode" value="Horizontal" />
 				<attribute name="Layout Spacing" value="3" />
 				<element type="DropDownList">
+					<attribute name="Name" value="DropDownList" />
 					<attribute name="Vert Alignment" value="Center" />
 					<attribute name="Image Rect" value="0 64 16 80" />
 					<attribute name="Hover Image Offset" value="16 0" />
@@ -164,7 +166,7 @@
 				</element>
 			</element>
 			<element type="CheckBox">
-				<attribute name="Name" value="chbFullsreen" />
+				<attribute name="Name" value="chbFullscreen" />
 			</element>
 		</element>
 	</element>

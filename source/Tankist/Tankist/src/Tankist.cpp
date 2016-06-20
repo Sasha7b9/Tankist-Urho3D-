@@ -77,12 +77,10 @@ void Tankist::Setup()
     engineParameters_["WindowTitle"] = "Tankist WaT";
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
 
-    bool fullscreen = gSet->Get(FULLSCREEN);
-
-    engineParameters_["FullScreen"] = fullscreen;
-    engineParameters_["Sound"] = false;
-    engineParameters_["WindowWidth"] = fullscreen ? gSet->Get(DESKTOP_WIDTH) : gSet->Get(WINDOW_WIDTH);
-    engineParameters_["WindowHeight"] = fullscreen ? gSet->Get(DESKTOP_HEIGHT) : gSet->Get(WINDOW_HEIGHT);
+    engineParameters_["FullScreen"] = gSet->Get(FULLSCREEN);
+    engineParameters_["Sound"] = true;
+    engineParameters_["WindowWidth"] = gSet->Get(WINDOW_WIDTH);
+    engineParameters_["WindowHeight"] = gSet->Get(WINDOW_HEIGHT);
     //engineParameters_["WindowPositionY"] = 20;
     //engineParameters_["WindowPositionX"] = gTypeConnection == Connection_Server ? 20 : 700;
 
@@ -103,9 +101,13 @@ void Tankist::Start()
     {
         gGraphics = GetSubsystem<Graphics>();
 
-        IntVector2 res = gGraphics->GetDesktopResolution();
-        gSet->Set(DESKTOP_WIDTH, res.x_);
-        gSet->Set(DESKTOP_HEIGHT, res.y_);
+        if(gSet->FirstStart())
+        {
+            IntVector2 res = gGraphics->GetDesktopResolution();
+            gSet->Set(WINDOW_WIDTH, res.x_);
+            gSet->Set(WINDOW_HEIGHT, res.y_);
+            gGraphics->SetMode(gSet->Get(WINDOW_WIDTH), gSet->Get(WINDOW_HEIGHT));
+        }
 
         SetWindowTitleAndIcon();
 

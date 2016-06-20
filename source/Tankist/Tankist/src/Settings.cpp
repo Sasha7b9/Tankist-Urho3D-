@@ -34,6 +34,7 @@ Settings::Settings()
                 settings[i] = set[i];
             }
 
+            firstStart = false;
         }
     }
 
@@ -187,11 +188,9 @@ void Settings::SetDefault()
 #pragma warning(push)
 #pragma warning(disable:4548 4709)
 
-    settings.Push(Variant(640));    // WINDOW_WIDTH     0
-    settings.Push(Variant(480));    // WINDOW_HEIGHT    1
+    settings.Push(Variant(1024));   // WINDOW_WIDTH     0
+    settings.Push(Variant(768));    // WINDOW_HEIGHT    1
     settings.Push(Variant(true));   // FULLSCREEN       2
-    settings.Push(Variant(640));    // DESKTOP_WIDTH    3
-    settings.Push(Variant(480));    // DESKTOP_HEIGHT   4
 
 #pragma warning(pop)
 }

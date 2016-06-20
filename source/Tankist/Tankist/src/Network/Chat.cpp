@@ -193,7 +193,7 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
     {
         void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
 
-        //gAudioCapturer->PlayData(buf, (uint)sizeData);
+    //    gAudioCapturer->PlayData(buf, (uint)sizeData);
     }
 }
 

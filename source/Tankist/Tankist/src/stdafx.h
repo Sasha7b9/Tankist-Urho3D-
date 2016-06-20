@@ -29,6 +29,7 @@
 #include <Urho3D/Graphics/StaticModel.h>
 #include <Urho3D/Graphics/Terrain.h>
 #include <Urho3D/Graphics/Zone.h>
+#include <Urho3D/Graphics/GraphicsEvents.h>
 
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Input/Input.h>
@@ -178,6 +179,7 @@ using Urho3D::Clamp;
 using Urho3D::Random;
 using Urho3D::GetVariantType;
 using Urho3D::Abs;
+using Urho3D::ToInt;
 
 using Urho3D::LOCAL;
 using Urho3D::LIGHT_DIRECTIONAL;
@@ -204,7 +206,7 @@ using Urho3D::AM_NODEID;
 #include "CameraUni.h"
 #include "Network/Client.h"
 
+#include "GUI/Elements/DropDownListButtons.h"
 #include "Network/Server.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
-

@@ -13,6 +13,7 @@
 
 
 // For server and client
+extern Urho3D::Context *gContext;
 extern Urho3D::Log *gLog;
 extern Urho3D::Network *gNetwork;
 extern Urho3D::FileSystem *gFileSystem;
@@ -33,6 +34,7 @@ extern Urho3D::Graphics *gGraphics;
 extern Urho3D::Console *gConsole;
 extern Urho3D::DebugHud *gDebugHud;
 extern Urho3D::Audio *gAudio;
+extern Urho3D::Localization *gLocale;
 
 extern CameraUni *gCamera;
 extern Client *gClient;
@@ -40,16 +42,9 @@ extern Client *gClient;
 extern Urho3D::String gIPAddress;
 extern unsigned short gNumPort;
 
-extern Urho3D::Context *gContext;
-
 extern Tankist *gTankist;
-
 extern Chat *gChat;
-
 extern Game *gGame;
-
 extern ChatLog *gChatLog;
-
 extern AudioCapturer *gAudioCapturer;
-
 extern WindowGameESC *gWindowGameESC;

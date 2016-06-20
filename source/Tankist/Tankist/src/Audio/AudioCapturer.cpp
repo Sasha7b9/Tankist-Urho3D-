@@ -199,7 +199,7 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
 
     if(gTime->GetElapsedTime() - prevTime >= 1.0f)
     {
-        LOG_INFOF("bytes : all - %d, transmitted - %d", allBytes, recvBytes);
+        //LOG_INFOF("bytes : all - %d, transmitted - %d", allBytes, recvBytes);
         prevTime = gTime->GetElapsedTime();
         allBytes = 0;
         recvBytes = 0;

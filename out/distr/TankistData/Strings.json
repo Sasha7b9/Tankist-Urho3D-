@@ -1,0 +1,6 @@
+{
+    "tExit":            { "en":"Exit",          "ru":"Выход" },
+    "tLanguage":        { "en":"Язык:EN",       "ru":"Language:RU" },
+    "tOptions":         { "en":"Options",       "ru":"Настройки" },
+    "tTankistWaT":      { "en":"Tankist WaT",   "ru":"Танкист МК" }
+}

@@ -21,7 +21,8 @@ private:
 
     SharedPtr<UIElement> window;
 
-    void HandleButtonExit(StringHash eventType, VariantMap& eventdata);
-    void HandleButtonOptions(StringHash eventType, VariantMap& eventData);
-    void HandleButtonLanguage(StringHash eventType, VariantMap& eventData);
+    void HandleButtonExit(StringHash, VariantMap&);
+    void HandleButtonOptions(StringHash, VariantMap&);
+    void HandleButtonLanguage(StringHash, VariantMap&);
+    void HandleLanguageChanged(StringHash, VariantMap&);
 };

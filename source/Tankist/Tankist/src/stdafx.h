@@ -47,6 +47,8 @@
 #include <Urho3D/Physics/PhysicsEvents.h>
 
 #include <Urho3D/Resource/ResourceCache.h>
+#include <Urho3D/Resource/Localization.h>
+#include <Urho3D/Resource/ResourceEvents.h>
 
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/LogicComponent.h>
@@ -115,6 +117,7 @@ using Urho3D::Log;
 using Urho3D::LogicComponent;
 using Urho3D::Light;
 using Urho3D::LineEdit;
+using Urho3D::Localization;
 
 using Urho3D::Material;
 using Urho3D::MemoryBuffer;

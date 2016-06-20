@@ -136,6 +136,10 @@ void Tankist::Start()
 
         gChat = new Chat(gContext, Chat::Chat_Client);
         gChat->Connect(gIPAddress.CString(), PORT_CHAT);
+
+        gLocale = GetSubsystem<Localization>();
+        gLocale->LoadJSONFile("Strings.json");
+        gLocale->SetLanguage("ru");
     }
 
     gGame = new Game(gContext);

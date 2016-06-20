@@ -20,6 +20,7 @@ log.txt
 out/launcher/files.txt
 files.txt
 out/distr/run.exp
+out/distr/Settings
 
 source/Tankist/ipch
 source/Tankist/x64

@@ -20,8 +20,8 @@ WindowGameESC::WindowGameESC(Context *context) : Object(context)
     Button *bExit = (Button*)window->GetChild("bExit", true);
     SubscribeToEvent(bExit, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonExit));
 
-    Button *bOptions = (Button*)window->GetChild("bOptions", true);
-    SubscribeToEvent(bOptions, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonOptions));
+    Button *bSettings = (Button*)window->GetChild("bSettings", true);
+    SubscribeToEvent(bSettings, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonSettings));
 
     Button *bLanguage = (Button*)window->GetChild("bLanguage", true);
     SubscribeToEvent(bLanguage, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonLanguage));
@@ -57,7 +57,8 @@ void WindowGameESC::HandleButtonLanguage(StringHash, VariantMap&)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void WindowGameESC::HandleButtonOptions(StringHash, VariantMap&)
+void WindowGameESC::HandleButtonSettings(StringHash, VariantMap&)
 {
-
+    Hide();
+    gWindowSettings->Show();
 }

@@ -36,13 +36,9 @@ unsigned short gNumPort = 0;
 Context *gContext = nullptr;
 
 Tankist *gTankist = nullptr;
-
 Chat *gChat = nullptr;
-
 Game *gGame = nullptr;
-
 ChatLog *gChatLog = nullptr;
-
 AudioCapturer *gAudioCapturer = nullptr;
-
 WindowGameESC *gWindowGameESC = nullptr;
+WindowSettings *gWindowSettings = nullptr;

@@ -282,6 +282,8 @@ void Tankist::CreateUI()
     statisticsWindow->SetColor(Urho3D::Color::BLACK);
 
     gWindowGameESC = new WindowGameESC(context_);
+
+    gWindowSettings = new WindowSettings(context_);
 }
 
 

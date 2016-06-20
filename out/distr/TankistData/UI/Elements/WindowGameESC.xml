@@ -24,9 +24,9 @@
 			</element>
 		</element>
 		<element type="Button">
-			<attribute name="Name" value="bOptions" />
+			<attribute name="Name" value="bSettings" />
 			<element type="Text">
-				<attribute name="Name" value="tOptions" />
+				<attribute name="Name" value="tSettings" />
 				<attribute name="Horiz Alignment" value="Center" />
 				<attribute name="Vert Alignment" value="Center" />
 				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />

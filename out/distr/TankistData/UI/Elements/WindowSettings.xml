@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <element type="Window">
 	<attribute name="Name" value="WindowsSettings" />
-	<attribute name="Position" value="500 300" />
+	<attribute name="Position" value="500 352" />
 	<attribute name="Size" value="600 500" />
+	<attribute name="Is Movable" value="true" />
 	<element type="Text">
 		<attribute name="Name" value="tSettings" />
 		<attribute name="Position" value="0 50" />
@@ -16,24 +17,15 @@
 	</element>
 	<element>
 		<attribute name="Name" value="lSettings" />
-		<attribute name="Position" value="170 110" />
-		<attribute name="Size" value="307 47" />
+		<attribute name="Position" value="160 110" />
+		<attribute name="Size" value="350 47" />
 		<attribute name="Layout Mode" value="Horizontal" />
 		<attribute name="Layout Spacing" value="10" />
 		<element>
 			<attribute name="Name" value="lNames" />
-			<attribute name="Max Size" value="70 2147483647" />
+			<attribute name="Max Size" value="100 2147483647" />
 			<attribute name="Layout Mode" value="Vertical" />
 			<attribute name="Layout Spacing" value="3" />
-			<element type="Text">
-				<attribute name="Name" value="tLanguage" />
-				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
-				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
-				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
-				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
-				<attribute name="Font Size" value="15" />
-				<attribute name="Text" value="Язык" />
-			</element>
 			<element type="Text">
 				<attribute name="Name" value="tBrightness" />
 				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
@@ -42,6 +34,15 @@
 				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Яркость" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tResolution" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Разрешение" />
 			</element>
 		</element>
 		<element>
@@ -101,7 +102,7 @@
 				</element>
 			</element>
 			<element>
-				<attribute name="Name" value="DropDownListButtons" />
+				<attribute name="Name" value="ddlbResolution" />
 				<attribute name="Layout Mode" value="Horizontal" />
 				<attribute name="Layout Spacing" value="3" />
 				<element type="DropDownList">
@@ -155,12 +156,12 @@
 		</element>
 	</element>
 	<element type="Button">
-		<attribute name="Name" value="bExit" />
-		<attribute name="Position" value="0 400" />
+		<attribute name="Name" value="bReturnToGame" />
+		<attribute name="Position" value="350 400" />
 		<attribute name="Size" value="200 50" />
-		<attribute name="Horiz Alignment" value="Center" />
 		<attribute name="Pressed Child Offset" value="1 1" />
 		<element type="Text">
+			<attribute name="Name" value="tReturnToGame" />
 			<attribute name="Horiz Alignment" value="Center" />
 			<attribute name="Vert Alignment" value="Center" />
 			<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
@@ -169,6 +170,22 @@
 			<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
 			<attribute name="Font Size" value="15" />
 			<attribute name="Text" value="Вернуться в игру" />
+		</element>
+	</element>
+	<element type="Button">
+		<attribute name="Name" value="bApplyChanges" />
+		<attribute name="Position" value="60 400" />
+		<attribute name="Size" value="200 50" />
+		<element type="Text">
+			<attribute name="Name" value="tApplyChanges" />
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Vert Alignment" value="Center" />
+			<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Font Size" value="15" />
+			<attribute name="Text" value="Применить изменения" />
 		</element>
 	</element>
 </element>

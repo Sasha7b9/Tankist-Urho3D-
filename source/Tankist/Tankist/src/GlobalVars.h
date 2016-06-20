@@ -10,6 +10,7 @@
 #include "ChatLog.h"
 #include "Audio/AudioCapturer.h"
 #include "GUI/WindowGameESC.h"
+#include "GUI/WindowSettings.h"
 
 
 // For server and client
@@ -48,3 +49,4 @@ extern Game *gGame;
 extern ChatLog *gChatLog;
 extern AudioCapturer *gAudioCapturer;
 extern WindowGameESC *gWindowGameESC;
+extern WindowSettings *gWindowSettings;

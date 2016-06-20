@@ -38,6 +38,7 @@
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\GUI\WindowGameESC.cpp" />
+    <ClCompile Include="src\GUI\WindowSettings.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Chat.cpp" />
     <ClCompile Include="src\Network\Messenger.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\WindowGameESC.h" />
+    <ClInclude Include="src\GUI\WindowSettings.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Messenger.h" />

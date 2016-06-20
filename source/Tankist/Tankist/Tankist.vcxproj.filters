@@ -64,6 +64,9 @@
     <ClCompile Include="src\GUI\WindowGameESC.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\WindowSettings.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -127,6 +130,9 @@
       <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\WindowGameESC.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\WindowSettings.h">
       <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>

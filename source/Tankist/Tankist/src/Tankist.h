@@ -48,10 +48,11 @@ private:
     bool GetNumPort(String &str, unsigned short &port);
 
     // Handlers
-    void HandleKeyDown(StringHash eventType, VariantMap& eventData);
-    void HandlePostUpdate(StringHash eventType, VariantMap &eventData);
+    void HandleKeyDown(StringHash, VariantMap&);
+    void HandlePostUpdate(StringHash, VariantMap&);
+    void HandleLanguageChanged(StringHash, VariantMap&);
     // Server functions
-    void HandleCloseConnection(StringHash eventType, VariantMap &eventData);
+    void HandleCloseConnection(StringHash, VariantMap&);
 
     void SubscribeToEvents();
 

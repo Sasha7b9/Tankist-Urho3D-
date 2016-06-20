@@ -248,6 +248,7 @@ void Tankist::SubscribeToEvents()
     if (gTypeApplication == Type_Client)
     {
         SubscribeToEvent(Urho3D::E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
+        SubscribeToEvent(Urho3D::E_CHANGELANGUAGE, URHO3D_HANDLER(Tankist, HandleLanguageChanged));
     }
 
     SubscribeToEvent(Urho3D::E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
@@ -383,7 +384,7 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateInstructions()
 {
-    Text *instructionText = gUI->GetRoot()->CreateChild<Text>();
+    Text *instructionText = gUIRoot->CreateChild<Text>();
     instructionText->SetText("Press F12 to help");
     instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 10);
 
@@ -391,13 +392,8 @@ void Tankist::CreateInstructions()
     instructionText->SetVerticalAlignment(Urho3D::VA_TOP);
     instructionText->SetPosition(0, 0);
 
-    instructionText = gUI->GetRoot()->CreateChild<Text>(INSTRUCTION);
-    instructionText->SetText(
-        "W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - controls\n"
-        "Right button mouse - move camera\n"
-        "Enter - enter/leave chat\n"
-        "ESC - exit"
-        );
+    instructionText = gUIRoot->CreateChild<Text>(INSTRUCTION);
+
     instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
     instructionText->SetTextAlignment(Urho3D::HA_CENTER);
     instructionText->SetHorizontalAlignment(Urho3D::HA_CENTER);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <element type="Window">
 	<attribute name="Name" value="WindowGameESC" />
-	<attribute name="Position" value="659 195" />
+	<attribute name="Position" value="830 237" />
 	<attribute name="Size" value="150 210" />
 	<attribute name="Is Movable" value="true" />
 	<element>

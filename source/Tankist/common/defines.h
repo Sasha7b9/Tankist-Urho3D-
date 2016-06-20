@@ -23,7 +23,7 @@ static const int MSG_VOICE_CHAT = 37;
 
 
 static const Urho3D::StringHash P_ID("ID");
-static const Urho3D::String INSTRUCTION("instructionText");
+static const Urho3D::String INSTRUCTION("tInstructions");
 
 
 typedef unsigned int    uint;

@@ -202,3 +202,27 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
         gChat->UpdateChat();
     }
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::HandleLanguageChanged(StringHash, VariantMap&)
+{
+    PODVector<UIElement*> elements;
+    gUIRoot->GetChildren(elements, true);
+
+    for(UIElement *element : elements)
+    {
+        if(element->GetType() == "Text")
+        {
+            String name = element->GetName();
+            if(name != "" && name != "DDL_Placeholder_Text" && name != "LE_Text")
+            {
+                String text = gLocale->Get(name);
+                if(text != String::EMPTY && text != name)
+                {
+                    ((Text*)element)->SetText(text);
+                }
+            }
+        }
+    }
+}

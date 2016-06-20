@@ -24,5 +24,4 @@ private:
     void HandleButtonExit(StringHash, VariantMap&);
     void HandleButtonOptions(StringHash, VariantMap&);
     void HandleButtonLanguage(StringHash, VariantMap&);
-    void HandleLanguageChanged(StringHash, VariantMap&);
 };

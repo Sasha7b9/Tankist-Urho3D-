@@ -1,6 +1,8 @@
 {
     "tExit":            { "en":"Exit",          "ru":"Выход" },
-    "tLanguage":        { "en":"Язык:EN",       "ru":"Language:RU" },
+    "tLanguage":        { "en":"Язык : EN",     "ru":"Language : RU" },
     "tOptions":         { "en":"Options",       "ru":"Настройки" },
-    "tTankistWaT":      { "en":"Tankist WaT",   "ru":"Танкист МК" }
+    "tTankistWaT":      { "en":"Tankist WaT",   "ru":"Танкист МК" },
+    "tInstructions":    { "en":"W,A,S,D,Q,E,\nNUM_4,NUM_8,NUM_6,NUM_2 - controls\nRBM - camera\nEnter - chat\nEsc - menu",
+                          "ru":"W,A,S,D,Q,E,\nNUM_4,NUM_8,NUM_6,NUM_2 - управление\nПКМ - камера\nEnter - чат\nEsc - меню" }
 }

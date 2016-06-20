@@ -8,7 +8,7 @@
 Log *gLog = nullptr;
 Network *gNetwork = nullptr;
 FileSystem *gFileSystem = nullptr;
-ResourceCache *gResourceCache = nullptr;
+ResourceCache *gCache = nullptr;
 Scene *gScene = nullptr;
 Time *gTime = nullptr;
 

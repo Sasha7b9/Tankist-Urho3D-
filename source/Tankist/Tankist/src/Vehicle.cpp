@@ -126,8 +126,8 @@ void Vehicle::Init()
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
-    hullObject->SetModel(gResourceCache->GetResource<Model>("Models/Box.mdl"));
-    hullObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    hullObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
     hullBody->SetMass(4.0f);
@@ -162,8 +162,8 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     CollisionShape* wheelShape = wheelNode->CreateComponent<CollisionShape>();
     Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
 
-    wheelObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
-    wheelObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    wheelObject->SetModel(gCache->GetResource<Model>("Models/Cylinder.mdl"));
+    wheelObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);
     wheelBody->SetFriction(10.0f);
@@ -195,8 +195,8 @@ void Vehicle::InitTower()
     StaticModel *towerObject = nodeTower->CreateComponent<StaticModel>();
     Constraint *towerConstraint = nodeTower->CreateComponent<Constraint>();
 
-    towerObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
-    towerObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    towerObject->SetModel(gCache->GetResource<Model>("Models/Cylinder.mdl"));
+    towerObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     towerObject->SetCastShadows(true);
 
     towerConstraint->SetAxis(Vector3::UP);
@@ -226,8 +226,8 @@ void Vehicle::InitTrunk()
     StaticModel *trunkObject = nodeTrunk->CreateComponent<StaticModel>();
     Constraint *trunkConstraint = nodeTrunk->CreateComponent<Constraint>();
 
-    trunkObject->SetModel(gResourceCache->GetResource<Model>("Models/Cylinder.mdl"));
-    trunkObject->SetMaterial(gResourceCache->GetResource<Material>("Materials/Stone.xml"));
+    trunkObject->SetModel(gCache->GetResource<Model>("Models/Cylinder.mdl"));
+    trunkObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     trunkObject->SetCastShadows(true);
 
     trunkConstraint->SetAxis(Vector3::UP);

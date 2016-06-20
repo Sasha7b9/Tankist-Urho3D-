@@ -56,9 +56,9 @@ void Tankist::Setup()
 
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
-    gResourceCache = GetSubsystem<ResourceCache>();
+    gCache = GetSubsystem<ResourceCache>();
 
-    gResourceCache->AddResourceDir(gFileSystem->GetProgramDir() + "TankistData");
+    gCache->AddResourceDir(gFileSystem->GetProgramDir() + "TankistData");
 
     gTime = GetSubsystem<Time>();
 
@@ -203,8 +203,8 @@ void Tankist::CreateScene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(false);
-    terrain->SetHeightMap(gResourceCache->GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(gResourceCache->GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetHeightMap(gCache->GetResource<Image>("Textures/HeightMap.png"));
+    terrain->SetMaterial(gCache->GetResource<Material>("Materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -226,8 +226,8 @@ void Tankist::CreateScene()
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
         objectNode->SetScale(3.0f);
         StaticModel* object = objectNode->CreateComponent<StaticModel>();
-        object->SetModel(gResourceCache->GetResource<Model>("Models/Mushroom.mdl"));
-        object->SetMaterial(gResourceCache->GetResource<Material>("Materials/Mushroom.xml"));
+        object->SetModel(gCache->GetResource<Model>("Models/Mushroom.mdl"));
+        object->SetMaterial(gCache->GetResource<Material>("Materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
         RigidBody* body = objectNode->CreateComponent<RigidBody>();
@@ -253,7 +253,7 @@ void Tankist::SubscribeToEvents()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateUI()
 {
-    XMLFile* uiStyle = gResourceCache->GetResource<XMLFile>("UI/TankistStyle.xml");
+    XMLFile* uiStyle = gCache->GetResource<XMLFile>("UI/TankistStyle.xml");
     // Set style to the UI root so that elements will inherit it
     gUIRoot->SetDefaultStyle(uiStyle);
 
@@ -302,7 +302,7 @@ void Tankist::MoveCamera()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetWindowTitleAndIcon()
 {
-    Image* icon = gResourceCache->GetResource<Image>("Textures/UrhoIcon.png");
+    Image* icon = gCache->GetResource<Image>("Textures/UrhoIcon.png");
     gGraphics->SetWindowIcon(icon);
     //gGraphics->SetWindowTitle("Tankist WaT");
 }
@@ -311,7 +311,7 @@ void Tankist::SetWindowTitleAndIcon()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateConsoleAndDebugHud()
 {
-    XMLFile* xmlFile = gResourceCache->GetResource<XMLFile>("UI/TankistStyle.xml");
+    XMLFile* xmlFile = gCache->GetResource<XMLFile>("UI/TankistStyle.xml");
 
     Console* console = engine_->CreateConsole();
     gConsole = GetSubsystem<Console>();
@@ -381,7 +381,7 @@ void Tankist::CreateInstructions()
 {
     Text *instructionText = gUI->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Press F12 to help");
-    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/CRL.ttf"), 10);
+    instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 10);
 
     instructionText->SetHorizontalAlignment(Urho3D::HA_LEFT);
     instructionText->SetVerticalAlignment(Urho3D::VA_TOP);
@@ -394,7 +394,7 @@ void Tankist::CreateInstructions()
         "Enter - enter/leave chat\n"
         "ESC - exit"
         );
-    instructionText->SetFont(gResourceCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
+    instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
     instructionText->SetTextAlignment(Urho3D::HA_CENTER);
     instructionText->SetHorizontalAlignment(Urho3D::HA_CENTER);
     instructionText->SetVerticalAlignment(Urho3D::VA_CENTER);

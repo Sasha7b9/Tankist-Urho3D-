@@ -16,7 +16,7 @@
 extern Urho3D::Log *gLog;
 extern Urho3D::Network *gNetwork;
 extern Urho3D::FileSystem *gFileSystem;
-extern Urho3D::ResourceCache *gResourceCache;
+extern Urho3D::ResourceCache *gCache;
 extern Urho3D::Scene *gScene;
 extern Urho3D::Time *gTime;
 

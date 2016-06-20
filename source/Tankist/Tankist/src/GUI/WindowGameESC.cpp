@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 WindowGameESC::WindowGameESC(Context *context) : Object(context)
 {
-    window = gUI->LoadLayout(gResourceCache->GetResource<XMLFile>("UI/Elements/WindowGameESC.xml"));
+    window = gUI->LoadLayout(gCache->GetResource<XMLFile>("UI/Elements/WindowGameESC.xml"));
     gUIRoot->AddChild(window);
 
     int posX = gUIRoot->GetWidth() / 2 - window->GetWidth() / 2;

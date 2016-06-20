@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <element type="Window">
 	<attribute name="Name" value="WindowsSettings" />
-	<attribute name="Position" value="427 609" />
+	<attribute name="Position" value="561 322" />
 	<attribute name="Size" value="600 500" />
 	<attribute name="Is Movable" value="true" />
 	<element type="Text">
@@ -18,7 +18,7 @@
 	<element>
 		<attribute name="Name" value="lSettings" />
 		<attribute name="Position" value="160 110" />
-		<attribute name="Size" value="350 47" />
+		<attribute name="Size" value="350 74" />
 		<attribute name="Is Enabled" value="true" />
 		<attribute name="Layout Mode" value="Horizontal" />
 		<attribute name="Layout Spacing" value="10" />
@@ -26,7 +26,7 @@
 			<attribute name="Name" value="lNames" />
 			<attribute name="Max Size" value="100 2147483647" />
 			<attribute name="Layout Mode" value="Vertical" />
-			<attribute name="Layout Spacing" value="3" />
+			<attribute name="Layout Spacing" value="6" />
 			<element type="Text">
 				<attribute name="Name" value="tBrightness" />
 				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
@@ -44,6 +44,15 @@
 				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Разрешение" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tFullscreen" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Полн. экран" />
 			</element>
 		</element>
 		<element>
@@ -87,15 +96,15 @@
 					<element type="Button">
 						<attribute name="Name" value="ButtonLess" />
 						<attribute name="Min Size" value="22 22" />
-						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Max Size" value="22 22" />
 						<attribute name="Image Rect" value="212 106 234 128" />
 						<attribute name="Hover Image Offset" value="-44 0" />
 						<attribute name="Pressed Image Offset" value="0 -22" />
 					</element>
 					<element type="Button">
 						<attribute name="Name" value="ButtonMore" />
-						<attribute name="Min Size" value="22 0" />
-						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 22" />
 						<attribute name="Image Rect" value="234 106 256 128" />
 						<attribute name="Hover Image Offset" value="-44 0" />
 						<attribute name="Pressed Image Offset" value="0 -22" />
@@ -146,13 +155,16 @@
 					</element>
 					<element type="Button">
 						<attribute name="Name" value="ButtonMore" />
-						<attribute name="Min Size" value="22 0" />
-						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 22" />
 						<attribute name="Image Rect" value="234 106 256 128" />
 						<attribute name="Hover Image Offset" value="-44 0" />
 						<attribute name="Pressed Image Offset" value="0 -22" />
 					</element>
 				</element>
+			</element>
+			<element type="CheckBox">
+				<attribute name="Name" value="chbFullsreen" />
 			</element>
 		</element>
 	</element>

@@ -25,4 +25,5 @@ private:
 
     void HandleButtonApplyChanges(StringHash, VariantMap&);
     void HandleButtonReturnToGame(StringHash, VariantMap&);
+    void HandleCheckBoxFullscreen(StringHash, VariantMap&);
 };

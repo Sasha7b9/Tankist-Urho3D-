@@ -70,6 +70,10 @@ void Settings::Save()
         {
             str += String(element.GetFloat());
         }
+        else if(type == Urho3D::VAR_BOOL)
+        {
+            str += String(element.GetBool());
+        }
 
         file.WriteLine(str);
     }
@@ -107,17 +111,16 @@ float Settings::Get(float, uint var)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Settings::SetDefault()
+void Settings::Set(bool, uint var, bool value)
 {
-    settings.Clear();
+    settings[var] = Variant(value);
+}
 
-#pragma warning(push)
-#pragma warning(disable:4548 4709)
 
-    settings.Push(Variant(640));   // WINDOW_WIDTH     0
-    settings.Push(Variant(480));    // WINDOW_HEIGHT    1
-
-#pragma warning(pop)
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+bool Settings::Get(bool, uint var)
+{
+    return settings[var].GetBool();
 }
 
 
@@ -169,5 +172,26 @@ void Settings::ReadFromFile(File &file, Vector<Variant> &set)
         {
             set.Push(Variant(Urho3D::ToFloat(str)));
         }
+        else if(type == Urho3D::VAR_BOOL)
+        {
+            set.Push(Variant(Urho3D::ToBool(str)));
+        }
     }
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Settings::SetDefault()
+{
+    settings.Clear();
+
+#pragma warning(push)
+#pragma warning(disable:4548 4709)
+
+    settings.Push(Variant(640));    // WINDOW_WIDTH     0
+    settings.Push(Variant(480));    // WINDOW_HEIGHT    1
+    settings.Push(Variant(true));   // FULLSCREEN       2
+    settings.Push(Variant(640));    // DESKTOP_WIDTH    3
+    settings.Push(Variant(480));    // DESKTOP_HEIGHT   4
+
+#pragma warning(pop)
 }

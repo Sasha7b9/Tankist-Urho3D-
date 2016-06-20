@@ -76,10 +76,13 @@ void Tankist::Setup()
     engineParameters_["Headless"] = gTypeApplication == Type_Server;
     engineParameters_["WindowTitle"] = "Tankist WaT";
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
-    engineParameters_["FullScreen"] = false;
+
+    bool fullscreen = gSet->Get(FULLSCREEN);
+
+    engineParameters_["FullScreen"] = fullscreen;
     engineParameters_["Sound"] = false;
-    engineParameters_["WindowWidth"] = gSet->Get(WINDOW_WIDTH);
-    engineParameters_["WindowHeight"] = gSet->Get(WINDOW_HEIGHT);
+    engineParameters_["WindowWidth"] = fullscreen ? gSet->Get(DESKTOP_WIDTH) : gSet->Get(WINDOW_WIDTH);
+    engineParameters_["WindowHeight"] = fullscreen ? gSet->Get(DESKTOP_HEIGHT) : gSet->Get(WINDOW_HEIGHT);
     //engineParameters_["WindowPositionY"] = 20;
     //engineParameters_["WindowPositionX"] = gTypeConnection == Connection_Server ? 20 : 700;
 
@@ -99,6 +102,10 @@ void Tankist::Start()
     if (gTypeApplication == Type_Client)
     {
         gGraphics = GetSubsystem<Graphics>();
+
+        IntVector2 res = gGraphics->GetDesktopResolution();
+        gSet->Set(DESKTOP_WIDTH, res.x_);
+        gSet->Set(DESKTOP_HEIGHT, res.y_);
 
         SetWindowTitleAndIcon();
 

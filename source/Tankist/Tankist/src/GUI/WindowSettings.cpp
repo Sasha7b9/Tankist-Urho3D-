@@ -23,6 +23,9 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
     Button *bReturnToGame = (Button*)window->GetChild("bReturnToGame", true);
     SubscribeToEvent(bReturnToGame, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonReturnToGame));
 
+    CheckBox *chbFullscreen = (CheckBox*)window->GetChild("chbFullscreen", true);
+    SubscribeToEvent(chbFullscreen, Urho3D::E_TOGGLED, URHO3D_HANDLER(WindowSettings, HandleCheckBoxFullscreen));
+
     FillDropDownListResolutions();
 }
 
@@ -85,4 +88,11 @@ void WindowSettings::HandleButtonApplyChanges(StringHash, VariantMap&)
 void WindowSettings::HandleButtonReturnToGame(StringHash, VariantMap&)
 {
     Hide();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void WindowSettings::HandleCheckBoxFullscreen(StringHash, VariantMap&)
+{
+
 }

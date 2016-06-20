@@ -62,6 +62,7 @@
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/Window.h>
 #include <Urho3D/UI/DropDownList.h>
+#include <Urho3D/UI/CheckBox.h>
 
 #include <Urho3D/DebugNew.h>
 
@@ -92,6 +93,7 @@ using Urho3D::Button;
 
 using Urho3D::Camera;
 using Urho3D::CascadeParameters;
+using Urho3D::CheckBox;
 using Urho3D::CollisionShape;
 using Urho3D::Color;
 using Urho3D::Connection;

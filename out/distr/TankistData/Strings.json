@@ -8,5 +8,6 @@
     "tApplyChanges":    { "en":"Apply changes",     "ru":"Применить изменения" },
     "tReturnToGame":    { "en":"Return to game",    "ru":"Вернуться в игру" },
     "tBrightness":      { "en":"Brightness",        "ru":"Яркость" },
-    "tResolution":      { "en":"Resolution",        "ru":"Разрешение" }
+    "tResolution":      { "en":"Resolution",        "ru":"Разрешение" },
+    "tFullscreen":      { "en":"Fullscreen",        "ru":"Полн. экран" }
 }

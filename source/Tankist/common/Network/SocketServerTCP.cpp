@@ -70,18 +70,18 @@ static void ExchangeTaks(int sock, SocketParam *sockParam)
 
 #else
 
-    while(run)
+    while(sockParam->run)
     {
-        int numBytes = recv(sock, buffer, sizeBuffer, 0);
+        int numBytes = recv(sock, buffer, (int)sockParam->sizeBuffer, 0);
         if(numBytes == 0)
         {
-            funcOnDisconnect(sock);
+            sockParam->funcOnDisconnect(sockParam->server, sock);
             break;
         }
-        funcOnRecieve(buffer, numBytes);
+        sockParam->funcOnReceive(sockParam->server, sock, buffer, numBytes);
     }
 
-    closesocket(sock);
+    close(sock);
 
 #endif
 

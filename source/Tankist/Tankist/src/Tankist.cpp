@@ -51,8 +51,10 @@ void Tankist::Setup()
         gLog->Open("server.log");
     }
 
+#ifdef WIN32
     gAudioCapturer = new AudioCapturer();
     gAudioCapturer->Start();
+#endif
 
     gAudio = GetSubsystem<Audio>();
 
@@ -167,7 +169,9 @@ void Tankist::Stop()
         gSet->Save();
     }
 
+#ifdef WIN32
     gAudioCapturer->Stop();
+#endif
 
     engine_->DumpResources(true);
     engine_->DumpProfiler();
@@ -270,6 +274,7 @@ void Tankist::SubscribeToEvents()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateUI()
 {
+#ifdef WIN32
     XMLFile* uiStyle = gCache->GetResource<XMLFile>("UI/TankistStyle.xml");
     // Set style to the UI root so that elements will inherit it
     gUIRoot->SetDefaultStyle(uiStyle);
@@ -296,6 +301,7 @@ void Tankist::CreateUI()
     gWindowGameESC = new WindowGameESC(context_);
 
     gWindowSettings = new WindowSettings(context_);
+#endif
 }
 
 

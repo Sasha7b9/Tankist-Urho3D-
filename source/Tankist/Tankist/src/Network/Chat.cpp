@@ -154,7 +154,7 @@ struct DataClient
     };
     DataClient(int id, char *addr, uint16 p) : clientID(id), port(p)
     {
-        strcpy_s(address, 19, addr);
+        strcpy(address, addr);
     };
     int clientID;
     char address[20];

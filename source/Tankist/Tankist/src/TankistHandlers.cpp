@@ -9,6 +9,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 {
+#ifdef WIN32
     using namespace Urho3D::KeyDown;
 
     int key = eventData[P_KEY].GetInt();
@@ -171,6 +172,7 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             instr->SetVisible(!instr->IsVisible());
         }
     }
+#endif
 }
 
 

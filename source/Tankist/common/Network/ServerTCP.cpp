@@ -142,9 +142,15 @@ bool ServerTCP::Init(const ServerParam &servParam)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ServerTCP::SendMessage(int numClient, uint8 typeMessage, void* data, uint size)
 {
+#ifdef WIN32
     send((SOCKET)numClient, (char*)&typeMessage, 1, 0);
     send((SOCKET)numClient, (char*)&size, 4, 0);
     send((SOCKET)numClient, (char*)data, (int)size, 0);
+#else
+    send(numClient, (char*)&typeMessage, 1, 0);
+    send(numClient, (char*)&size, 4, 0);
+    send(numClient, (char*)data, (int)size, 0);
+#endif
 }
 
 

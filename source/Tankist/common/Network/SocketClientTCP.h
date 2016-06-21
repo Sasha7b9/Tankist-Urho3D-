@@ -26,7 +26,7 @@ private:
     TypeSocket  type;
     bool        run = true;
     void        *clientTCP;
-    int         sockClient;     // Using for Windows - (SOCKET)sockClient
+    SOCKET      sockClient;
     sockaddr_in destAddr;
     pFuncVpVpVI funcOnRecieve;
 };

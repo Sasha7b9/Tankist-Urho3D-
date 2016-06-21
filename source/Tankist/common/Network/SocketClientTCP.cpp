@@ -45,9 +45,9 @@ bool SocketClientTCP::Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *cli
         return false;
     }
 
-    sockClient = (int)socket(AF_INET, SOCK_STREAM, 0);
+    sockClient = socket(AF_INET, SOCK_STREAM, 0);
 
-    if((SOCKET)sockClient == INVALID_SOCKET)
+    if(sockClient == INVALID_SOCKET)
     {
         LOG_ERRORF("ocket() error %d", WSAGetLastError());
         return false;

@@ -152,7 +152,7 @@ struct DataClient
     {
         address[0] = '\0';
     };
-    DataClient(int id, char *addr, uint16 p) : clientID(id), port(p)
+    DataClient(SOCKET id, char *addr, uint16 p) : clientID(id), port(p)
     {
 #ifdef WIN32
         strcpy_s(address, 19, addr);
@@ -161,7 +161,7 @@ struct DataClient
 #endif
 
     };
-    int clientID;
+    SOCKET clientID;
     char address[20];
     uint16 port;
 
@@ -178,7 +178,7 @@ static Vector<DataClient> clients;
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
+static void ServerCallbackOnConnect(SOCKET clientID, char *address, uint16 port)
 {
     URHO3D_LOGINFOF("Chat from %s:%d connected", address, (int)port);
 
@@ -187,7 +187,7 @@ static void ServerCallbackOnConnect(int clientID, char *address, uint16 port)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *data, int sizeData)
+static void ServerCallbackOnRecieve(SOCKET /*clientID*/, uint8 typeMessage, void *data, int sizeData)
 {
     if(typeMessage == MSG_CHAT)
     {
@@ -204,7 +204,7 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnDisconnect(int clientID)
+static void ServerCallbackOnDisconnect(SOCKET clientID)
 {
     LOG_INFOF("%s enter");
 

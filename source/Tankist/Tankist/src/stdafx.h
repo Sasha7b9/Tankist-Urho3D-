@@ -4,8 +4,6 @@
 #pragma warning(disable:4100 4251 4265 4266 4275 4365 4571 4625 4626 4640)
 
 
-#include "defines.h"
-
 #include <Urho3D/Audio/Audio.h>
 
 #include <Urho3D/Container/Ptr.h>
@@ -85,6 +83,13 @@
 
 #pragma warning(pop)
 
+#ifndef WIN32
+#define SOCKET int
+#define closesocket close
+#define WSAGetLastError() errno
+#endif
+
+#include "defines.h"
 
 using Urho3D::Application;
 using Urho3D::Audio;

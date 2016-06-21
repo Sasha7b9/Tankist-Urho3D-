@@ -3,9 +3,9 @@
 
 struct SocketParam
 {
-    pFuncVpVIpCU16  funcOnConnect;          // *ServerTCP, num client(socket), address, port
-    pFuncVpVI       funcOnDisconnect;       // *ServerTCP, num client(socket)
-    pFuncVpVIpVI    funcOnReceive;          // *ServerTCP, num client, num recieved bytes
+    pFuncVpVSpCU16  funcOnConnect;          // *ServerTCP, num client(socket), address, port
+    pFuncVpVS       funcOnDisconnect;       // *ServerTCP, num client(socket)
+    pFuncVpVSpVI    funcOnReceive;          // *ServerTCP, num client, num recieved bytes
     size_t          sizeBuffer;
     void            *server;
     bool            run;
@@ -38,6 +38,6 @@ private:
     char        buff[1024];
     SocketParam *sockParam = nullptr;
     sockaddr_in address;
-    int         sockServer = 0;     // Using for Windows - (SOCKET)sockServer
+    SOCKET      sockServer = 0;
     std::thread *t = nullptr;
 };

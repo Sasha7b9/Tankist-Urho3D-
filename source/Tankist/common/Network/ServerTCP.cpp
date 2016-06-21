@@ -15,9 +15,9 @@ static const int SIZE_BUFFER = 1024 * 10;
 struct ClientData
 {
     ClientData() : server(nullptr), stateRecieve(WAIT_MSG) {};
-    ClientData(void *serv, int num) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
+    ClientData(void *serv, SOCKET num) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
     uint8 data[SIZE_BUFFER];
-    int numClient;
+    SOCKET numClient;
     StateRecieve stateRecieve;
     int recvBytes;              // Number all accepted bytes - type message + 4 + length buffer
     BitSet32 lengthBuffer;      // length message without type and another one byte  (10 in sample)
@@ -26,15 +26,15 @@ struct ClientData
 };
 
 
-static HashMap<void*, HashMap<int, ClientData>> datas;
+static HashMap<void*, HashMap<SOCKET, ClientData>> datas;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void CallbackOnConnect(void *server, int numClient, char *address, uint16 port)
+static void CallbackOnConnect(void *server, SOCKET numClient, char *address, uint16 port)
 {
     if (datas.Find(server) == datas.End())      // If map for this server does not exist
     {
-        HashMap<int, ClientData> newServer;
+        HashMap<SOCKET, ClientData> newServer;
         datas[server] = newServer;              // Create new map for this server
     }
 
@@ -82,7 +82,7 @@ static void ProcessNextByte(ClientData &data, uint8 b)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnReceive(void *server, int numClient, void *buffer, int size)
+static void CallbackOnReceive(void *server, SOCKET numClient, void *buffer, int size)
 {
     ClientData &data = datas[server][numClient];
 
@@ -97,7 +97,7 @@ static void CallbackOnReceive(void *server, int numClient, void *buffer, int siz
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnDisconnect(void *server, int numClient)
+static void CallbackOnDisconnect(void *server, SOCKET numClient)
 {
     datas[server].Erase(numClient);
 
@@ -140,17 +140,11 @@ bool ServerTCP::Init(const ServerParam &servParam)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void ServerTCP::SendMessage(int numClient, uint8 typeMessage, void* data, uint size)
+void ServerTCP::SendMessage(SOCKET numClient, uint8 typeMessage, void* data, uint size)
 {
-#ifdef WIN32
-    send((SOCKET)numClient, (char*)&typeMessage, 1, 0);
-    send((SOCKET)numClient, (char*)&size, 4, 0);
-    send((SOCKET)numClient, (char*)data, (int)size, 0);
-#else
     send(numClient, (char*)&typeMessage, 1, 0);
     send(numClient, (char*)&size, 4, 0);
     send(numClient, (char*)data, (int)size, 0);
-#endif
 }
 
 

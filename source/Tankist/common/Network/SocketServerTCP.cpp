@@ -24,7 +24,7 @@ bool SocketServerTCP::Init(SocketParam *sockParam)
         return false;
     }
 
-    sockServer = (int)socket(AF_INET, SOCK_STREAM, 0);
+    sockServer = socket(AF_INET, SOCK_STREAM, 0);
     if(sockServer == 0)
     {
         LOG_ERRORF("Erorr socket() %d", WSAGetLastError());
@@ -49,31 +49,18 @@ bool SocketServerTCP::Init(SocketParam *sockParam)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ExchangeTaks(int sock, SocketParam *sockParam)
+static void ExchangeTaks(SOCKET sock, SocketParam *sockParam)
 {
     char *buffer = new char[sockParam->sizeBuffer];
-
-#ifdef WIN32
-
-    while(sockParam->run)
-    {
-        int numBytes = recv((SOCKET)sock, buffer, (int)sockParam->sizeBuffer, 0);
-        if(numBytes == SOCKET_ERROR)
-        {
-            sockParam->funcOnDisconnect(sockParam->server, sock);
-            break;
-        }
-        sockParam->funcOnReceive(sockParam->server, sock, buffer, numBytes);
-    }
-
-    closesocket((SOCKET)sock);
-
-#else
 
     while(sockParam->run)
     {
         int numBytes = recv(sock, buffer, (int)sockParam->sizeBuffer, 0);
+#ifdef WIN32
+        if(numBytes == SOCKET_ERROR)
+#else
         if(numBytes == 0)
+#endif
         {
             sockParam->funcOnDisconnect(sockParam->server, sock);
             break;
@@ -81,9 +68,7 @@ static void ExchangeTaks(int sock, SocketParam *sockParam)
         sockParam->funcOnReceive(sockParam->server, sock, buffer, numBytes);
     }
 
-    close(sock);
-
-#endif
+    closesocket(sock);
 
     delete[] buffer;
 }
@@ -97,13 +82,14 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
     sockaddr_in addrClient;
     int lenClient = sizeof(addrClient);
 
-#ifdef WIN32
-
     while(sockParam->run)
     {
         SOCKET newSock = accept((SOCKET)sockServer, (sockaddr*)&addrClient, &lenClient);
-
+#ifdef WIN32
         if(newSock != INVALID_SOCKET)
+#else
+        if(newSock >= 0)
+#endif
         {
             uint longAddr = addrClient.sin_addr.S_un.S_addr;
             char buffAddr[30];
@@ -111,31 +97,13 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
 
             t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 
-            sockParam->funcOnConnect(sockParam->server, (int)newSock, buffAddr, addrClient.sin_port);
+            sockParam->funcOnConnect(sockParam->server, newSock, buffAddr, addrClient.sin_port);
         }
         else
         {
             LOG_ERRORF("Failed accept() with error %d", WSAGetLastError());
         }
     }
-
-#else
-
-    while(run)
-    {
-        int newSock = accept(sockServer, (sockaddr*)&addrClient, &lenClient);
-        if(newsock < 0)
-        {
-            LOG_ERRORF("accept() failed: %d", errno)
-        }
-        else
-        {
-            t = new std::thread(ExchangeTaks, newSock, run, funcOnDisconnect, funcOnRecieve, sizeBuffer);
-            funcOnConnect(newSock, addrClient.sin_addr.s_addr, addrClient.sin_port);
-        }
-    }
-
-#endif  // WIN32
 }
 
 
@@ -146,34 +114,24 @@ bool SocketServerTCP::Listen(uint16 port)
     address.sin_port = htons(port);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
-#ifdef WIN32
-
-    if(bind((SOCKET)sockServer, (sockaddr*)&address, sizeof(address)))
+    if(bind(sockServer, (sockaddr*)&address, sizeof(address)))
     {
         LOG_ERRORF("Error bind() %d", WSAGetLastError());
+#ifdef WIN32
         WSACleanup();
+#endif
         return false;
     }
 
-    if(listen((SOCKET)sockServer, 100))
+    if(listen(sockServer, 100))
     {
         LOG_ERRORF("Error listen() %d", WSAGetLastError());
-        closesocket((SOCKET)sockServer);
+        closesocket(sockServer);
+#ifdef WIN32
         WSACleanup();
+#endif
         return false;
     }
-
-#else
-
-    if(bind(sockServer, (struct sockaddr*)&address, sizeof(address)) < 0)
-    {
-        LOG_ERROR1("bind() failed: %d", errno);
-        return false;
-    }
-
-    listen(sockServer, 100);
-
-#endif  // WIN32
 
     sockParam->run = true;
 
@@ -186,7 +144,7 @@ bool SocketServerTCP::Listen(uint16 port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketServerTCP::Transmit(const void *data, uint size)
 {
-    int numBytes = send((SOCKET)sockServer, (const char*)data, (int)size, 0);
+    int numBytes = send(sockServer, (const char*)data, (int)size, 0);
 
     LOG_INFOF("socket = %d, Transferred %d, pass %d, error %d", sockServer, size, numBytes, WSAGetLastError());
 }

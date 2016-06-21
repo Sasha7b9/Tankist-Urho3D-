@@ -11,9 +11,9 @@ class ServerTCP;
 
 struct ServerParam
 {
-    pFuncVIpCU16    funcOnConnect;
-    pFuncVI         funcOnDisconnect;
-    pFuncVIU8pVI    funcOnRecieve;      // client ID, type message, data, size data
+    pFuncVSpCU16    funcOnConnect;
+    pFuncVS         funcOnDisconnect;
+    pFuncVSU8pVI    funcOnRecieve;      // client ID, type message, data, size data
     uint16          port;
 };
 
@@ -25,7 +25,7 @@ public:
     ServerTCP();
 
     bool Init(const ServerParam &servParam);
-    void SendMessage(int numClient, uint8 typeMessage, void* data, uint size);
+    void SendMessage(SOCKET numClient, uint8 typeMessage, void* data, uint size);
     void Close();
 
     ServerParam     param;

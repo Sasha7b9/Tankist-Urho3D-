@@ -21,7 +21,10 @@ private:
 
     SharedPtr<UIElement> window;
 
-    DropDownListButtons *ddlbResolution;
+    DropDownListButtons *ddlbResolution = nullptr;
+    Governor *gGameVolume = nullptr;
+    Governor *gChatVolume = nullptr;
+    Governor *gMicLevel = nullptr;
 
     void FillDropDownListResolutions();
     void FillControlsFromSettings();

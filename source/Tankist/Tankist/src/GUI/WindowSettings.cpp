@@ -27,6 +27,12 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
 
     ddlbResolution = new DropDownListButtons(context_, window, "ddlbResolution");
 
+    gGameVolume = new Governor(context, window, "gGameVolume");
+
+    gChatVolume = new Governor(context, window, "gChatVolume");
+
+    gMicLevel = new Governor(context, window, "gLevelMic");
+
     FillDropDownListResolutions();
 
     FillControlsFromSettings();
@@ -124,7 +130,7 @@ void WindowSettings::HandleButtonReturnToGame(StringHash, VariantMap&)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void WindowSettings::HandleChangedScreenMode(StringHash, VariantMap& eventData)
+void WindowSettings::HandleChangedScreenMode(StringHash, VariantMap&)
 {
     using namespace Urho3D::ScreenMode;
 

@@ -73,6 +73,9 @@
     <ClCompile Include="src\Settings.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Elements\Governor.cpp">
+      <Filter>GUI\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="src\Settings.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Elements\Governor.h">
+      <Filter>GUI\Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

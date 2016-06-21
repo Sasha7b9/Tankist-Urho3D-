@@ -4,6 +4,9 @@
 #define WINDOW_WIDTH    0,      0
 #define WINDOW_HEIGHT   0,      1
 #define FULLSCREEN      true,   2
+#define VOLUME_GAME     0,      3
+#define VOLUME_CHAT     0,      4
+#define MIC_LEVEL       0,      5
 
 
 class Settings

@@ -207,6 +207,7 @@ using Urho3D::AM_NODEID;
 #include "Network/Client.h"
 
 #include "GUI/Elements/DropDownListButtons.h"
+#include "GUI/Elements/Governor.h"
 #include "Network/Server.h"
 #include "Tankist.h"
 #include "GlobalVars.h"

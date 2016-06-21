@@ -154,7 +154,12 @@ struct DataClient
     };
     DataClient(int id, char *addr, uint16 p) : clientID(id), port(p)
     {
+#ifdef WIN32
+        strcpy_s(address, 19, addr);
+#else
         strcpy(address, addr);
+#endif
+
     };
     int clientID;
     char address[20];
@@ -193,7 +198,7 @@ static void ServerCallbackOnRecieve(int /*clientID*/, uint8 typeMessage, void *d
     {
         void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
 
-    //    gAudioCapturer->PlayData(buf, (uint)sizeData);
+        gAudioCapturer->PlayData(buf, (uint)sizeData);
     }
 }
 

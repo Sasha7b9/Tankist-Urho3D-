@@ -188,9 +188,9 @@ void Settings::SetDefault()
 #pragma warning(push)
 #pragma warning(disable:4548 4709)
 
-    settings.Push(Variant(1024));   // WINDOW_WIDTH     0
-    settings.Push(Variant(768));    // WINDOW_HEIGHT    1
-    settings.Push(Variant(true));   // FULLSCREEN       2
+    settings.Push(Variant(1280));   // WINDOW_WIDTH     0
+    settings.Push(Variant(1024));   // WINDOW_HEIGHT    1
+    settings.Push(Variant(false));  // FULLSCREEN       2
     settings.Push(Variant(50));     // VOLUME_GAME      3
     settings.Push(Variant(50));     // VOLUME_CHAT      4
     settings.Push(Variant(50));     // MIC_LEVEL        5

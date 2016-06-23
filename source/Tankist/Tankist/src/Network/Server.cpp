@@ -48,7 +48,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     numClients++;
 
-    gChat->SendToAll(newConnection->GetAddress() + " enter");
+    gChat->SendToAll(MSG_CHAT, newConnection->GetAddress() + " enter");
 }
 
 static String prevAddress;
@@ -124,7 +124,7 @@ void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 
     numClients--;
 
-    gChat->SendToAll(conn->GetAddress() + " leave");
+    gChat->SendToAll(MSG_CHAT, conn->GetAddress() + " leave");
 }
 
 

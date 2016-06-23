@@ -40,6 +40,13 @@ static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int sizeBuf
     {
         gChat->AddMessage(String((char*)buffer, (uint)sizeBuffer));
     }
+    else if(typeMessage == MSG_VOICE_CHAT)
+    {
+#ifdef WIN32
+        void *buf = gAudioCapturer->OPUS_Decode(buffer, &sizeBuffer);
+        gAudioCapturer->PlayData(buf, (uint)sizeBuffer);
+#endif
+    }
 }
 
 
@@ -192,13 +199,12 @@ static void ServerCallbackOnRecieve(SOCKET /*clientID*/, uint8 typeMessage, void
     if(typeMessage == MSG_CHAT)
     {
         String message((char*)data, (uint)sizeData);
-        gChat->SendToAll(message);
+        gChat->SendToAll(MSG_CHAT, message);
     }
     else if(typeMessage == MSG_VOICE_CHAT)
     {
-        //void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
-
-        //gAudioCapturer->PlayData(buf, (uint)sizeData);
+        String message((char*)data, (uint)sizeData);
+        gChat->SendToAll(MSG_VOICE_CHAT, message);
     }
 }
 
@@ -219,7 +225,7 @@ static void ServerCallbackOnDisconnect(SOCKET clientID)
             break;
         }
     }
-    gChat->SendToAll(message);
+    gChat->SendToAll(MSG_CHAT, message);
 
     LOG_INFOF("%s leave");
 }
@@ -254,12 +260,12 @@ bool Chat::Listen(uint16 port)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Chat::SendToAll(const String &message)
+void Chat::SendToAll(uint8 typeMessage, const String &message)
 {
     gChatLog->WriteMessage(message);
 
     for (DataClient &client : clients)
     {
-        server.SendMessage(client.clientID, MSG_CHAT, (void*)message.CString(), message.Length());
+        server.SendMessage(client.clientID, typeMessage, (void*)message.CString(), message.Length());
     }
 }

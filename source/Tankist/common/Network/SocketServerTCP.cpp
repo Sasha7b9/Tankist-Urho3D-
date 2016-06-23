@@ -80,20 +80,30 @@ static void AcceptTask(int sockServer, SocketParam *sockParam)
     std::thread *t;
 
     sockaddr_in addrClient;
+#ifdef WIN32
     int lenClient = sizeof(addrClient);
+#else
+    socklen_t lenClient = sizeof(addrClient);
+#endif
 
     while(sockParam->run)
     {
-        SOCKET newSock = accept((SOCKET)sockServer, (sockaddr*)&addrClient, &lenClient);
+        SOCKET newSock = accept(sockServer, (sockaddr*)&addrClient, &lenClient);
 #ifdef WIN32
         if(newSock != INVALID_SOCKET)
 #else
         if(newSock >= 0)
 #endif
         {
-            uint longAddr = addrClient.sin_addr.S_un.S_addr;
             char buffAddr[30];
-            sprintf_s(buffAddr, 19, "%d.%d.%d.%d", longAddr & 0xff, (longAddr >> 8) & 0xff, (longAddr >> 16) & 0xff, (longAddr >> 24) & 0xff);
+#ifdef WIN32
+            uint longAddr = addrClient.sin_addr.S_un.S_addr;
+            sprintf_s(buffAddr, 19,
+#else
+            uint longAddr = addrClient.sin_addr.s_addr;
+            sprintf(buffAddr,
+#endif
+                              "%d.%d.%d.%d", longAddr & 0xff, (longAddr >> 8) & 0xff, (longAddr >> 16) & 0xff, (longAddr >> 24) & 0xff);
 
             t = new std::thread(ExchangeTaks, (int)newSock, sockParam);
 

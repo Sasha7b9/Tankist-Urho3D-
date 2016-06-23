@@ -39,30 +39,34 @@ bool SocketClientTCP::Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *cli
 
     this->funcOnRecieve = funcOnRecieve;
 
+#ifdef WIN32
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))
     {
         LOG_ERRORF("Winsock not initialized with error %d", WSAGetLastError());
         return false;
     }
+#endif
 
     sockClient = socket(AF_INET, SOCK_STREAM, 0);
 
+#ifdef WIN32
     if(sockClient == INVALID_SOCKET)
     {
-        LOG_ERRORF("ocket() error %d", WSAGetLastError());
+        LOG_ERRORF("socket() error %d", WSAGetLastError());
         return false;
     }
+#endif
 
     return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnRecieve(int sock, void *buffer, int sizeBuffer, bool &run, pFuncVpVpVI funcOnRecieve, void *clientTCP)
+static void CallbackOnRecieve(SOCKET sock, void *buffer, int sizeBuffer, bool *run, pFuncVpVpVI funcOnRecieve, void *clientTCP)
 {
-    while(run)
+    while(*run)
     {
-        int numBytes = recv((SOCKET)sock, (char*)buffer, sizeBuffer, 0);
+        int numBytes = recv(sock, (char*)buffer, sizeBuffer, 0);
         funcOnRecieve(clientTCP, buffer, numBytes);
     }
 }
@@ -84,7 +88,7 @@ bool SocketClientTCP::Connect(const char *address, uint16 port)
         return false;
     }
 
-    if(connect((SOCKET)sockClient, (sockaddr*)&destAddr, sizeof(destAddr)))
+    if(connect(sockClient, (sockaddr*)&destAddr, sizeof(destAddr)))
     {
         LOG_ERRORF("Connect error %d", WSAGetLastError());
         return false;
@@ -92,7 +96,7 @@ bool SocketClientTCP::Connect(const char *address, uint16 port)
 
     if(type == Socket_Asynch)
     {
-        t = new std::thread(CallbackOnRecieve, sockClient, (void*)buff, 1024, run, funcOnRecieve, clientTCP);
+        t = new std::thread(CallbackOnRecieve, sockClient, (void*)buff, 1024, &run, funcOnRecieve, clientTCP);
     }
 
     return true;

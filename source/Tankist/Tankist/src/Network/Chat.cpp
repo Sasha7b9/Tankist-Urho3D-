@@ -196,9 +196,9 @@ static void ServerCallbackOnRecieve(SOCKET /*clientID*/, uint8 typeMessage, void
     }
     else if(typeMessage == MSG_VOICE_CHAT)
     {
-        void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
+        //void *buf = gAudioCapturer->OPUS_Decode(data, &sizeData);
 
-        gAudioCapturer->PlayData(buf, (uint)sizeData);
+        //gAudioCapturer->PlayData(buf, (uint)sizeData);
     }
 }
 

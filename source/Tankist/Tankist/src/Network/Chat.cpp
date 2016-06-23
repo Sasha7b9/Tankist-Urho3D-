@@ -194,7 +194,7 @@ static void ServerCallbackOnConnect(SOCKET clientID, char *address, uint16 port)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void ServerCallbackOnRecieve(SOCKET /*clientID*/, uint8 typeMessage, void *data, int sizeData)
+static void ServerCallbackOnRecieve(SOCKET clientID, uint8 typeMessage, void *data, int sizeData)
 {
     if(typeMessage == MSG_CHAT)
     {
@@ -204,7 +204,7 @@ static void ServerCallbackOnRecieve(SOCKET /*clientID*/, uint8 typeMessage, void
     else if(typeMessage == MSG_VOICE_CHAT)
     {
         String message((char*)data, (uint)sizeData);
-        gChat->SendToAll(MSG_VOICE_CHAT, message);
+        gChat->SendToAllExcept(MSG_VOICE_CHAT, message, clientID);
     }
 }
 
@@ -262,10 +262,26 @@ bool Chat::Listen(uint16 port)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToAll(uint8 typeMessage, const String &message)
 {
-    gChatLog->WriteMessage(message);
+    if(typeMessage == MSG_CHAT)
+    {
+        gChatLog->WriteMessage(message);
+    }
 
     for (DataClient &client : clients)
     {
         server.SendMessage(client.clientID, typeMessage, (void*)message.CString(), message.Length());
+    }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Chat::SendToAllExcept(uint8 typeMessage, const String &message, SOCKET except)
+{
+    for(DataClient &client : clients)
+    {
+        if(client.clientID != except)
+        {
+            server.SendMessage(client.clientID, typeMessage, (void*)message.CString(), message.Length());
+        }
     }
 }

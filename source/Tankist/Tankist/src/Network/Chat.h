@@ -25,6 +25,7 @@ public:
     // Functions server
     bool Listen(uint16 port);
     void SendToAll(uint8 typeMessage, const String &message);
+    void SendToAllExcept(uint8 typeMessage, const String &message, SOCKET except);
 
     // Functions client
     bool Connect(const char *address, uint16 port);

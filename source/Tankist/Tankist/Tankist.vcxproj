@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
+    <ClCompile Include="..\common\Core\Math.cpp" />
     <ClCompile Include="..\common\Counters.cpp" />
+    <ClCompile Include="..\common\Graphics\lImage.cpp" />
     <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -62,8 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
+    <ClInclude Include="..\common\Core\Math.h" />
     <ClInclude Include="..\common\Counters.h" />
     <ClInclude Include="..\common\defines.h" />
+    <ClInclude Include="..\common\Graphics\lImage.h" />
     <ClInclude Include="..\common\Network\ClientTCP.h" />
     <ClInclude Include="..\common\Network\ServerTCP.h" />
     <ClInclude Include="..\common\Network\SocketClientTCP.h" />

@@ -79,6 +79,12 @@
     <ClCompile Include="..\common\Counters.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\Graphics\lImage.cpp">
+      <Filter>common\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Core\Math.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -159,6 +165,12 @@
     <ClInclude Include="..\common\Counters.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\Graphics\lImage.h">
+      <Filter>common\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Core\Math.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -181,6 +193,9 @@
     </Filter>
     <Filter Include="GUI\Elements">
       <UniqueIdentifier>{ee3d8181-5b6a-4b98-bffb-43997907c563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\Graphics">
+      <UniqueIdentifier>{e3e006dd-7ba9-43fa-879d-812c33cdd152}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

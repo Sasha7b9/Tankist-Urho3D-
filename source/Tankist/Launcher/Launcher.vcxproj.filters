@@ -7,17 +7,17 @@
     <Filter Include="doc">
       <UniqueIdentifier>{d32b8d17-cd56-455f-8190-01e5150329f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{eebc72b2-1c43-4c81-92de-4ee11fce1ddd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{0797c59e-fa4f-40c9-9abf-f32673eb5839}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{6ef03981-9aa1-4ecb-a689-f9beda4e17e4}</UniqueIdentifier>
     </Filter>
     <Filter Include="common\Network">
       <UniqueIdentifier>{86a807b9-f409-437d-ad13-ee3325acb5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\Graphics">
+      <UniqueIdentifier>{d7757462-e977-42d9-818c-35f8b7da3bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\Core">
+      <UniqueIdentifier>{ba6d85e0-ad95-4fa1-bbdf-cfd4823ebed7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,18 +26,6 @@
     </ClInclude>
     <ClInclude Include="src\GlobalVars.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Math.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\lSprite.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\lImage.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\ProgressBar.h">
-      <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Launcher.h">
       <Filter>src</Filter>
@@ -66,6 +54,18 @@
     <ClInclude Include="..\common\Counters.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\Graphics\lImage.h">
+      <Filter>common\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Graphics\lSprite.h">
+      <Filter>common\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Graphics\ProgressBar.h">
+      <Filter>common\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Core\Math.h">
+      <Filter>common\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -73,18 +73,6 @@
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Math.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\lSprite.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\lImage.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\ProgressBar.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Launcher.cpp">
       <Filter>src</Filter>
@@ -109,6 +97,18 @@
     </ClCompile>
     <ClCompile Include="..\common\Counters.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Graphics\lImage.cpp">
+      <Filter>common\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Graphics\lSprite.cpp">
+      <Filter>common\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Graphics\ProgressBar.cpp">
+      <Filter>common\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Core\Math.cpp">
+      <Filter>common\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -144,33 +144,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
+    <ClInclude Include="..\common\Core\Math.h" />
     <ClInclude Include="..\common\Counters.h" />
     <ClInclude Include="..\common\defines.h" />
+    <ClInclude Include="..\common\Graphics\lImage.h" />
+    <ClInclude Include="..\common\Graphics\lSprite.h" />
+    <ClInclude Include="..\common\Graphics\ProgressBar.h" />
     <ClInclude Include="..\common\Network\ClientTCP.h" />
     <ClInclude Include="..\common\Network\ServerTCP.h" />
     <ClInclude Include="..\common\Network\SocketClientTCP.h" />
     <ClInclude Include="..\common\Network\SocketServerTCP.h" />
-    <ClInclude Include="src\Core\Math.h" />
     <ClInclude Include="src\GlobalVars.h" />
-    <ClInclude Include="src\Graphics\lImage.h" />
-    <ClInclude Include="src\Graphics\lSprite.h" />
-    <ClInclude Include="src\Graphics\ProgressBar.h" />
     <ClInclude Include="src\NetworkThread.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Launcher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
+    <ClCompile Include="..\common\Core\Math.cpp" />
     <ClCompile Include="..\common\Counters.cpp" />
+    <ClCompile Include="..\common\Graphics\lImage.cpp" />
+    <ClCompile Include="..\common\Graphics\lSprite.cpp" />
+    <ClCompile Include="..\common\Graphics\ProgressBar.cpp" />
     <ClCompile Include="..\common\Network\ClientTCP.cpp" />
     <ClCompile Include="..\common\Network\ServerTCP.cpp" />
     <ClCompile Include="..\common\Network\SocketClientTCP.cpp" />
     <ClCompile Include="..\common\Network\SocketServerTCP.cpp" />
-    <ClCompile Include="src\Core\Math.cpp" />
     <ClCompile Include="src\GlobalVars.cpp" />
-    <ClCompile Include="src\Graphics\lImage.cpp" />
-    <ClCompile Include="src\Graphics\lSprite.cpp" />
-    <ClCompile Include="src\Graphics\ProgressBar.cpp" />
     <ClCompile Include="src\NetworkThread.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

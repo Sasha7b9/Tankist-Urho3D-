@@ -236,7 +236,7 @@ void lImage::DrawCircle(float x, float y, float radius, const Color &color, floa
 {
     for (float angle = 0.0f; angle < 360.0f; angle += step)
     {
-        SetPoint((int)(x + Cos(angle) * radius + 0.5f), (int)(y + Sin(angle) * radius + 0.5f), color);
+        SetPoint((int)(x + Urho3D::Cos(angle) * radius + 0.5f), (int)(y + Urho3D::Sin(angle) * radius + 0.5f), color);
     }
 }
 

@@ -263,6 +263,8 @@ void Tankist::CreateScene()
         CollisionShape* shape = objectNode->CreateComponent<CollisionShape>();
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
+
+    //gScene->GetComponent<PhysicsWorld>()->SetFps(300);
 }
 
 

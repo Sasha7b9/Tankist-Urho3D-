@@ -36,6 +36,8 @@ public:
         this->state = state;
     }
 
+    void Shot();
+
 private:
     Game(Game const&) : Object(nullptr) {};
     Game operator=(Game const&) {};

@@ -110,6 +110,14 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
         gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3::UP);
     }
 
+    else if(key == Urho3D::KEY_CTRL)
+    {
+        if(gCamera->GetMode() == ModeShooter)
+        {
+            gGame->Shot();
+        }
+    }
+
     // Common rendering quality controls, only when UI has no focused element
     else if(!gUI->GetFocusElement())
     {

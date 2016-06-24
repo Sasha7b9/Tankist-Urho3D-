@@ -43,6 +43,11 @@ public:
         return mode;
     }
 
+    Node *GetNode()
+    {
+        return node;
+    }
+
 private:
     float yaw = 0.0f;
     float pitch = 0.0f;

@@ -135,3 +135,29 @@ Vehicle* Game::CreateVehicle()
 
     return vehicle;
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Game::Shot()
+{
+    Node *nodeTrunk = gScene->GetNode(gClient->trunkID);
+
+    Node *boxNode = gScene->CreateChild("SmallBox");
+    boxNode->SetPosition(gCamera->GetNode()->GetWorldPosition() + gCamera->GetNode()->GetWorldRotation() * Vector3::FORWARD * 25.0f);
+    boxNode->SetScale(0.5f);
+
+    StaticModel *boxObject = boxNode->CreateComponent<StaticModel>();
+    boxObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
+    boxObject->SetMaterial(gCache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+    boxObject->SetCastShadows(true);
+
+    RigidBody *body = boxNode->CreateComponent<RigidBody>();
+    body->SetMass(100.0f);
+    body->SetFriction(0.75f);
+    CollisionShape *shape = boxNode->CreateComponent<CollisionShape>();
+    shape->SetBox(Vector3::ONE);
+
+    const float OBJECT_VELOCITY = 250.0f;
+
+    body->SetLinearVelocity(gCamera->GetNode()->GetWorldRotation() * Vector3::FORWARD * OBJECT_VELOCITY);
+}

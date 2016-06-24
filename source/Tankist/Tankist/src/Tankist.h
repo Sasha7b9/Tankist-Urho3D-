@@ -49,6 +49,7 @@ private:
 
     // Handlers
     void HandleKeyDown(StringHash, VariantMap&);
+    void HandleKeyUp(StringHash, VariantMap&);
     void HandlePostUpdate(StringHash, VariantMap&);
     void HandleLanguageChanged(StringHash, VariantMap&);
     // Server functions

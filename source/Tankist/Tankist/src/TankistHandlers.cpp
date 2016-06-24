@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
+void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 {
 #ifdef WIN32
     using namespace Urho3D::KeyDown;
@@ -78,6 +78,11 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         {
             gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
         }
+    }
+
+    else if(key == Urho3D::KEY_KP_ENTER)
+    {
+        gAudioCapturer->Pause(false);
     }
 
     // Common rendering quality controls, only when UI has no focused element
@@ -171,6 +176,22 @@ void Tankist::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             UIElement *instr = gUI->GetRoot()->GetChild(INSTRUCTION);
             instr->SetVisible(!instr->IsVisible());
         }
+    }
+#endif
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
+{
+#ifdef WIN32
+    using namespace Urho3D::KeyDown;
+
+    int key = eventData[P_KEY].GetInt();
+
+    if(key == Urho3D::KEY_KP_ENTER)
+    {
+        gAudioCapturer->Pause(true);
     }
 #endif
 }

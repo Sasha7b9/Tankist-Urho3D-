@@ -191,8 +191,14 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void * /*user*/)
+static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void *user)
 {
+    bool *pause = (bool*)user;
+    if(*pause)
+    {
+        return true;
+    }
+
     static float prevTime = 0.0f;
     static int allBytes = 0;
     static int recvBytes = 0;
@@ -275,7 +281,7 @@ bool AudioCapturer::Start()
             return false;
         }
 
-        rchan = BASS_RecordStart(SAMPLERATE, 2, MAKELONG(0, 10), RecordingCallback, 0);
+        rchan = BASS_RecordStart(SAMPLERATE, 2, MAKELONG(0, 10), RecordingCallback, &pause);
 
         if(rchan == 0)
         {

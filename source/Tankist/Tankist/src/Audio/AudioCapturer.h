@@ -7,6 +7,14 @@ public:
     AudioCapturer();
 
     bool Start();
+    void Pause(bool pause)
+    {
+        this->pause = pause;
+    };
+    bool InPause()
+    {
+        return pause;
+    };
     void Stop();
     void PlayData(void *buffer, uint length);
 
@@ -14,4 +22,5 @@ public:
 
 private:
     bool Init();
+    bool pause = true;
 };

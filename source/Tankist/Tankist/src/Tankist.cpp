@@ -267,6 +267,7 @@ void Tankist::SubscribeToEvents()
     if (gTypeApplication == Type_Client)
     {
         SubscribeToEvent(Urho3D::E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
+        SubscribeToEvent(Urho3D::E_KEYUP, URHO3D_HANDLER(Tankist, HandleKeyUp));
         SubscribeToEvent(Urho3D::E_CHANGELANGUAGE, URHO3D_HANDLER(Tankist, HandleLanguageChanged));
     }
 

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\CommonFunctions.cpp" />
+    <ClCompile Include="..\common\Counters.cpp" />
     <ClCompile Include="..\common\Network\ClientTCP.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -33,7 +34,6 @@
     <ClCompile Include="src\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\CameraUni.cpp" />
     <ClCompile Include="src\ChatLog.cpp" />
-    <ClCompile Include="src\Counters.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
+    <ClInclude Include="..\common\Counters.h" />
     <ClInclude Include="..\common\defines.h" />
     <ClInclude Include="..\common\Network\ClientTCP.h" />
     <ClInclude Include="..\common\Network\ServerTCP.h" />
@@ -72,7 +73,6 @@
     <ClInclude Include="src\Audio\AudioPlayer.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\ChatLog.h" />
-    <ClInclude Include="src\Counters.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />

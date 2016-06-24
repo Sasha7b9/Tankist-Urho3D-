@@ -63,6 +63,9 @@
     <ClInclude Include="..\common\Network\SocketServerTCP.h">
       <Filter>common\Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\Counters.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="..\common\Network\SocketServerTCP.cpp">
       <Filter>common\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Counters.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

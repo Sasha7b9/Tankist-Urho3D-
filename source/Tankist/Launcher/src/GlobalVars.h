@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "Counters.h"
+
+
 extern Urho3D::UI *gUI;
 extern Urho3D::UIElement *gUIRoot;
 extern Urho3D::ResourceCache *gResourceCache;
@@ -10,3 +13,5 @@ extern Urho3D::Time *gTime;
 extern Urho3D::FileSystem *gFileSystem;
 extern Urho3D::Log *gLog;
 extern Urho3D::Context *gContext;
+
+extern Counters *gCounters;

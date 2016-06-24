@@ -204,7 +204,7 @@ static void ServerCallbackOnRecieve(SOCKET clientID, uint8 typeMessage, void *da
     else if(typeMessage == MSG_VOICE_CHAT)
     {
         String message((char*)data, (uint)sizeData);
-        gChat->SendToAll(MSG_VOICE_CHAT, message);
+        gChat->SendToAllExcept(MSG_VOICE_CHAT, message, clientID);
     }
 }
 

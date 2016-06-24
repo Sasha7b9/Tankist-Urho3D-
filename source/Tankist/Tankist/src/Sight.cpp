@@ -16,6 +16,7 @@ static void DrawTriangle(lImage *image, int x, int y)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Sight::Sight(Context *context) : Window(context)
 {
+#ifdef WIN32
     lImage *imageSight = new lImage(context_);
     imageSight->SetSize(gUIRoot->GetWidth(), gUIRoot->GetHeight());
     imageSight->Clear({0.0f, 0.0f, 0.0f, 1.0f});
@@ -87,4 +88,5 @@ Sight::Sight(Context *context) : Window(context)
     SetTexture(texture);
     SetBringToBack(true);
     SetFocusMode(Urho3D::FM_NOTFOCUSABLE);
+#endif
 }

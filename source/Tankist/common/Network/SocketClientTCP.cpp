@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include <stdafx.h>
 
 
 #include "SocketClientTCP.h"
@@ -68,6 +68,7 @@ static void CallbackOnRecieve(SOCKET sock, void *buffer, int sizeBuffer, bool *r
     {
         int numBytes = recv(sock, (char*)buffer, sizeBuffer, 0);
         funcOnRecieve(clientTCP, buffer, numBytes);
+        gCounters->AddClientIn(numBytes);
     }
 }
 
@@ -107,6 +108,8 @@ bool SocketClientTCP::Connect(const char *address, uint16 port)
 void SocketClientTCP::Transmit(void *data, int size)
 {
     send((SOCKET)sockClient, (char*)data, size, 0);
+
+    gCounters->AddClientOut(size);
 }
 
 

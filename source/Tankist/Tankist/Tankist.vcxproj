@@ -33,6 +33,7 @@
     <ClCompile Include="src\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\CameraUni.cpp" />
     <ClCompile Include="src\ChatLog.cpp" />
+    <ClCompile Include="src\Counters.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -71,6 +72,7 @@
     <ClInclude Include="src\Audio\AudioPlayer.h" />
     <ClInclude Include="src\CameraUni.h" />
     <ClInclude Include="src\ChatLog.h" />
+    <ClInclude Include="src\Counters.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />

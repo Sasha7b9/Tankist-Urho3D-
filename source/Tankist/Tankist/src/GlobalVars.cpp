@@ -43,3 +43,4 @@ AudioCapturer *gAudioCapturer = nullptr;
 WindowGameESC *gWindowGameESC = nullptr;
 WindowSettings *gWindowSettings = nullptr;
 Settings *gSet = nullptr;
+Counters *gCounters = nullptr;

@@ -12,6 +12,7 @@
 #include "GUI/WindowGameESC.h"
 #include "GUI/WindowSettings.h"
 #include "Settings.h"
+#include "Counters.h"
 
 
 // For server and client
@@ -52,3 +53,4 @@ extern AudioCapturer *gAudioCapturer;
 extern WindowGameESC *gWindowGameESC;
 extern WindowSettings *gWindowSettings;
 extern Settings *gSet;
+extern Counters *gCounters;

@@ -56,6 +56,7 @@ static void ExchangeTaks(SOCKET sock, SocketParam *sockParam)
     while(sockParam->run)
     {
         int numBytes = recv(sock, buffer, (int)sockParam->sizeBuffer, 0);
+        gCounters->AddServerIn(numBytes);
 #ifdef WIN32
         if(numBytes == SOCKET_ERROR)
 #else
@@ -155,6 +156,7 @@ bool SocketServerTCP::Listen(uint16 port)
 void SocketServerTCP::Transmit(const void *data, uint size)
 {
     int numBytes = send(sockServer, (const char*)data, (int)size, 0);
+    gCounters->AddServerOut(numBytes);
 
-    LOG_INFOF("socket = %d, Transferred %d, pass %d, error %d", sockServer, size, numBytes, WSAGetLastError());
+    //LOG_INFOF("socket = %d, Transferred %d, pass %d, error %d", sockServer, size, numBytes, WSAGetLastError());
 }

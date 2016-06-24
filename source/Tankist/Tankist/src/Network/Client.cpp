@@ -150,8 +150,8 @@ void Client::RequestSystemInformation()
         gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, true, VectorBuffer());
 
 
-        gTankist->SetBytesInPerSec(connection->GetBytesInPerSec());
-        gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec());
+        gTankist->SetBytesInPerSec(connection->GetBytesInPerSec() + gCounters->GetClientIn());
+        gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec() + gCounters->GetClientOut());
     }
 }
 

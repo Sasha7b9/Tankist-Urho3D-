@@ -102,8 +102,8 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             speedOut += conn->GetBytesOutPerSec();
         }
 
-        buffer.WriteFloat(speedIn);
-        buffer.WriteFloat(speedOut);
+        buffer.WriteFloat(speedIn + gCounters->GetServerIn());
+        buffer.WriteFloat(speedOut + gCounters->GetServerOut());
         connection->SendMessage(MSG_SERVER_SPEED, true, true, buffer);
     }
 }

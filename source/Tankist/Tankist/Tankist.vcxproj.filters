@@ -76,6 +76,9 @@
     <ClCompile Include="src\GUI\Elements\Governor.cpp">
       <Filter>GUI\Elements</Filter>
     </ClCompile>
+    <ClCompile Include="src\Counters.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -152,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Elements\Governor.h">
       <Filter>GUI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Counters.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -200,6 +200,8 @@ void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandlePostUpdate(StringHash, VariantMap &)
 {
+    gCounters->Update();
+
     static float prevTime = 0.0f;
 
     float curTime = gTime->GetElapsedTime();

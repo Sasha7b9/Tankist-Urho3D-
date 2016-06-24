@@ -44,10 +44,14 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
                 controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
-                controls.Set(CTRL_TOWER_RIGHT, gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6));
-                controls.Set(CTRL_TOWER_LEFT, gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4));
-                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2));
-                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8));
+                controls.Set(CTRL_TOWER_RIGHT, (gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6)) && gCamera->GetMode() == ModeShooter);
+                controls.Set(CTRL_TOWER_RIGHT_FAST, (gInput->GetKeyDown('E') || gInput->GetKeyDown(Urho3D::KEY_KP_6)) && gCamera->GetMode() == ModeCommander);
+                controls.Set(CTRL_TOWER_LEFT, (gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4)) && gCamera->GetMode() == ModeShooter);
+                controls.Set(CTRL_TOWER_LEFT_FAST, (gInput->GetKeyDown('Q') || gInput->GetKeyDown(Urho3D::KEY_KP_4)) && gCamera->GetMode() == ModeCommander);
+                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(Urho3D::KEY_KP_2) && gCamera->GetMode() == ModeShooter);
+                controls.Set(CTRL_TRUNK_DOWN_FAST, gInput->GetKeyDown(Urho3D::KEY_KP_2) && gCamera->GetMode() == ModeCommander);
+                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(Urho3D::KEY_KP_8) && gCamera->GetMode() == ModeShooter);
+                controls.Set(CTRL_TRUNK_UP_FAST, gInput->GetKeyDown(Urho3D::KEY_KP_8) && gCamera->GetMode() == ModeCommander);
             }
 
             serverConnection->SetControls(controls);
@@ -80,6 +84,10 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
                 vehicle->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
                 vehicle->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
                 vehicle->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
+                vehicle->controls.Set(CTRL_TOWER_LEFT_FAST, ((controls.buttons_ & CTRL_TOWER_LEFT_FAST) != 0));
+                vehicle->controls.Set(CTRL_TOWER_RIGHT_FAST, ((controls.buttons_ & CTRL_TOWER_RIGHT_FAST) != 0));
+                vehicle->controls.Set(CTRL_TRUNK_UP_FAST, ((controls.buttons_ & CTRL_TRUNK_UP_FAST) != 0));
+                vehicle->controls.Set(CTRL_TRUNK_DOWN_FAST, ((controls.buttons_ & CTRL_TRUNK_DOWN_FAST) != 0));
             }
         }
     }

@@ -36,6 +36,8 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
     FillDropDownListResolutions();
 
     FillControlsFromSettings();
+
+    window->SetOpacity(0.75f);
 }
 
 

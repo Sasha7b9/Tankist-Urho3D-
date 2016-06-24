@@ -35,7 +35,7 @@ Client::~Client()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Client::ConnectToServer()
 {
-    nodeID = 0;
+    towerID = 0;
 
     return GetSubsystem<Network>()->Connect(gIPAddress, gNumPort, gScene);
 }
@@ -49,7 +49,7 @@ void Client::Disconnect()
     {
         serverConnnection->Disconnect();
         gScene->Clear(true, false);
-        nodeID = 0;
+        towerID = 0;
     }
 }
 
@@ -57,14 +57,16 @@ void Client::Disconnect()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
 {
-    nodeID = eventData[P_ID].GetUInt();
+    towerID = eventData[P_ID_TOWER].GetUInt();
+    trunkID = eventData[P_ID_TRUNK].GetUInt();
+    caseID = eventData[P_ID_CASE].GetUInt();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Client::AttachCameraToNode()
 {
-    return gCamera->AttachToNode(gScene->GetNode(nodeID), Vector3::UP * 1.75f + Vector3::BACK);
+    return gCamera->SetMode(ModeCommander, gScene->GetNode(towerID), Vector3::UP);
 }
 
 

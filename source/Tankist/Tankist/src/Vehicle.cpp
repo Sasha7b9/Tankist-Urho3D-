@@ -100,9 +100,21 @@ void Vehicle::FixedUpdate(float timeStep)
         nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
     }
 
+    if(controls.buttons_ & CTRL_TOWER_RIGHT_FAST)
+    {
+        pitchTower += SPEED_TOWER_ROTATION * timeStep * 4;
+        nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
+    }
+
     if(controls.buttons_ & CTRL_TOWER_LEFT)
     {
         pitchTower -= SPEED_TOWER_ROTATION * timeStep;
+        nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
+    }
+
+    if(controls.buttons_ & CTRL_TOWER_LEFT_FAST)
+    {
+        pitchTower -= SPEED_TOWER_ROTATION * timeStep * 4;
         nodeTower->SetRotation(Quaternion(pitchTower, Vector3::UP));
     }
 
@@ -111,9 +123,19 @@ void Vehicle::FixedUpdate(float timeStep)
         RotateTrunk(-SPEED_TRUNK_ROTATION * timeStep);
     }
 
+    if(controls.buttons_ & CTRL_TRUNK_DOWN_FAST)
+    {
+        RotateTrunk(-SPEED_TRUNK_ROTATION * timeStep * 4);
+    }
+
     if(controls.buttons_ & CTRL_TRUNK_UP)
     {
         RotateTrunk(SPEED_TRUNK_ROTATION * timeStep);
+    }
+
+    if(controls.buttons_ & CTRL_TRUNK_UP_FAST)
+    {
+        RotateTrunk(SPEED_TRUNK_ROTATION * timeStep * 4);
     }
 }
 

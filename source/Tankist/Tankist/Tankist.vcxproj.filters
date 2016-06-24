@@ -85,6 +85,9 @@
     <ClCompile Include="..\common\Core\Math.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="src\Sight.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="..\common\Core\Math.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sight.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

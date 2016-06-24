@@ -43,7 +43,9 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
     Vehicle* vehicle = gGame->ClientConnected(newConnection);
 
     VariantMap remoteEventData;
-    remoteEventData[P_ID] = vehicle->towerID;
+    remoteEventData[P_ID_TOWER] = vehicle->towerID;
+    remoteEventData[P_ID_TRUNK] = vehicle->trunkID;
+    remoteEventData[P_ID_CASE] = 0;
     newConnection->SendRemoteEvent(E_CLIENTOBJECTID, true, remoteEventData);
 
     numClients++;

@@ -25,6 +25,8 @@ WindowGameESC::WindowGameESC(Context *context) : Object(context)
 
     Button *bLanguage = (Button*)window->GetChild("bLanguage", true);
     SubscribeToEvent(bLanguage, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonLanguage));
+
+    window->SetOpacity(0.75f);
 }
 
 
@@ -39,6 +41,9 @@ void WindowGameESC::Hide()
 void WindowGameESC::Show()
 {
     window->SetVisible(true);
+    window->SetBringToFront(true);
+    window->SetFocus(true);
+    window->BringToFront();
 }
 
 

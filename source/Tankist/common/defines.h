@@ -22,7 +22,9 @@ static const int MSG_SERVER_SPEED = 36;
 static const int MSG_VOICE_CHAT = 37;
 
 
-static const Urho3D::StringHash P_ID("ID");
+static const Urho3D::StringHash P_ID_TOWER("ID_TOWER");
+static const Urho3D::StringHash P_ID_TRUNK("ID_TRUNK");
+static const Urho3D::StringHash P_ID_CASE("ID_CASE");
 static const Urho3D::String INSTRUCTION("tInstructions");
 
 

@@ -2,21 +2,25 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const int CTRL_FORWARD      = 1 << 0;
-const int CTRL_BACK         = 1 << 1;
-const int CTRL_LEFT         = 1 << 2;
-const int CTRL_RIGHT        = 1 << 3;
-const int CTRL_TOWER_LEFT   = 1 << 4;
-const int CTRL_TOWER_RIGHT  = 1 << 5;
-const int CTRL_TRUNK_UP     = 1 << 6;
-const int CTRL_TRUNK_DOWN   = 1 << 7;
+const int CTRL_FORWARD          = 1 << 0;
+const int CTRL_BACK             = 1 << 1;
+const int CTRL_LEFT             = 1 << 2;
+const int CTRL_RIGHT            = 1 << 3;
+const int CTRL_TOWER_LEFT       = 1 << 4;
+const int CTRL_TOWER_RIGHT      = 1 << 5;
+const int CTRL_TRUNK_UP         = 1 << 6;
+const int CTRL_TRUNK_DOWN       = 1 << 7;
+const int CTRL_TOWER_LEFT_FAST  = 1 << 8;
+const int CTRL_TOWER_RIGHT_FAST = 1 << 9;
+const int CTRL_TRUNK_UP_FAST    = 1 << 10;
+const int CTRL_TRUNK_DOWN_FAST  = 1 << 11;
 
 const float YAW_SENSITIVITY = 0.1f;
 const float ENGINE_POWER = 5.0f;
 const float DOWN_FORCE = 10.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
-const float SPEED_TOWER_ROTATION = 8.0f;
-const float SPEED_TRUNK_ROTATION = 10.0f;
+const float SPEED_TOWER_ROTATION = 2.0f;
+const float SPEED_TRUNK_ROTATION = 2.5f;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +52,7 @@ public:
     void Delete();
 
     unsigned towerID;
+    unsigned trunkID;
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
@@ -86,7 +91,6 @@ private:
     unsigned frontRightID;
     unsigned rearLeftID;
     unsigned rearRightID;
-    unsigned trunkID;
 
     float pitchTower = 0.0f;
 

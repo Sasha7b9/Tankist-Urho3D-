@@ -1,11 +1,13 @@
-#include <stdafx.h>
+#include "stdafx.h"
 
 
 #include "Vehicle.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "../../common/CommonFunctions.h"
-#include <Network/Chat.h>
+#include "Network/Chat.h"
+#include "Graphics/lImage.h"
+
 
 #pragma warning(disable:4100)
 URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
@@ -208,8 +210,8 @@ void Tankist::CreateScene()
     Zone* zone = zoneNode->CreateComponent<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
-    zone->SetFogStart(300.0f);
-    zone->SetFogEnd(500.0f);
+    zone->SetFogStart(4000.0f);
+    zone->SetFogEnd(5000.0f);
     zone->SetBoundingBox(BoundingBox(-2000.0f, 2000.0f));
 
     // Create a directional light with cascaded shadow mapping
@@ -308,6 +310,7 @@ void Tankist::CreateUI()
     gWindowGameESC = new WindowGameESC(context_);
 
     gWindowSettings = new WindowSettings(context_);
+
 #endif
 }
 

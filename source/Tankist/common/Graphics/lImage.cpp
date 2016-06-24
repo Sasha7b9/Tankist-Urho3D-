@@ -117,7 +117,7 @@ void lImage::Replace4Points(int x, int y, const Color &color)
 {
     if(y > 0)                       // upper pixel
     {
-        if(GetPixel(x, y - 1) == replacedColor)
+        if(GetPixel(x, y - 1) != color)
         {
             SetPixel(x, y - 1, color);
             Replace4Points(x, y - 1, color);
@@ -125,7 +125,7 @@ void lImage::Replace4Points(int x, int y, const Color &color)
     }
     if(x < GetWidth() - 1)   // rught pixel
     {
-        if(GetPixel(x + 1, y) == replacedColor)
+        if(GetPixel(x + 1, y) != color)
         {
             SetPixel(x + 1, y, color);
             Replace4Points(x + 1, y, color);
@@ -133,7 +133,7 @@ void lImage::Replace4Points(int x, int y, const Color &color)
     }
     if(y < GetHeight() - 1)
     {
-        if(GetPixel(x, y + 1) == replacedColor)
+        if(GetPixel(x, y + 1) != color)
         {
             SetPixel(x, y + 1, color);
             Replace4Points(x, y + 1, color);
@@ -141,7 +141,7 @@ void lImage::Replace4Points(int x, int y, const Color &color)
     }
     if(x > 0)
     {
-        if(GetPixel(x - 1, y) == replacedColor)
+        if(GetPixel(x - 1, y) != color)
         {
             SetPixel(x - 1, y, color);
             Replace4Points(x - 1, y, color);

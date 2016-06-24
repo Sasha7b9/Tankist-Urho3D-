@@ -28,6 +28,7 @@
 #include <Urho3D/Graphics/Terrain.h>
 #include <Urho3D/Graphics/Zone.h>
 #include <Urho3D/Graphics/GraphicsEvents.h>
+#include <Urho3D/Graphics/Texture2D.h>
 
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Input/Input.h>
@@ -62,14 +63,19 @@
 #include <Urho3D/UI/Window.h>
 #include <Urho3D/UI/DropDownList.h>
 #include <Urho3D/UI/CheckBox.h>
+#include <Urho3D/UI/Sprite.h>
 
 #include <Urho3D/DebugNew.h>
+
+#include <Urho3D/Urho2D/Sprite2D.h>
+#include <Urho3D/Urho2D/StaticSprite2D.h>
 
 #include <thread>
 
 #ifdef WIN32
 
 #pragma comment(lib, "ws2_32.lib")
+#include <d3d9types.h>
 
 #else
 
@@ -156,11 +162,14 @@ using Urho3D::SharedPtr;
 using Urho3D::StaticModel;
 using Urho3D::String;
 using Urho3D::StringHash;
+using Urho3D::Sprite2D;
+using Urho3D::StaticSprite2D;
 
 using Urho3D::Terrain;
 using Urho3D::Text;
 using Urho3D::Time;
 using Urho3D::Thread;
+using Urho3D::Texture2D;
 
 using Urho3D::Variant;
 using Urho3D::VariantMap;

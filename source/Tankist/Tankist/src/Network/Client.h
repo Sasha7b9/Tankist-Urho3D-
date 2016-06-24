@@ -25,6 +25,10 @@ public:
     // Request ping, load cpu, number clients
     void RequestSystemInformation();
 
+    unsigned towerID = 0;
+    unsigned trunkID = 0;
+    unsigned caseID = 0;
+
 private:
     void HandleClientObjectID(StringHash eventType, VariantMap &eventData);
     void HandleServerConnected(StringHash eventType, VariantMap &eventData);
@@ -39,8 +43,6 @@ private:
     void HandleNetworkUpdateSent(StringHash eventType, VariantMap &eventData);
     void HandleNetworkSceneLoadFailed(StringHash eventType, VariantMap &eventData);
     void HandleRemoteEventData(StringHash eventType, VariantMap &eventData);
-
-    unsigned nodeID = 0;
 
     bool serverIsConnected = false;
 

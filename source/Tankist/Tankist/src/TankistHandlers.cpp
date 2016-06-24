@@ -85,6 +85,31 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
         gAudioCapturer->Pause(false);
     }
 
+    else if(key == Urho3D::KEY_KP_PLUS)
+    {
+        //gCamera->IncFov();
+    }
+
+    else if(key == Urho3D::KEY_KP_MINUS)
+    {
+        //gCamera->DecFov();
+    }
+
+    else if(key == Urho3D::KEY_KP_MULTIPLY)
+    {
+        gCamera->DefaultFov();
+    }
+
+    else if(key == Urho3D::KEY_SPACE)
+    {
+        gCamera->SetMode(ModeShooter, gScene->GetNode(gClient->trunkID), Vector3::UP * 1.75f + Vector3::BACK * 3);
+    }
+
+    else if(key == Urho3D::KEY_F9)
+    {
+        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3::UP);
+    }
+
     // Common rendering quality controls, only when UI has no focused element
     else if(!gUI->GetFocusElement())
     {

@@ -14,6 +14,15 @@ public:
     int GetValue();
     void SetValue(int value);
 
+    void SaveValue()
+    {
+        savedValue = value;
+    };
+    void RestoreValue()
+    {
+        SetValue(savedValue);
+    };
+
 private:
     Governor(Governor const&) : Object(nullptr) {};
     Governor operator=(Governor const&) {};
@@ -37,6 +46,8 @@ private:
     int value = 0;
     int min = 0;
     int max = 0;
+
+    int savedValue = 0;
 
     bool mousePressed = false;
     float scale = 1.0f;

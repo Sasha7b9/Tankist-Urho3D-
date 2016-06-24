@@ -105,10 +105,12 @@ void Tankist::Start()
 
         if(gSet->FirstStart())
         {
+            /*
             IntVector2 res = gGraphics->GetDesktopResolution();
             gSet->Set(WINDOW_WIDTH, res.x_);
             gSet->Set(WINDOW_HEIGHT, res.y_);
             gGraphics->SetMode(gSet->Get(WINDOW_WIDTH), gSet->Get(WINDOW_HEIGHT));
+            */
         }
 
         SetWindowTitleAndIcon();
@@ -152,7 +154,8 @@ void Tankist::Start()
 
         gLocale = GetSubsystem<Localization>();
         gLocale->LoadJSONFile("Strings.json");
-        gLocale->SetLanguage("ru");
+        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "ru" : "en");
+        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "en" : "ru");
     }
 
     gGame = new Game(gContext);

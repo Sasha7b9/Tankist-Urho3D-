@@ -75,7 +75,7 @@ static void ExchangeTaks(SOCKET sock, SocketParam *sockParam)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void AcceptTask(int sockServer, SocketParam *sockParam)
+static void AcceptTask(SOCKET sockServer, SocketParam *sockParam)
 {
     std::thread *t;
 

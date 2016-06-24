@@ -7,6 +7,7 @@
 #define VOLUME_GAME     0,      3
 #define VOLUME_CHAT     0,      4
 #define MIC_LEVEL       0,      5
+#define LANGUAGE        0,      6  /* 0 - en, 1 - ru */
 
 
 class Settings

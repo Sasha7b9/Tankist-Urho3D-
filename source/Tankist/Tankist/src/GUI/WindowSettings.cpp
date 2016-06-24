@@ -61,6 +61,10 @@ void WindowSettings::FillControlsFromSettings()
 
     String currentResolution = String(gSet->Get(WINDOW_WIDTH)) + " x " + String(gSet->Get(WINDOW_HEIGHT));
     ddlbResolution->SetCurrentItem(currentResolution);
+
+    gGameVolume->SetValue(gSet->Get(VOLUME_GAME));
+    gChatVolume->SetValue(gSet->Get(VOLUME_CHAT));
+    gMicLevel->SetValue(gSet->Get(MIC_LEVEL));
 }
 
 

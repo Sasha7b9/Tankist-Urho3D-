@@ -52,7 +52,8 @@ void WindowGameESC::HandleButtonExit(StringHash, VariantMap&)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowGameESC::HandleButtonLanguage(StringHash, VariantMap&)
 {
-    gLocale->SetLanguage(gLocale->GetLanguage() == String("ru") ? "en" : "ru");
+    gSet->Set(LANGUAGE, gLocale->GetLanguage() == String("ru") ? 0 : 1);
+    gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "en" : "ru");
 }
 
 

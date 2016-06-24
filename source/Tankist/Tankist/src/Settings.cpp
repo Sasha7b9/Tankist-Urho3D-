@@ -194,6 +194,7 @@ void Settings::SetDefault()
     settings.Push(Variant(50));     // VOLUME_GAME      3
     settings.Push(Variant(50));     // VOLUME_CHAT      4
     settings.Push(Variant(50));     // MIC_LEVEL        5
+    settings.Push(Variant(0));      // LANGUAGE         6
 
 #pragma warning(pop)
 }

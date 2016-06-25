@@ -112,7 +112,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_CTRL)
     {
-        if(gCamera->GetMode() == ModeShooter)
+        if(!eventData[P_REPEAT].GetBool())
         {
             gGame->Shot();
         }

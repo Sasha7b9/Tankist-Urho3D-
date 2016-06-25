@@ -196,6 +196,7 @@ using Urho3D::GetVariantType;
 using Urho3D::Abs;
 using Urho3D::ToInt;
 
+using Urho3D::REPLICATED;
 using Urho3D::LOCAL;
 using Urho3D::LIGHT_DIRECTIONAL;
 using Urho3D::SHADOWQUALITY_BLUR_VSM;

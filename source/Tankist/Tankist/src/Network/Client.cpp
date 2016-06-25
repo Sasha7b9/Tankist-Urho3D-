@@ -2,6 +2,7 @@
 
 
 #include "Client.h"
+#include "Network/NetworkEvents.h"
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -9,6 +10,7 @@ Client::Client(Context *context) : Object(context)
 {
     gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
     SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(Client, HandleClientObjectID));
+    //gNetwork->RegisterRemoteEvent(E_SHOOT);
 
     SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
     SubscribeToEvent(Urho3D::E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));

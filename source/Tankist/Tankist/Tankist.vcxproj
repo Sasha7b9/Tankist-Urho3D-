@@ -87,6 +87,7 @@
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Messenger.h" />
+    <ClInclude Include="src\Network\NetworkEvents.h" />
     <ClInclude Include="src\Network\Server.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\Sight.h" />

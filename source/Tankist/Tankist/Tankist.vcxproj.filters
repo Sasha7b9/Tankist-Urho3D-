@@ -177,6 +177,9 @@
     <ClInclude Include="src\Sight.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Network\NetworkEvents.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

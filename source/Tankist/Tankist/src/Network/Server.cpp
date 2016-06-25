@@ -1,10 +1,16 @@
 #include <stdafx.h>
 
 
+#include "NetworkEvents.h"
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Server::Server(Context *context) : Object(context)
 {
     gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
+    gNetwork->RegisterRemoteEvent(E_SHOOT);
+    SubscribeToEvent(E_SHOOT, URHO3D_HANDLER(Server, HandleShoot));
+
     SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Server, HandleCloseConnection));
 
     SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
@@ -26,6 +32,33 @@ Server::Server(Context *context) : Object(context)
 void Server::Start(unsigned short port)
 {
     gNetwork->StartServer(port);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleShoot(StringHash, VariantMap& eventData)
+{
+    uint trunkID = eventData[P_ID_TRUNK].GetUInt();
+    Node* nodeTrunk = gScene->GetNode(trunkID);
+
+    Node *boxNode = gScene->CreateChild("SmallBox", REPLICATED);
+    boxNode->SetPosition(nodeTrunk->GetWorldPosition() + nodeTrunk->GetWorldRotation() * Vector3::UP * 1.0f);
+    boxNode->SetScale(0.5f);
+
+    StaticModel *boxObject = boxNode->CreateComponent<StaticModel>();
+    boxObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
+    boxObject->SetMaterial(gCache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+    boxObject->SetCastShadows(true);
+
+    RigidBody *body = boxNode->CreateComponent<RigidBody>();
+    body->SetMass(100.0f);
+    body->SetFriction(0.75f);
+    CollisionShape *shape = boxNode->CreateComponent<CollisionShape>();
+    shape->SetBox(Vector3::ONE);
+
+    const float OBJECT_VELOCITY = 250.0f;
+
+    body->SetLinearVelocity(nodeTrunk->GetWorldRotation() * Vector3::UP * OBJECT_VELOCITY);
 }
 
 
@@ -128,6 +161,9 @@ void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 
     gChat->SendToAll(MSG_CHAT, conn->GetAddress() + " leave");
 }
+
+
+
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

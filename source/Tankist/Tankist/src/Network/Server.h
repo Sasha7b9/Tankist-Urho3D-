@@ -25,19 +25,20 @@ public:
     void Start(unsigned short port);
 
 private:
-    void HandleCloseConnection(StringHash eventType, VariantMap &eventData);
-    void HandleServerConnected(StringHash eventType, VariantMap &eventData);
-    void HandleServerDisconnected(StringHash eventType, VariantMap &eventData);
-    void HandleConnectFailed(StringHash eventType, VariantMap &eventData);
-    void HandleNetworkMessage(StringHash eventType, VariantMap &eventData);
-    void HandleClientConnected(StringHash eventType, VariantMap &eventData);
-    void HandleClientDisconnected(StringHash eventType, VariantMap &eventData);
-    void HandleClientIdentity(StringHash eventType, VariantMap &eventData);
-    void HandleClientSceneLoaded(StringHash eventType, VariantMap &eventData);
-    void HandleNetworkUpdate(StringHash eventType, VariantMap &eventData);
-    void HandleNetworkUpdateSent(StringHash eventType, VariantMap &eventData);
-    void HandleNetworkSceneLoadFailed(StringHash eventType, VariantMap &eventData);
-    void HandleRemoteEventData(StringHash eventType, VariantMap &eventData);
+    void HandleCloseConnection(StringHash, VariantMap&);
+    void HandleServerConnected(StringHash, VariantMap&);
+    void HandleServerDisconnected(StringHash, VariantMap&);
+    void HandleConnectFailed(StringHash, VariantMap&);
+    void HandleNetworkMessage(StringHash, VariantMap&);
+    void HandleClientConnected(StringHash, VariantMap&);
+    void HandleClientDisconnected(StringHash, VariantMap&);
+    void HandleClientIdentity(StringHash, VariantMap&);
+    void HandleClientSceneLoaded(StringHash, VariantMap&);
+    void HandleNetworkUpdate(StringHash, VariantMap&);
+    void HandleNetworkUpdateSent(StringHash, VariantMap&);
+    void HandleNetworkSceneLoadFailed(StringHash, VariantMap&);
+    void HandleRemoteEventData(StringHash, VariantMap&);
+    void HandleShoot(StringHash, VariantMap&);
 
     int numClients = 0;
 

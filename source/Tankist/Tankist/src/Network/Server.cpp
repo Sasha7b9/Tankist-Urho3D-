@@ -48,7 +48,7 @@ void Server::HandleShoot(StringHash, VariantMap& eventData)
     Node* nodeTrunk = gScene->GetNode(trunkID);
 
     Node *boxNode = gScene->CreateChild("SmallBox", REPLICATED);
-    boxNode->SetAttribute(ATTR_TIME_DEATH, Variant(gTime->GetElapsedTime() + 60.0f));
+    boxNode->SetVar(ATTR_TIME_DEATH, Variant(gTime->GetElapsedTime() + 60.0f));
     boxNode->SetPosition(nodeTrunk->GetWorldPosition() + nodeTrunk->GetWorldRotation() * Vector3::UP * 1.0f);
     boxNode->SetScale(0.5f);
 
@@ -77,7 +77,7 @@ void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
     for(Node *node : boxNodes)
     {
         RigidBody *body = node->GetComponent<RigidBody>();
-        if(body->GetLinearVelocity() == Vector3::ZERO || body->GetPosition().y_ < -100.0f || node->GetAttribute(ATTR_TIME_DEATH).GetFloat() < gTime->GetElapsedTime())
+        if(body->GetLinearVelocity() == Vector3::ZERO || body->GetPosition().y_ < -100.0f || node->GetVar(ATTR_TIME_DEATH).GetFloat() < gTime->GetElapsedTime())
         {
             boxNodes.Remove(node);
             gScene->RemoveChild(node);

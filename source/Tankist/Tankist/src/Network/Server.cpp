@@ -75,7 +75,7 @@ void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
     for(Node *node : boxNodes)
     {
         RigidBody *body = node->GetComponent<RigidBody>();
-        if(body->GetLinearVelocity() == Vector3::ZERO)
+        if(body->GetLinearVelocity() == Vector3::ZERO || body->GetPosition().y_ < -100.0f)
         {
             boxNodes.Remove(node);
             gScene->RemoveChild(node);

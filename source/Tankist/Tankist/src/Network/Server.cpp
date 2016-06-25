@@ -25,6 +25,8 @@ Server::Server(Context *context) : Object(context)
 //    SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Server, HandleNetworkUpdateSent));
     SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Server, HandleNetworkSceneLoadFailed));
     SubscribeToEvent(Urho3D::E_REMOTEEVENTDATA, URHO3D_HANDLER(Server, HandleRemoteEventData));
+
+    SubscribeToEvent(Urho3D::E_PHYSICSPOSTSTEP, URHO3D_HANDLER(Server, HandlePhysicsPostStep));
 }
 
 
@@ -33,6 +35,9 @@ void Server::Start(unsigned short port)
 {
     gNetwork->StartServer(port);
 }
+
+
+static Vector<Node*> boxNodes;
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -59,6 +64,23 @@ void Server::HandleShoot(StringHash, VariantMap& eventData)
     const float OBJECT_VELOCITY = 250.0f;
 
     body->SetLinearVelocity(nodeTrunk->GetWorldRotation() * Vector3::UP * OBJECT_VELOCITY);
+
+    boxNodes.Push(boxNode);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
+{
+    for(Node *node : boxNodes)
+    {
+        RigidBody *body = node->GetComponent<RigidBody>();
+        if(body->GetLinearVelocity() == Vector3::ZERO)
+        {
+            boxNodes.Remove(node);
+            gScene->RemoveChild(node);
+        }
+    }
 }
 
 

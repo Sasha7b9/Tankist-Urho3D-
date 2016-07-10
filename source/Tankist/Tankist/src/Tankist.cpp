@@ -81,6 +81,7 @@ void Tankist::Setup()
     engineParameters_["WindowTitle"] = "Tankist WaT";
     engineParameters_["LogName"] = gFileSystem->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
 
+    engineParameters_["FrameLimiter"] = false;
     engineParameters_["FullScreen"] = gSet->Get(FULLSCREEN);
     engineParameters_["Sound"] = true;
     engineParameters_["WindowWidth"] = gSet->Get(WINDOW_WIDTH);

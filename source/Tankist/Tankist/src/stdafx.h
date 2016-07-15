@@ -209,7 +209,7 @@ using Urho3D::DEBUGHUD_SHOW_ALL;
 using Urho3D::DEBUGHUD_SHOW_NONE;
 using Urho3D::LOG_INFO;
 using Urho3D::MOUSEB_RIGHT;
-using Urho3D::KEY_ESC;
+using Urho3D::KEY_ESCAPE;
 using Urho3D::KEY_F1;
 using Urho3D::KEY_F2;
 using Urho3D::KEY_F3;

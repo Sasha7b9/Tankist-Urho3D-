@@ -15,7 +15,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     int key = eventData[P_KEY].GetInt();
 
     // Close console (if open) or exit when ESC is pressed
-    if(key == Urho3D::KEY_ESC)
+    if(key == Urho3D::KEY_ESCAPE)
     {
         if(gConsole->IsVisible())
         {

@@ -52,7 +52,7 @@ private:
     float yaw = 0.0f;
     float pitch = 0.0f;
     SharedPtr<Node> node;
-    Camera *camera;
+    Camera *camera = nullptr;
     CameraMode mode = ModeNone;
     Quaternion rotationCommaner;
     Sight *sight = nullptr;

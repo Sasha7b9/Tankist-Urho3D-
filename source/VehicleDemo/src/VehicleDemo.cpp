@@ -304,7 +304,7 @@ void VehicleDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 
 void VehicleDemo::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
-    static bool drawDebug = true;
+    static bool drawDebug = false;
 
     if(GetSubsystem<Input>()->GetKeyPress(KEY_SPACE))
     {

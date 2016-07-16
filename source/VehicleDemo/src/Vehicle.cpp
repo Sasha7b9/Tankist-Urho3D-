@@ -79,7 +79,6 @@ void Vehicle::FixedUpdate(float timeStep)
     float newSteering = 0.0f;
     float accelerator = 0.0f;
 
-    // Read controls
     if (controls_.buttons_ & CTRL_LEFT)
         newSteering = -1.0f;
     if (controls_.buttons_ & CTRL_RIGHT)
@@ -89,7 +88,6 @@ void Vehicle::FixedUpdate(float timeStep)
     if (controls_.buttons_ & CTRL_BACK)
         accelerator = -0.5f;
 
-    // When steering, wake up the wheel rigidbodies so that their orientation is updated
     if (newSteering != 0.0f)
     {
         frontLeftBody_->Activate();
@@ -99,15 +97,13 @@ void Vehicle::FixedUpdate(float timeStep)
     else
         steering_ = steering_ * 0.8f + newSteering * 0.2f;
 
-    // Set front wheel angles
-    Quaternion steeringRot(0, steering_ * MAX_WHEEL_ANGLE, 0);
-    frontLeftAxis_->SetOtherAxis(steeringRot * Vector3::LEFT);
-    frontRightAxis_->SetOtherAxis(steeringRot * Vector3::RIGHT);
+    Quaternion steeringRot(steering_ * MAX_WHEEL_ANGLE, 0, 0);
+    frontLeftAxis_->SetOtherAxis(steeringRot * Vector3::DOWN);
+    frontRightAxis_->SetOtherAxis(steeringRot * Vector3::UP);
 
     Quaternion hullRot = hullBody_->GetRotation();
     if (accelerator != 0.0f)
     {
-        // Torques are applied in world space, so need to take the vehicle & wheel rotation into account
         Vector3 torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0f, 0.0f);
 
         frontLeftBody_->ApplyTorque(hullRot * steeringRot * torqueVec);
@@ -116,7 +112,6 @@ void Vehicle::FixedUpdate(float timeStep)
         rearRightBody_->ApplyTorque(hullRot * torqueVec);
     }
 
-    // Apply downforce proportional to velocity
     Vector3 localVelocity = hullRot.Inverse() * hullBody_->GetLinearVelocity();
     hullBody_->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE);
 }
@@ -135,7 +130,7 @@ void Vehicle::Init()
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
-    hullBody_->SetMass(1.9f);
+    hullBody_->SetMass(10.0f);
     hullBody_->SetLinearDamping(0.2f); // Some air resistance
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
@@ -154,21 +149,23 @@ void Vehicle::Init()
     InitDamper("damperRearLeft", {-x, y, -z}, damperRearLeft, damperBodyRearLeft);
     InitDamper("damperRearRight", {x, y, -z}, damperRearRight, damperBodyRearRight);
 
-    x = 1.1f;
-    y = 2.4f;
-    z = 0.8f;
-
+    x = -0.6f;
+    y = 2.0f;
+    z = 0.0f;
+    
+    /*
     InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_, hullBody_);
     InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_, hullBody_);
     InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_, hullBody_);
     InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_, hullBody_);
-
-    /*
-    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_, damperBodyFrontLeft);
-    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_, damperBodyFrontRight);
-    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_, damperBodyRearLeft);
-    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_, damperBodyRearRight);
     */
+    
+    
+    InitWheel("FrontLeft", Vector3(x, y, z), frontLeft_, frontLeftID_, damperBodyFrontLeft);
+    InitWheel("FrontRight", Vector3(x, -y, z), frontRight_, frontRightID_, damperBodyFrontRight);
+    InitWheel("RearLeft", Vector3(x, y, -z), rearLeft_, rearLeftID_, damperBodyRearLeft);
+    InitWheel("RearRight", Vector3(x, -y, -z), rearRight_, rearRightID_, damperBodyRearRight);
+    
 
     GetWheelComponents();
 }
@@ -179,6 +176,7 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
 
     damperNode = GetScene()->CreateChild(name);
     damperNode->SetPosition(node_->LocalToWorld(offset));
+    damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
 
     float scaleX = 1.5f;
     float scaleY = 0.2f;
@@ -211,12 +209,12 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
 
     btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
 
-    bulletConstraint->setDampingLimLin(1.0f);
-    //bulletConstraint->setSoftnessLimLin(1.0f);
-    //bulletConstraint->setRestitutionLimLin(1.0f);
+    //bulletConstraint->setDampingLimLin(0.9f);
+    bulletConstraint->setSoftnessLimLin(0.5f);
+    bulletConstraint->setRestitutionLimLin(0.5f);
 
-    damperConstaraint->SetLowLimit({-0.01f, 0.0f});
-    damperConstaraint->SetHighLimit({0.01f, 0.0f});
+    damperConstaraint->SetLowLimit({-0.5f, 0.0f});
+    damperConstaraint->SetHighLimit({0.5f, 0.0f});
 
     damperConstaraint->SetCFM(0.1f);
     damperConstaraint->SetERP(0.3f);
@@ -231,8 +229,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelNode = GetScene()->CreateChild(name);
     Node *node = damperBody->GetNode();
     wheelNode->SetPosition(node->LocalToWorld(offset));
-    wheelNode->SetRotation(node->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
-        Quaternion(0.0f, 0.0f, 90.0f)));
+    
     wheelNode->SetScale(Vector3(0.8f, 0.5f, 0.8f));
     // Remember the ID for serialization
     wheelNodeID = wheelNode->GetID();
@@ -248,8 +245,8 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
 
     wheelShape->SetSphere(1.0f);
 
-    wheelBody->SetFriction(100.0f);
-    wheelBody->SetMass(1.10f);
+    wheelBody->SetFriction(1.0f);
+    wheelBody->SetMass(0.5f);
     wheelBody->SetLinearDamping(0.2f); // Some air resistance
     wheelBody->SetAngularDamping(0.75f); // Could also use rolling friction
     wheelBody->SetCollisionLayer(1);
@@ -257,8 +254,21 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
     wheelConstraint->SetOtherBody(damperBody); // Connect to the hull body
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
-    wheelConstraint->SetAxis(Vector3::UP); // Wheel rotates around its local Y-axis
-    wheelConstraint->SetOtherAxis(offset.x_ >= 0.0 ? Vector3::RIGHT : Vector3::LEFT); // Wheel's hull axis points either left or right
+    
+    if(offset.x_ < 0.0f)
+    {
+        wheelNode->SetRotation(offset.y_ >= 0.0f ? Quaternion(0.0f, 0.0f, -90.0f) : Quaternion(0.0f, 0.0f, 90.0f));
+        wheelConstraint->SetAxis(Vector3::UP);
+        wheelConstraint->SetOtherAxis(offset.y_ < 0.0f ? Vector3::UP : Vector3::DOWN);
+    }
+    else
+    {
+        wheelNode->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
+        wheelConstraint->SetAxis(Vector3::LEFT);
+        wheelConstraint->SetOtherAxis(Vector3::DOWN);
+    }
+    
+
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
     wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
     wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the vehicle hull
@@ -268,8 +278,9 @@ void Vehicle::GetWheelComponents()
 {
     frontLeftAxis_ = frontLeft_->GetComponent<Constraint>();
     frontRightAxis_ = frontRight_->GetComponent<Constraint>();
-    frontLeftBody_ = frontLeft_->GetComponent<RigidBody>();
+    frontLeftBody_ = frontLeft_->GetComponent<RigidBody>(); 
     frontRightBody_ = frontRight_->GetComponent<RigidBody>();
     rearLeftBody_ = rearLeft_->GetComponent<RigidBody>();
     rearRightBody_ = rearRight_->GetComponent<RigidBody>();
 }
+

@@ -125,7 +125,11 @@ void Vehicle::Init()
     hullBody_ = node_->CreateComponent<RigidBody>();
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
-    node_->SetScale(Vector3(1.5f, 1.0f, 4.0f));
+    float sizeX = 3.5f;
+    float sizeY = 1.0f;
+    float sizeZ = 10.0f;
+
+    node_->SetScale(Vector3(sizeX, sizeY, sizeZ));
     hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
@@ -135,8 +139,8 @@ void Vehicle::Init()
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
-    float x = 0.7f;
-    float y = -0.5f;
+    float x = 0.5f;
+    float y = -1.0f;
     float z = 0.3f;
 
     WeakPtr<RigidBody> damperBodyFrontLeft;
@@ -152,14 +156,6 @@ void Vehicle::Init()
     x = -0.6f;
     y = 2.0f;
     z = 0.0f;
-    
-    /*
-    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_, hullBody_);
-    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_, hullBody_);
-    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_, hullBody_);
-    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_, hullBody_);
-    */
-    
     
     InitWheel("FrontLeft", Vector3(x, y, z), frontLeft_, frontLeftID_, damperBodyFrontLeft);
     InitWheel("FrontRight", Vector3(x, -y, z), frontRight_, frontRightID_, damperBodyFrontRight);

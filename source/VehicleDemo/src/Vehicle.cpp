@@ -37,8 +37,7 @@
 #include "Vehicle.h"
 
 Vehicle::Vehicle(Context* context) :
-    LogicComponent(context),
-    steering_(0.0f)
+    LogicComponent(context)
 {
     // Only the physics update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -50,7 +49,6 @@ void Vehicle::RegisterObject(Context* context)
 
     URHO3D_ATTRIBUTE("Controls Yaw", float, controls_.yaw_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Controls Pitch", float, controls_.pitch_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Steering", float, steering_, 0.0f, AM_DEFAULT);
     // Register wheel node IDs as attributes so that the wheel nodes can be reaquired on deserialization. They need to be tagged
     // as node ID's so that the deserialization code knows to rewrite the IDs in case they are different on load than on save
     URHO3D_ATTRIBUTE("Front Left Node", unsigned, frontLeftID_, 0, AM_DEFAULT | AM_NODEID);
@@ -65,10 +63,10 @@ void Vehicle::ApplyAttributes()
     // as well as all required physics components
     Scene* scene = GetScene();
 
-    frontLeft_ = scene->GetNode(frontLeftID_);
-    frontRight_ = scene->GetNode(frontRightID_);
-    rearLeft_ = scene->GetNode(rearLeftID_);
-    rearRight_ = scene->GetNode(rearRightID_);
+    wheelLeft1 = scene->GetNode(frontLeftID_);
+    wheelRight1 = scene->GetNode(frontRightID_);
+    wheelLeft5 = scene->GetNode(rearLeftID_);
+    wheelRight5 = scene->GetNode(rearRightID_);
     hullBody_ = node_->GetComponent<RigidBody>();
 
     GetWheelComponents();
@@ -76,44 +74,62 @@ void Vehicle::ApplyAttributes()
 
 void Vehicle::FixedUpdate(float timeStep)
 {
-    float newSteering = 0.0f;
     float accelerator = 0.0f;
 
-    if (controls_.buttons_ & CTRL_LEFT)
-        newSteering = -1.0f;
-    if (controls_.buttons_ & CTRL_RIGHT)
-        newSteering = 1.0f;
+    if(controls_.buttons_ & CTRL_LEFT)
+    {
+        leftBody1->SetLinearVelocity(Vector3::ZERO);
+        leftBody5->SetLinearVelocity(Vector3::ZERO);
+    }
+    if(controls_.buttons_ & CTRL_RIGHT)
+    {
+        rightBody1->SetLinearVelocity(Vector3::ZERO);
+        rightBody5->SetLinearVelocity(Vector3::ZERO);
+    }
+
     if (controls_.buttons_ & CTRL_FORWARD)
         accelerator = 1.0f;
     if (controls_.buttons_ & CTRL_BACK)
         accelerator = -0.5f;
-
-    if (newSteering != 0.0f)
-    {
-        frontLeftBody_->Activate();
-        frontRightBody_->Activate();
-        steering_ = steering_ * 0.95f + newSteering * 0.05f;
-    }
-    else
-        steering_ = steering_ * 0.8f + newSteering * 0.2f;
-
-    Quaternion steeringRot(steering_ * MAX_WHEEL_ANGLE, 0, 0);
-    frontLeftAxis_->SetOtherAxis(steeringRot * Vector3::DOWN);
-    frontRightAxis_->SetOtherAxis(steeringRot * Vector3::UP);
 
     Quaternion hullRot = hullBody_->GetRotation();
     if (accelerator != 0.0f)
     {
         Vector3 torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0f, 0.0f);
 
-        frontLeftBody_->ApplyTorque(hullRot * steeringRot * torqueVec);
-        frontRightBody_->ApplyTorque(hullRot * steeringRot * torqueVec);
-        rearLeftBody_->ApplyTorque(hullRot * torqueVec);
-        rearRightBody_->ApplyTorque(hullRot * torqueVec);
+        if(!(controls_.buttons_ & CTRL_LEFT))
+        {
+            leftBody1->ApplyTorque(hullRot * torqueVec);
+            leftBody5->ApplyTorque(hullRot * torqueVec);
+        }
+        else
+        {
+            leftBody1->ApplyTorque(hullRot * -torqueVec);
+            leftBody5->ApplyTorque(hullRot * -torqueVec);
+        }
+
+        if(!(controls_.buttons_ & CTRL_RIGHT))
+        {
+            rightBody1->ApplyTorque(hullRot * torqueVec);            
+            rightBody5->ApplyTorque(hullRot * torqueVec);
+        }
+        else
+        {
+            rightBody1->ApplyTorque(hullRot * -torqueVec);
+            rightBody5->ApplyTorque(hullRot * -torqueVec);
+        }
     }
 
     Vector3 localVelocity = hullRot.Inverse() * hullBody_->GetLinearVelocity();
     hullBody_->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE);
+
+    if(controls_.buttons_ & CTRL_STOP)
+    {
+        leftBody1->SetLinearVelocity(Vector3::ZERO);
+        rightBody1->SetLinearVelocity(Vector3::ZERO);
+        leftBody5->SetLinearVelocity(Vector3::ZERO);
+        rightBody5->SetLinearVelocity(Vector3::ZERO);
+    }
 }
 
 void Vehicle::Init()
@@ -134,43 +150,55 @@ void Vehicle::Init()
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
-    hullBody_->SetMass(10.0f);
+    hullBody_->SetMass(64.0f);
     hullBody_->SetLinearDamping(0.2f); // Some air resistance
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
+    WeakPtr<RigidBody> damperBodyLeft1;
+    WeakPtr<RigidBody> damperBodyRight1;
+    WeakPtr<RigidBody> damperBodyLeft5;
+    WeakPtr<RigidBody> damperBodyRight5;
+
+    Vector<WeakPtr<RigidBody>> damperBodyLeft(3);
+    Vector<WeakPtr<RigidBody>> damperBodyRight(3);
+
     float x = 0.5f;
     float y = -1.0f;
     float z = 0.3f;
+    float dZ = 0.1f;
 
-    WeakPtr<RigidBody> damperBodyFrontLeft;
-    WeakPtr<RigidBody> damperBodyFrontRight;
-    WeakPtr<RigidBody> damperBodyRearLeft;
-    WeakPtr<RigidBody> damperBodyRearRight;
+    /*
+    for(int i = 0; i < 3; i++)
+    {
+        InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
+        InitDamper("damper", {x, y, z}, )
+    }
+    */
     
-    InitDamper("damperFrontLeft", {-x, y, z}, damperFrontLeft, damperBodyFrontLeft);
-    InitDamper("damperFrontRight", {x, y, z}, damperFrontRight, damperBodyFrontRight);
-    InitDamper("damperRearLeft", {-x, y, -z}, damperRearLeft, damperBodyRearLeft);
-    InitDamper("damperRearRight", {x, y, -z}, damperRearRight, damperBodyRearRight);
+    InitDamper("damperFrontLeft", {-x, y, z}, damperBodyLeft1);
+    InitDamper("damperFrontRight", {x, y, z}, damperBodyRight1);
+    InitDamper("damperRearLeft", {-x, y, -z}, damperBodyLeft5);
+    InitDamper("damperRearRight", {x, y, -z}, damperBodyRight5);
 
     x = -0.6f;
     y = 2.0f;
     z = 0.0f;
     
-    InitWheel("FrontLeft", Vector3(x, y, z), frontLeft_, frontLeftID_, damperBodyFrontLeft);
-    InitWheel("FrontRight", Vector3(x, -y, z), frontRight_, frontRightID_, damperBodyFrontRight);
-    InitWheel("RearLeft", Vector3(x, y, -z), rearLeft_, rearLeftID_, damperBodyRearLeft);
-    InitWheel("RearRight", Vector3(x, -y, -z), rearRight_, rearRightID_, damperBodyRearRight);
+    InitWheel("FrontLeft", Vector3(x, y, z), wheelLeft1, frontLeftID_, damperBodyLeft1);
+    InitWheel("FrontRight", Vector3(x, -y, z), wheelRight1, frontRightID_, damperBodyRight1);
+    InitWheel("RearLeft", Vector3(x, y, -z), wheelLeft5, rearLeftID_, damperBodyLeft5);
+    InitWheel("RearRight", Vector3(x, -y, -z), wheelRight5, rearRightID_, damperBodyRight5);
     
 
     GetWheelComponents();
 }
 
-void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& damperNode, WeakPtr<RigidBody>& damperBody)
+void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)
 {
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
-    damperNode = GetScene()->CreateChild(name);
+    WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
     damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
 
@@ -206,8 +234,8 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
     btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
 
     //bulletConstraint->setDampingLimLin(0.9f);
-    bulletConstraint->setSoftnessLimLin(0.5f);
-    bulletConstraint->setRestitutionLimLin(0.5f);
+    bulletConstraint->setSoftnessLimLin(1.0f);
+    bulletConstraint->setRestitutionLimLin(1.0f);
 
     damperConstaraint->SetLowLimit({-0.5f, 0.0f});
     damperConstaraint->SetHighLimit({0.5f, 0.0f});
@@ -243,8 +271,8 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
 
     wheelBody->SetFriction(1.0f);
     wheelBody->SetMass(0.5f);
-    wheelBody->SetLinearDamping(0.2f); // Some air resistance
-    wheelBody->SetAngularDamping(0.75f); // Could also use rolling friction
+    wheelBody->SetLinearDamping(0.2f);
+    wheelBody->SetAngularDamping(0.75f);
     wheelBody->SetCollisionLayer(1);
 
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
@@ -272,11 +300,11 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
 
 void Vehicle::GetWheelComponents()
 {
-    frontLeftAxis_ = frontLeft_->GetComponent<Constraint>();
-    frontRightAxis_ = frontRight_->GetComponent<Constraint>();
-    frontLeftBody_ = frontLeft_->GetComponent<RigidBody>(); 
-    frontRightBody_ = frontRight_->GetComponent<RigidBody>();
-    rearLeftBody_ = rearLeft_->GetComponent<RigidBody>();
-    rearRightBody_ = rearRight_->GetComponent<RigidBody>();
+    frontLeftAxis_ = wheelLeft1->GetComponent<Constraint>();
+    frontRightAxis_ = wheelRight1->GetComponent<Constraint>();
+    leftBody1 = wheelLeft1->GetComponent<RigidBody>(); 
+    rightBody1 = wheelRight1->GetComponent<RigidBody>();
+    leftBody5 = wheelLeft5->GetComponent<RigidBody>();
+    rightBody5 = wheelRight5->GetComponent<RigidBody>();
 }
 

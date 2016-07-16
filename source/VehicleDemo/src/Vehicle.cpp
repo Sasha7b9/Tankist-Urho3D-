@@ -32,6 +32,8 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Scene/Scene.h>
 
+#include <Bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.h>
+
 #include "Vehicle.h"
 
 Vehicle::Vehicle(Context* context) :
@@ -128,22 +130,84 @@ void Vehicle::Init()
     hullBody_ = node_->CreateComponent<RigidBody>();
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
-    node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
+    node_->SetScale(Vector3(1.5f, 1.0f, 4.0f));
     hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
-    hullBody_->SetMass(4.0f);
+    hullBody_->SetMass(1.9f);
     hullBody_->SetLinearDamping(0.2f); // Some air resistance
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
-    InitWheel("FrontLeft", Vector3(-0.6f, -0.4f, 0.3f), frontLeft_, frontLeftID_);
-    InitWheel("FrontRight", Vector3(0.6f, -0.4f, 0.3f), frontRight_, frontRightID_);
-    InitWheel("RearLeft", Vector3(-0.6f, -0.4f, -0.3f), rearLeft_, rearLeftID_);
-    InitWheel("RearRight", Vector3(0.6f, -0.4f, -0.3f), rearRight_, rearRightID_);
+    float x = 1.1f;
+    float y = -2.4f;
+    float z = 0.8f;
+
+    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_);
+    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_);
+    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_);
+    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_);
+
+    x = 0.7f;
+    y = -0.5f;
+    z = 0.3f;
+    
+    InitDamper("damperFrontLeft", {-x, y, z}, damperFrontLeft);
+    InitDamper("damperFrontRight", {x, y, z}, damperFrontRight);
+    InitDamper("damperRearLeft", {-x, y, -z}, damperRearLeft);
+    InitDamper("damperRearRight", {x, y, -z}, damperRearRight);
 
     GetWheelComponents();
+}
+
+void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& damperNode)
+{
+    ResourceCache *cache = GetSubsystem<ResourceCache>();
+
+    damperNode = GetScene()->CreateChild(name);
+    damperNode->SetPosition(node_->LocalToWorld(offset));
+
+    float scaleX = 1.5f;
+    float scaleY = 0.2f;
+    float scaleZ = 0.2f;
+
+    damperNode->SetScale({scaleX, scaleY, scaleZ});
+
+    StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
+    RigidBody *damperBody = damperNode->CreateComponent<RigidBody>();
+    CollisionShape *damperShape = damperNode->CreateComponent<CollisionShape>();
+    Constraint *damperConstaraint = hullBody_->GetNode()->CreateComponent<Constraint>();
+
+    damperObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    damperObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    damperObject->SetCastShadows(true);
+
+    damperShape->SetSphere(0.2f);
+    damperShape->SetPosition(Vector3(-0.5f, 0.0f, 0.0f));
+
+    damperBody->SetFriction(1.0f);
+    damperBody->SetMass(20.0f);
+    damperBody->SetCollisionLayer(1);
+    damperBody->DisableMassUpdate();
+
+    damperConstaraint->SetConstraintType(CONSTRAINT_SLIDER);
+    damperConstaraint->SetOtherBody(damperBody);
+    damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
+    damperConstaraint->SetWorldPosition(damperNode->GetPosition());
+    damperConstaraint->SetDisableCollision(true);
+
+    btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
+
+    bulletConstraint->setDampingLimLin(1.0f);
+    //bulletConstraint->setSoftnessLimLin(1.0f);
+    //bulletConstraint->setRestitutionLimLin(1.0f);
+
+    damperConstaraint->SetLowLimit({-0.01f, 0.0f});
+    damperConstaraint->SetHighLimit({0.01f, 0.0f});
+
+    damperConstaraint->SetCFM(0.1f);
+    damperConstaraint->SetERP(0.3f);
 }
 
 void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID)
@@ -168,12 +232,15 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelObject->SetModel(cache->GetResource<Model>("Models/Cylinder.mdl"));
     wheelObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
+
     wheelShape->SetSphere(1.0f);
-    wheelBody->SetFriction(1.0f);
-    wheelBody->SetMass(1.0f);
+
+    wheelBody->SetFriction(100.0f);
+    wheelBody->SetMass(1.10f);
     wheelBody->SetLinearDamping(0.2f); // Some air resistance
     wheelBody->SetAngularDamping(0.75f); // Could also use rolling friction
     wheelBody->SetCollisionLayer(1);
+
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
     wheelConstraint->SetOtherBody(GetComponent<RigidBody>()); // Connect to the hull body
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location

@@ -68,10 +68,13 @@ public:
     
     /// Movement controls.
     Controls controls_;
+
+    WeakPtr<RigidBody> hullBody_;
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
     void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID);
+    void InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode);
     /// Acquire wheel components from wheel scene nodes.
     void GetWheelComponents();
 
@@ -81,13 +84,17 @@ private:
     WeakPtr<Node> frontRight_;
     WeakPtr<Node> rearLeft_;
     WeakPtr<Node> rearRight_;
+
+    WeakPtr<Node> damperFrontLeft;
+    WeakPtr<Node> damperFrontRight;
+    WeakPtr<Node> damperRearLeft;
+    WeakPtr<Node> damperRearRight;
     
     // Steering axle constraints.
     WeakPtr<Constraint> frontLeftAxis_;
     WeakPtr<Constraint> frontRightAxis_;
     
     // Hull and wheel rigid bodies.
-    WeakPtr<RigidBody> hullBody_;
     WeakPtr<RigidBody> frontLeftBody_;
     WeakPtr<RigidBody> frontRightBody_;
     WeakPtr<RigidBody> rearLeftBody_;

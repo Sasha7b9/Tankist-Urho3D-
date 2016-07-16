@@ -22,6 +22,7 @@
 
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Core/ProcessUtils.h>
+#include <Urho3D/Graphics/DebugRenderer.h>
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Light.h>
@@ -86,6 +87,8 @@ void VehicleDemo::CreateScene()
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     scene_ = new Scene(context_);
+
+    scene_->CreateComponent<DebugRenderer>();
 
     // Create scene subsystem components
     scene_->CreateComponent<Octree>();
@@ -200,6 +203,8 @@ void VehicleDemo::SubscribeToEvents()
 
     // Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
+
+    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(VehicleDemo, HandlePostRenderUpdate));
 }
 
 void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -295,4 +300,27 @@ void VehicleDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 
     cameraNode_->SetPosition(cameraTargetPos);
     cameraNode_->SetRotation(dir);
+}
+
+void VehicleDemo::HandlePostRenderUpdate(StringHash, VariantMap&)
+{
+    static bool drawDebug = true;
+
+    if(GetSubsystem<Input>()->GetKeyPress(KEY_SPACE))
+    {
+        drawDebug = !drawDebug;
+    }
+
+    if(drawDebug)
+    {
+        scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(false);
+        /*
+        DebugRenderer *dRender = scene_->GetComponent<DebugRenderer>();
+        if(dRender)
+        {
+            dRender->AddSphere(Sphere(vehicle_->hullBody_->GetNode()->GetWorldPosition(), 0.25f), Color::YELLOW, false);
+            dRender->Render();
+        }
+        */
+    }
 }

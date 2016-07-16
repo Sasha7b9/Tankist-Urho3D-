@@ -140,28 +140,40 @@ void Vehicle::Init()
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
-    float x = 1.1f;
-    float y = -2.4f;
-    float z = 0.8f;
+    float x = 0.7f;
+    float y = -0.5f;
+    float z = 0.3f;
 
-    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_);
-    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_);
-    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_);
-    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_);
-
-    x = 0.7f;
-    y = -0.5f;
-    z = 0.3f;
+    WeakPtr<RigidBody> damperBodyFrontLeft;
+    WeakPtr<RigidBody> damperBodyFrontRight;
+    WeakPtr<RigidBody> damperBodyRearLeft;
+    WeakPtr<RigidBody> damperBodyRearRight;
     
-    InitDamper("damperFrontLeft", {-x, y, z}, damperFrontLeft);
-    InitDamper("damperFrontRight", {x, y, z}, damperFrontRight);
-    InitDamper("damperRearLeft", {-x, y, -z}, damperRearLeft);
-    InitDamper("damperRearRight", {x, y, -z}, damperRearRight);
+    InitDamper("damperFrontLeft", {-x, y, z}, damperFrontLeft, damperBodyFrontLeft);
+    InitDamper("damperFrontRight", {x, y, z}, damperFrontRight, damperBodyFrontRight);
+    InitDamper("damperRearLeft", {-x, y, -z}, damperRearLeft, damperBodyRearLeft);
+    InitDamper("damperRearRight", {x, y, -z}, damperRearRight, damperBodyRearRight);
+
+    x = 1.1f;
+    y = 2.4f;
+    z = 0.8f;
+
+    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_, hullBody_);
+    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_, hullBody_);
+    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_, hullBody_);
+    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_, hullBody_);
+
+    /*
+    InitWheel("FrontLeft", Vector3(-x, y, z), frontLeft_, frontLeftID_, damperBodyFrontLeft);
+    InitWheel("FrontRight", Vector3(x, y, z), frontRight_, frontRightID_, damperBodyFrontRight);
+    InitWheel("RearLeft", Vector3(-x, y, -z), rearLeft_, rearLeftID_, damperBodyRearLeft);
+    InitWheel("RearRight", Vector3(x, y, -z), rearRight_, rearRightID_, damperBodyRearRight);
+    */
 
     GetWheelComponents();
 }
 
-void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& damperNode)
+void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& damperNode, WeakPtr<RigidBody>& damperBody)
 {
     ResourceCache *cache = GetSubsystem<ResourceCache>();
 
@@ -175,7 +187,7 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
     damperNode->SetScale({scaleX, scaleY, scaleZ});
 
     StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
-    RigidBody *damperBody = damperNode->CreateComponent<RigidBody>();
+    damperBody = damperNode->CreateComponent<RigidBody>();
     CollisionShape *damperShape = damperNode->CreateComponent<CollisionShape>();
     Constraint *damperConstaraint = hullBody_->GetNode()->CreateComponent<Constraint>();
 
@@ -187,7 +199,7 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
     damperShape->SetPosition(Vector3(-0.5f, 0.0f, 0.0f));
 
     damperBody->SetFriction(1.0f);
-    damperBody->SetMass(20.0f);
+    damperBody->SetMass(5.0f);
     damperBody->SetCollisionLayer(1);
     damperBody->DisableMassUpdate();
 
@@ -210,15 +222,16 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Node
     damperConstaraint->SetERP(0.3f);
 }
 
-void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID)
+void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID, WeakPtr<RigidBody>& damperBody)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     // Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
     // constraint keep it together
     wheelNode = GetScene()->CreateChild(name);
-    wheelNode->SetPosition(node_->LocalToWorld(offset));
-    wheelNode->SetRotation(node_->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
+    Node *node = damperBody->GetNode();
+    wheelNode->SetPosition(node->LocalToWorld(offset));
+    wheelNode->SetRotation(node->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
         Quaternion(0.0f, 0.0f, 90.0f)));
     wheelNode->SetScale(Vector3(0.8f, 0.5f, 0.8f));
     // Remember the ID for serialization
@@ -242,7 +255,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelBody->SetCollisionLayer(1);
 
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
-    wheelConstraint->SetOtherBody(GetComponent<RigidBody>()); // Connect to the hull body
+    wheelConstraint->SetOtherBody(damperBody); // Connect to the hull body
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
     wheelConstraint->SetAxis(Vector3::UP); // Wheel rotates around its local Y-axis
     wheelConstraint->SetOtherAxis(offset.x_ >= 0.0 ? Vector3::RIGHT : Vector3::LEFT); // Wheel's hull axis points either left or right

@@ -73,8 +73,8 @@ public:
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
-    void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID);
-    void InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode);
+    void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID, WeakPtr<RigidBody>& damperBody);
+    void InitDamper(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, WeakPtr<RigidBody>& damperBody);
     /// Acquire wheel components from wheel scene nodes.
     void GetWheelComponents();
 

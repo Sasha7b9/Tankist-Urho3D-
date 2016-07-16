@@ -43,7 +43,7 @@ const int CTRL_RIGHT = 1 << 3;
 const int CTRL_STOP = 1 << 4;
 
 const float YAW_SENSITIVITY = 0.1f;
-const float ENGINE_POWER = 50.0f;
+const float ENGINE_POWER = 10.0f;
 const float DOWN_FORCE = 10.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
 
@@ -74,35 +74,10 @@ public:
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
-    void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID, WeakPtr<RigidBody>& damperBody);
+    void InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody);
     void InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody);
-    /// Acquire wheel components from wheel scene nodes.
-    void GetWheelComponents();
-
     
     // Wheel scene nodes.
-    WeakPtr<Node> wheelLeft1;
-    WeakPtr<Node> wheelRight1;
-    WeakPtr<Node> wheelLeft3;
-    WeakPtr<Node> wheelRight3;
-    WeakPtr<Node> wheelLeft5;
-    WeakPtr<Node> wheelRight5;
-    
-    // Steering axle constraints.
-    WeakPtr<Constraint> frontLeftAxis_;
-    WeakPtr<Constraint> frontRightAxis_;
-    
-    // Hull and wheel rigid bodies.
-    WeakPtr<RigidBody> leftBody1;
-    WeakPtr<RigidBody> rightBody1;
-    WeakPtr<RigidBody> leftBody3;
-    WeakPtr<RigidBody> rightBody3;
-    WeakPtr<RigidBody> leftBody5;
-    WeakPtr<RigidBody> rightBody5;
-    
-    // IDs of the wheel scene nodes for serialization.
-    unsigned frontLeftID_;
-    unsigned frontRightID_;
-    unsigned rearLeftID_;
-    unsigned rearRightID_;
+    WeakPtr<RigidBody> wheelBodyLeft[5];
+    WeakPtr<RigidBody> wheelBodyRight[5];
 };

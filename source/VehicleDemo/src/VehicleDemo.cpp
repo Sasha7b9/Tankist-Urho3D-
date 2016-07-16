@@ -135,6 +135,7 @@ void VehicleDemo::CreateScene()
 
     RigidBody* body = terrainNode->CreateComponent<RigidBody>();
     body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
+    body->SetFriction(100.0f);
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
     shape->SetTerrain();
 

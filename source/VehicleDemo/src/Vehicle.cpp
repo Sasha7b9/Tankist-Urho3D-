@@ -168,6 +168,12 @@ void Vehicle::Init()
     Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
     Vector<WeakPtr<RigidBody>> damperBodyRight(5);
 
+    for(int i = 0; i < 5; i++)
+    {
+        wheelBodyLeft[i] = new RigidBody(context_);
+        wheelBodyRight[i] = new RigidBody(context_);
+    }
+
     float x = 0.47f;
     float y = -0.3f;
     float z = 0.4f;

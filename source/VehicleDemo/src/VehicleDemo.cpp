@@ -72,9 +72,6 @@ void VehicleDemo::Start()
     // Create the controllable vehicle
     CreateVehicle();
 
-    // Create the UI content
-    CreateInstructions();
-
     // Subscribe to necessary events
     SubscribeToEvents();
 
@@ -160,6 +157,35 @@ void VehicleDemo::CreateScene()
         CollisionShape* shape = objectNode->CreateComponent<CollisionShape>();
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
+
+    const unsigned NUM_BOXES = 10;
+
+    float x = 50.0f;
+    float z = 50.0f;
+
+    for(unsigned i = 0; i < NUM_BOXES; i++)
+    {
+        Node *boxNode = scene_->CreateChild("Box");
+        //Vector3 position(Random(2000.0f) - 1000.0f, 20.0f, Random(2000.0f) - 1000.0f);
+        Vector3 position(x, 10.0f, z);
+        x += 10.0f;
+        boxNode->SetPosition(position);
+        Vector3 scale(5.0f, 0.25f, 10.0f);
+        boxNode->SetScale(scale);
+        StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
+        boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+        boxObject->SetCastShadows(true);
+
+        // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
+        // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
+        // objects are significant
+        RigidBody* body = boxNode->CreateComponent<RigidBody>();
+        body->SetMass(1.0f);
+        body->SetFriction(0.75f);
+        CollisionShape* shape = boxNode->CreateComponent<CollisionShape>();
+        shape->SetBox(Vector3::ONE);
+    }
 }
 
 void VehicleDemo::CreateVehicle()
@@ -171,27 +197,6 @@ void VehicleDemo::CreateVehicle()
     vehicle_ = vehicleNode->CreateComponent<Vehicle>();
     // Create the rendering and physics components
     vehicle_->Init();
-}
-
-void VehicleDemo::CreateInstructions()
-{
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    UI* ui = GetSubsystem<UI>();
-
-    // Construct new Text object, set string to display and font to use
-    Text* instructionText = ui->GetRoot()->CreateChild<Text>();
-    instructionText->SetText(
-        "Use WASD keys to drive, mouse/touch to rotate camera\n"
-        "F5 to save scene, F7 to load"
-    );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
-    // The text has multiple rows. Center them in relation to each other
-    instructionText->SetTextAlignment(HA_CENTER);
-
-    // Position the text relative to the screen center
-    instructionText->SetHorizontalAlignment(HA_CENTER);
-    instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
 }
 
 void VehicleDemo::SubscribeToEvents()

@@ -55,8 +55,6 @@ private:
     void CreateScene();
     /// Create the vehicle.
     void CreateVehicle();
-    /// Construct an instruction text to the UI.
-    void CreateInstructions();
     /// Subscribe to necessary events.
     void SubscribeToEvents();
     /// Handle application update. Set controls to vehicle.

@@ -158,7 +158,7 @@ void VehicleDemo::CreateScene()
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
 
-    const unsigned NUM_BOXES = 10;
+    const unsigned NUM_BOXES = 50;
 
     float x = 50.0f;
     float z = 50.0f;
@@ -167,10 +167,10 @@ void VehicleDemo::CreateScene()
     {
         Node *boxNode = scene_->CreateChild("Box");
         //Vector3 position(Random(2000.0f) - 1000.0f, 20.0f, Random(2000.0f) - 1000.0f);
-        Vector3 position(x, 10.0f, z);
+        Vector3 position(x, 50.0f, z);
         x += 10.0f;
         boxNode->SetPosition(position);
-        Vector3 scale(5.0f, 0.25f, 10.0f);
+        Vector3 scale(3.0f, 1.0f, 3.0f);
         boxNode->SetScale(scale);
         StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
         boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
@@ -181,8 +181,9 @@ void VehicleDemo::CreateScene()
         // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
         // objects are significant
         RigidBody* body = boxNode->CreateComponent<RigidBody>();
-        body->SetMass(1.0f);
-        body->SetFriction(0.75f);
+        body->SetMass(0.1f);
+        body->SetFriction(100.0f);
+        body->SetLinearDamping(0.9f);
         CollisionShape* shape = boxNode->CreateComponent<CollisionShape>();
         shape->SetBox(Vector3::ONE);
     }

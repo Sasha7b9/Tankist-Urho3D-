@@ -14,9 +14,10 @@ const int CTRL_TOWER_LEFT_FAST  = 1 << 8;
 const int CTRL_TOWER_RIGHT_FAST = 1 << 9;
 const int CTRL_TRUNK_UP_FAST    = 1 << 10;
 const int CTRL_TRUNK_DOWN_FAST  = 1 << 11;
+const int CTRL_STOP             = 1 << 12;
 
 const float YAW_SENSITIVITY = 0.1f;
-const float ENGINE_POWER = 5.0f;
+const float ENGINE_POWER = 10.0f;
 const float DOWN_FORCE = 10.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
 const float SPEED_TOWER_ROTATION = 2.0f;
@@ -56,9 +57,8 @@ public:
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
-    void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID);
-    /// Acquire wheel components from wheel scene nodes.
-    void GetWheelComponents();
+    void InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody);
+    void InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody);
 
     void InitTower();
 
@@ -66,32 +66,15 @@ private:
 
     void RotateTrunk(float delta);
 
-    // Wheel scene nodes.
-    WeakPtr<Node> frontLeft;
-    WeakPtr<Node> frontRight;
-    WeakPtr<Node> rearLeft;
-    WeakPtr<Node> rearRight;
-    WeakPtr<Node> nodeTower;
-    WeakPtr<Node> nodeTrunk;
-    
-    // Steering axle constraints.
-    WeakPtr<Constraint> frontLeftAxis;
-    WeakPtr<Constraint> frontRightAxis;
+    WeakPtr<RigidBody> wheelBodyLeft[5];
+    WeakPtr<RigidBody> wheelBodyRight[5];
     
     // Hull and wheel rigid bodies.
     WeakPtr<RigidBody> hullBody;
-    WeakPtr<RigidBody> frontLeftBody;
-    WeakPtr<RigidBody> frontRightBody;
-    WeakPtr<RigidBody> rearLeftBody;
-    WeakPtr<RigidBody> rearRightBody;
-    WeakPtr<RigidBody> towerBody;
-    
-    // IDs of the wheel scene nodes for serialization.
-    unsigned frontLeftID;
-    unsigned frontRightID;
-    unsigned rearLeftID;
-    unsigned rearRightID;
 
+    WeakPtr<Node> nodeTower;
+    WeakPtr<Node> nodeTrunk;
+    
     float pitchTower = 0.0f;
 
     float yawTrunkMin = -110.0f;

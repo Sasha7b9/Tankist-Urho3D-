@@ -46,6 +46,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
                 controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
+                controls.Set(CTRL_STOP, gInput->GetKeyDown(Urho3D::KEY_KP_ENTER));
                 controls.Set(CTRL_TOWER_RIGHT, (gInput->GetKeyDown('E') | gInput->GetKeyDown(Urho3D::KEY_KP_6)) && gCamera->GetMode() == ModeShooter);
                 controls.Set(CTRL_TOWER_RIGHT_FAST, (gInput->GetKeyDown('E') || gInput->GetKeyDown(Urho3D::KEY_KP_6)) && gCamera->GetMode() == ModeCommander);
                 controls.Set(CTRL_TOWER_LEFT, (gInput->GetKeyDown('Q') | gInput->GetKeyDown(Urho3D::KEY_KP_4)) && gCamera->GetMode() == ModeShooter);
@@ -82,6 +83,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
                 vehicle->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
                 vehicle->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
                 vehicle->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
+                vehicle->controls.Set(CTRL_STOP, ((controls.buttons_ & CTRL_STOP) > 0));
                 vehicle->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
                 vehicle->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
                 vehicle->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));

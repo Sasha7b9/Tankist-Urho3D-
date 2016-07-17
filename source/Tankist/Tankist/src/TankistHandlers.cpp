@@ -107,7 +107,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_F9)
     {
-        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3::UP);
+        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3(0.0f, 4.0f, -2.0f));
     }
 
     else if(key == Urho3D::KEY_CTRL)

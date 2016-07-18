@@ -272,11 +272,12 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Rigid
 
     wheelShape->SetSphere(1.0f);
 
-    wheelBody->SetFriction(10.0f);
+    wheelBody->SetFriction(1.0f);
+    //wheelBody->SetRollingFriction(0.5f);
     wheelBody->SetMass(0.5f);
-    wheelBody->SetLinearDamping(0.2f);
-    wheelBody->SetAngularDamping(0.75f);
-    wheelBody->SetCollisionLayer(1);
+    //wheelBody->SetLinearDamping(0.2f);
+    //wheelBody->SetAngularDamping(0.75f);
+    //wheelBody->SetCollisionLayer(1);
 
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
     wheelConstraint->SetOtherBody(damperBody); // Connect to the hull body

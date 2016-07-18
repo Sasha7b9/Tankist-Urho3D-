@@ -91,6 +91,9 @@ void VehicleDemo::CreateScene()
     scene_->CreateComponent<Octree>();
     scene_->CreateComponent<PhysicsWorld>();
 
+    PhysicsWorld *physics = scene_->GetComponent<PhysicsWorld>();
+    //physics->SetFps(100);
+
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
     cameraNode_ = new Node(context_);
@@ -132,7 +135,9 @@ void VehicleDemo::CreateScene()
 
     RigidBody* body = terrainNode->CreateComponent<RigidBody>();
     body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
-    body->SetFriction(100.0f);
+    //body->SetFriction(1.0f);
+    //body->SetCcdRadius(10000.0f);
+    //body->SetCcdMotionThreshold(10000.0f);
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
     shape->SetTerrain();
 
@@ -160,17 +165,17 @@ void VehicleDemo::CreateScene()
 
     const unsigned NUM_BOXES = 50;
 
-    float x = 50.0f;
+    float x = -250.0f;
     float z = 50.0f;
 
     for(unsigned i = 0; i < NUM_BOXES; i++)
     {
         Node *boxNode = scene_->CreateChild("Box");
         //Vector3 position(Random(2000.0f) - 1000.0f, 20.0f, Random(2000.0f) - 1000.0f);
-        Vector3 position(x, 50.0f, z);
+        Vector3 position(x, 10.0f, z);
         x += 10.0f;
         boxNode->SetPosition(position);
-        Vector3 scale(3.0f, 1.0f, 3.0f);
+        Vector3 scale(3.0f, 0.1f, 10.3f);
         boxNode->SetScale(scale);
         StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
         boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
@@ -181,9 +186,10 @@ void VehicleDemo::CreateScene()
         // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
         // objects are significant
         RigidBody* body = boxNode->CreateComponent<RigidBody>();
-        body->SetMass(0.1f);
-        body->SetFriction(100.0f);
-        body->SetLinearDamping(0.9f);
+        body->SetMass(1.0f);
+        body->SetFriction(1.0f);
+        body->SetCcdRadius(11.0f);
+        body->SetCcdMotionThreshold(0.09f);
         CollisionShape* shape = boxNode->CreateComponent<CollisionShape>();
         shape->SetBox(Vector3::ONE);
     }

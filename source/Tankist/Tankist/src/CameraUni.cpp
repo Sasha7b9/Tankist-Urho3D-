@@ -54,6 +54,7 @@ bool CameraUni::SetMode(CameraMode mode, Node *node, const Vector3 &shift)
             this->node = gScene->CreateChild("CameraNode", LOCAL);
             camera = this->node->CreateComponent<Camera>();
             camera->SetFarClip(5000.0f);
+            //camera->SetFillMode(Urho3D::FILL_WIREFRAME);
             GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, gScene, camera));
         }
 

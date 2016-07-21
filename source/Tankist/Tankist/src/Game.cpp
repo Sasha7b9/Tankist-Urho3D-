@@ -132,7 +132,7 @@ Vehicle* Game::ClientConnected(Connection *connection)
 Vehicle* Game::CreateVehicle()
 {
     Node* vehicleNode = gScene->CreateChild("Vehicle");
-    vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 15.0f));
+    vehicleNode->SetPosition(Vector3(0.0f, 200.0f, 0.0f));
 
     Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>();
     vehicle->Init();

@@ -1,7 +1,5 @@
 #pragma once
 
-#define URHO3D_LOGGING
-
 #pragma warning(push)
 #pragma warning(disable:4251)
 

@@ -26,6 +26,8 @@ Console *gConsole = nullptr;
 DebugHud *gDebugHud = nullptr;
 Audio *gAudio = nullptr;
 Localization *gLocale = nullptr;
+DebugRenderer *gDebugRenderer = nullptr;
+PhysicsWorld *gPhysicsWorld = nullptr;
 
 CameraUni *gCamera = nullptr;
 Client *gClient = nullptr;

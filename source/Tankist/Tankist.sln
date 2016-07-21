@@ -19,7 +19,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "silk_float", "..\ThirdParty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "celt", "..\ThirdParty\opus\win32\VS2010\celt.vcxproj", "{245603E3-F580-41A5-9632-B25FE3372CBF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19_VehicleDemo", "..\VehicleDemo\19_VehicleDemo.vcxproj", "{1F0EC0A1-71AB-3600-9049-26471420AD32}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VehicleDemo", "..\VehicleDemo\19_VehicleDemo.vcxproj", "{1F0EC0A1-71AB-3600-9049-26471420AD32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,7 +66,6 @@ Global
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|Win32.Build.0 = Debug|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|x64.ActiveCfg = Debug|x64
-		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|x64.Build.0 = Debug|x64
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Mixed Platforms.Build.0 = Release|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Win32.ActiveCfg = Release|Win32

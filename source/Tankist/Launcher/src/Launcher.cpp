@@ -4,7 +4,7 @@
 #include "Launcher.h"
 #include "Graphics/lSprite.h"
 #include "NetworkThread.h"
-#include "../../common/CommonFunctions.h"
+#include <CommonFunctions.h>
 
 
 #pragma warning(disable:4100)

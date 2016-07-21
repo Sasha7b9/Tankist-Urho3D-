@@ -92,7 +92,10 @@ void VehicleDemo::CreateScene()
     scene_->CreateComponent<PhysicsWorld>();
 
     PhysicsWorld *physics = scene_->GetComponent<PhysicsWorld>();
-    //physics->SetFps(100);
+    //physics->SetInterpolation(true);
+    //physics->SetInternalEdge(true);
+    //physics->SetSplitImpulse(true);
+    physics->SetFps(100);
 
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
@@ -135,7 +138,9 @@ void VehicleDemo::CreateScene()
 
     RigidBody* body = terrainNode->CreateComponent<RigidBody>();
     body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
-    //body->SetFriction(1.0f);
+    //body->SetContactProcessingThreshold(1.0f);
+    body->SetRestitution(0.0f);
+    body->SetFriction(1.0f);
     //body->SetCcdRadius(10000.0f);
     //body->SetCcdMotionThreshold(10000.0f);
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
@@ -163,19 +168,20 @@ void VehicleDemo::CreateScene()
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
 
-    const unsigned NUM_BOXES = 50;
+    return;
 
-    float x = -250.0f;
-    float z = 50.0f;
+    const unsigned NUM_BOXES = 200;
+
+    float y = 20.0f;
 
     for(unsigned i = 0; i < NUM_BOXES; i++)
     {
         Node *boxNode = scene_->CreateChild("Box");
         //Vector3 position(Random(2000.0f) - 1000.0f, 20.0f, Random(2000.0f) - 1000.0f);
-        Vector3 position(x, 10.0f, z);
-        x += 10.0f;
+        Vector3 position(0.0f, y, 0.0f);
+        y += 1.0f;
         boxNode->SetPosition(position);
-        Vector3 scale(3.0f, 0.1f, 10.3f);
+        Vector3 scale(2.0f, 0.25f, 2.0f);
         boxNode->SetScale(scale);
         StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
         boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
@@ -186,14 +192,85 @@ void VehicleDemo::CreateScene()
         // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
         // objects are significant
         RigidBody* body = boxNode->CreateComponent<RigidBody>();
-        body->SetMass(1.0f);
+        body->SetCollisionLayer(2);
+        body->SetMass(10000000.0f);
         body->SetFriction(1.0f);
-        body->SetCcdRadius(11.0f);
-        body->SetCcdMotionThreshold(0.09f);
+        //body->SetCcdRadius(2.1f / 2.0f);
+        //body->SetCcdMotionThreshold(0.25f);
         CollisionShape* shape = boxNode->CreateComponent<CollisionShape>();
         shape->SetBox(Vector3::ONE);
     }
 }
+
+
+void VehicleDemo::AddNewCube()
+{
+    static float prevTime = 0.0;
+    static float timePrevCube = 0.0f;
+
+    static int counter = 0;
+
+    static float x = -100.0f;
+    static float z = -100.0f;
+
+    float delta = GetSubsystem<Time>()->GetElapsedTime() - prevTime;
+
+    prevTime = GetSubsystem<Time>()->GetElapsedTime();
+
+    if(delta > 0.02f)
+    {
+        return;
+    }
+
+    if(prevTime - timePrevCube < 0.1f)
+    {
+        //return;
+    }
+
+    timePrevCube = prevTime;
+
+    for(unsigned i = 0; i < 1; i++)
+    {
+        ResourceCache* cache = GetSubsystem<ResourceCache>();
+
+        prevTime = GetSubsystem<Time>()->GetElapsedTime();
+
+        Node *boxNode = scene_->CreateChild("Box");
+        //Vector3 position(Random(2000.0f) - 1000.0f, 20.0f, Random(2000.0f) - 1000.0f);
+        Vector3 position(Random(-50.0f, 50.0f), 50.0f, Random(-50.0f, 50.0f));
+        boxNode->SetPosition(position);
+        boxNode->SetRotation(Quaternion(Random(100.0f), Random(100.0f), Random(100.0f)));
+        Vector3 scale(0.2f, 2.0f, 2.0f);
+        boxNode->SetScale(scale);
+        StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
+        boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+        boxObject->SetCastShadows(true);
+
+        // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
+        // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
+        // objects are significant
+        RigidBody* body = boxNode->CreateComponent<RigidBody>();
+        body->SetCollisionLayer(2);
+        body->SetMass(1000.0f);
+        body->SetFriction(1.0f);
+        body->SetCcdRadius(2.1f / 2.0f);
+        body->SetCcdMotionThreshold(0.2f);
+        CollisionShape* shape = boxNode->CreateComponent<CollisionShape>();
+        shape->SetBox(Vector3::ONE);
+
+        x += 5.0f;
+
+        if(x == 100.0f && z != 100.0f)
+        {
+            x = -100.0f;
+            z += 5.0f;
+        }
+
+        URHO3D_LOGINFOF("%d", counter++);
+    }
+}
+
 
 void VehicleDemo::CreateVehicle()
 {
@@ -222,6 +299,8 @@ void VehicleDemo::SubscribeToEvents()
 
 void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
+    AddNewCube();
+
     using namespace Update;
 
     Input* input = GetSubsystem<Input>();

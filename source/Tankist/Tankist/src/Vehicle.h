@@ -85,5 +85,5 @@ private:
     float steering;
 
     Vehicle(Vehicle const&) : LogicComponent(nullptr) {};
-    Vehicle operator=(Vehicle const&) {};
+    Vehicle operator=(Vehicle const&){};
 };

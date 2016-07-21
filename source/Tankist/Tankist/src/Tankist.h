@@ -52,6 +52,7 @@ private:
     void HandleKeyUp(StringHash, VariantMap&);
     void HandlePostUpdate(StringHash, VariantMap&);
     void HandleLanguageChanged(StringHash, VariantMap&);
+    void HandlePostRenderUpdate(StringHash, VariantMap&);
     // Server functions
     void HandleCloseConnection(StringHash, VariantMap&);
 

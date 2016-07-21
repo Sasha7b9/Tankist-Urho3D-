@@ -3,6 +3,8 @@
 
 #include "Vehicle.h"
 
+#include <CommonFunctions.h>
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Vehicle::Vehicle(Context* context) :
@@ -28,6 +30,8 @@ void Vehicle::RegisterObject(Context* context)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::FixedUpdate(float timeStep)
 {
+    return;
+
     if(!hullBody)
     {
         return;
@@ -157,20 +161,23 @@ void Vehicle::FixedUpdate(float timeStep)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::Init()
 {
-    // This function is called only from the main program when initially creating the vehicle, not on scene load
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-
-    StaticModel* hullObject = node_->CreateComponent<StaticModel>();
     hullBody = node_->CreateComponent<RigidBody>();
+    float scale = 1.0f;
+    node_->SetScale({scale, scale, scale});
+
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
-    float sizeX = 3.5f;
-    float sizeY = 1.0f;
-    float sizeZ = 6.0f;
+    StaticModel *hullObject = node_->CreateComponent<StaticModel>();
+    Model *cloneModel = (Model*)gCache->GetResource<Model>("Models/Tank/Body.mdl");
+    hullObject->SetModel(cloneModel);
+    hullObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
 
-    node_->SetScale(Vector3(sizeX, sizeY, sizeZ));
-    hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    Geometry *geom = cloneModel->GetGeometry(0, 1);
+
+    VertexBuffer *buffer = geom->GetVertexBuffer(0);
+
+    PODVector<VertexElement> elements = buffer->GetElements();
+
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
     hullBody->SetMass(40.0f);
@@ -188,11 +195,11 @@ void Vehicle::Init()
     }
 
     float x = 0.47f;
-    float y = -0.3f;
-    float z = 0.4f;
-    float dZ = 0.2f;
+    float y = 3.3f;
+    float z = 06.0f;
+    float dZ = 10.2f;
 
-    for(uint i = 0; i < 5; i++)
+    for(uint i = 0; i < 1; i++)
     {
         InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
         InitDamper("damper", {x, y, z}, damperBodyRight[i]);
@@ -203,13 +210,18 @@ void Vehicle::Init()
     y = 2.0f;
     z = 0.0f;
 
+    /*
+    String strLeftWheel = "LeftWheel";
+    String strRightWheel = "RightWheel";
+
     for(uint i = 0; i < 5; i++)
     {
-        InitWheel("wheel", Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
+        InitWheel(&scnTank, strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
         y = -y;
-        InitWheel("wheel", Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
+        InitWheel(&scnTank, strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
         y = -y;
     }
+    */
 
     InitTower();
 }
@@ -222,12 +234,6 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Rigi
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
     damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
-
-    float scaleX = 1.5f;
-    float scaleY = 0.2f;
-    float scaleZ = 0.2f;
-
-    damperNode->SetScale({scaleX, scaleY, scaleZ});
 
     StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
     damperBody = damperNode->CreateComponent<RigidBody>();
@@ -245,6 +251,8 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Rigi
     damperBody->SetMass(2.0f);
     damperBody->SetCollisionLayer(1);
     damperBody->DisableMassUpdate();
+
+    return;
 
     damperConstaraint->SetConstraintType(Urho3D::CONSTRAINT_SLIDER);
     damperConstaraint->SetOtherBody(damperBody);
@@ -277,14 +285,12 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Rigid
     Node *node = damperBody->GetNode();
     wheelNode->SetPosition(node->LocalToWorld(offset));
 
-    wheelNode->SetScale(Vector3(0.8f, 0.5f, 0.8f));
-
     StaticModel* wheelObject = wheelNode->CreateComponent<StaticModel>();
     wheelBody = wheelNode->CreateComponent<RigidBody>();
     CollisionShape* wheelShape = wheelNode->CreateComponent<CollisionShape>();
     Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
 
-    wheelObject->SetModel(cache->GetResource<Model>("Models/Cylinder.mdl"));
+    wheelObject->SetModel(gCache->GetResource<Model>(String("Models/Tank/") + name + String(".mdl")));
     wheelObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
 
@@ -324,17 +330,17 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Rigid
 void Vehicle::InitTower()
 {
     nodeTower = node_->CreateChild("Tower");
-    nodeTower->SetPosition({0.0f, 0.8f, 0.0f});
-    float scaleHor = 0.8f;
-    nodeTower->SetScale(Vector3(scaleHor, 0.75f, scaleHor));
+    nodeTower->SetPosition({0.0f, 6.8f, 0.0f});
 
     towerID = nodeTower->GetID();
 
     StaticModel *towerObject = nodeTower->CreateComponent<StaticModel>();
+    Model *model = (Model*)gCache->GetResource<Model>("Models/Tank/Tower.mdl");
+    towerObject->SetModel(model);
+
     Constraint *towerConstraint = nodeTower->CreateComponent<Constraint>();
 
-    towerObject->SetModel(gCache->GetResource<Model>("Models/Cylinder.mdl"));
-    towerObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
+    towerObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     towerObject->SetCastShadows(true);
 
     towerConstraint->SetAxis(Vector3::UP);
@@ -354,18 +360,15 @@ void Vehicle::InitTrunk()
     nodeTrunk->SetPosition({0.0f, 0.75f, 0.4f});
     //nodeTrunk->Translate({0.0f, 1.5f, 0.0f});
     
-    RotateTrunk(-90.0f);
-
-    float scaleHor = 0.23f;
-    nodeTrunk->SetScale({scaleHor, 1.5f, scaleHor});
+    //RotateTrunk(-90.0f);
 
     trunkID = nodeTrunk->GetID();
 
     StaticModel *trunkObject = nodeTrunk->CreateComponent<StaticModel>();
     Constraint *trunkConstraint = nodeTrunk->CreateComponent<Constraint>();
 
-    trunkObject->SetModel(gCache->GetResource<Model>("Models/Cylinder.mdl"));
-    trunkObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
+    trunkObject->SetModel(gCache->GetResource<Model>("Models/Tank/Trunk.mdl"));
+    trunkObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     trunkObject->SetCastShadows(true);
 
     trunkConstraint->SetAxis(Vector3::UP);

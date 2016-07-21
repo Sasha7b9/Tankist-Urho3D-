@@ -107,7 +107,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_F9)
     {
-        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3(0.0f, 4.0f, -2.0f));
+        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3(0.0f, 0.0f, -50.0f));
     }
 
     else if(key == Urho3D::KEY_CTRL)
@@ -283,6 +283,33 @@ void Tankist::HandleLanguageChanged(StringHash, VariantMap&)
                     ((Text*)element)->SetText(text);
                 }
             }
+        }
+    }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
+{
+    PhysicsWorld *physicsWorld = gScene->GetComponent<PhysicsWorld>();
+    if(physicsWorld)
+    {
+        //physicsWorld->DrawDebugGeometry(false);
+    }
+
+    PODVector<Node*> nodes;
+    gScene->GetChildren(nodes, true);
+
+    if(!gDebugRenderer)
+    {
+        return;
+    }
+
+    for(Node* node : nodes)
+    {
+        if(node->GetName() == "Vehicle")
+        {
+//            node->GetComponent<Vehicle>()->DrawDebugGeometry_();
         }
     }
 }

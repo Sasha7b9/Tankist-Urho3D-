@@ -181,9 +181,9 @@ void Tankist::Stop()
     gAudioCapturer->Stop();
 #endif
 
-    engine_->DumpResources(true);
-    engine_->DumpProfiler();
-    engine_->DumpMemory();
+    //engine_->DumpResources(true);
+    //engine_->DumpProfiler();
+    //engine_->DumpMemory();
     gLog->Write(0, "out");
     gLog->Close();
 
@@ -205,7 +205,12 @@ void Tankist::CreateScene()
     gScene = new Scene(context_);
 
     gScene->CreateComponent<Octree>(LOCAL);
-    gScene->CreateComponent<PhysicsWorld>(LOCAL);
+    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
+
+    if(gTypeApplication == Type_Client)
+    {
+        gDebugRenderer = gScene->CreateComponent<DebugRenderer>(LOCAL);
+    }
 
     Node* zoneNode = gScene->CreateChild("Zone", LOCAL);
     Zone* zone = zoneNode->CreateComponent<Zone>();
@@ -277,6 +282,7 @@ void Tankist::SubscribeToEvents()
         SubscribeToEvent(Urho3D::E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
         SubscribeToEvent(Urho3D::E_KEYUP, URHO3D_HANDLER(Tankist, HandleKeyUp));
         SubscribeToEvent(Urho3D::E_CHANGELANGUAGE, URHO3D_HANDLER(Tankist, HandleLanguageChanged));
+        SubscribeToEvent(Urho3D::E_POSTRENDERUPDATE, URHO3D_HANDLER(Tankist, HandlePostRenderUpdate));
     }
 
     SubscribeToEvent(Urho3D::E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));

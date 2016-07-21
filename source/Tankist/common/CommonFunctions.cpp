@@ -35,3 +35,41 @@ void CreateListFiles()
 
     file.Close();
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+Node *GetNodeByName(Scene *scene, char *name)
+{
+    PODVector<Node*> nodes;
+    scene->GetChildren(nodes, true);
+
+    for(Node *node : nodes)
+    {
+        String nameNode = node->GetName();
+
+        if(strcmp(nameNode.CString(), name) == 0)
+        {
+            Vector<SharedPtr<Component>> components = node->GetComponents();
+
+            LOG_INFOF("type name is %s, num components is %d, type name is %s", node->GetTypeName().CString(), components.Size(), components[0]->GetTypeName().CString());
+
+            return node;
+        }
+    }
+
+    return nullptr;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+StaticModel *GetStaticModel(Scene *scene, char *name)
+{
+    Node *node = GetNodeByName(scene, name);
+
+    if(node)
+    {
+        return node->GetComponent<StaticModel>();
+    }
+
+    return nullptr;
+}

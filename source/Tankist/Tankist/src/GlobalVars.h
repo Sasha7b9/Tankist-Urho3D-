@@ -38,6 +38,8 @@ extern Urho3D::Console *gConsole;
 extern Urho3D::DebugHud *gDebugHud;
 extern Urho3D::Audio *gAudio;
 extern Urho3D::Localization *gLocale;
+extern Urho3D::DebugRenderer *gDebugRenderer;
+extern Urho3D::PhysicsWorld *gPhysicsWorld;
 
 extern CameraUni *gCamera;
 extern Client *gClient;

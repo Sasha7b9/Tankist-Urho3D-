@@ -21,15 +21,19 @@
 
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Graphics/Graphics.h>
+#include <Urho3D/Graphics/Geometry.h>
 #include <Urho3D/Graphics/Light.h>
 #include <Urho3D/Graphics/Model.h>
 #include <Urho3D/Graphics/Octree.h>
 #include <Urho3D/Graphics/Renderer.h>
 #include <Urho3D/Graphics/StaticModel.h>
+#include <Urho3D/Graphics/StaticModelGroup.h>
 #include <Urho3D/Graphics/Terrain.h>
 #include <Urho3D/Graphics/Zone.h>
 #include <Urho3D/Graphics/GraphicsEvents.h>
 #include <Urho3D/Graphics/Texture2D.h>
+#include <Urho3D/Graphics/VertexBuffer.h>
+#include <Urho3D/Graphics/DebugRenderer.h>
 
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Input/Input.h>
@@ -118,6 +122,7 @@ using Urho3D::Controls;
 using Urho3D::Cursor;
 
 using Urho3D::DebugHud;
+using Urho3D::DebugRenderer;
 using Urho3D::DropDownList;
 
 using Urho3D::File;
@@ -125,6 +130,7 @@ using Urho3D::FileSystem;
 using Urho3D::Font;
 
 using Urho3D::Graphics;
+using Urho3D::Geometry;
 
 using Urho3D::Input;
 using Urho3D::IntVector2;
@@ -161,6 +167,7 @@ using Urho3D::Scene;
 using Urho3D::ShadowQuality;
 using Urho3D::SharedPtr;
 using Urho3D::StaticModel;
+using Urho3D::StaticModelGroup;
 using Urho3D::String;
 using Urho3D::StringHash;
 using Urho3D::Sprite2D;
@@ -179,6 +186,8 @@ using Urho3D::Vector;
 using Urho3D::Vector2;
 using Urho3D::Vector3;
 using Urho3D::VectorBuffer;
+using Urho3D::VertexBuffer;
+using Urho3D::VertexElement;
 using Urho3D::Viewport;
 
 using Urho3D::WeakPtr;

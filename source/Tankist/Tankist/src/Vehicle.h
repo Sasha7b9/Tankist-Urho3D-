@@ -54,6 +54,8 @@ public:
 
     unsigned towerID;
     unsigned trunkID;
+
+    void DrawDebugGeometry_();
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
@@ -74,7 +76,7 @@ private:
 
     WeakPtr<Node> nodeTower;
     WeakPtr<Node> nodeTrunk;
-    
+
     float pitchTower = 0.0f;
 
     float yawTrunkMin = -110.0f;

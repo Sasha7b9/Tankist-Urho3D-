@@ -68,7 +68,7 @@ void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Client::AttachCameraToNode()
 {
-    return gCamera->SetMode(ModeCommander, gScene->GetNode(towerID), Vector3::UP);
+    return gCamera->SetMode(ModeCommander, gScene->GetNode(towerID));
 }
 
 

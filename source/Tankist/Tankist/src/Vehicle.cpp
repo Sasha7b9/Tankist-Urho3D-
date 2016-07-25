@@ -161,29 +161,40 @@ void Vehicle::FixedUpdate(float timeStep)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::Init()
 {
-    hullBody = node_->CreateComponent<RigidBody>();
-    float scale = 1.0f;
+    float scale = 0.05f;
     node_->SetScale({scale, scale, scale});
 
-    CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
+    AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
+
+    float x = 6.5f;
+    float y = 7.5f;
+    float z = -3.1f;
+
+    AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
+    AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
 
     StaticModel *hullObject = node_->CreateComponent<StaticModel>();
     Model *cloneModel = (Model*)gCache->GetResource<Model>("Models/Tank/Body.mdl");
     hullObject->SetModel(cloneModel);
-    hullObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
-
-    Geometry *geom = cloneModel->GetGeometry(0, 1);
-
-    VertexBuffer *buffer = geom->GetVertexBuffer(0);
-
-    PODVector<VertexElement> elements = buffer->GetElements();
-
+    //hullObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     hullObject->SetCastShadows(true);
-    hullShape->SetBox(Vector3::ONE);
+
+    hullBody = node_->CreateComponent<RigidBody>();
     hullBody->SetMass(40.0f);
     hullBody->SetLinearDamping(0.2f); // Some air resistance
     hullBody->SetAngularDamping(0.5f);
-    hullBody->SetCollisionLayer(1);
+    hullBody->SetCollisionLayer(2);
+
+    BoundingBox box = hullObject->GetBoundingBox();
+    Vector3 dimensions;
+    Vector3 center;
+    GetDimensionsCenter(box, dimensions, center);
+
+    //hullBody->SetCcdRadius(0.1f);
+    //hullBody->SetCcdMotionThreshold(dimensions.y_ / 100.0f);
+
+    CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
+    hullShape->SetBox(dimensions, center);
 
     Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
     Vector<WeakPtr<RigidBody>> damperBodyRight(5);
@@ -194,12 +205,12 @@ void Vehicle::Init()
         wheelBodyRight[i] = new RigidBody(context_);
     }
 
-    float x = 0.47f;
-    float y = 3.3f;
-    float z = 06.0f;
-    float dZ = 10.2f;
+    x = 10.0f;
+    y = 00.0f;
+    z = 16.0f;
+    float dZ = 8.0f;
 
-    for(uint i = 0; i < 1; i++)
+    for(uint i = 0; i < 5; i++)
     {
         InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
         InitDamper("damper", {x, y, z}, damperBodyRight[i]);
@@ -227,36 +238,52 @@ void Vehicle::Init()
 }
 
 
+void Vehicle::DrawDebugGeometry_()
+{
+    if(gDebugRenderer)
+    {
+        PODVector<Node*> nodes;
+        node_->GetChildren(nodes, false);
+        for(Node *node : nodes)
+        {
+            if(node->GetName() == "damper")
+            {
+                CollisionShape *shape = node->GetComponent<CollisionShape>();
+                shape->DrawDebugGeometry(gDebugRenderer, true);
+            }
+        }
+    }
+}
+
+
 void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)
 {
-    ResourceCache *cache = GetSubsystem<ResourceCache>();
-
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
-    damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
+    Vector3 s = node_->GetScale();
+    damperNode->SetScale(Vector3(s.x_, s.y_ * 5, s.z_));
 
     StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
     damperBody = damperNode->CreateComponent<RigidBody>();
     CollisionShape *damperShape = damperNode->CreateComponent<CollisionShape>();
-    Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
-    damperObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    damperObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    damperObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
+    damperObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     damperObject->SetCastShadows(true);
 
-    damperShape->SetSphere(0.2f);
-    damperShape->SetPosition(Vector3(-0.5f, 0.0f, 0.0f));
+    damperShape->SetSphere(1.0f);
+    damperShape->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
 
     damperBody->SetFriction(0.0f);
     damperBody->SetMass(2.0f);
     damperBody->SetCollisionLayer(1);
     damperBody->DisableMassUpdate();
 
-    return;
+    Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
     damperConstaraint->SetConstraintType(Urho3D::CONSTRAINT_SLIDER);
     damperConstaraint->SetOtherBody(damperBody);
-    damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
+    //damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
     damperConstaraint->SetWorldPosition(damperNode->GetPosition());
     damperConstaraint->SetDisableCollision(true);
 
@@ -330,7 +357,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Rigid
 void Vehicle::InitTower()
 {
     nodeTower = node_->CreateChild("Tower");
-    nodeTower->SetPosition({0.0f, 6.8f, 0.0f});
+    nodeTower->SetPosition({0.0f, 6.8f, 4.0f});
 
     towerID = nodeTower->GetID();
 
@@ -340,7 +367,7 @@ void Vehicle::InitTower()
 
     Constraint *towerConstraint = nodeTower->CreateComponent<Constraint>();
 
-    towerObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
+    //towerObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     towerObject->SetCastShadows(true);
 
     towerConstraint->SetAxis(Vector3::UP);
@@ -368,7 +395,7 @@ void Vehicle::InitTrunk()
     Constraint *trunkConstraint = nodeTrunk->CreateComponent<Constraint>();
 
     trunkObject->SetModel(gCache->GetResource<Model>("Models/Tank/Trunk.mdl"));
-    trunkObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
+    //trunkObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     trunkObject->SetCastShadows(true);
 
     trunkConstraint->SetAxis(Vector3::UP);

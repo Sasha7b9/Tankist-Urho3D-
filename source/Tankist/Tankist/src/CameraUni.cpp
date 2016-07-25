@@ -45,7 +45,7 @@ void CameraUni::MoveFromMouse()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool CameraUni::SetMode(CameraMode mode, Node *node, const Vector3 &shift)
+bool CameraUni::SetMode(CameraMode mode, Node *node)
 {
     if(node && mode != this->mode)
     {
@@ -68,7 +68,7 @@ bool CameraUni::SetMode(CameraMode mode, Node *node, const Vector3 &shift)
         if(mode == ModeCommander)
         {
             node->AddChild(this->node);
-            this->node->SetPosition(shift);
+            this->node->SetPosition(Vector3(0.0f, 0.0f, -100.0f));
             camera->SetFov(45.0f);
             this->node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
             sight->SetVisible(false);
@@ -76,7 +76,7 @@ bool CameraUni::SetMode(CameraMode mode, Node *node, const Vector3 &shift)
         else if(mode == ModeShooter)
         {
             node->AddChild(this->node);
-            this->node->SetPosition(shift);
+            this->node->SetPosition(Vector3::UP * 1.75f + Vector3::BACK * 3);
             camera->SetFov(4.5f);
             this->node->SetRotation(Quaternion(-90.0f, 0.0f, 0.0f));
             sight->SetVisible(true);

@@ -24,8 +24,8 @@ public:
     CameraUni(Context *context);
 
     void MoveFromMouse();
-    bool SetMode(CameraMode mode, Node *node, const Vector3 &shift);    // For client
-    void SetupViewport();                                               // For server
+    bool SetMode(CameraMode mode, Node *node);  // For client
+    void SetupViewport();                       // For server
     void IncFov()
     {
         camera->SetFov(camera->GetFov() / 1.1f);

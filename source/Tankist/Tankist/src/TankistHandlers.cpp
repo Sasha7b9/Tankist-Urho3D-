@@ -102,12 +102,12 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_SPACE)
     {
-        gCamera->SetMode(ModeShooter, gScene->GetNode(gClient->trunkID), Vector3::UP * 1.75f + Vector3::BACK * 3);
+        gCamera->SetMode(ModeShooter, gScene->GetNode(gClient->trunkID));
     }
 
     else if(key == Urho3D::KEY_F9)
     {
-        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID), Vector3(0.0f, 0.0f, -50.0f));
+        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID));
     }
 
     else if(key == Urho3D::KEY_CTRL)
@@ -291,25 +291,34 @@ void Tankist::HandleLanguageChanged(StringHash, VariantMap&)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
-    PhysicsWorld *physicsWorld = gScene->GetComponent<PhysicsWorld>();
-    if(physicsWorld)
+    if(gDebugRenderer)
     {
-        //physicsWorld->DrawDebugGeometry(false);
-    }
+        /*
+        PODVector<Node*> nodes;
+        gScene->GetChildren(nodes, true);
 
-    PODVector<Node*> nodes;
-    gScene->GetChildren(nodes, true);
-
-    if(!gDebugRenderer)
-    {
-        return;
-    }
-
-    for(Node* node : nodes)
-    {
-        if(node->GetName() == "Vehicle")
+        for(Node* node : nodes)
         {
-//            node->GetComponent<Vehicle>()->DrawDebugGeometry_();
+            if(node->GetName() == "Vehicle")
+            {
+                node->GetComponent<Vehicle>()->DrawDebugGeometry_();
+            }
+        }
+        */
+
+        gPhysicsWorld->DrawDebugGeometry(true);
+
+        return;
+
+        PODVector<Node*> nodes;
+        gScene->GetChildren(nodes, true);
+        for(Node *node : nodes)
+        {
+            if(node->GetName() == "damper")
+            {
+                CollisionShape *shape = node->GetComponent<CollisionShape>();
+                shape->DrawDebugGeometry(gDebugRenderer, true);
+            }
         }
     }
 }

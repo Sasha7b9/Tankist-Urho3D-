@@ -249,7 +249,7 @@ void Tankist::CreateScene()
     shape->SetTerrain();
 
     // Create 1000 mushrooms in the terrain. Always face outward along the terrain normal
-    const unsigned NUM_MUSHROOMS = 1000;
+    const unsigned NUM_MUSHROOMS = 100;
     for(unsigned i = 0; i < NUM_MUSHROOMS; ++i)
     {
         Node* objectNode = gScene->CreateChild("Mushroom", LOCAL);

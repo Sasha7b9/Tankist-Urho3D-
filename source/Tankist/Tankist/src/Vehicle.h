@@ -56,6 +56,7 @@ public:
     unsigned trunkID;
 
     void DrawDebugGeometry_();
+    void Logging();
     
 private:
     /// Initialize a wheel and remember its scene node and ID.

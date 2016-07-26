@@ -293,22 +293,7 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
     if(gDebugRenderer)
     {
-        /*
-        PODVector<Node*> nodes;
-        gScene->GetChildren(nodes, true);
-
-        for(Node* node : nodes)
-        {
-            if(node->GetName() == "Vehicle")
-            {
-                node->GetComponent<Vehicle>()->DrawDebugGeometry_();
-            }
-        }
-        */
-
         gPhysicsWorld->DrawDebugGeometry(true);
-
-        return;
 
         PODVector<Node*> nodes;
         gScene->GetChildren(nodes, true);
@@ -318,6 +303,12 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
             {
                 CollisionShape *shape = node->GetComponent<CollisionShape>();
                 shape->DrawDebugGeometry(gDebugRenderer, true);
+            }
+
+            if(node->GetName() == "Vehicle")
+            {
+                Vehicle *vehicle = node->GetComponent<Vehicle>();
+                vehicle->Logging();
             }
         }
     }

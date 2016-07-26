@@ -159,42 +159,54 @@ void Vehicle::FixedUpdate(float timeStep)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+void Vehicle::Logging()
+{
+    CollisionShape *shape = node_->GetComponent<CollisionShape>();
+    Vector3 c = shape->GetPosition();
+    LOG_INFOF("position collision shape %f %f %f", c.x_, c.y_, c.z_);
+    c = node_->GetWorldPosition();
+    LOG_INFOF("position node %f %f %f", c.x_, c.y_, c.z_);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Vehicle::Init()
 {
     float scale = 0.05f;
     node_->SetScale({scale, scale, scale});
 
-    AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
+    //AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
 
     float x = 6.5f;
     float y = 7.5f;
     float z = -3.1f;
 
-    AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
-    AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
+    //AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
+    //AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
 
     StaticModel *hullObject = node_->CreateComponent<StaticModel>();
     Model *cloneModel = (Model*)gCache->GetResource<Model>("Models/Tank/Body.mdl");
     hullObject->SetModel(cloneModel);
-    //hullObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
+    hullObject->SetMaterial(gCache->GetResource<Material>("Models/Tank/DefaultMaterial.xml"));
     hullObject->SetCastShadows(true);
 
     hullBody = node_->CreateComponent<RigidBody>();
     hullBody->SetMass(40.0f);
-    hullBody->SetLinearDamping(0.2f); // Some air resistance
-    hullBody->SetAngularDamping(0.5f);
-    hullBody->SetCollisionLayer(2);
+    //hullBody->SetLinearDamping(0.2f); // Some air resistance
+    //hullBody->SetAngularDamping(0.5f);
+    //hullBody->SetCollisionLayer(1);
 
     BoundingBox box = hullObject->GetBoundingBox();
     Vector3 dimensions;
     Vector3 center;
-    GetDimensionsCenter(box, dimensions, center);
+    GetDimensionsCenter(box, dimensions, center, 1.0f);
 
-    //hullBody->SetCcdRadius(0.1f);
-    //hullBody->SetCcdMotionThreshold(dimensions.y_ / 100.0f);
+    hullBody->SetCcdRadius(0.1f);
+    hullBody->SetCcdMotionThreshold(dimensions.y_ / 1000.0f);
 
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
-    hullShape->SetBox(dimensions, center);
+    hullShape->SetBox(dimensions / 2.0f, center);
+    //hullShape->SetBox(Vector3::ONE);
 
     Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
     Vector<WeakPtr<RigidBody>> damperBodyRight(5);
@@ -210,6 +222,7 @@ void Vehicle::Init()
     z = 16.0f;
     float dZ = 8.0f;
 
+    /*
     for(uint i = 0; i < 5; i++)
     {
         InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
@@ -221,7 +234,6 @@ void Vehicle::Init()
     y = 2.0f;
     z = 0.0f;
 
-    /*
     String strLeftWheel = "LeftWheel";
     String strRightWheel = "RightWheel";
 

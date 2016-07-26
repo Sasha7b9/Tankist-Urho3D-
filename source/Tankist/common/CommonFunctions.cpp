@@ -86,11 +86,11 @@ void AddModelToNode(Node *node, char *nameModel, const Vector3 &offset)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void GetDimensionsCenter(const BoundingBox &box, Vector3 &dimensions, Vector3 &center)
+void GetDimensionsCenter(const BoundingBox &box, Vector3 &dimensions, Vector3 &center, float scale)
 {
-    dimensions.x_ = box.max_.x_ - box.min_.x_;
-    dimensions.y_ = box.max_.y_ - box.min_.y_;
-    dimensions.z_ = box.max_.z_ - box.min_.z_;
+    dimensions.x_ = (box.max_.x_ - box.min_.x_) * scale;
+    dimensions.y_ = (box.max_.y_ - box.min_.y_) * scale;
+    dimensions.z_ = (box.max_.z_ - box.min_.z_) * scale;
 
     center.x_ = (box.min_.x_ + box.max_.x_) / 2.0f;
     center.y_ = (box.min_.y_ + box.max_.y_) / 2.0f;

@@ -74,7 +74,6 @@ void Tankist::Setup()
         gUIRoot = gUI->GetRoot();
         gInput = GetSubsystem<Input>();
         gRenderer = GetSubsystem<Renderer>();
-        gCamera = new CameraUni(context_);
     }
 
     engineParameters_["Headless"] = gTypeApplication == Type_Server;
@@ -104,6 +103,8 @@ void Tankist::Start()
 {
     if (gTypeApplication == Type_Client)
     {
+        gCamera = new CameraUni(context_);
+
         gGraphics = GetSubsystem<Graphics>();
 
         if(gSet->FirstStart())
@@ -142,6 +143,8 @@ void Tankist::Start()
 
         gChat = new Chat(gContext, Chat::Chat_Server);
         gChat->Listen(PORT_CHAT);
+
+        gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
     }
     
     if (gTypeApplication == Type_Client)
@@ -205,7 +208,9 @@ void Tankist::CreateScene()
     gScene = new Scene(context_);
 
     gScene->CreateComponent<Octree>(LOCAL);
-    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
+//    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
+
+    //gPhysicsWorld->SetGravity(gPhysicsWorld->GetGravity() / 10.0f);
 
     if(gTypeApplication == Type_Client)
     {

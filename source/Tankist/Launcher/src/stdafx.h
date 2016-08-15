@@ -17,6 +17,8 @@
 
 #include <Urho3D/Graphics/Graphics.h>
 #include <Urho3D/Graphics/Texture2D.h>
+#include <Urho3D/Graphics/StaticModel.h>
+#include <Urho3D/Graphics/Model.h>
 
 #include <Urho3D/Input/Input.h>
 
@@ -26,6 +28,9 @@
 
 #include <Urho3D/Resource/Resource.h>
 #include <Urho3D/Resource/ResourceCache.h>
+
+#include <Urho3D/Scene/Node.h>
+#include <Urho3D/Scene/Scene.h>
 
 #include <Urho3D/UI/Button.h>
 #include <Urho3D/UI/Font.h>
@@ -67,10 +72,16 @@ using Urho3D::HashMap;
 
 using Urho3D::Log;
 
+using Urho3D::Model;
+
+using Urho3D::Node;
+
 using Urho3D::ResourceCache;
 
+using Urho3D::Scene;
 using Urho3D::SharedPtr;
 using Urho3D::Sprite;
+using Urho3D::StaticModel;
 using Urho3D::String;
 using Urho3D::StringHash;
 

@@ -214,7 +214,7 @@ static void ServerCallbackOnRecieve(SOCKET clientID, uint8 typeMessage, void *da
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnDisconnect(SOCKET clientID)
 {
-    LOG_INFOF("%s enter");
+    LOG_FUNC_ENTER
 
     String message;
 
@@ -229,7 +229,7 @@ static void ServerCallbackOnDisconnect(SOCKET clientID)
     }
     gChat->SendToAll(MSG_CHAT, message);
 
-    LOG_INFOF("%s leave");
+    LOG_FUNC_LEAVE
 }
 
 

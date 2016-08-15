@@ -59,7 +59,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     // Toggle debug HUD with F2
     else if(key == Urho3D::KEY_F2)
     {
-        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == Urho3D::DEBUGHUD_SHOW_ALL_MEMORY)
+        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == Urho3D::DEBUGHUD_SHOW_MEMORY)
         {
             gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_ALL);
         }
@@ -70,13 +70,13 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     }
     else if(key == Urho3D::KEY_F3)
     {
-        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == DEBUGHUD_SHOW_ALL)
+        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == Urho3D::DEBUGHUD_SHOW_ALL)
         {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_ALL_MEMORY);
+            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_MEMORY);
         }
         else
         {
-            gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
+            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_NONE);
         }
     }
 
@@ -293,6 +293,8 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
     if(gDebugRenderer)
     {
+        return;
+
         gPhysicsWorld->DrawDebugGeometry(true);
 
         PODVector<Node*> nodes;

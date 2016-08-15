@@ -27,7 +27,7 @@ void TerminalTWT::Setup()
 {
     gUI = GetSubsystem<UI>();
     gUIRoot = gUI->GetRoot();
-    gResourceCache = GetSubsystem<ResourceCache>();
+    gCache = GetSubsystem<ResourceCache>();
     gInput = GetSubsystem<Input>();
     gTime = GetSubsystem<Time>();
     gFileSystem = GetSubsystem<FileSystem>();
@@ -93,7 +93,7 @@ void TerminalTWT::SubscribeToEvents()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void TerminalTWT::CreateUI()
 {
-    XMLFile *uiStyle = gResourceCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XMLFile *uiStyle = gCache->GetResource<XMLFile>("UI/DefaultStyle.xml");
     gUIRoot->SetDefaultStyle(uiStyle);
 
     SharedPtr<Cursor> cursor(new Cursor(context_));
@@ -109,7 +109,7 @@ void TerminalTWT::CreateUI()
 
     ///
     label = new Text(context_);
-    label->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 50);
+    label->SetFont(gCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 50);
     label->SetColor(Color::YELLOW);
     label->SetText(L"Танкист МК");
     label->SetPosition((width - label->GetWidth()) / 2, 10);
@@ -121,7 +121,7 @@ void TerminalTWT::CreateUI()
 
     ///
     textVerifyUpdate = new Text(context_);
-    textVerifyUpdate->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 13);
+    textVerifyUpdate->SetFont(gCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 13);
     textVerifyUpdate->SetColor(Color::GREEN);
     textVerifyUpdate->SetText(L"Проверяю наличие обновлений...");
     textVerifyUpdate->SetPosition((width - textVerifyUpdate->GetWidth()) / 2, height - 100);
@@ -130,7 +130,7 @@ void TerminalTWT::CreateUI()
     buttonPlay = new Button(context_);
     buttonPlay->SetStyleAuto();
     SharedPtr<Text> lbl(new Text(context_));
-    lbl->SetFont(gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    lbl->SetFont(gCache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     lbl->SetAlignment(Urho3D::HA_CENTER, Urho3D::VA_CENTER);
     lbl->SetText(L"ИГРАТЬ");
     buttonPlay->AddChild(lbl);

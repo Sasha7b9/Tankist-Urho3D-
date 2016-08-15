@@ -185,7 +185,7 @@ void Vehicle::Init()
     hullBody = node_->CreateComponent<RigidBody>();
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
-    float scale = 0.05f;
+    float scale = 1.0f;
     node_->SetScale({scale, scale, scale});
 
     hullObject->SetModel(gCache->GetResource<Model>("Models/Tank/Body.mdl"));
@@ -203,8 +203,8 @@ void Vehicle::Init()
     hullBody->SetAngularDamping(0.5f);
     hullBody->SetCollisionLayer(1);
 
-    hullBody->SetCcdRadius(0.1f);
-    hullBody->SetCcdMotionThreshold(dimensions.y_ / 1000.0f);
+    //hullBody->SetCcdRadius(0.1f);
+    //hullBody->SetCcdMotionThreshold(dimensions.y_ / 1000.0f);
 
     Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
     Vector<WeakPtr<RigidBody>> damperBodyRight(5);

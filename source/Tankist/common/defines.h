@@ -72,4 +72,7 @@ union BitSet32
 
 #define LOG_ERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
 #define LOG_ERRORF(format, ...) Urho3D::Log::Write(Urho3D::LOG_ERROR, Urho3D::ToString(format, ##__VA_ARGS__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-    
+
+#define LOG_FUNC_ENTER Urho3D::Log::Write(Urho3D::LOG_INFO, Urho3D::ToString("%s enter", __FUNCTION__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
+
+#define LOG_FUNC_LEAVE Urho3D::Log::Write(Urho3D::LOG_INFO, Urho3D::ToString("%s leave", __FUNCTION__) + Urho3D::ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));

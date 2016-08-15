@@ -11,7 +11,7 @@ ProgressBar::ProgressBar(Context *context) : UIElement(context)
     sprite->SetSize((int)width, (int)height);
     AddChild(sprite);
 
-    Font *font = gResourceCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    Font *font = gCache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     textPercents = new Text(context);
     textPercents->SetFont(font);

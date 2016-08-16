@@ -184,7 +184,8 @@ void Client::HandleClientIdentity(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientSceneLoaded(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    gPhysicsWorld = gScene->GetComponent<PhysicsWorld>();
+    LOG_INFOF("gPhysicsWorld = %d", gPhysicsWorld);
 }
 
 

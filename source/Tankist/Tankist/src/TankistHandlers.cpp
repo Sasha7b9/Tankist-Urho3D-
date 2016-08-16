@@ -291,11 +291,11 @@ void Tankist::HandleLanguageChanged(StringHash, VariantMap&)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
-    if(gDebugRenderer)
+    if(gDebugRenderer && gScene->GetComponent<PhysicsWorld>())
     {
-        return;
+        LOG_INFO("Test point");
 
-        gPhysicsWorld->DrawDebugGeometry(true);
+        gScene->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
 
         PODVector<Node*> nodes;
         gScene->GetChildren(nodes, true);

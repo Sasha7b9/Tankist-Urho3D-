@@ -144,7 +144,7 @@ void Tankist::Start()
         gChat = new Chat(gContext, Chat::Chat_Server);
         gChat->Listen(PORT_CHAT);
 
-        gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
+        gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>();
     }
     
     if (gTypeApplication == Type_Client)

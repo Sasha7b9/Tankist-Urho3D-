@@ -45,7 +45,7 @@
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/UI.h>
 
-#include "Vehicle.h"
+#include "Tank.h"
 #include "VehicleDemo.h"
 
 #include <Urho3D/DebugNew.h>
@@ -57,8 +57,8 @@ URHO3D_DEFINE_APPLICATION_MAIN(VehicleDemo)
 VehicleDemo::VehicleDemo(Context* context) :
     Sample(context)
 {
-    // Register factory and attributes for the Vehicle component so it can be created via CreateComponent, and loaded / saved
-    Vehicle::RegisterObject(context);
+    // Register factory and attributes for the Tank component so it can be created via CreateComponent, and loaded / saved
+    Tank::RegisterObject(context);
 }
 
 void VehicleDemo::Start()
@@ -274,13 +274,13 @@ void VehicleDemo::AddNewCube()
 
 void VehicleDemo::CreateVehicle()
 {
-    Node* vehicleNode = scene_->CreateChild("Vehicle");
+    Node* vehicleNode = scene_->CreateChild("Tank");
     vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 
-    // Create the vehicle logic component
-    vehicle_ = vehicleNode->CreateComponent<Vehicle>();
+    // Create the tank logic component
+    tank_ = vehicleNode->CreateComponent<Tank>();
     // Create the rendering and physics components
-    vehicle_->Init();
+    tank_->Init();
 }
 
 void VehicleDemo::SubscribeToEvents()
@@ -299,24 +299,24 @@ void VehicleDemo::SubscribeToEvents()
 
 void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
-    AddNewCube();
+    //AddNewCube();
 
     using namespace Update;
 
     Input* input = GetSubsystem<Input>();
 
-    if (vehicle_)
+    if (tank_)
     {
         UI* ui = GetSubsystem<UI>();
 
         // Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
         if (!ui->GetFocusElement())
         {
-            vehicle_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
-            vehicle_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
-            vehicle_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
-            vehicle_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
-            vehicle_->controls_.Set(CTRL_STOP, input->GetKeyDown(KEY_KP_ENTER));
+            tank_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
+            tank_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
+            tank_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
+            tank_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
+            tank_->controls_.Set(CTRL_STOP, input->GetKeyDown(KEY_KP_ENTER));
 
             // Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
             if (touchEnabled_)
@@ -331,18 +331,18 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
                             return;
 
                         Graphics* graphics = GetSubsystem<Graphics>();
-                        vehicle_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                        vehicle_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                        tank_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
+                        tank_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
                     }
                 }
             }
             else
             {
-                vehicle_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
-                vehicle_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
+                tank_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
+                tank_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
             }
             // Limit pitch
-            vehicle_->controls_.pitch_ = Clamp(vehicle_->controls_.pitch_, 0.0f, 80.0f);
+            tank_->controls_.pitch_ = Clamp(tank_->controls_.pitch_, 0.0f, 80.0f);
 
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
@@ -359,25 +359,25 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
                 // Simply find the vehicle's scene node by name as there's only one of them
                 Node* vehicleNode = scene_->GetChild("Vehicle", true);
                 if (vehicleNode)
-                    vehicle_ = vehicleNode->GetComponent<Vehicle>();
+                    tank_ = vehicleNode->GetComponent<Tank>();
             }
         }
         else
-            vehicle_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_STOP, false);
+            tank_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_STOP, false);
     }
 }
 
 void VehicleDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 {
-    if (!vehicle_)
+    if (!tank_)
         return;
 
-    Node* vehicleNode = vehicle_->GetNode();
+    Node* vehicleNode = tank_->GetNode();
 
     // Physics update has completed. Position camera behind vehicle
     Quaternion dir(vehicleNode->GetRotation().YawAngle(), Vector3::UP);
-    dir = dir * Quaternion(vehicle_->controls_.yaw_, Vector3::UP);
-    dir = dir * Quaternion(vehicle_->controls_.pitch_, Vector3::RIGHT);
+    dir = dir * Quaternion(tank_->controls_.yaw_, Vector3::UP);
+    dir = dir * Quaternion(tank_->controls_.pitch_, Vector3::RIGHT);
 
     Vector3 cameraTargetPos = vehicleNode->GetPosition() - dir * Vector3(0.0f, 0.0f, CAMERA_DISTANCE);
     Vector3 cameraStartPos = vehicleNode->GetPosition();
@@ -411,7 +411,7 @@ void VehicleDemo::HandlePostRenderUpdate(StringHash, VariantMap&)
         DebugRenderer *dRender = scene_->GetComponent<DebugRenderer>();
         if(dRender)
         {
-            dRender->AddSphere(Sphere(vehicle_->hullBody_->GetNode()->GetWorldPosition(), 0.25f), Color::YELLOW, false);
+            dRender->AddSphere(Sphere(tank_->hullBody_->GetNode()->GetWorldPosition(), 0.25f), Color::YELLOW, false);
             dRender->Render();
         }
         */

@@ -20,12 +20,18 @@
     <ClInclude Include="src\VehicleDemo.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Tank.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Vehicle.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\VehicleDemo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tank.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -61,7 +61,7 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\out</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">19_VehicleDemo.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">19_VehicleDemo_d</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
@@ -300,10 +300,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sample.h" />
+    <ClInclude Include="src\Tank.h" />
     <ClInclude Include="src\Vehicle.h" />
     <ClInclude Include="src\VehicleDemo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\Vehicle.cpp" />
     <ClCompile Include="src\VehicleDemo.cpp" />
   </ItemGroup>

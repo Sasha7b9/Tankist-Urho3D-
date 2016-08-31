@@ -14,9 +14,6 @@
     <ClInclude Include="src\Sample.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vehicle.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\VehicleDemo.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -25,9 +22,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Vehicle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\VehicleDemo.cpp">
       <Filter>src</Filter>
     </ClCompile>

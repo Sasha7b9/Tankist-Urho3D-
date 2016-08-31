@@ -82,6 +82,7 @@ void VehicleDemo::Start()
 void VehicleDemo::CreateScene()
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
+    cache->AddResourceDir(GetSubsystem<FileSystem>()->GetProgramDir() + "TankistData");
 
     scene_ = new Scene(context_);
 

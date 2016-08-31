@@ -301,12 +301,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClInclude Include="src\Sample.h" />
     <ClInclude Include="src\Tank.h" />
-    <ClInclude Include="src\Vehicle.h" />
     <ClInclude Include="src\VehicleDemo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Tank.cpp" />
-    <ClCompile Include="src\Vehicle.cpp" />
     <ClCompile Include="src\VehicleDemo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

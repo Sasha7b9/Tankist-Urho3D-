@@ -135,7 +135,7 @@ void Tank::Init()
     float sizeZ = 6.0f;
 
     node_->SetScale(Vector3(sizeX, sizeY, sizeZ));
-    hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetModel(cache->GetResource<Model>("Models/Tank/Body.mdl"));
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);

@@ -36,11 +36,10 @@ class RigidBody;
 
 using namespace Urho3D;
 
-const int CTRL_FORWARD = 1 << 0;
-const int CTRL_BACK = 1 << 1;
-const int CTRL_LEFT = 1 << 2;
-const int CTRL_RIGHT = 1 << 3;
-const int CTRL_STOP = 1 << 4;
+const int CTRL_FORWARD = 1;
+const int CTRL_BACK = 2;
+const int CTRL_LEFT = 4;
+const int CTRL_RIGHT = 8;
 
 const float YAW_SENSITIVITY = 0.1f;
 const float ENGINE_POWER = 10.0f;
@@ -69,15 +68,37 @@ public:
     
     /// Movement controls.
     Controls controls_;
-
-    WeakPtr<RigidBody> hullBody_;
     
 private:
     /// Initialize a wheel and remember its scene node and ID.
-    void InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody);
-    void InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody);
+    void InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID);
+    /// Acquire wheel components from wheel scene nodes.
+    void GetWheelComponents();
+
     
     // Wheel scene nodes.
-    WeakPtr<RigidBody> wheelBodyLeft[5];
-    WeakPtr<RigidBody> wheelBodyRight[5];
+    WeakPtr<Node> frontLeft_;
+    WeakPtr<Node> frontRight_;
+    WeakPtr<Node> rearLeft_;
+    WeakPtr<Node> rearRight_;
+    
+    // Steering axle constraints.
+    WeakPtr<Constraint> frontLeftAxis_;
+    WeakPtr<Constraint> frontRightAxis_;
+    
+    // Hull and wheel rigid bodies.
+    WeakPtr<RigidBody> hullBody_;
+    WeakPtr<RigidBody> frontLeftBody_;
+    WeakPtr<RigidBody> frontRightBody_;
+    WeakPtr<RigidBody> rearLeftBody_;
+    WeakPtr<RigidBody> rearRightBody_;
+    
+    // IDs of the wheel scene nodes for serialization.
+    unsigned frontLeftID_;
+    unsigned frontRightID_;
+    unsigned rearLeftID_;
+    unsigned rearRightID_;
+    
+    /// Current left/right steering amount (-1 to 1.)
+    float steering_;
 };

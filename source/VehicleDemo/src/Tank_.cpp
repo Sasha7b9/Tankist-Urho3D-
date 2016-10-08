@@ -144,9 +144,6 @@ void Tank::Init()
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
-    Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
-    Vector<WeakPtr<RigidBody>> damperBodyRight(5);
-
     for(int i = 0; i < 5; i++)
     {
         wheelBodyLeft[i] = new RigidBody(context_);
@@ -158,24 +155,29 @@ void Tank::Init()
     float z = 0.4f;
     float dZ = 0.2f;
 
-    for(int i = 0; i < 5; i++)
-    {
-        InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
-        InitDamper("damper", {x, y, z}, damperBodyRight[i]);
-        z -= dZ;
-    }
-    
-    x = -0.6f;
-    y = 2.0f;
-    z = 0.0f;
+    float x0 = -0.6f;
+    float y0 = 2.0f;
+    float z0 = 0.0f;
+
+    WeakPtr<RigidBody> damperBodyL;
+    WeakPtr<RigidBody> damperBodyR;
 
     for(int i = 0; i < 5; i++)
     {
-        InitWheel("wheel", Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
-        y = -y;
-        InitWheel("wheel", Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
-        y = -y;
+        InitDamper("damper", {-x, y, z}, damperBodyL);
+        InitDamper("damper", {x, y, z}, damperBodyR);
+        z -= dZ;
+
+        InitWheel("wheel", Vector3(x0, y0, z0), wheelBodyLeft[i], damperBodyL);
+        y0 = -y0;
+        InitWheel("wheel", Vector3(x0, y0, z0), wheelBodyRight[i], damperBodyR);
+        y0 = -y0;
     }
+}
+
+Tank::~Tank()
+{
+
 }
 
 void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)

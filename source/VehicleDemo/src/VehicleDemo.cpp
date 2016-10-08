@@ -45,7 +45,7 @@
 #include <Urho3D/UI/Text.h>
 #include <Urho3D/UI/UI.h>
 
-#include "Tank.h"
+#include "Vehicle.h"
 #include "VehicleDemo.h"
 
 #include <Urho3D/DebugNew.h>
@@ -57,8 +57,8 @@ URHO3D_DEFINE_APPLICATION_MAIN(VehicleDemo)
 VehicleDemo::VehicleDemo(Context* context) :
     Sample(context)
 {
-    // Register factory and attributes for the Tank component so it can be created via CreateComponent, and loaded / saved
-    Tank::RegisterObject(context);
+    // Register factory and attributes for the Vehicle component so it can be created via CreateComponent, and loaded / saved
+    Vehicle::RegisterObject(context);
 }
 
 void VehicleDemo::Start()
@@ -275,11 +275,11 @@ void VehicleDemo::AddNewCube()
 
 void VehicleDemo::CreateVehicle()
 {
-    Node* vehicleNode = scene_->CreateChild("Tank");
+    Node* vehicleNode = scene_->CreateChild("Vehicle");
     vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 
     // Create the tank logic component
-    tank_ = vehicleNode->CreateComponent<Tank>();
+    tank_ = vehicleNode->CreateComponent<Vehicle>();
     // Create the rendering and physics components
     tank_->Init();
 }
@@ -317,7 +317,7 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             tank_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
             tank_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
             tank_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
-            tank_->controls_.Set(CTRL_STOP, input->GetKeyDown(KEY_KP_ENTER));
+//            tank_->controls_.Set(CTRL_STOP, input->GetKeyDown(KEY_KP_ENTER));
 
             // Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
             if (touchEnabled_)
@@ -360,11 +360,11 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
                 // Simply find the vehicle's scene node by name as there's only one of them
                 Node* vehicleNode = scene_->GetChild("Vehicle", true);
                 if (vehicleNode)
-                    tank_ = vehicleNode->GetComponent<Tank>();
+                    tank_ = vehicleNode->GetComponent<Vehicle>();
             }
         }
         else
-            tank_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_STOP, false);
+            tank_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT, false);
     }
 }
 

@@ -34,6 +34,7 @@ class Tank : public LogicComponent
 public:
     /// Construct.
     Tank(Context* context);
+    ~Tank();
     
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);

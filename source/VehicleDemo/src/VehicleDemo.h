@@ -32,7 +32,7 @@ class Scene;
 
 }
 
-class Tank;
+class Vehicle;
 
 /// Vehicle example.
 /// This sample demonstrates:
@@ -67,5 +67,5 @@ private:
     void HandlePostRenderUpdate(StringHash, VariantMap&);
     
     /// The controllable vehicle component.
-    WeakPtr<Tank> tank_;
+    WeakPtr<Vehicle> tank_;
 };

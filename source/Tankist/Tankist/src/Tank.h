@@ -17,7 +17,7 @@ const int CTRL_TRUNK_DOWN_FAST  = 1 << 11;
 const int CTRL_STOP             = 1 << 12;
 
 const float YAW_SENSITIVITY = 0.1f;
-const float ENGINE_POWER = 20.0f;
+const float ENGINE_POWER = 500.0f;
 const float DOWN_FORCE = 1.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
 const float SPEED_TOWER_ROTATION = 2.0f;
@@ -90,4 +90,6 @@ private:
 
     Tank(Tank const&) : LogicComponent(nullptr) {};
     Tank operator=(Tank const&){};
+
+    float scaleNode = 0.5f;
 };

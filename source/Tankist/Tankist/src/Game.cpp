@@ -132,7 +132,7 @@ Tank* Game::ClientConnected(Connection *connection)
 Tank* Game::CreateTank()
 {
     Node* tankNode = gScene->CreateChild("Tank");
-    tankNode->SetPosition(Vector3(0.0f, 80.0f, 0.0f));
+    tankNode->SetPosition(Vector3(0.0f, 110.0f, 0.0f));
 
     Tank *tank = tankNode->CreateComponent<Tank>();
     tank->Init();

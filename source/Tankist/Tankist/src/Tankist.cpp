@@ -142,9 +142,6 @@ void Tankist::Start()
         gChat = new Chat(gContext, Chat::Chat_Server);
         gChat->Listen(PORT_CHAT);
 
-        gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>();
-
-        gPhysicsWorld->SetGravity({0.0f, -90.8f, 0.0f});
     }
     
     if (gTypeApplication == Type_Client)
@@ -208,7 +205,7 @@ void Tankist::CreateScene()
     gScene = new Scene(context_);
 
     gScene->CreateComponent<Octree>(LOCAL);
-//    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
+    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
 
     if(gTypeApplication == Type_Client)
     {

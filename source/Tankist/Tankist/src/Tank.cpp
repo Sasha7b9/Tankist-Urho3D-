@@ -299,9 +299,9 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 
     btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
 
-    bulletConstraint->setDampingLimLin(0.5f);
+    bulletConstraint->setDampingLimLin(1.0f);
     bulletConstraint->setSoftnessLimLin(0.5f);
-    bulletConstraint->setRestitutionLimLin(1.0f);
+    bulletConstraint->setRestitutionLimLin(0.5f);
 
     damperConstaraint->SetLowLimit({-1.5f, 0.0f});
     damperConstaraint->SetHighLimit({1.5f, 0.0f});
@@ -337,7 +337,7 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
 
     wheelShape->SetSphere(5.0f);
 
-    wheelBody->SetFriction(0.5f);
+    wheelBody->SetFriction(10.0f);
     wheelBody->SetMass(1.5f);
     wheelBody->SetLinearDamping(0.2f);
     wheelBody->SetAngularDamping(0.2f);
@@ -352,8 +352,8 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     Vector3 vecRotate = Vector3::DOWN;
     Vector3 vecAxis = Vector3::UP;
 
-    //float sign = 1.0f;
-    float sign = Urho3D::Sign(offset.x_);
+    float sign = 1.0f;
+    //float sign = Urho3D::Sign(offset.x_);
 
     wheelNode->SetRotation(node->GetRotation() * Quaternion(sign * 90.0f, Vector3::UP));
     //wheelConstraint->SetRotation(Quaternion(90.0f, Vector3::DOWN) * Quaternion(90.0f, Vector3::LEFT));

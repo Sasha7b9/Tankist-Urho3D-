@@ -102,12 +102,12 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_SPACE)
     {
-        gCamera->SetMode(ModeShooter, gScene->GetNode(gClient->trunkID));
+        gCamera->SetCameraMode(ModeShooter, gScene->GetNode(gClient->trunkID));
     }
 
     else if(key == Urho3D::KEY_F9)
     {
-        gCamera->SetMode(ModeCommander, gScene->GetNode(gClient->towerID));
+        gCamera->SetCameraMode(ModeCommander, gScene->GetNode(gClient->towerID));
     }
 
     else if(key == Urho3D::KEY_CTRL)

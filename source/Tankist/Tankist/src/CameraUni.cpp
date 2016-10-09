@@ -26,7 +26,7 @@ void CameraUni::SetupViewport()
 {
     node = gScene->CreateChild("CameraNode", LOCAL);
     Camera *camera = node->CreateComponent<Camera>();
-    camera->SetFarClip(300.0f);
+    camera->SetFarClip(5000.0f);
 
     node->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 
@@ -52,7 +52,7 @@ void CameraUni::MoveFromMouse()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool CameraUni::SetMode(CameraMode mode, Node *node)
+bool CameraUni::SetCameraMode(CameraMode mode, Node *node)
 {
     if(node && mode != this->mode)
     {
@@ -70,7 +70,7 @@ bool CameraUni::SetMode(CameraMode mode, Node *node)
         else if(mode == ModeCommander)
         {
             node->AddChild(this->node);
-            this->node->SetPosition(Vector3(-15.0f, -0.5f, -50.0f));
+            this->node->SetPosition(Vector3(-50.0f, -1.5f, -150.0f));
             camera->SetFov(45.0f);
             this->node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
             sight->SetVisible(false);

@@ -17,8 +17,8 @@ const int CTRL_TRUNK_DOWN_FAST  = 1 << 11;
 const int CTRL_STOP             = 1 << 12;
 
 const float YAW_SENSITIVITY = 0.1f;
-const float ENGINE_POWER = 10.0f;
-const float DOWN_FORCE = 10.0f;
+const float ENGINE_POWER = 50.0f;
+const float DOWN_FORCE = 1.0f;
 const float MAX_WHEEL_ANGLE = 22.5f;
 const float SPEED_TOWER_ROTATION = 2.0f;
 const float SPEED_TRUNK_ROTATION = 2.5f;
@@ -74,6 +74,7 @@ private:
     
     // Hull and wheel rigid bodies.
     WeakPtr<RigidBody> hullBody;
+    bool created = false;
 
     WeakPtr<Node> nodeTower;
     WeakPtr<Node> nodeTrunk;

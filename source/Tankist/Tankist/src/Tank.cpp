@@ -30,9 +30,7 @@ void Tank::RegisterObject(Context* context)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::FixedUpdate(float timeStep)
 {
-    return;
-
-    if(!hullBody)
+    if(!created)
     {
         return;
     }
@@ -67,7 +65,7 @@ void Tank::FixedUpdate(float timeStep)
 
     if(accelerator != 0.0f)
     {
-        Vector3 torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0f, 0.0f);
+        Vector3 torqueVec = Vector3(0.0f, 0.0f, ENGINE_POWER * accelerator);
 
         if(!(controls.buttons_ & CTRL_LEFT))
         {
@@ -241,6 +239,8 @@ void Tank::Init()
     }
 
     InitTower();
+
+    created = true;
 }
 
 
@@ -277,7 +277,7 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     damperObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     damperObject->SetCastShadows(true);
 
-    damperBody->SetFriction(0.75f);
+    //damperBody->SetFriction(0.75f);
     damperBody->SetMass(1.0f);
     damperBody->DisableMassUpdate();
 
@@ -312,14 +312,11 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody)
 {
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-
     // Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
     // constraint keep it together
     WeakPtr<Node> wheelNode(GetScene()->CreateChild(name));
     Node *node = damperBody->GetNode();
     wheelNode->SetPosition(node->LocalToWorld(offset));
-    wheelNode->SetRotation(Quaternion(90.0f, Vector3::FORWARD));
 
     StaticModel* wheelObject = wheelNode->CreateComponent<StaticModel>();
     wheelBody = wheelNode->CreateComponent<RigidBody>();
@@ -329,31 +326,27 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     wheelObject->SetModel(gCache->GetResource<Model>(String("Models/Tank/") + name + String(".mdl")));
     wheelObject->SetCastShadows(true);
 
-    wheelShape->SetSphere(1.0f);
+    wheelShape->SetSphere(5.0f);
 
-    wheelBody->SetFriction(10.0f);
+    wheelBody->SetFriction(1.0f);
     wheelBody->SetMass(0.5f);
-    wheelBody->SetLinearDamping(0.2f);
-    wheelBody->SetAngularDamping(0.75f);
+    wheelBody->SetLinearDamping(0.5f);
+    wheelBody->SetAngularDamping(0.5f);
     wheelBody->SetCollisionLayer(1);
 
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
     wheelConstraint->SetOtherBody(damperBody); // Connect to the hull body
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
 
-    if(offset.x_ < 0.0f)
-    {
-        wheelNode->SetRotation(offset.y_ >= 0.0f ? Quaternion(0.0f, 0.0f, -90.0f) : Quaternion(0.0f, 0.0f, 90.0f));
-        wheelConstraint->SetAxis(Vector3::UP);
-        wheelConstraint->SetOtherAxis(offset.y_ < 0.0f ? Vector3::UP : Vector3::DOWN);
-    }
-    else
-    {
-        wheelNode->SetRotation(Quaternion(90.0f, 0.0f, 0.0f));
-        wheelConstraint->SetAxis(Vector3::LEFT);
-        wheelConstraint->SetOtherAxis(Vector3::DOWN);
-    }
+    Vector3 vecRotate = Vector3::DOWN;
+    Vector3 vecAxis = Vector3::UP;
 
+    //float sign = 1.0f;
+    float sign = Urho3D::Sign(offset.x_);
+
+    wheelNode->SetRotation(node->GetRotation() * Quaternion(sign * 90.0f, Vector3::UP));
+    wheelConstraint->SetRotation(Quaternion(90.0f, Vector3::DOWN));
+    wheelConstraint->SetAxis(Vector3::UP);
 
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
     wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));

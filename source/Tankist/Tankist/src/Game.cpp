@@ -71,27 +71,27 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
             for(uint i = 0; i < connections.Size(); ++i)
             {
                 Connection *connection = connections[i];
-                WeakPtr<Vehicle> vehicle = objects[connection];
-                if(!vehicle)
+                WeakPtr<Tank> tank = objects[connection];
+                if(!tank)
                 {
                     continue;
                 }
 
                 const Controls &controls = connection->GetControls();
 
-                vehicle->controls.Set(CTRL_FORWARD, ((controls.buttons_ & CTRL_FORWARD) > 0));
-                vehicle->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
-                vehicle->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
-                vehicle->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
-                vehicle->controls.Set(CTRL_STOP, ((controls.buttons_ & CTRL_STOP) > 0));
-                vehicle->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
-                vehicle->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
-                vehicle->controls.Set(CTRL_TOWER_LEFT_FAST, ((controls.buttons_ & CTRL_TOWER_LEFT_FAST) != 0));
-                vehicle->controls.Set(CTRL_TOWER_RIGHT_FAST, ((controls.buttons_ & CTRL_TOWER_RIGHT_FAST) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_UP_FAST, ((controls.buttons_ & CTRL_TRUNK_UP_FAST) != 0));
-                vehicle->controls.Set(CTRL_TRUNK_DOWN_FAST, ((controls.buttons_ & CTRL_TRUNK_DOWN_FAST) != 0));
+                tank->controls.Set(CTRL_FORWARD, ((controls.buttons_ & CTRL_FORWARD) > 0));
+                tank->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
+                tank->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
+                tank->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
+                tank->controls.Set(CTRL_STOP, ((controls.buttons_ & CTRL_STOP) > 0));
+                tank->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
+                tank->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
+                tank->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
+                tank->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
+                tank->controls.Set(CTRL_TOWER_LEFT_FAST, ((controls.buttons_ & CTRL_TOWER_LEFT_FAST) != 0));
+                tank->controls.Set(CTRL_TOWER_RIGHT_FAST, ((controls.buttons_ & CTRL_TOWER_RIGHT_FAST) != 0));
+                tank->controls.Set(CTRL_TRUNK_UP_FAST, ((controls.buttons_ & CTRL_TRUNK_UP_FAST) != 0));
+                tank->controls.Set(CTRL_TRUNK_DOWN_FAST, ((controls.buttons_ & CTRL_TRUNK_DOWN_FAST) != 0));
             }
         }
     }
@@ -101,7 +101,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::ClientDisconnected(Connection *connection)
 {
-    Vehicle *object = objects[connection];
+    Tank *object = objects[connection];
     if(object)
     {
         object->Delete();
@@ -120,24 +120,24 @@ void Game::ClientDisconnected(Connection *connection)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* Game::ClientConnected(Connection *connection)
+Tank* Game::ClientConnected(Connection *connection)
 {
-    Vehicle *vehicle = CreateVehicle();
-    objects[connection] = vehicle;
-    return vehicle;
+    Tank *tank = CreateTank();
+    objects[connection] = tank;
+    return tank;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* Game::CreateVehicle()
+Tank* Game::CreateTank()
 {
-    Node* vehicleNode = gScene->CreateChild("Vehicle");
-    vehicleNode->SetPosition(Vector3(0.0f, 100.0f, 0.0f));
+    Node* tankNode = gScene->CreateChild("Tank");
+    tankNode->SetPosition(Vector3(0.0f, 150.0f, 0.0f));
 
-    Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>();
-    vehicle->Init();
+    Tank *tank = tankNode->CreateComponent<Tank>();
+    tank->Init();
 
-    return vehicle;
+    return tank;
 }
 
 

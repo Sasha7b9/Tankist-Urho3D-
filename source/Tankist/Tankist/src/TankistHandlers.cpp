@@ -3,7 +3,7 @@
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "defines.h"
-#include "Vehicle.h"
+#include "Tank.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,10 +307,10 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
                 shape->DrawDebugGeometry(gDebugRenderer, true);
             }
 
-            if(node->GetName() == "Vehicle")
+            if(node->GetName() == "Tank")
             {
-                Vehicle *vehicle = node->GetComponent<Vehicle>();
-                vehicle->Logging();
+                Tank *tank = node->GetComponent<Tank>();
+                tank->Logging();
             }
         }
     }

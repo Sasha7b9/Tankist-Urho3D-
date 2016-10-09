@@ -68,7 +68,7 @@ bool CameraUni::SetMode(CameraMode mode, Node *node)
         if(mode == ModeCommander)
         {
             node->AddChild(this->node);
-            this->node->SetPosition(Vector3(0.0f, 0.0f, -100.0f));
+            this->node->SetPosition(Vector3(-20.0f, 0.0f, -40.0f));
             camera->SetFov(45.0f);
             this->node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
             sight->SetVisible(false);

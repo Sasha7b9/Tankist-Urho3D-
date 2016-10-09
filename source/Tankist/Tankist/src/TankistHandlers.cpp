@@ -309,8 +309,8 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 
             if(node->GetName() == "Tank")
             {
-                Tank *vehicle = node->GetComponent<Tank>();
-                vehicle->Logging();
+                Tank *tank = node->GetComponent<Tank>();
+                tank->Logging();
             }
         }
     }

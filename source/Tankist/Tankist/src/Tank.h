@@ -44,7 +44,7 @@ public:
     /// Handle physics world update. Called by LogicComponent base class.
     virtual void FixedUpdate(float timeStep);
     
-    /// Initialize the vehicle. Create rendering and physics components. Called by the application.
+    /// Initialize the tank. Create rendering and physics components. Called by the application.
     void Init();
 
     /// Movement controls.

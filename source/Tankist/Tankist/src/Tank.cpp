@@ -220,7 +220,6 @@ void Tank::Init()
     z = 16.0f;
     float dZ = 8.0f;
 
-    /*
     for(uint i = 0; i < 5; i++)
     {
         InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
@@ -228,6 +227,7 @@ void Tank::Init()
         z -= dZ;
     }
 
+    /*
     x = -0.6f;
     y = 2.0f;
     z = 0.0f;
@@ -284,10 +284,10 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     damperShape->SetSphere(1.0f);
     damperShape->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
 
-    damperBody->SetFriction(0.0f);
-    damperBody->SetMass(2.0f);
-    damperBody->SetCollisionLayer(1);
-    damperBody->DisableMassUpdate();
+    damperBody->SetFriction(0.75f);
+    damperBody->SetMass(1.0f);
+    //damperBody->SetCollisionLayer(1);
+    //damperBody->DisableMassUpdate();
 
     Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
@@ -308,6 +308,10 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 
     damperConstaraint->SetCFM(0.5f);
     damperConstaraint->SetERP(0.5f);
+
+    CollisionShape *collisionShape = damperNode->CreateComponent<CollisionShape>();
+    collisionShape->SetSphere(2.0f);
+    collisionShape->SetPosition({0.0f, -0.5f, 0.0f});
 }
 
 
@@ -359,7 +363,7 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
 
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
     wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
-    wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the vehicle hull
+    wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the tank hull
 }
 
 

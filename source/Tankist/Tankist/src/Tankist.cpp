@@ -103,8 +103,6 @@ void Tankist::Start()
 {
     if (gTypeApplication == Type_Client)
     {
-        gCamera = new CameraUni(context_);
-
         gGraphics = GetSubsystem<Graphics>();
 
         if(gSet->FirstStart())

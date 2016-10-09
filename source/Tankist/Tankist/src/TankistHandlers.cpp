@@ -302,13 +302,19 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
             if(node->GetName() == "damper")
             {
                 CollisionShape *shape = node->GetComponent<CollisionShape>();
-                shape->DrawDebugGeometry(gDebugRenderer, true);
+                if(shape)
+                {
+                    shape->DrawDebugGeometry(gDebugRenderer, true);
+                }
             }
 
             if(node->GetName() == "Tank")
             {
                 Tank *tank = node->GetComponent<Tank>();
-                tank->Logging();
+                if(tank)
+                {
+                    tank->Logging();
+                }
             }
         }
     }

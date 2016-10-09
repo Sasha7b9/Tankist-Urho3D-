@@ -232,7 +232,6 @@ void Tank::Init()
     String strLeftWheel = "LeftWheel";
     String strRightWheel = "RightWheel";
 
-    /*
     for(uint i = 0; i < 5; i++)
     {
         InitWheel(strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
@@ -240,7 +239,6 @@ void Tank::Init()
         InitWheel(strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
         y = -y;
     }
-    */
 
     InitTower();
 }
@@ -268,6 +266,7 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 {
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
+    damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
     Vector3 s = node_->GetScale();
     damperNode->SetScale(Vector3(s.x_ * 5, s.y_, s.z_));
 
@@ -280,6 +279,7 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 
     damperBody->SetFriction(0.75f);
     damperBody->SetMass(1.0f);
+    damperBody->DisableMassUpdate();
 
     Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
@@ -301,11 +301,11 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     damperConstaraint->SetCFM(0.5f);
     damperConstaraint->SetERP(0.5f);
 
-    
+    /*
     CollisionShape *collisionShape = damperNode->CreateComponent<CollisionShape>();
     collisionShape->SetSphere(0.3f);
     collisionShape->SetPosition({-0.4f, -0.0f, 0.0f});
-    
+    */
 }
 
 
@@ -319,6 +319,7 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     WeakPtr<Node> wheelNode(GetScene()->CreateChild(name));
     Node *node = damperBody->GetNode();
     wheelNode->SetPosition(node->LocalToWorld(offset));
+    wheelNode->SetRotation(Quaternion(90.0f, Vector3::FORWARD));
 
     StaticModel* wheelObject = wheelNode->CreateComponent<StaticModel>();
     wheelBody = wheelNode->CreateComponent<RigidBody>();
@@ -326,7 +327,6 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
 
     wheelObject->SetModel(gCache->GetResource<Model>(String("Models/Tank/") + name + String(".mdl")));
-    wheelObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
 
     wheelShape->SetSphere(1.0f);

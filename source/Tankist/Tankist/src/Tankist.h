@@ -9,7 +9,7 @@ enum TypeApplication
 };
 
 
-class Vehicle;
+class Tank;
 
 
 class Tankist : public Application

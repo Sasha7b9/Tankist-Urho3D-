@@ -71,7 +71,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
             for(uint i = 0; i < connections.Size(); ++i)
             {
                 Connection *connection = connections[i];
-                WeakPtr<Vehicle> vehicle = objects[connection];
+                WeakPtr<Tank> vehicle = objects[connection];
                 if(!vehicle)
                 {
                     continue;
@@ -101,7 +101,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::ClientDisconnected(Connection *connection)
 {
-    Vehicle *object = objects[connection];
+    Tank *object = objects[connection];
     if(object)
     {
         object->Delete();
@@ -120,21 +120,21 @@ void Game::ClientDisconnected(Connection *connection)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* Game::ClientConnected(Connection *connection)
+Tank* Game::ClientConnected(Connection *connection)
 {
-    Vehicle *vehicle = CreateVehicle();
+    Tank *vehicle = CreateTank();
     objects[connection] = vehicle;
     return vehicle;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Vehicle* Game::CreateVehicle()
+Tank* Game::CreateTank()
 {
-    Node* vehicleNode = gScene->CreateChild("Vehicle");
+    Node* vehicleNode = gScene->CreateChild("Tank");
     vehicleNode->SetPosition(Vector3(0.0f, 100.0f, 0.0f));
 
-    Vehicle *vehicle = vehicleNode->CreateComponent<Vehicle>();
+    Tank *vehicle = vehicleNode->CreateComponent<Tank>();
     vehicle->Init();
 
     return vehicle;

@@ -97,7 +97,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     newConnection->SetScene(gScene);
 
-    Vehicle* vehicle = gGame->ClientConnected(newConnection);
+    Tank* vehicle = gGame->ClientConnected(newConnection);
 
     VariantMap remoteEventData;
     remoteEventData[P_ID_TOWER] = vehicle->towerID;

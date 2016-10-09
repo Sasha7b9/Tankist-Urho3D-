@@ -25,18 +25,18 @@ const float SPEED_TRUNK_ROTATION = 2.5f;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vehicle component, responsible for physical movement according to controls.
-class Vehicle : public LogicComponent
+// Tank component, responsible for physical movement according to controls.
+class Tank : public LogicComponent
 {
 
 #pragma warning(push)
 #pragma warning(disable:4640)
-    URHO3D_OBJECT(Vehicle, LogicComponent);
+    URHO3D_OBJECT(Tank, LogicComponent);
 #pragma warning(pop)
 
 public:
     /// Construct.
-    Vehicle(Context* context);
+    Tank(Context* context);
     
     /// Register object factory and attributes.
     static void RegisterObject(Context* context);
@@ -87,6 +87,6 @@ private:
     /// Current left/right steering amount (-1 to 1.)
     float steering;
 
-    Vehicle(Vehicle const&) : LogicComponent(nullptr) {};
-    Vehicle operator=(Vehicle const&){};
+    Tank(Tank const&) : LogicComponent(nullptr) {};
+    Tank operator=(Tank const&){};
 };

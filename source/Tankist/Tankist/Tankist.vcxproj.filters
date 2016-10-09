@@ -37,9 +37,6 @@
     <ClCompile Include="src\TankistHandlers.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vehicle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\ChatLog.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
     <ClCompile Include="src\Sight.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tank.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -124,9 +124,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Tankist.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vehicle.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ChatLog.h">
@@ -179,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="src\Network\NetworkEvents.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tank.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,13 @@
 #include <stdafx.h>
 
 
-#include "Vehicle.h"
+#include "Tank.h"
 
 #include <CommonFunctions.h>
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Vehicle::Vehicle(Context* context) :
+Tank::Tank(Context* context) :
     LogicComponent(context),
     steering(0.0f)
 {
@@ -17,9 +17,9 @@ Vehicle::Vehicle(Context* context) :
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::RegisterObject(Context* context)
+void Tank::RegisterObject(Context* context)
 {
-    context->RegisterFactory<Vehicle>();
+    context->RegisterFactory<Tank>();
 
     URHO3D_ATTRIBUTE("Controls Yaw", float, controls.yaw_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Controls Pitch", float, controls.pitch_, 0.0f, AM_DEFAULT);
@@ -28,7 +28,7 @@ void Vehicle::RegisterObject(Context* context)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::FixedUpdate(float timeStep)
+void Tank::FixedUpdate(float timeStep)
 {
     return;
 
@@ -159,7 +159,7 @@ void Vehicle::FixedUpdate(float timeStep)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::Logging()
+void Tank::Logging()
 {
     CollisionShape *shape = node_->GetComponent<CollisionShape>();
     Vector3 c = shape->GetPosition();
@@ -170,7 +170,7 @@ void Vehicle::Logging()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::Init()
+void Tank::Init()
 {
     AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
 
@@ -248,7 +248,7 @@ void Vehicle::Init()
 }
 
 
-void Vehicle::DrawDebugGeometry_()
+void Tank::DrawDebugGeometry_()
 {
     if(gDebugRenderer)
     {
@@ -266,7 +266,7 @@ void Vehicle::DrawDebugGeometry_()
 }
 
 
-void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)
+void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)
 {
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
@@ -312,7 +312,7 @@ void Vehicle::InitDamper(const String& name, const Vector3& offset, WeakPtr<Rigi
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody)
+void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
@@ -364,7 +364,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Rigid
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::InitTower()
+void Tank::InitTower()
 {
     nodeTower = node_->CreateChild("Tower");
     nodeTower->SetPosition({0.0f, 6.8f, 4.0f});
@@ -391,7 +391,7 @@ void Vehicle::InitTower()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::InitTrunk()
+void Tank::InitTrunk()
 {
     nodeTrunk = nodeTower->CreateChild("Trunk");
     nodeTrunk->SetPosition({0.0f, 0.75f, 0.4f});
@@ -415,7 +415,7 @@ void Vehicle::InitTrunk()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::RotateTrunk(float delta)
+void Tank::RotateTrunk(float delta)
 {
     yawTrunk += delta;
     if(yawTrunk < yawTrunkMin)
@@ -436,7 +436,7 @@ void Vehicle::RotateTrunk(float delta)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Vehicle::Delete()
+void Tank::Delete()
 {
     for(uint i = 0; i < 5; i++)
     {

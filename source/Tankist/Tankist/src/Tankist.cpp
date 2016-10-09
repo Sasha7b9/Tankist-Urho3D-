@@ -143,6 +143,8 @@ void Tankist::Start()
         gChat->Listen(PORT_CHAT);
 
         gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>();
+
+        gPhysicsWorld->SetGravity({0.0f, -90.8f, 0.0f});
     }
     
     if (gTypeApplication == Type_Client)
@@ -208,8 +210,6 @@ void Tankist::CreateScene()
     gScene->CreateComponent<Octree>(LOCAL);
 //    gPhysicsWorld = gScene->CreateComponent<PhysicsWorld>(LOCAL);
 
-    //gPhysicsWorld->SetGravity(gPhysicsWorld->GetGravity() / 10.0f);
-
     if(gTypeApplication == Type_Client)
     {
         gDebugRenderer = gScene->CreateComponent<DebugRenderer>(LOCAL);
@@ -247,7 +247,8 @@ void Tankist::CreateScene()
     terrain->SetOccluder(true);
 
     RigidBody* body = terrainNode->CreateComponent<RigidBody>();
-    body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
+    body->SetCollisionLayer(1); // Use layer bitmask 2 for static geometry
+    body->SetFriction(1.0f);
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
     shape->SetTerrain();
 

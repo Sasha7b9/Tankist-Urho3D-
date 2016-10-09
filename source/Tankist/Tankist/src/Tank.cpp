@@ -71,14 +71,14 @@ void Tank::FixedUpdate(float timeStep)
         {
             for(int i = 0; i < 5; i++)
             {
-                wheelBodyLeft[i]->ApplyTorque(hullRot * torqueVec);
+                wheelBodyLeft[i]->ApplyTorqueImpulse(hullRot * torqueVec);
             }
         }
         else
         {
             for(int i = 0; i < 5; i++)
             {
-                wheelBodyLeft[i]->ApplyTorque(hullRot * -torqueVec);
+                wheelBodyLeft[i]->ApplyTorqueImpulse(hullRot * -torqueVec);
             }
         }
 
@@ -86,15 +86,26 @@ void Tank::FixedUpdate(float timeStep)
         {
             for(int i = 0; i < 5; i++)
             {
-                wheelBodyRight[i]->ApplyTorque(hullRot * torqueVec);
+                wheelBodyRight[i]->ApplyTorqueImpulse(hullRot * torqueVec);
             }
         }
         else
         {
             for(int i = 0; i < 5; i++)
             {
-                wheelBodyRight[i]->ApplyTorque(hullRot * -torqueVec);
+                wheelBodyRight[i]->ApplyTorqueImpulse(hullRot * -torqueVec);
             }
+        }
+    }
+
+    if(controls.buttons_ & CTRL_STOP)
+    {
+        Vector3 torque = Vector3(0.0f, 0.0f, -hullBody->GetLinearVelocity().Length());
+
+        for(int i = 0; i < 5; i++)
+        {
+            wheelBodyLeft[i]->ApplyTorque(hullRot * torque);
+            wheelBodyRight[i]->ApplyTorque(hullRot * torque);
         }
     }
 
@@ -102,17 +113,6 @@ void Tank::FixedUpdate(float timeStep)
     Vector3 vec = Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE;
     vec.y_ = -DOWN_FORCE;
     hullBody->ApplyForce(hullRot * vec);
-
-    if(controls.buttons_ & CTRL_STOP)
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            wheelBodyLeft[i]->SetLinearVelocity(Vector3::ZERO);
-            wheelBodyLeft[i]->SetAngularVelocity(Vector3::ZERO);
-            wheelBodyRight[i]->SetLinearVelocity(Vector3::ZERO);
-            wheelBodyRight[i]->SetAngularVelocity(Vector3::ZERO);
-        }
-    }
 
     if(controls.buttons_ & CTRL_TOWER_RIGHT)
     {
@@ -172,14 +172,14 @@ void Tank::Logging()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::Init()
 {
-    //AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
+    AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
 
     float x = 6.5f;
     float y = 7.5f;
     float z = -3.1f;
 
-    //AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
-    //AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
+    AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
+    AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
 
     StaticModel *hullObject = node_->CreateComponent<StaticModel>();
     hullBody = node_->CreateComponent<RigidBody>();
@@ -198,9 +198,9 @@ void Tank::Init()
     GetDimensionsCenter(box, dimensions, center, 1.0f);
     hullShape->SetBox(dimensions, center);
 
-    hullBody->SetMass(4.0f);
-    hullBody->SetLinearDamping(0.0f); // Some air resistance
-    hullBody->SetAngularDamping(1.0f);
+    hullBody->SetMass(250.0f);
+    hullBody->SetLinearDamping(0.2f); // Some air resistance
+    hullBody->SetAngularDamping(0.2f);
     hullBody->SetCollisionLayer(1);
 
     //hullBody->SetCcdRadius(0.1f);
@@ -298,8 +298,8 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
 
     bulletConstraint->setDampingLimLin(1.0f);
-    bulletConstraint->setSoftnessLimLin(0.5f);
-    bulletConstraint->setRestitutionLimLin(0.5f);
+    bulletConstraint->setSoftnessLimLin(1.0f);
+    bulletConstraint->setRestitutionLimLin(1.0f);
 
     damperConstaraint->SetLowLimit({-1.5f, 0.0f});
     damperConstaraint->SetHighLimit({1.5f, 0.0f});
@@ -334,7 +334,7 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
 
     wheelShape->SetSphere(5.0f);
 
-    wheelBody->SetFriction(5.0f);
+    wheelBody->SetFriction(50.0f);
     wheelBody->SetMass(1.5f);
     wheelBody->SetLinearDamping(0.2f);
     wheelBody->SetAngularDamping(0.2f);

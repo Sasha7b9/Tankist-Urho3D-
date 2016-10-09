@@ -65,7 +65,9 @@ void Tank::FixedUpdate(float timeStep)
 
     if(accelerator != 0.0f)
     {
-        Vector3 torqueVec = Vector3(0.0f, 0.0f, ENGINE_POWER * accelerator);
+        //Vector3 torqueVec = Vector3(0.0f, 0.0f, ENGINE_POWER * accelerator);
+        //Vector3 torqueVec = Vector3(0.0f, ENGINE_POWER * accelerator, 0.0f);
+        Vector3 torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0f, 0.0f);
 
         if(!(controls.buttons_ & CTRL_LEFT))
         {
@@ -271,6 +273,7 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
     damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
+    //damperNode->Rotate(Quaternion(90.0f, Vector3::UP));
     Vector3 s = node_->GetScale();
     damperNode->SetScale(Vector3(s.x_ * 5, s.y_, s.z_));
 
@@ -281,11 +284,10 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     damperObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     damperObject->SetCastShadows(true);
 
-    //damperBody->SetFriction(0.75f);
     damperBody->SetAngularDamping(0.0f);
     damperBody->SetLinearDamping(0.0f);
     damperBody->SetMass(1.0f);
-    //damperBody->DisableMassUpdate();
+    damperBody->DisableMassUpdate();
 
     Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
@@ -297,8 +299,8 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
 
     btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
 
-    bulletConstraint->setDampingLimLin(1.0f);
-    bulletConstraint->setSoftnessLimLin(1.0f);
+    bulletConstraint->setDampingLimLin(0.5f);
+    bulletConstraint->setSoftnessLimLin(0.5f);
     bulletConstraint->setRestitutionLimLin(1.0f);
 
     damperConstaraint->SetLowLimit({-1.5f, 0.0f});
@@ -327,21 +329,24 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     StaticModel* wheelObject = wheelNode->CreateComponent<StaticModel>();
     wheelBody = wheelNode->CreateComponent<RigidBody>();
     CollisionShape* wheelShape = wheelNode->CreateComponent<CollisionShape>();
-    Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
+    //Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
+    Constraint* wheelConstraint = damperBody->GetNode()->CreateComponent<Constraint>();
 
     wheelObject->SetModel(gCache->GetResource<Model>(String("Models/Tank/") + name + String(".mdl")));
     wheelObject->SetCastShadows(true);
 
     wheelShape->SetSphere(5.0f);
 
-    wheelBody->SetFriction(50.0f);
+    wheelBody->SetFriction(0.5f);
     wheelBody->SetMass(1.5f);
     wheelBody->SetLinearDamping(0.2f);
     wheelBody->SetAngularDamping(0.2f);
     wheelBody->SetCollisionLayer(1);
 
     wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
-    wheelConstraint->SetOtherBody(damperBody); // Connect to the hull body
+    //wheelConstraint->SetOtherBody(damperBody);
+    wheelConstraint->SetOtherBody(wheelNode->GetComponent<RigidBody>());
+
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
 
     Vector3 vecRotate = Vector3::DOWN;
@@ -351,7 +356,7 @@ void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBod
     float sign = Urho3D::Sign(offset.x_);
 
     wheelNode->SetRotation(node->GetRotation() * Quaternion(sign * 90.0f, Vector3::UP));
-    wheelConstraint->SetRotation(Quaternion(90.0f, Vector3::DOWN));
+    //wheelConstraint->SetRotation(Quaternion(90.0f, Vector3::DOWN) * Quaternion(90.0f, Vector3::LEFT));
     wheelConstraint->SetAxis(Vector3::UP);
 
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis

@@ -11,6 +11,13 @@ CameraUni::CameraUni(Context *context) : Object(context)
     sight = new Sight(context);
     gUIRoot->AddChild(sight);
     sight->SetVisible(false);
+    this->node = gScene->CreateChild("CameraNode", LOCAL);
+    camera = this->node->CreateComponent<Camera>();
+    camera->SetFarClip(5000.0f);
+    camera->SetFov(45.0f);
+    //camera->SetFillMode(Urho3D::FILL_WIREFRAME);
+    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, gScene, camera));
+    node->SetPosition({0.0f, 0.0f, 50.0f});
 }
 
 
@@ -49,15 +56,6 @@ bool CameraUni::SetMode(CameraMode mode, Node *node)
 {
     if(node && mode != this->mode)
     {
-        if(camera == nullptr)
-        {
-            this->node = gScene->CreateChild("CameraNode", LOCAL);
-            camera = this->node->CreateComponent<Camera>();
-            camera->SetFarClip(5000.0f);
-            //camera->SetFillMode(Urho3D::FILL_WIREFRAME);
-            GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, gScene, camera));
-        }
-
         if(this->mode == ModeCommander)
         {
             rotationCommaner = this->node->GetRotation();
@@ -65,10 +63,14 @@ bool CameraUni::SetMode(CameraMode mode, Node *node)
 
         this->mode = mode;
 
-        if(mode == ModeCommander)
+        if(mode == ModeOverview)
+        {
+            node->SetPosition({0.0f, 0.0f, 50.0f});
+        } 
+        else if(mode == ModeCommander)
         {
             node->AddChild(this->node);
-            this->node->SetPosition(Vector3(-0.0f, 10.5f, -50.0f));
+            this->node->SetPosition(Vector3(-15.0f, -0.5f, -50.0f));
             camera->SetFov(45.0f);
             this->node->SetRotation(Quaternion(0.0f, 0.0f, 0.0f));
             sight->SetVisible(false);

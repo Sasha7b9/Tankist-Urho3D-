@@ -163,9 +163,7 @@ void Tank::Logging()
 {
     CollisionShape *shape = node_->GetComponent<CollisionShape>();
     Vector3 c = shape->GetPosition();
-    LOG_INFOF("position collision shape %f %f %f", c.x_, c.y_, c.z_);
     c = node_->GetWorldPosition();
-    LOG_INFOF("position node %f %f %f", c.x_, c.y_, c.z_);
 }
 
 
@@ -216,7 +214,7 @@ void Tank::Init()
     }
 
     x = 10.0f;
-    y = 00.0f;
+    y = -2.0f;
     z = 16.0f;
     float dZ = 8.0f;
 
@@ -227,8 +225,6 @@ void Tank::Init()
         z -= dZ;
     }
 
-    return;
-
     x = -0.6f;
     y = 2.0f;
     z = 0.0f;
@@ -236,8 +232,7 @@ void Tank::Init()
     String strLeftWheel = "LeftWheel";
     String strRightWheel = "RightWheel";
 
-    return;
-
+    /*
     for(uint i = 0; i < 5; i++)
     {
         InitWheel(strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
@@ -245,6 +240,7 @@ void Tank::Init()
         InitWheel(strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
         y = -y;
     }
+    */
 
     InitTower();
 }

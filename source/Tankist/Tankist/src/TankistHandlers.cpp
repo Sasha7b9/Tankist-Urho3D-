@@ -293,8 +293,6 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 {
     if(gDebugRenderer && gScene->GetComponent<PhysicsWorld>())
     {
-        LOG_INFO("Test point");
-
         gScene->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
 
         PODVector<Node*> nodes;

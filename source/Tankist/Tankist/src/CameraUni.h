@@ -6,7 +6,8 @@ enum CameraMode
     ModeNone,
     ModeCommander,
     ModeShooter,
-    ModeDriver
+    ModeDriver,
+    ModeOverview
 };
 
 
@@ -24,7 +25,7 @@ public:
     CameraUni(Context *context);
 
     void MoveFromMouse();
-    bool SetMode(CameraMode mode, Node *node);  // For client
+    bool SetMode(CameraMode mode, Node *node = nullptr);  // For client
     void SetupViewport();                       // For server
     void IncFov()
     {

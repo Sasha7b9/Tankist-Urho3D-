@@ -49,7 +49,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Urho3D-dbg\build\bin\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\out\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">19_VehicleDemo.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">19_VehicleDemo</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
@@ -105,28 +105,12 @@
     <PostBuildEvent>
       <Message>
       </Message>
-      <Command>setlocal
-"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy_if_different C:/Urho3D-dbg/build/bin/Urho3D.dll C:/Urho3D-dbg/build/bin
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd
-setlocal
-"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy_if_different "C:/Program Files (x86)/Windows Kits/8.1/Redist/D3D/x64/d3dcompiler_47.dll" C:/Urho3D-dbg/build/bin
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Link>
       <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;..\..\..\lib\Urho3D.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;ws2_32.lib;winmm.lib;dbghelp.lib;d3dcompiler.lib;d3d11.lib;dxgi.lib;dxguid.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;ws2_32.lib;dbghelp.lib;d3dcompiler.lib;d3d11.lib;dxgi.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;c:\Urho3D-rel\build\lib\Urho3D.lib;winmm.lib;imm32.lib;version.lib;ws2_32.lib;dbghelp.lib;d3dcompiler.lib;d3d11.lib;dxgi.lib;dxguid.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>false</GenerateDebugInformation>

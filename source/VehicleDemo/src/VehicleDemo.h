@@ -49,7 +49,7 @@ public:
     
     /// Setup after engine initialization and before running the main loop.
     virtual void Start();
-    
+
 private:
     /// Create static scene content.
     void CreateScene();
@@ -68,4 +68,6 @@ private:
     
     /// The controllable vehicle component.
     WeakPtr<Vehicle> tank_;
+
+    float cameraDistance = 10.0f;
 };

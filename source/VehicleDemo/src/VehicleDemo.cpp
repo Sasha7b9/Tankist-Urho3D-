@@ -50,8 +50,6 @@
 
 #include <Urho3D/DebugNew.h>
 
-const float CAMERA_DISTANCE = 10.0f;
-
 URHO3D_DEFINE_APPLICATION_MAIN(VehicleDemo)
 
 VehicleDemo::VehicleDemo(Context* context) :
@@ -102,7 +100,7 @@ void VehicleDemo::CreateScene()
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
     cameraNode_ = new Node(context_);
     Camera* camera = cameraNode_->CreateComponent<Camera>();
-    camera->SetFarClip(500.0f);
+    camera->SetFarClip(5000.0f);
     GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
@@ -110,8 +108,8 @@ void VehicleDemo::CreateScene()
     Zone* zone = zoneNode->CreateComponent<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
-    zone->SetFogStart(300.0f);
-    zone->SetFogEnd(500.0f);
+    zone->SetFogStart(3000.0f);
+    zone->SetFogEnd(5000.0f);
     zone->SetBoundingBox(BoundingBox(-2000.0f, 2000.0f));
 
     // Create a directional light with cascaded shadow mapping
@@ -129,10 +127,11 @@ void VehicleDemo::CreateScene()
     terrainNode->SetPosition(Vector3::ZERO);
     Terrain* terrain = terrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
-    terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
+    terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache->GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(cache->GetResource<Material>("Materials/Terrain.xml"));
+    Image *img = cache->GetResource<Image>("Landscape/land1.png");
+    bool rez = terrain->SetHeightMap(img);
+    terrain->SetMaterial(cache->GetResource<Material>("Landscape/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -146,6 +145,8 @@ void VehicleDemo::CreateScene()
     //body->SetCcdMotionThreshold(10000.0f);
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
     shape->SetTerrain();
+
+    return;
 
     // Create 1000 mushrooms in the terrain. Always face outward along the terrain normal
     const unsigned NUM_MUSHROOMS = 1000;
@@ -276,7 +277,7 @@ void VehicleDemo::AddNewCube()
 void VehicleDemo::CreateVehicle()
 {
     Node* vehicleNode = scene_->CreateChild("Vehicle");
-    vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
+    vehicleNode->SetPosition(Vector3(0.0f, 75.0f, 0.0f));
 
     // Create the tank logic component
     tank_ = vehicleNode->CreateComponent<Vehicle>();
@@ -380,7 +381,7 @@ void VehicleDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     dir = dir * Quaternion(tank_->controls_.yaw_, Vector3::UP);
     dir = dir * Quaternion(tank_->controls_.pitch_, Vector3::RIGHT);
 
-    Vector3 cameraTargetPos = vehicleNode->GetPosition() - dir * Vector3(0.0f, 0.0f, CAMERA_DISTANCE);
+    Vector3 cameraTargetPos = vehicleNode->GetPosition() - dir * Vector3(0.0f, 0.0f, cameraDistance);
     Vector3 cameraStartPos = vehicleNode->GetPosition();
 
     // Raycast camera against static objects (physics collision mask 2)
@@ -403,6 +404,27 @@ void VehicleDemo::HandlePostRenderUpdate(StringHash, VariantMap&)
     if(GetSubsystem<Input>()->GetKeyPress(KEY_SPACE))
     {
         drawDebug = !drawDebug;
+    }
+
+    if(GetSubsystem<Input>()->GetKeyPress(KEY_P))
+    {
+        tank_->Respaun();
+    }
+
+    int d = GetSubsystem<Input>()->GetMouseMoveWheel();
+
+    if(d != 0)
+    {
+        cameraDistance *= (d > 0) ? 1.1f : 0.9f;
+
+        if(cameraDistance < 5.0f)
+        {
+            cameraDistance = 5.0f;
+        }
+        else if(cameraDistance > 250.0f)
+        {
+            cameraDistance = 250.0f;
+        }
     }
 
     if(drawDebug)

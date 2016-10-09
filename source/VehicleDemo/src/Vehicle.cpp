@@ -128,8 +128,8 @@ void Vehicle::Init()
     hullBody_ = node_->CreateComponent<RigidBody>();
     CollisionShape* hullShape = node_->CreateComponent<CollisionShape>();
 
-    //node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
-    hullObject->SetModel(cache->GetResource<Model>("Models/Tank/Body.mdl"));
+    node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
+    hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
     hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
@@ -138,12 +138,22 @@ void Vehicle::Init()
     hullBody_->SetAngularDamping(0.5f);
     hullBody_->SetCollisionLayer(1);
 
-    InitWheel("FrontLeft", Vector3(-0.6f, -0.4f, 0.3f), frontLeft_, frontLeftID_);
-    InitWheel("FrontRight", Vector3(0.6f, -0.4f, 0.3f), frontRight_, frontRightID_);
-    InitWheel("RearLeft", Vector3(-0.6f, -0.4f, -0.3f), rearLeft_, rearLeftID_);
-    InitWheel("RearRight", Vector3(0.6f, -0.4f, -0.3f), rearRight_, rearRightID_);
+    float k = 1.0f;
+
+    float h = -3.0f;
+
+    InitWheel("FrontLeft", Vector3(-0.6f - k, h, 0.3f + k), frontLeft_, frontLeftID_);
+    InitWheel("FrontRight", Vector3(0.6f + k, h, 0.3f + k), frontRight_, frontRightID_);
+    InitWheel("RearLeft", Vector3(-0.6f - k, h, -0.3f - k), rearLeft_, rearLeftID_);
+    InitWheel("RearRight", Vector3(0.6f + k, h, -0.3f - k), rearRight_, rearRightID_);
 
     GetWheelComponents();
+
+    startRotationNode = node_->GetRotation();
+    startRotationFL = frontLeft_->GetRotation();
+    startRotationFR = frontRight_->GetRotation();
+    startRotationRL = rearLeft_->GetRotation();
+    startRotationRR = rearRight_->GetRotation();
 }
 
 void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID)
@@ -156,7 +166,9 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelNode->SetPosition(node_->LocalToWorld(offset));
     wheelNode->SetRotation(node_->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
         Quaternion(0.0f, 0.0f, 90.0f)));
-    wheelNode->SetScale(Vector3(0.8f, 0.5f, 0.8f));
+
+    float k = 2.0f;
+    wheelNode->SetScale(Vector3(0.8f * k, 0.5f * k, 0.8f * k));
     // Remember the ID for serialization
     wheelNodeID = wheelNode->GetID();
 
@@ -169,8 +181,8 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);
-    wheelBody->SetFriction(1.0f);
-    wheelBody->SetMass(1.0f);
+    wheelBody->SetFriction(0.75f);
+    wheelBody->SetMass(2.0f);
     wheelBody->SetLinearDamping(0.2f); // Some air resistance
     wheelBody->SetAngularDamping(0.75f); // Could also use rolling friction
     wheelBody->SetCollisionLayer(1);
@@ -192,4 +204,33 @@ void Vehicle::GetWheelComponents()
     frontRightBody_ = frontRight_->GetComponent<RigidBody>();
     rearLeftBody_ = rearLeft_->GetComponent<RigidBody>();
     rearRightBody_ = rearRight_->GetComponent<RigidBody>();
+}
+
+void Vehicle::SetPosition(const Vector3 &newPos)
+{
+    Vector3 pos = node_->GetPosition();
+
+    Vector3 deltaFL = frontLeft_->GetPosition() - pos;
+    Vector3 deltaFR = frontRight_->GetPosition() - pos;
+    Vector3 deltaRL = rearLeft_->GetPosition() - pos;
+    Vector3 deltaRR = rearRight_->GetPosition() - pos;
+
+    node_->SetPosition(newPos);
+    frontLeft_->SetPosition(newPos + deltaFL);
+    frontRight_->SetPosition(newPos + deltaFR);
+    rearLeft_->SetPosition(newPos + deltaRL);
+    rearRight_->SetPosition(newPos + deltaRR);
+}
+
+void Vehicle::Respaun()
+{
+    Vector3 pos = node_->GetPosition();
+    pos.y_ += 10.0f;
+    SetPosition(pos);
+
+    node_->SetRotation(startRotationNode);
+    frontLeft_->SetRotation(startRotationFL);
+    frontRight_->SetRotation(startRotationFR);
+    rearLeft_->SetRotation(startRotationRL);
+    rearRight_->SetRotation(startRotationRR);
 }

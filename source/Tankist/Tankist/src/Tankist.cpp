@@ -240,10 +240,10 @@ void Tankist::CreateScene()
     terrainNode->SetPosition(Vector3::ZERO);
     Terrain* terrain = terrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
-    terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
+    terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(false);
-    terrain->SetHeightMap(gCache->GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(gCache->GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetHeightMap(gCache->GetResource<Image>("Landscape/land1.png"));
+    terrain->SetMaterial(gCache->GetResource<Material>("Landscape/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -252,28 +252,6 @@ void Tankist::CreateScene()
     body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
     CollisionShape* shape = terrainNode->CreateComponent<CollisionShape>();
     shape->SetTerrain();
-
-    // Create 1000 mushrooms in the terrain. Always face outward along the terrain normal
-    const unsigned NUM_MUSHROOMS = 100;
-    for(unsigned i = 0; i < NUM_MUSHROOMS; ++i)
-    {
-        Node* objectNode = gScene->CreateChild("Mushroom", LOCAL);
-        Vector3 position(Random(2000.0f) - 1000.0f, 0.0f, Random(2000.0f) - 1000.0f);
-        position.y_ = terrain->GetHeight(position) - 0.1f;
-        objectNode->SetPosition(position);
-        // Create a rotation quaternion from up vector to terrain normal
-        objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
-        objectNode->SetScale(3.0f);
-        StaticModel* object = objectNode->CreateComponent<StaticModel>();
-        object->SetModel(gCache->GetResource<Model>("Models/Mushroom.mdl"));
-        object->SetMaterial(gCache->GetResource<Material>("Materials/Mushroom.xml"));
-        object->SetCastShadows(true);
-
-        RigidBody* body = objectNode->CreateComponent<RigidBody>();
-        body->SetCollisionLayer(2);
-        CollisionShape* shape = objectNode->CreateComponent<CollisionShape>();
-        shape->SetTriangleMesh(object->GetModel(), 0);
-    }
 
     //gScene->GetComponent<PhysicsWorld>()->SetFps(300);
 }

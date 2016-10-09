@@ -227,7 +227,8 @@ void Tank::Init()
         z -= dZ;
     }
 
-    /*
+    return;
+
     x = -0.6f;
     y = 2.0f;
     z = 0.0f;
@@ -235,14 +236,15 @@ void Tank::Init()
     String strLeftWheel = "LeftWheel";
     String strRightWheel = "RightWheel";
 
+    return;
+
     for(uint i = 0; i < 5; i++)
     {
-        InitWheel(&scnTank, strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
+        InitWheel(strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
         y = -y;
-        InitWheel(&scnTank, strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
+        InitWheel(strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
         y = -y;
     }
-    */
 
     InitTower();
 }
@@ -271,29 +273,23 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
     damperNode->SetPosition(node_->LocalToWorld(offset));
     Vector3 s = node_->GetScale();
-    damperNode->SetScale(Vector3(s.x_, s.y_ * 5, s.z_));
+    damperNode->SetScale(Vector3(s.x_ * 5, s.y_, s.z_));
 
     StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
     damperBody = damperNode->CreateComponent<RigidBody>();
-    CollisionShape *damperShape = damperNode->CreateComponent<CollisionShape>();
 
     damperObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
     damperObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
     damperObject->SetCastShadows(true);
 
-    damperShape->SetSphere(1.0f);
-    damperShape->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
-
     damperBody->SetFriction(0.75f);
     damperBody->SetMass(1.0f);
-    //damperBody->SetCollisionLayer(1);
-    //damperBody->DisableMassUpdate();
 
     Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
 
     damperConstaraint->SetConstraintType(Urho3D::CONSTRAINT_SLIDER);
     damperConstaraint->SetOtherBody(damperBody);
-    //damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
+    damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
     damperConstaraint->SetWorldPosition(damperNode->GetPosition());
     damperConstaraint->SetDisableCollision(true);
 
@@ -303,15 +299,17 @@ void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBo
     bulletConstraint->setSoftnessLimLin(0.5f);
     bulletConstraint->setRestitutionLimLin(0.5f);
 
-    damperConstaraint->SetLowLimit({-0.25f, 0.0f});
-    damperConstaraint->SetHighLimit({0.25f, 0.0f});
+    damperConstaraint->SetLowLimit({-1.5f, 0.0f});
+    damperConstaraint->SetHighLimit({1.5f, 0.0f});
 
     damperConstaraint->SetCFM(0.5f);
     damperConstaraint->SetERP(0.5f);
 
+    
     CollisionShape *collisionShape = damperNode->CreateComponent<CollisionShape>();
-    collisionShape->SetSphere(2.0f);
-    collisionShape->SetPosition({0.0f, -0.5f, 0.0f});
+    collisionShape->SetSphere(0.3f);
+    collisionShape->SetPosition({-0.4f, -0.0f, 0.0f});
+    
 }
 
 

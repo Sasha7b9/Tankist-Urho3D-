@@ -73,7 +73,6 @@ void Tankist::Setup()
         gUI = GetSubsystem<UI>();
         gUIRoot = gUI->GetRoot();
         gInput = GetSubsystem<Input>();
-        gRenderer = GetSubsystem<Renderer>();
     }
 
     engineParameters_["Headless"] = gTypeApplication == Type_Server;
@@ -104,6 +103,7 @@ void Tankist::Start()
     if (gTypeApplication == Type_Client)
     {
         gGraphics = GetSubsystem<Graphics>();
+        gRenderer = GetSubsystem<Renderer>();
 
         if(gSet->FirstStart())
         {

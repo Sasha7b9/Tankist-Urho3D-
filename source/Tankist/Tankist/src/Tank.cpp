@@ -39,17 +39,9 @@ void Tank::FixedUpdate(float timeStep)
 
     if(controls.buttons_ & CTRL_LEFT)
     {
-        for(int i = 0; i < 5; i++)
-        {
-            wheelBodyLeft[i]->SetLinearVelocity(Vector3::ZERO);
-        }
     }
     if(controls.buttons_ & CTRL_RIGHT)
     {
-        for(int i = 0; i < 5; i++)
-        {
-            wheelBodyRight[i]->SetLinearVelocity(Vector3::ZERO);
-        }
     }
 
     if(controls.buttons_ & CTRL_FORWARD)
@@ -71,55 +63,23 @@ void Tank::FixedUpdate(float timeStep)
 
         if(!(controls.buttons_ & CTRL_LEFT))
         {
-            for(int i = 0; i < 5; i++)
-            {
-                wheelBodyLeft[i]->ApplyTorque(hullRot * torqueVec);
-            }
         }
         else
         {
-            for(int i = 0; i < 5; i++)
-            {
-                wheelBodyLeft[i]->ApplyTorque(hullRot * -torqueVec);
-            }
         }
 
         if(!(controls.buttons_ & CTRL_RIGHT))
         {
-            for(int i = 0; i < 5; i++)
-            {
-                wheelBodyRight[i]->ApplyTorque(hullRot * torqueVec);
-            }
         }
         else
         {
-            for(int i = 0; i < 5; i++)
-            {
-                wheelBodyRight[i]->ApplyTorque(hullRot * -torqueVec);
-            }
         }
     }
 
     Vector3 localVelocity = hullRot.Inverse() * hullBody->GetLinearVelocity();
 
-    /*
-    Vector3 vec = Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE;
-    vec.y_ = -DOWN_FORCE;
-    hullBody->ApplyForce(hullRot * vec);
-    */
-    //hullBody->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE);
-
     if(controls.buttons_ & CTRL_STOP)
     {
-        //Vector3 torque = Vector3(0.0f, 0.0f, -hullBody->GetLinearVelocity().Length());
-
-        for(int i = 0; i < 5; i++)
-        {
-            wheelBodyLeft[i]->SetLinearVelocity(Vector3::ZERO);
-            wheelBodyRight[i]->SetLinearVelocity(Vector3::ZERO);
-            //wheelBodyLeft[i]->ApplyTorque(hullRot * torque);
-            //wheelBodyRight[i]->ApplyTorque(hullRot * torque);
-        }
     }
 
     if(controls.buttons_ & CTRL_TOWER_RIGHT)
@@ -180,14 +140,14 @@ void Tank::Logging()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::Init()
 {
-    //AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
+    AddModelToNode(node_, "Models/Tank/Box001.mdl", {0.0f, 6.5f, -9.0f});
 
     float x = 6.5f;
     float y = 7.5f;
     float z = -3.1f;
 
-    //AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
-    //AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
+    AddModelToNode(node_, "Models/Tank/Cylinder001.mdl", {-x, y, z});
+    AddModelToNode(node_, "Models/Tank/Cylinder002.mdl", {x, y, z});
 
     StaticModel *hullObject = node_->CreateComponent<StaticModel>();
     hullBody = node_->CreateComponent<RigidBody>();
@@ -206,49 +166,13 @@ void Tank::Init()
     GetDimensionsCenter(box, dimensions, center, 1.0f);
     hullShape->SetBox(dimensions, center);
 
-    hullBody->SetMass(25.0f);
+    hullBody->SetMass(0.0f);
     hullBody->SetLinearDamping(0.2f); // Some air resistance
     hullBody->SetAngularDamping(0.2f);
     hullBody->SetCollisionLayer(1);
 
-    //hullBody->SetCcdRadius(0.1f);
-    //hullBody->SetCcdMotionThreshold(dimensions.y_ / 1000.0f);
-
-    Vector<WeakPtr<RigidBody>> damperBodyLeft(5);
-    Vector<WeakPtr<RigidBody>> damperBodyRight(5);
-
-    for(int i = 0; i < 5; i++)
-    {
-        wheelBodyLeft[i] = new RigidBody(context_);
-        wheelBodyRight[i] = new RigidBody(context_);
-    }
-
-    x = 10.0f;
-    y = -2.0f;
-    z = 16.0f;
-    float dZ = 8.0f;
-
-    for(uint i = 0; i < 5; i++)
-    {
-        InitDamper("damper", {-x, y, z}, damperBodyLeft[i]);
-        InitDamper("damper", {x, y, z}, damperBodyRight[i]);
-        z -= dZ;
-    }
-
-    x = -0.6f;
-    y = 2.0f;
-    z = 0.0f;
-
     String strLeftWheel = "LeftWheel";
     String strRightWheel = "RightWheel";
-
-    for(uint i = 0; i < 5; i++)
-    {
-        InitWheel(strLeftWheel + String(i + 1), Vector3(x, y, z), wheelBodyLeft[i], damperBodyLeft[i]);
-        y = -y;
-        InitWheel(strRightWheel + String(i + 1), Vector3(x, y, z), wheelBodyRight[i], damperBodyRight[i]);
-        y = -y;
-    }
 
     InitTower();
 
@@ -273,101 +197,6 @@ void Tank::DrawDebugGeometry_()
             }
         }
     }
-}
-
-
-void Tank::InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody)
-{
-    WeakPtr<Node> damperNode(GetScene()->CreateChild(name));
-    damperNode->SetPosition(node_->LocalToWorld(offset));
-    damperNode->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
-    //damperNode->Rotate(Quaternion(90.0f, Vector3::UP));
-    Vector3 s = node_->GetScale() * scaleNode;
-    damperNode->SetScale(Vector3(s.x_* 5, s.y_, s.z_));
-
-    StaticModel *damperObject = damperNode->CreateComponent<StaticModel>();
-    damperBody = damperNode->CreateComponent<RigidBody>();
-
-    damperObject->SetModel(gCache->GetResource<Model>("Models/Box.mdl"));
-    damperObject->SetMaterial(gCache->GetResource<Material>("Materials/Stone.xml"));
-    damperObject->SetCastShadows(true);
-
-    damperBody->SetFriction(0.0f);
-    damperBody->SetMass(1.0f);
-    damperBody->SetCollisionLayer(1);
-
-    Constraint *damperConstaraint = hullBody->GetNode()->CreateComponent<Constraint>();
-
-    damperConstaraint->SetConstraintType(Urho3D::CONSTRAINT_SLIDER);
-    damperConstaraint->SetOtherBody(damperBody);
-    damperConstaraint->SetRotation(Quaternion(0.0f, 0.0f, 90.0f));
-    damperConstaraint->SetWorldPosition(damperNode->GetPosition());
-    damperConstaraint->SetDisableCollision(true);
-
-    btSliderConstraint *bulletConstraint = (btSliderConstraint*)damperConstaraint->GetConstraint();
-
-    bulletConstraint->setDampingLimLin(0.0f);
-    bulletConstraint->setSoftnessLimLin(0.5f);
-    bulletConstraint->setRestitutionLimLin(1.0f);
-
-    damperConstaraint->SetLowLimit({-0.025f, 0.0f});
-    damperConstaraint->SetHighLimit({0.025f, 0.0f});
-
-    damperConstaraint->SetCFM(0.9f);
-    damperConstaraint->SetERP(0.1f);
-
-    CollisionShape *collisionShape = damperNode->CreateComponent<CollisionShape>();
-    collisionShape->SetSphere(0.2f);
-    collisionShape->SetPosition({-0.4f, -0.0f, 0.0f});
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tank::InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody)
-{
-    // Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
-    // constraint keep it together
-    WeakPtr<Node> wheelNode(GetScene()->CreateChild(name));
-    Node *node = damperBody->GetNode();
-    wheelNode->SetPosition(node->LocalToWorld(offset));
-    wheelNode->SetScale(scaleNode);
-
-    StaticModel* wheelObject = wheelNode->CreateComponent<StaticModel>();
-    wheelBody = wheelNode->CreateComponent<RigidBody>();
-    CollisionShape* wheelShape = wheelNode->CreateComponent<CollisionShape>();
-    //Constraint* wheelConstraint = wheelNode->CreateComponent<Constraint>();
-    Constraint* wheelConstraint = damperBody->GetNode()->CreateComponent<Constraint>();
-
-    wheelObject->SetModel(gCache->GetResource<Model>(String("Models/Tank/") + name + String(".mdl")));
-    wheelObject->SetCastShadows(true);
-
-    wheelShape->SetSphere(5.0f);
-
-    wheelBody->SetFriction(100.0f);
-    wheelBody->SetMass(0.5f);
-    wheelBody->SetLinearDamping(0.2f);
-    wheelBody->SetAngularDamping(0.2f);
-    wheelBody->SetCollisionLayer(1);
-
-    wheelConstraint->SetConstraintType(CONSTRAINT_HINGE);
-    //wheelConstraint->SetOtherBody(damperBody);
-    wheelConstraint->SetOtherBody(wheelNode->GetComponent<RigidBody>());
-
-    wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
-
-    Vector3 vecRotate = Vector3::DOWN;
-    Vector3 vecAxis = Vector3::UP;
-
-    float sign = 1.0f;
-    //float sign = Urho3D::Sign(offset.x_);
-
-    wheelNode->SetRotation(node->GetRotation() * Quaternion(sign * 90.0f, Vector3::UP));
-    //wheelConstraint->SetRotation(Quaternion(90.0f, Vector3::DOWN) * Quaternion(90.0f, Vector3::LEFT));
-    wheelConstraint->SetAxis(Vector3::UP);
-
-    wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
-    wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
-    wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the tank hull
 }
 
 
@@ -446,11 +275,4 @@ void Tank::RotateTrunk(float delta)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::Delete()
 {
-    for(uint i = 0; i < 5; i++)
-    {
-        wheelBodyLeft[i]->GetNode()->Remove();
-        wheelBodyRight[i]->GetNode()->Remove();
-    }
-
-    hullBody->GetNode()->Remove();
 }

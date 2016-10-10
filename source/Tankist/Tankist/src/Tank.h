@@ -59,19 +59,12 @@ public:
     void Logging();
     
 private:
-    /// Initialize a wheel and remember its scene node and ID.
-    void InitWheel(const String& name, const Vector3& offset, WeakPtr<RigidBody>& wheelBody, WeakPtr<RigidBody>& damperBody);
-    void InitDamper(const String& name, const Vector3& offset, WeakPtr<RigidBody>& damperBody);
-
     void InitTower();
 
     void InitTrunk();
 
     void RotateTrunk(float delta);
 
-    WeakPtr<RigidBody> wheelBodyLeft[5];
-    WeakPtr<RigidBody> wheelBodyRight[5];
-    
     // Hull and wheel rigid bodies.
     WeakPtr<RigidBody> hullBody;
     bool created = false;

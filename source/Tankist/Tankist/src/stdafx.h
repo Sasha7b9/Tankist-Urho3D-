@@ -43,6 +43,8 @@
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/IO/MemoryBuffer.h>
 
+#include <Urho3D/Math/Ray.h>
+
 #include <Urho3D/Network/Network.h>
 #include <Urho3D/Network/NetworkEvents.h>
 

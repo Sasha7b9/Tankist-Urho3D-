@@ -234,6 +234,7 @@ void Tankist::CreateScene()
     Node* terrainNode = gScene->CreateChild("Terrain");
     terrainNode->SetPosition(Vector3::ZERO);
     Terrain* terrain = terrainNode->CreateComponent<Terrain>();
+    terrain->SetViewMask(VIEW_MASK_TERRAIN);
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(false);

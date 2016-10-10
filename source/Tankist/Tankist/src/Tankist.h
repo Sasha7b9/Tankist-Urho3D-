@@ -1,6 +1,8 @@
 #pragma once
 
 
+#define VIEW_MASK_TERRAIN 1 << 10
+
 enum TypeApplication
 {
     Type_None,      // Before initialization

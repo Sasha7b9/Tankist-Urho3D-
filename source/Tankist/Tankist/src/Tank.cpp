@@ -5,6 +5,8 @@
 
 #include <CommonFunctions.h>
 
+using namespace Urho3D;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Tank::Tank(Context* context) :
@@ -26,6 +28,11 @@ void Tank::RegisterObject(Context* context)
     URHO3D_ATTRIBUTE("Steering", float, steering, 0.0f, AM_DEFAULT);
 }
 
+void WriteVector(const char *str, const Vector3& vec)
+{
+    LOG_INFOF("%s %f %f %f", str, vec.x_, vec.y_, vec.z_);
+}
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::FixedUpdate(float timeStep)
@@ -35,23 +42,68 @@ void Tank::FixedUpdate(float timeStep)
         return;
     }
 
+    float speed = 50.0f;
+    float speedRotate = 50.0f;
+
     float accelerator = 0.0f;
+
+    Vector3 position = node_->GetPosition();
+    Quaternion rotation = node_->GetRotation();
 
     if(controls.buttons_ & CTRL_LEFT)
     {
+        rotation = rotation * Quaternion(timeStep * speedRotate, Vector3::DOWN);
     }
     if(controls.buttons_ & CTRL_RIGHT)
     {
+        rotation = rotation * Quaternion(timeStep * speedRotate, Vector3::UP);
     }
+
+    node_->SetRotation(rotation);
+
+    Matrix3 matRot = rotation.RotationMatrix();
+    Vector3 vecSpeed = matRot * Vector3::FORWARD;
 
     if(controls.buttons_ & CTRL_FORWARD)
     {
-        accelerator = 1.0f;
+        position += vecSpeed * speed * timeStep;
     }
     if(controls.buttons_ & CTRL_BACK)
     {
-        accelerator = -0.5f;
+        position -= vecSpeed * speed * timeStep;
     }
+
+    Vector3 direction = {0.0f, -1.0f, 0.0f};
+    Ray ray(position, direction);
+    PODVector<RayQueryResult> results;
+    RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, Urho3D::DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
+    GetScene()->GetComponent<Octree>()->Raycast(query);
+
+    if(results.Size())
+    {
+        for(RayQueryResult &result : results)
+        {
+            position.y_ = result.position_.y_ + 5.0f;
+        }
+    }
+    else
+    {
+        direction.y_ = 1.0f;
+        results.Clear();
+        Ray ray(position, direction);
+        RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, Urho3D::DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
+        GetScene()->GetComponent<Octree>()->Raycast(query);
+
+        if(results.Size())
+        {
+            for(RayQueryResult &result : results)
+            {
+                position.y_ = result.position_.y_ + 5.0f;
+            }
+        }
+    }
+
+    node_->SetPosition(position);
 
     Quaternion hullRot = hullBody->GetRotation();
 

@@ -10,6 +10,8 @@ Client::Client(Context *context) : Object(context)
 {
     gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
     SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(Client, HandleClientObjectID));
+    gNetwork->RegisterRemoteEvent(E_STRING_MESSAGE);
+    SubscribeToEvent(E_STRING_MESSAGE, URHO3D_HANDLER(Client, HandleStringMessage));
     //gNetwork->RegisterRemoteEvent(E_SHOOT);
 
     SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
@@ -62,6 +64,16 @@ void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
     towerID = eventData[P_ID_TOWER].GetUInt();
     trunkID = eventData[P_ID_TRUNK].GetUInt();
     caseID = eventData[P_ID_CASE].GetUInt();
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::HandleStringMessage(StringHash, VariantMap& eventData)
+{
+    String var = eventData[P_STRING_VAR].GetString();
+    String value = eventData[P_STRING_VALUE].GetString();
+
+    gGameGUI->SetVar(var, value);
 }
 
 

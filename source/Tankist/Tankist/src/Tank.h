@@ -1,6 +1,13 @@
 #pragma once
 
 
+// Команды управления
+URHO3D_EVENT(E_COMMAND_CONTROL, CommandControl)
+{
+    URHO3D_PARAM(P_KEY, Command);
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const int CTRL_FORWARD          = 1 << 0;
 const int CTRL_BACK             = 1 << 1;
@@ -57,6 +64,8 @@ public:
 
     void DrawDebugGeometry_();
     void Logging();
+
+    int speed = 0;
     
 private:
     void InitTower();
@@ -85,4 +94,7 @@ private:
     Tank operator=(Tank const&){};
 
     float scaleNode = 0.5f;
+
+    const int maxSpeed = 10;
+    const int minSpeed = -5;
 };

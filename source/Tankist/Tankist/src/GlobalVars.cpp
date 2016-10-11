@@ -46,3 +46,4 @@ WindowGameESC *gWindowGameESC = nullptr;
 WindowSettings *gWindowSettings = nullptr;
 Settings *gSet = nullptr;
 Counters *gCounters = nullptr;
+GameGUI *gGameGUI = nullptr;

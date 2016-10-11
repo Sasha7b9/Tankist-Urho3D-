@@ -88,6 +88,9 @@
     <ClCompile Include="src\Tank.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\GameGUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h">
@@ -179,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="src\Tank.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\GameGUI.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -53,12 +53,12 @@ void Tankist::Setup()
         gLog->Open("server.log");
     }
 
+    gAudio = GetSubsystem<Audio>();
+
 #ifdef WIN32
     gAudioCapturer = new AudioCapturer();
     gAudioCapturer->Start();
 #endif
-
-    gAudio = GetSubsystem<Audio>();
 
     gNetwork = GetSubsystem<Network>();
     gFileSystem = GetSubsystem<FileSystem>();
@@ -102,6 +102,11 @@ void Tankist::Start()
 {
     if (gTypeApplication == Type_Client)
     {
+        gLocale = GetSubsystem<Localization>();
+        gLocale->LoadJSONFile("Strings.json");
+        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "ru" : "en");
+        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "en" : "ru");
+
         gGraphics = GetSubsystem<Graphics>();
         gRenderer = GetSubsystem<Renderer>();
 
@@ -156,11 +161,6 @@ void Tankist::Start()
 
         gChat = new Chat(gContext, Chat::Chat_Client);
         gChat->Connect(gIPAddress.CString(), PORT_CHAT);
-
-        gLocale = GetSubsystem<Localization>();
-        gLocale->LoadJSONFile("Strings.json");
-        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "ru" : "en");
-        gLocale->SetLanguage(gSet->Get(LANGUAGE) == 0 ? "en" : "ru");
     }
 
     gGame = new Game(gContext);
@@ -300,6 +300,7 @@ void Tankist::CreateUI()
 
     gWindowSettings = new WindowSettings(context_);
 
+    gGameGUI = new GameGUI(context_);
 #endif
 }
 

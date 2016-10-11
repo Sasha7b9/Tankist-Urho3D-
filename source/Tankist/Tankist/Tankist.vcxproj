@@ -42,6 +42,7 @@
     <ClCompile Include="src\GlobalVars.cpp" />
     <ClCompile Include="src\GUI\Elements\DropDownListButtons.cpp" />
     <ClCompile Include="src\GUI\Elements\Governor.cpp" />
+    <ClCompile Include="src\GUI\GameGUI.cpp" />
     <ClCompile Include="src\GUI\WindowGameESC.cpp" />
     <ClCompile Include="src\GUI\WindowSettings.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
@@ -82,6 +83,7 @@
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />
     <ClInclude Include="src\GUI\Elements\Governor.h" />
+    <ClInclude Include="src\GUI\GameGUI.h" />
     <ClInclude Include="src\GUI\WindowGameESC.h" />
     <ClInclude Include="src\GUI\WindowSettings.h" />
     <ClInclude Include="src\Network\Client.h" />

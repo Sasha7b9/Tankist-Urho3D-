@@ -46,9 +46,12 @@ private:
 
     void SubscribeToEvents();
 
-    void HandlePhysicsPreStep(StringHash eventType, VariantMap &eventData);
+    void HandlePhysicsPreStep(StringHash, VariantMap&);
+    void HandleCommandControl(StringHash, VariantMap&);
 
     Tank* CreateTank();
 
     StateGame state = InProcess;
+
+    Controls controls;
 };

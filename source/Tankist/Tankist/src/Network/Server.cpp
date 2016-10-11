@@ -99,6 +99,9 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     Tank* tank = gGame->ClientConnected(newConnection);
 
+    tanks.Push(tank);
+    connections.Push(newConnection);
+
     VariantMap remoteEventData;
     remoteEventData[P_ID_TOWER] = tank->towerID;
     remoteEventData[P_ID_TRUNK] = tank->trunkID;
@@ -110,7 +113,33 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
     gChat->SendToAll(MSG_CHAT, newConnection->GetAddress() + " enter");
 }
 
-static String prevAddress;
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::SendStringMessage(Tank *tank, const String &var, const String &value)
+{
+    VariantMap eventData;
+    eventData[P_STRING_VAR] = var;
+    eventData[P_STRING_VALUE] = value;
+
+    Connection *connection = 0;
+    for(uint i = 0; i < tanks.Size(); i++)
+    {
+        if(tanks[i] == tank)
+        {
+            connection = connections[i];
+            break;
+        }
+    }
+
+    if(connection)
+    {
+        connection->SendRemoteEvent(E_STRING_MESSAGE, true, eventData);
+    }
+    else
+    {
+        LOG_INFOF("Can not message - not find *tank");
+    }
+}
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "GUI/WindowSettings.h"
 #include "Settings.h"
 #include "Counters.h"
+#include "GUI/GameGUI.h"
 
 
 // For server and client
@@ -56,3 +57,4 @@ extern WindowGameESC *gWindowGameESC;
 extern WindowSettings *gWindowSettings;
 extern Settings *gSet;
 extern Counters *gCounters;
+extern GameGUI *gGameGUI;

@@ -24,6 +24,8 @@ public:
 
     void Start(unsigned short port);
 
+    void SendStringMessage(Tank *tank, const String &var, const String &value);
+
 private:
     void HandleCloseConnection(StringHash, VariantMap&);
     void HandleServerConnected(StringHash, VariantMap&);
@@ -42,6 +44,9 @@ private:
     void HandlePhysicsPostStep(StringHash, VariantMap&);
 
     int numClients = 0;
+
+    Vector<Tank*>       tanks;          // Это танки - по одному от каждого клиента
+    Vector<Connection*> connections;    // А это соответствующие им соединения к клиентам
 
     Server(Server const&) : Object(nullptr) {};
     Server operator=(Server const&) {};

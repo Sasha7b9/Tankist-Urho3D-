@@ -12,6 +12,11 @@ static const Urho3D::StringHash E_CLIENTOBJECTID("ClientObjectID");
 static const Urho3D::StringHash P_ID_TOWER("ID_TOWER");
 static const Urho3D::StringHash P_ID_TRUNK("ID_TRUNK");
 static const Urho3D::StringHash P_ID_CASE("ID_CASE");
+static const Urho3D::StringHash P_ID_NODE("ID_NODE");       // Это ID ноды танка, который сервер посылает клиенту
+
+static const Urho3D::StringHash E_STRING_MESSAGE("StringMessage");
+static const Urho3D::StringHash P_STRING_VAR("STRING_VAR");
+static const Urho3D::StringHash P_STRING_VALUE("STRING_VALUE");
 
 static const Urho3D::StringHash E_SHOOT("Shoot");
 

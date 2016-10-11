@@ -7,6 +7,9 @@
 #include "Network/NetworkEvents.h"
 
 
+using namespace Urho3D;
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Game::Game(Context *context) : Object(context)
 {
@@ -24,7 +27,8 @@ void Game::Start()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::SubscribeToEvents()
 {
-    SubscribeToEvent(Urho3D::E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
+    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
+    SubscribeToEvent(E_COMMAND_CONTROL, URHO3D_HANDLER(Game, HandleCommandControl));
 }
 
 
@@ -38,12 +42,8 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 
         if(serverConnection)
         {
-            Controls controls;
-
             if(!gUI->GetFocusElement())
             {
-                controls.Set(CTRL_FORWARD, gInput->GetKeyDown('W'));
-                controls.Set(CTRL_BACK, gInput->GetKeyDown('S'));
                 controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
                 controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
                 controls.Set(CTRL_STOP, gInput->GetKeyDown(Urho3D::KEY_KP_ENTER));
@@ -59,6 +59,8 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 
             serverConnection->SetControls(controls);
             //serverConnection->SetPosition(cameraNode->GetPosition());
+
+            controls.buttons_ = 0;
         }
     }
     // Server
@@ -147,4 +149,22 @@ void Game::Shot()
     VariantMap eventData;
     eventData[P_ID_TRUNK] = gClient->trunkID;
     gNetwork->GetServerConnection()->SendRemoteEvent(E_SHOOT, true, eventData);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Game::HandleCommandControl(StringHash, VariantMap& eventData)
+{
+    using namespace CommandControl;
+
+    int command = eventData[P_KEY].GetInt();
+
+    if(command == 'W')
+    {
+        controls.Set(CTRL_FORWARD);
+    }
+    else if(command == 'S')
+    {
+        controls.Set(CTRL_BACK);
+    }
 }

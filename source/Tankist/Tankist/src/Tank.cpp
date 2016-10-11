@@ -42,10 +42,29 @@ void Tank::FixedUpdate(float timeStep)
         return;
     }
 
-    float speed = 50.0f;
     float speedRotate = 50.0f;
 
     float accelerator = 0.0f;
+
+    if(controls.buttons_ & CTRL_FORWARD)
+    {
+        if(++speed > maxSpeed)
+        {
+            speed = maxSpeed;
+        }
+
+        gServer->SendStringMessage(this, "Speed", String(speed));
+    }
+
+    if(controls.buttons_ & CTRL_BACK)
+    {
+        if(--speed < minSpeed)
+        {
+            speed = minSpeed;
+        }
+        
+        gServer->SendStringMessage(this, "Speed", String(speed));
+    }
 
     Vector3 position = node_->GetPosition();
     Quaternion rotation = node_->GetRotation();
@@ -64,14 +83,7 @@ void Tank::FixedUpdate(float timeStep)
     Matrix3 matRot = rotation.RotationMatrix();
     Vector3 vecSpeed = matRot * Vector3::FORWARD;
 
-    if(controls.buttons_ & CTRL_FORWARD)
-    {
-        position += vecSpeed * speed * timeStep;
-    }
-    if(controls.buttons_ & CTRL_BACK)
-    {
-        position -= vecSpeed * speed * timeStep;
-    }
+    position += vecSpeed * (float)speed * timeStep * 10.0f;
 
     Vector3 direction = {0.0f, -1.0f, 0.0f};
     Ray ray(position, direction);

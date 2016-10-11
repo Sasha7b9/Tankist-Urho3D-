@@ -5,14 +5,32 @@
 #include "defines.h"
 #include "Tank.h"
 
+using namespace Urho3D;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
-{
+    {
 #ifdef WIN32
     using namespace Urho3D::KeyDown;
 
     int key = eventData[P_KEY].GetInt();
+
+    if(!gUI->GetFocusElement())
+    {
+        if(key == KEY_W)
+        {
+            VariantMap &eventData = GetEventDataMap();
+            eventData[CommandControl::P_KEY] = 'W';
+            SendEvent(E_COMMAND_CONTROL, eventData);
+        }
+        else if(key == KEY_S)
+        {
+            VariantMap &eventData = GetEventDataMap();
+            eventData[CommandControl::P_KEY] = 'S';
+            SendEvent(E_COMMAND_CONTROL, eventData);
+        }
+    }
 
     // Close console (if open) or exit when ESC is pressed
     if(key == Urho3D::KEY_ESCAPE)
@@ -87,12 +105,12 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     else if(key == Urho3D::KEY_KP_PLUS)
     {
-        //gCamera->IncFov();
+        gCamera->IncFov();
     }
 
     else if(key == Urho3D::KEY_KP_MINUS)
     {
-        //gCamera->DecFov();
+        gCamera->DecFov();
     }
 
     else if(key == Urho3D::KEY_KP_MULTIPLY)

@@ -25,6 +25,8 @@ public:
     // Request ping, load cpu, number clients
     void RequestSystemInformation();
 
+    void MessageControl(int control);
+
     unsigned towerID = 0;
     unsigned trunkID = 0;
     unsigned caseID = 0;

@@ -33,6 +33,28 @@ void WriteVector(const char *str, const Vector3& vec)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+void Tank::SetControl(Control control)
+{
+    if(control == CTRL_FORWARD)
+    {
+        if(++speed > maxSpeed)
+        {
+            speed = maxSpeed;
+        }
+        gServer->SendStringMessage(this, "Speed", String(speed));
+    }
+    else if(control == CTRL_BACK)
+    {
+        if(--speed < minSpeed)
+        {
+            speed = minSpeed;
+        }
+        gServer->SendStringMessage(this, "Speed", String(speed));
+    }
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tank::FixedUpdate(float timeStep)
 {
     if(!created)
@@ -43,26 +65,6 @@ void Tank::FixedUpdate(float timeStep)
     float speedRotate = 50.0f;
 
     float accelerator = 0.0f;
-
-    if(controls.buttons_ & CTRL_FORWARD)
-    {
-        if(++speed > maxSpeed)
-        {
-            speed = maxSpeed;
-        }
-
-        gServer->SendStringMessage(this, "Speed", String(speed));
-    }
-
-    if(controls.buttons_ & CTRL_BACK)
-    {
-        if(--speed < minSpeed)
-        {
-            speed = minSpeed;
-        }
-        
-        gServer->SendStringMessage(this, "Speed", String(speed));
-    }
 
     Vector3 position = node_->GetPosition();
     Quaternion rotation = node_->GetRotation();

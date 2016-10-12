@@ -25,7 +25,6 @@ void Game::Start()
 void Game::SubscribeToEvents()
 {
     SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
-    SubscribeToEvent(E_COMMAND_CONTROL, URHO3D_HANDLER(Game, HandleCommandControl));
 }
 
 
@@ -146,22 +145,4 @@ void Game::Shot()
     VariantMap eventData;
     eventData[P_ID_TRUNK] = gClient->trunkID;
     gNetwork->GetServerConnection()->SendRemoteEvent(E_SHOOT, true, eventData);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Game::HandleCommandControl(StringHash, VariantMap& eventData)
-{
-    using namespace CommandControl;
-
-    int command = eventData[P_KEY].GetInt();
-
-    if(command == 'W')
-    {
-        controls.Set(CTRL_FORWARD);
-    }
-    else if(command == 'S')
-    {
-        controls.Set(CTRL_BACK);
-    }
 }

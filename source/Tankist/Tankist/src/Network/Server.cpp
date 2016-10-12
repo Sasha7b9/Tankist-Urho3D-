@@ -194,6 +194,19 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         buffer.WriteFloat(speedOut + gCounters->GetServerOut());
         connection->SendMessage(MSG_SERVER_SPEED, true, true, buffer);
     }
+    else if(msgID == MSG_CONTROL)
+    {
+        int cntrl = msg.ReadInt();
+        
+        for(uint i = 0; i < connections.Size(); i++)
+        {
+            if(connection == connections[i])
+            {
+                Tank *tank = tanks[i];
+                tank->SetControl(Control(cntrl));
+            }
+        }
+    }
 }
 
 
@@ -216,7 +229,11 @@ void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 }
 
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+void Server::HandleControlMessage(StringHash, VariantMap&)
+{
 
+}
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

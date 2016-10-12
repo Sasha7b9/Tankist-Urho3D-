@@ -1,27 +1,23 @@
 #pragma once
 
 
-// Команды управления
-URHO3D_EVENT(E_COMMAND_CONTROL, CommandControl)
-{
-    URHO3D_PARAM(P_KEY, Command);
-}
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const int CTRL_FORWARD          = 1 << 0;
-const int CTRL_BACK             = 1 << 1;
-const int CTRL_LEFT             = 1 << 2;
-const int CTRL_RIGHT            = 1 << 3;
-const int CTRL_TOWER_LEFT       = 1 << 4;
-const int CTRL_TOWER_RIGHT      = 1 << 5;
-const int CTRL_TRUNK_UP         = 1 << 6;
-const int CTRL_TRUNK_DOWN       = 1 << 7;
-const int CTRL_TOWER_LEFT_FAST  = 1 << 8;
-const int CTRL_TOWER_RIGHT_FAST = 1 << 9;
-const int CTRL_TRUNK_UP_FAST    = 1 << 10;
-const int CTRL_TRUNK_DOWN_FAST  = 1 << 11;
-const int CTRL_STOP             = 1 << 12;
+enum Control
+{
+    CTRL_FORWARD            = 1 << 0,
+    CTRL_BACK               = 1 << 1,
+    CTRL_LEFT               = 1 << 2,
+    CTRL_RIGHT              = 1 << 3,
+    CTRL_TOWER_LEFT         = 1 << 4,
+    CTRL_TOWER_RIGHT        = 1 << 5,
+    CTRL_TRUNK_UP           = 1 << 6,
+    CTRL_TRUNK_DOWN         = 1 << 7,
+    CTRL_TOWER_LEFT_FAST    = 1 << 8,
+    CTRL_TOWER_RIGHT_FAST   = 1 << 9,
+    CTRL_TRUNK_UP_FAST      = 1 << 10,
+    CTRL_TRUNK_DOWN_FAST    = 1 << 11,
+    CTRL_STOP               = 1 << 12
+};
 
 const float YAW_SENSITIVITY = 0.1f;
 const float ENGINE_POWER = 500.0f;
@@ -65,6 +61,9 @@ public:
     void DrawDebugGeometry_();
     void Logging();
 
+    //
+    void SetControl(Control control);
+
     int speed = 0;
     
 private:
@@ -95,6 +94,6 @@ private:
 
     float scaleNode = 0.5f;
 
-    const int maxSpeed = 10;
+    const int maxSpeed = 20;
     const int minSpeed = -5;
 };

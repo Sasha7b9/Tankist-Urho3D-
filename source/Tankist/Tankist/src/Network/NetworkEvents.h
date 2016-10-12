@@ -8,6 +8,7 @@ static const int MSG_LOAD_CPU = 34;     // Request full load cpu - [0...1] ([0..
 static const int MSG_NUM_CLIENTS = 35;  // Request number connected clients, return float
 static const int MSG_SERVER_SPEED = 36;
 static const int MSG_VOICE_CHAT = 37;
+static const int MSG_CONTROL = 38;      // Сообщение для передачи управления на сервер
 
 static const StringHash E_CLIENTOBJECTID("ClientObjectID");
 static const StringHash P_ID_TOWER("ID_TOWER");
@@ -19,6 +20,6 @@ static const StringHash E_STRING_MESSAGE("StringMessage");
 static const StringHash P_STRING_VAR("STRING_VAR");
 static const StringHash P_STRING_VALUE("STRING_VALUE");
 
-
 static const StringHash E_SHOOT("Shoot");
 
+// Соообщения клиента

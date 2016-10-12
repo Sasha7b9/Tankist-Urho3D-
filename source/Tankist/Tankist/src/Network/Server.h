@@ -42,6 +42,7 @@ private:
     void HandleRemoteEventData(StringHash, VariantMap&);
     void HandleShoot(StringHash, VariantMap&);
     void HandlePhysicsPostStep(StringHash, VariantMap&);
+    void HandleControlMessage(StringHash, VariantMap&);
 
     int numClients = 0;
 

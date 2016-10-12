@@ -175,6 +175,15 @@ void Client::RequestSystemInformation()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+void Client::MessageControl(int control)
+{
+    VectorBuffer buffer;
+    buffer.WriteInt(control);
+    gNetwork->GetServerConnection()->SendMessage(MSG_CONTROL, true, true, buffer);
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientConnected(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);

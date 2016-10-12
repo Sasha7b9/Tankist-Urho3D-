@@ -8,7 +8,7 @@
 
 static bool keys[256] = {false};
 
-#define SEND_CONTROL(k, ctrl)   if(key == k) { if(!keys[k]) { gClient->MessageControl(ctrl); keys[k] = true; } }
+#define SEND_CONTROL(k, ctrl)   if(key == k) { if(!keys[k]) { gClient->MessageControl(ctrl, CTRL_ON); keys[k] = true; } }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
@@ -21,7 +21,9 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     if(!gUI->GetFocusElement())
     {
         SEND_CONTROL(KEY_W, CTRL_FORWARD)
-        else SEND_CONTROL(KEY_S, CTRL_BACK);
+        else SEND_CONTROL(KEY_S, CTRL_BACK)
+        else SEND_CONTROL(KEY_A, CTRL_LEFT)
+        else SEND_CONTROL(KEY_D, CTRL_RIGHT)
     }
 
     // Close console (if open) or exit when ESC is pressed
@@ -233,6 +235,15 @@ void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
     int key = eventData[P_KEY].GetInt();
 
     keys[key] = false;
+
+    if(key == KEY_A)
+    {
+        gClient->MessageControl(CTRL_LEFT, CTRL_OFF);
+    }
+    else if(key == KEY_D)
+    {
+        gClient->MessageControl(CTRL_RIGHT, CTRL_OFF);
+    }
 
     if(key == KEY_KP_ENTER)
     {

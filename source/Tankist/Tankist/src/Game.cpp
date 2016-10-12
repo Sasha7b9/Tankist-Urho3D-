@@ -40,8 +40,6 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
         {
             if(!gUI->GetFocusElement())
             {
-                controls.Set(CTRL_LEFT, gInput->GetKeyDown('A'));
-                controls.Set(CTRL_RIGHT, gInput->GetKeyDown('D'));
                 controls.Set(CTRL_STOP, gInput->GetKeyDown(KEY_KP_ENTER));
                 controls.Set(CTRL_TOWER_RIGHT, (gInput->GetKeyDown('E') | gInput->GetKeyDown(KEY_KP_6)) && gCamera->GetMode() == ModeShooter);
                 controls.Set(CTRL_TOWER_RIGHT_FAST, (gInput->GetKeyDown('E') || gInput->GetKeyDown(KEY_KP_6)) && gCamera->GetMode() == ModeCommander);
@@ -77,10 +75,6 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 
                 const Controls &controls = connection->GetControls();
 
-                tank->controls.Set(CTRL_FORWARD, ((controls.buttons_ & CTRL_FORWARD) > 0));
-                tank->controls.Set(CTRL_BACK, ((controls.buttons_ & CTRL_BACK) > 0));
-                tank->controls.Set(CTRL_LEFT, ((controls.buttons_ & CTRL_LEFT) > 0));
-                tank->controls.Set(CTRL_RIGHT, ((controls.buttons_ & CTRL_RIGHT) > 0));
                 tank->controls.Set(CTRL_STOP, ((controls.buttons_ & CTRL_STOP) > 0));
                 tank->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
                 tank->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));

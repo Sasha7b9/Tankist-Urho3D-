@@ -19,6 +19,12 @@ enum Control
     CTRL_STOP               = 1 << 12
 };
 
+enum TypeControl
+{
+    CTRL_ON,    // Когда клавиша нажимается
+    CTRL_OFF    // Когда клавиша отжимается
+};
+
 const float YAW_SENSITIVITY = 0.1f;
 const float ENGINE_POWER = 500.0f;
 const float DOWN_FORCE = 1.0f;
@@ -62,7 +68,7 @@ public:
     void Logging();
 
     //
-    void SetControl(Control control);
+    void SetControl(Control control, TypeControl type);
 
     int speed = 0;
     

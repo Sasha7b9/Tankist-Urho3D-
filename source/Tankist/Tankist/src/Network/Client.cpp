@@ -12,7 +12,6 @@ Client::Client(Context *context) : Object(context)
     SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(Client, HandleClientObjectID));
     gNetwork->RegisterRemoteEvent(E_STRING_MESSAGE);
     SubscribeToEvent(E_STRING_MESSAGE, URHO3D_HANDLER(Client, HandleStringMessage));
-    //gNetwork->RegisterRemoteEvent(E_SHOOT);
 
     SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
     SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));
@@ -175,10 +174,11 @@ void Client::RequestSystemInformation()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::MessageControl(int control)
+void Client::MessageControl(Control control, TypeControl type)
 {
     VectorBuffer buffer;
     buffer.WriteInt(control);
+    buffer.WriteInt(type);
     gNetwork->GetServerConnection()->SendMessage(MSG_CONTROL, true, true, buffer);
 }
 

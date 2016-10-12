@@ -196,14 +196,15 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     }
     else if(msgID == MSG_CONTROL)
     {
-        int cntrl = msg.ReadInt();
+        Control cntrl = (Control)msg.ReadInt();
+        TypeControl type = (TypeControl)msg.ReadInt();
         
         for(uint i = 0; i < connections.Size(); i++)
         {
             if(connection == connections[i])
             {
                 Tank *tank = tanks[i];
-                tank->SetControl(Control(cntrl));
+                tank->SetControl(cntrl, type);
             }
         }
     }

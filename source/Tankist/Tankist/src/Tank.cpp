@@ -33,9 +33,9 @@ void WriteVector(const char *str, const Vector3& vec)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tank::SetControl(Control control)
+void Tank::SetControl(Control control, TypeControl type)
 {
-    if(control == CTRL_FORWARD)
+    if(control == CTRL_FORWARD && type == CTRL_ON)
     {
         if(++speed > maxSpeed)
         {
@@ -43,13 +43,21 @@ void Tank::SetControl(Control control)
         }
         gServer->SendStringMessage(this, "Speed", String(speed));
     }
-    else if(control == CTRL_BACK)
+    else if(control == CTRL_BACK && type == CTRL_ON)
     {
         if(--speed < minSpeed)
         {
             speed = minSpeed;
         }
         gServer->SendStringMessage(this, "Speed", String(speed));
+    }
+    else if(control == CTRL_LEFT)
+    {
+        controls.Set(CTRL_LEFT, type == CTRL_ON);
+    }
+    else if(control == CTRL_RIGHT)
+    {
+        controls.Set(CTRL_RIGHT, type == CTRL_ON);
     }
 }
 

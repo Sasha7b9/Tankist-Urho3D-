@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "Tank.h"
+
+
 class ThreadConnection;
 
 
@@ -25,7 +28,7 @@ public:
     // Request ping, load cpu, number clients
     void RequestSystemInformation();
 
-    void MessageControl(int control);
+    void MessageControl(Control control, TypeControl type);
 
     unsigned towerID = 0;
     unsigned trunkID = 0;

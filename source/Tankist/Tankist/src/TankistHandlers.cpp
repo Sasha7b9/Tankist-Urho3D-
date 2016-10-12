@@ -6,9 +6,7 @@
 #include "Tank.h"
 
 
-static bool keys[256] = {false};
-
-#define SEND_CONTROL(k, ctrl)   if(key == k) { if(!keys[k]) { gClient->MessageControl(ctrl, CTRL_ON); keys[k] = true; } }
+#define SEND_CONTROL(k, ctrl)   if(key == k && !repeat) { gClient->MessageControl(ctrl, CTRL_ON); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
@@ -17,6 +15,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     using namespace KeyDown;
 
     int key = eventData[P_KEY].GetInt();
+    bool repeat = eventData[P_REPEAT].GetBool();
 
     if(!gUI->GetFocusElement())
     {
@@ -233,11 +232,6 @@ void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
     using namespace KeyDown;
 
     int key = eventData[P_KEY].GetInt();
-
-    if(key < 256)
-    {
-        keys[key] = false;
-    }
 
     if(key == KEY_A)
     {

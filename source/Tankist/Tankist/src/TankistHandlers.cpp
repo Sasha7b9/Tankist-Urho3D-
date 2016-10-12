@@ -234,7 +234,10 @@ void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
 
     int key = eventData[P_KEY].GetInt();
 
-    keys[key] = false;
+    if(key < 256)
+    {
+        keys[key] = false;
+    }
 
     if(key == KEY_A)
     {

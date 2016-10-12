@@ -5,8 +5,6 @@
 
 #include <CommonFunctions.h>
 
-using namespace Urho3D;
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Tank::Tank(Context* context) :
@@ -88,7 +86,7 @@ void Tank::FixedUpdate(float timeStep)
     Vector3 direction = {0.0f, -1.0f, 0.0f};
     Ray ray(position, direction);
     PODVector<RayQueryResult> results;
-    RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, Urho3D::DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
+    RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
     GetScene()->GetComponent<Octree>()->Raycast(query);
 
     if(results.Size())
@@ -103,7 +101,7 @@ void Tank::FixedUpdate(float timeStep)
         direction.y_ = 1.0f;
         results.Clear();
         Ray ray(position, direction);
-        RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, Urho3D::DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
+        RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
         GetScene()->GetComponent<Octree>()->Raycast(query);
 
         if(results.Size())
@@ -332,7 +330,7 @@ void Tank::RotateTrunk(float delta)
 
     Quaternion rotate(delta, Vector3::LEFT);
 
-    nodeTrunk->RotateAround({0.0f, 0.0f, 0.4f}, rotate, Urho3D::TS_PARENT);
+    nodeTrunk->RotateAround({0.0f, 0.0f, 0.4f}, rotate, TS_PARENT);
 }
 
 

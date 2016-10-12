@@ -17,13 +17,13 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
 
     Hide();
 
-    SubscribeToEvent(Urho3D::E_SCREENMODE, URHO3D_HANDLER(WindowSettings, HandleChangedScreenMode));
+    SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(WindowSettings, HandleChangedScreenMode));
 
     Button *bApplyChanges = (Button*)window->GetChild("bApplyChanges", true);
-    SubscribeToEvent(bApplyChanges, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonApplyChanges));
+    SubscribeToEvent(bApplyChanges, E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonApplyChanges));
 
     Button *bReturnToGame = (Button*)window->GetChild("bReturnToGame", true);
-    SubscribeToEvent(bReturnToGame, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonReturnToGame));
+    SubscribeToEvent(bReturnToGame, E_RELEASED, URHO3D_HANDLER(WindowSettings, HandleButtonReturnToGame));
 
     ddlbResolution = new DropDownListButtons(context_, window, "ddlbResolution");
 
@@ -138,7 +138,7 @@ void WindowSettings::HandleButtonReturnToGame(StringHash, VariantMap&)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::HandleChangedScreenMode(StringHash, VariantMap&)
 {
-    using namespace Urho3D::ScreenMode;
+    using namespace ScreenMode;
 
     int width = gUIRoot->GetWidth();
     int height = gUIRoot->GetHeight();

@@ -56,12 +56,12 @@ Sight::Sight(Context *context) : Window(context)
                 text->SetMaxWidth(20);
                 if(i % 4 == 0)
                 {
-                    text->SetTextAlignment(Urho3D::HA_RIGHT);
+                    text->SetTextAlignment(HA_RIGHT);
                     text->SetPosition((int)(x0 - length / 2.0f - 22), (int)(y0 + y + 0.5f - 5.0f));
                 }
                 else if(i % 2 == 0)
                 {
-                    text->SetTextAlignment(Urho3D::HA_LEFT);
+                    text->SetTextAlignment(HA_LEFT);
                     text->SetPosition((int)(x0 + length / 2.0f + 0.5f + 4.0f), (int)(y0 + y + 0.5f - 5.0f));
                 }
             }
@@ -87,6 +87,6 @@ Sight::Sight(Context *context) : Window(context)
 
     SetTexture(texture);
     SetBringToBack(true);
-    SetFocusMode(Urho3D::FM_NOTFOCUSABLE);
+    SetFocusMode(FM_NOTFOCUSABLE);
 #endif
 }

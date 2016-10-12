@@ -13,20 +13,20 @@ Server::Server(Context *context) : Object(context)
 
     SubscribeToEvent(E_CLOSECONNECTION, URHO3D_HANDLER(Server, HandleCloseConnection));
 
-    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
-    SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Server, HandleServerConnected));
-    SubscribeToEvent(Urho3D::E_SERVERDISCONNECTED, URHO3D_HANDLER(Server, HandleServerDisconnected));
-    SubscribeToEvent(Urho3D::E_CONNECTFAILED, URHO3D_HANDLER(Server, HandleConnectFailed));
-    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnected));
-    SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Server, HandleClientIdentity));
-    SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Server, HandleClientSceneLoaded));
-    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
-//    SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Server, HandleNetworkUpdate));
-//    SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Server, HandleNetworkUpdateSent));
-    SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Server, HandleNetworkSceneLoadFailed));
-    SubscribeToEvent(Urho3D::E_REMOTEEVENTDATA, URHO3D_HANDLER(Server, HandleRemoteEventData));
+    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Server, HandleClientConnected));
+    SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(Server, HandleServerConnected));
+    SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(Server, HandleServerDisconnected));
+    SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(Server, HandleConnectFailed));
+    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Server, HandleClientDisconnected));
+    SubscribeToEvent(E_CLIENTIDENTITY, URHO3D_HANDLER(Server, HandleClientIdentity));
+    SubscribeToEvent(E_CLIENTSCENELOADED, URHO3D_HANDLER(Server, HandleClientSceneLoaded));
+    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Server, HandleNetworkMessage));
+//    SubscribeToEvent(E_NETWORKUPDATE, URHO3D_HANDLER(Server, HandleNetworkUpdate));
+//    SubscribeToEvent(E_NETWORKUPDATESENT, URHO3D_HANDLER(Server, HandleNetworkUpdateSent));
+    SubscribeToEvent(E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Server, HandleNetworkSceneLoadFailed));
+    SubscribeToEvent(E_REMOTEEVENTDATA, URHO3D_HANDLER(Server, HandleRemoteEventData));
 
-    SubscribeToEvent(Urho3D::E_PHYSICSPOSTSTEP, URHO3D_HANDLER(Server, HandlePhysicsPostStep));
+    SubscribeToEvent(E_PHYSICSPOSTSTEP, URHO3D_HANDLER(Server, HandlePhysicsPostStep));
 }
 
 
@@ -91,7 +91,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 {
     LOG_INFO("New client connected");
 
-    using namespace Urho3D::ClientConnected;
+    using namespace ClientConnected;
 
     Connection *newConnection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
 
@@ -145,7 +145,7 @@ void Server::SendStringMessage(Tank *tank, const String &var, const String &valu
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    using namespace Urho3D::NetworkMessage;
+    using namespace NetworkMessage;
 
     Connection *connection = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
 
@@ -163,9 +163,9 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     else if(msgID == MSG_LOAD_CPU)
     {
 #ifndef WIN32
-        // uint numCPU = Urho3D::GetNumPhysicalCPUs(); On virtual server not work
+        // uint numCPU = GetNumPhysicalCPUs(); On virtual server not work
         int rez = system("uptime > out.uptime");
-        File file(gContext, "out.uptime", Urho3D::FILE_READ);
+        File file(gContext, "out.uptime", FILE_READ);
         Vector<String> list = file.ReadLine().Split(' ');
         file.Close();
         buffer.WriteFloat(rez == -1 ? 0.0f : (ToFloat(list[list.Size() - 3]) / /* (float)numCPU */ 2.0f));
@@ -200,7 +200,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 {
-    using namespace Urho3D::ClientDisconnected;
+    using namespace ClientDisconnected;
 
     VariantMap &eData = GetEventDataMap();
     eData[CloseConnection::P_CONNECT] = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());

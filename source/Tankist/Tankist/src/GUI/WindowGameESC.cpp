@@ -18,13 +18,13 @@ WindowGameESC::WindowGameESC(Context *context) : Object(context)
     Hide();
 
     Button *bExit = (Button*)window->GetChild("bExit", true);
-    SubscribeToEvent(bExit, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonExit));
+    SubscribeToEvent(bExit, E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonExit));
 
     Button *bSettings = (Button*)window->GetChild("bSettings", true);
-    SubscribeToEvent(bSettings, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonSettings));
+    SubscribeToEvent(bSettings, E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonSettings));
 
     Button *bLanguage = (Button*)window->GetChild("bLanguage", true);
-    SubscribeToEvent(bLanguage, Urho3D::E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonLanguage));
+    SubscribeToEvent(bLanguage, E_RELEASED, URHO3D_HANDLER(WindowGameESC, HandleButtonLanguage));
 
     window->SetOpacity(0.75f);
 }

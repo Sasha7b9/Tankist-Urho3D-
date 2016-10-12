@@ -17,35 +17,35 @@
 
 
 // For server and client
-extern Urho3D::Context *gContext;
-extern Urho3D::Log *gLog;
-extern Urho3D::Network *gNetwork;
-extern Urho3D::FileSystem *gFileSystem;
-extern Urho3D::ResourceCache *gCache;
-extern Urho3D::Scene *gScene;
-extern Urho3D::Time *gTime;
+extern Context *gContext;
+extern Log *gLog;
+extern Network *gNetwork;
+extern FileSystem *gFileSystem;
+extern ResourceCache *gCache;
+extern Scene *gScene;
+extern Time *gTime;
 
 extern Server *gServer;
 extern TypeApplication gTypeApplication;
 
 
 // For client only
-extern Urho3D::UI *gUI;
-extern Urho3D::UIElement *gUIRoot;
-extern Urho3D::Input *gInput;
-extern Urho3D::Renderer *gRenderer;
-extern Urho3D::Graphics *gGraphics;
-extern Urho3D::Console *gConsole;
-extern Urho3D::DebugHud *gDebugHud;
-extern Urho3D::Audio *gAudio;
-extern Urho3D::Localization *gLocale;
-extern Urho3D::DebugRenderer *gDebugRenderer;
-extern Urho3D::PhysicsWorld *gPhysicsWorld;
+extern UI *gUI;
+extern UIElement *gUIRoot;
+extern Input *gInput;
+extern Renderer *gRenderer;
+extern Graphics *gGraphics;
+extern Console *gConsole;
+extern DebugHud *gDebugHud;
+extern Audio *gAudio;
+extern Localization *gLocale;
+extern DebugRenderer *gDebugRenderer;
+extern PhysicsWorld *gPhysicsWorld;
 
 extern CameraUni *gCamera;
 extern Client *gClient;
 
-extern Urho3D::String gIPAddress;
+extern String gIPAddress;
 extern unsigned short gNumPort;
 
 extern Tankist *gTankist;

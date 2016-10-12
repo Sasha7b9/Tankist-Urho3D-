@@ -12,7 +12,7 @@ Settings::Settings()
 {
     SetDefault();
 
-    File file(gContext, FILE_NAME, Urho3D::FILE_READ);
+    File file(gContext, FILE_NAME, FILE_READ);
 
     if(file.IsOpen())
     {
@@ -51,7 +51,7 @@ Settings::~Settings()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Settings::Save()
 {
-    File file(gContext, FILE_NAME, Urho3D::FILE_WRITE);
+    File file(gContext, FILE_NAME, FILE_WRITE);
 
     for(uint i = 0; i < settings.Size(); i++)
     {
@@ -63,15 +63,15 @@ void Settings::Save()
 
         str += String((int)type) + " ";
 
-        if(type == Urho3D::VAR_INT)
+        if(type == VAR_INT)
         {
             str += String(element.GetInt());
         }
-        else if(type == Urho3D::VAR_FLOAT)
+        else if(type == VAR_FLOAT)
         {
             str += String(element.GetFloat());
         }
-        else if(type == Urho3D::VAR_BOOL)
+        else if(type == VAR_BOOL)
         {
             str += String(element.GetBool());
         }
@@ -136,14 +136,14 @@ void Settings::ReadFromFile(File &file, Vector<Variant> &set)
 
         Vector<String> parts = str.Split(' ');
 
-        uint num = Urho3D::ToUInt(parts[0]);
+        uint num = ToUInt(parts[0]);
 
         if(num != set.Size())
         {
             return;
         }
 
-        VariantType type = (VariantType)Urho3D::ToInt(parts[1]);
+        VariantType type = (VariantType)ToInt(parts[1]);
 
         for(uint i = 0; i < parts[0].Length(); i++)
         {
@@ -165,17 +165,17 @@ void Settings::ReadFromFile(File &file, Vector<Variant> &set)
             str.Erase(0);
         }
 
-        if(type == Urho3D::VAR_INT)
+        if(type == VAR_INT)
         {
-            set.Push(Variant(Urho3D::ToInt(str)));
+            set.Push(Variant(ToInt(str)));
         }
-        else if(type == Urho3D::VAR_FLOAT)
+        else if(type == VAR_FLOAT)
         {
-            set.Push(Variant(Urho3D::ToFloat(str)));
+            set.Push(Variant(ToFloat(str)));
         }
-        else if(type == Urho3D::VAR_BOOL)
+        else if(type == VAR_BOOL)
         {
-            set.Push(Variant(Urho3D::ToBool(str)));
+            set.Push(Variant(ToBool(str)));
         }
     }
 }

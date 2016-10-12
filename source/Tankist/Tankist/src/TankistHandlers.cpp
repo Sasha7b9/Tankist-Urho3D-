@@ -5,14 +5,12 @@
 #include "defines.h"
 #include "Tank.h"
 
-using namespace Urho3D;
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     {
 #ifdef WIN32
-    using namespace Urho3D::KeyDown;
+    using namespace KeyDown;
 
     int key = eventData[P_KEY].GetInt();
 
@@ -33,7 +31,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     }
 
     // Close console (if open) or exit when ESC is pressed
-    if(key == Urho3D::KEY_ESCAPE)
+    if(key == KEY_ESCAPE)
     {
         if(gConsole->IsVisible())
         {
@@ -53,7 +51,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
             }
         }
     }
-    else if(key == Urho3D::KEY_RETURN)
+    else if(key == KEY_RETURN)
     {
         if(!gConsole->IsVisible())
         {
@@ -69,66 +67,66 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
     }
 
     // Toggle console with F1
-    else if(key == Urho3D::KEY_F1)
+    else if(key == KEY_F1)
     {
         gConsole->Toggle();
     }
 
     // Toggle debug HUD with F2
-    else if(key == Urho3D::KEY_F2)
+    else if(key == KEY_F2)
     {
-        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == Urho3D::DEBUGHUD_SHOW_MEMORY)
+        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == DEBUGHUD_SHOW_MEMORY)
         {
-            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_ALL);
+            gDebugHud->SetMode(DEBUGHUD_SHOW_ALL);
         }
         else
         {
-            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_NONE);
+            gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
         }
     }
-    else if(key == Urho3D::KEY_F3)
+    else if(key == KEY_F3)
     {
-        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == Urho3D::DEBUGHUD_SHOW_ALL)
+        if(gDebugHud->GetMode() == 0 || gDebugHud->GetMode() == DEBUGHUD_SHOW_ALL)
         {
-            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_MEMORY);
+            gDebugHud->SetMode(DEBUGHUD_SHOW_MEMORY);
         }
         else
         {
-            gDebugHud->SetMode(Urho3D::DEBUGHUD_SHOW_NONE);
+            gDebugHud->SetMode(DEBUGHUD_SHOW_NONE);
         }
     }
 
-    else if(key == Urho3D::KEY_KP_ENTER)
+    else if(key == KEY_KP_ENTER)
     {
         gAudioCapturer->Pause(false);
     }
 
-    else if(key == Urho3D::KEY_KP_PLUS)
+    else if(key == KEY_KP_PLUS)
     {
         gCamera->IncFov();
     }
 
-    else if(key == Urho3D::KEY_KP_MINUS)
+    else if(key == KEY_KP_MINUS)
     {
         gCamera->DecFov();
     }
 
-    else if(key == Urho3D::KEY_KP_MULTIPLY)
+    else if(key == KEY_KP_MULTIPLY)
     {
         gCamera->DefaultFov();
     }
 
-    else if(key == Urho3D::KEY_SPACE)
+    else if(key == KEY_SPACE)
     {
         gCamera->SetCameraMode(ModeShooter, gScene->GetNode(gClient->trunkID));
     }
 
-    else if(key == Urho3D::KEY_F9)
+    else if(key == KEY_F9)
     {
         gCamera->SetCameraMode(ModeCommander, gScene->GetNode(gClient->towerID));
     }
 
-    else if(key == Urho3D::KEY_CTRL)
+    else if(key == KEY_CTRL)
     {
         if(!eventData[P_REPEAT].GetBool())
         {
@@ -222,7 +220,7 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
             screenshot.SavePNG(gFileSystem->GetProgramDir() + "Data/Screenshot_" +
                                Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
         }
-        else if(key == Urho3D::KEY_F12)
+        else if(key == KEY_F12)
         {
             UIElement *instr = gUI->GetRoot()->GetChild(INSTRUCTION);
             instr->SetVisible(!instr->IsVisible());
@@ -236,11 +234,11 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
 {
 #ifdef WIN32
-    using namespace Urho3D::KeyDown;
+    using namespace KeyDown;
 
     int key = eventData[P_KEY].GetInt();
 
-    if(key == Urho3D::KEY_KP_ENTER)
+    if(key == KEY_KP_ENTER)
     {
         gAudioCapturer->Pause(true);
     }

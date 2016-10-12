@@ -14,18 +14,18 @@ Client::Client(Context *context) : Object(context)
     SubscribeToEvent(E_STRING_MESSAGE, URHO3D_HANDLER(Client, HandleStringMessage));
     //gNetwork->RegisterRemoteEvent(E_SHOOT);
 
-    SubscribeToEvent(Urho3D::E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
-    SubscribeToEvent(Urho3D::E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));
-    SubscribeToEvent(Urho3D::E_CONNECTFAILED, URHO3D_HANDLER(Client, HandleConnectFailed));
-    SubscribeToEvent(Urho3D::E_CLIENTCONNECTED, URHO3D_HANDLER(Client, HandleClientObjectID));
-    SubscribeToEvent(Urho3D::E_CLIENTDISCONNECTED, URHO3D_HANDLER(Client, HandleClientDisconnected));
-    SubscribeToEvent(Urho3D::E_CLIENTIDENTITY, URHO3D_HANDLER(Client, HandleClientIdentity));
-    SubscribeToEvent(Urho3D::E_CLIENTSCENELOADED, URHO3D_HANDLER(Client, HandleClientSceneLoaded));
-    SubscribeToEvent(Urho3D::E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
-    //SubscribeToEvent(Urho3D::E_NETWORKUPDATE, URHO3D_HANDLER(Client, HandleNetworkUpdate));
-    //SubscribeToEvent(Urho3D::E_NETWORKUPDATESENT, URHO3D_HANDLER(Client, HandleNetworkUpdateSent));
-    SubscribeToEvent(Urho3D::E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Client, HandleNetworkSceneLoadFailed));
-    SubscribeToEvent(Urho3D::E_REMOTEEVENTDATA, URHO3D_HANDLER(Client, HandleRemoteEventData));
+    SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(Client, HandleServerConnected));
+    SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));
+    SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(Client, HandleConnectFailed));
+    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Client, HandleClientObjectID));
+    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Client, HandleClientDisconnected));
+    SubscribeToEvent(E_CLIENTIDENTITY, URHO3D_HANDLER(Client, HandleClientIdentity));
+    SubscribeToEvent(E_CLIENTSCENELOADED, URHO3D_HANDLER(Client, HandleClientSceneLoaded));
+    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
+    //SubscribeToEvent(E_NETWORKUPDATE, URHO3D_HANDLER(Client, HandleNetworkUpdate));
+    //SubscribeToEvent(E_NETWORKUPDATESENT, URHO3D_HANDLER(Client, HandleNetworkUpdateSent));
+    SubscribeToEvent(E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Client, HandleNetworkSceneLoadFailed));
+    SubscribeToEvent(E_REMOTEEVENTDATA, URHO3D_HANDLER(Client, HandleRemoteEventData));
 }
 
 
@@ -112,7 +112,7 @@ void Client::HandleConnectFailed(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 {
-    using namespace Urho3D::NetworkMessage;
+    using namespace NetworkMessage;
 
     int msgID = eventData[P_MESSAGEID].GetInt();
 
@@ -144,12 +144,14 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::TranslateMessage(const String &message)
+/*
+void Client::TranslateChatMessage(const String &message)
 {
     VectorBuffer buffer;
     buffer.WriteString(message);
     gNetwork->GetServerConnection()->SendMessage(MSG_CHAT, true, true, buffer);
 }
+*/
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

@@ -29,7 +29,7 @@ Tankist::Tankist(Context* context) :
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Setup()
 {
-    Vector<String> argumensts = Urho3D::GetArguments();
+    Vector<String> argumensts = GetArguments();
 
     if (!ParseArguments(argumensts, gTypeApplication, gIPAddress, gNumPort))
     {
@@ -42,7 +42,7 @@ void Tankist::Setup()
     }
 
     gLog = new Log(context_);
-    gLog->SetLevel(Urho3D::LOG_INFO);
+    gLog->SetLevel(LOG_INFO);
 
     if (gTypeApplication == Type_Client)
     {
@@ -259,13 +259,13 @@ void Tankist::SubscribeToEvents()
 {
     if (gTypeApplication == Type_Client)
     {
-        SubscribeToEvent(Urho3D::E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
-        SubscribeToEvent(Urho3D::E_KEYUP, URHO3D_HANDLER(Tankist, HandleKeyUp));
-        SubscribeToEvent(Urho3D::E_CHANGELANGUAGE, URHO3D_HANDLER(Tankist, HandleLanguageChanged));
-        SubscribeToEvent(Urho3D::E_POSTRENDERUPDATE, URHO3D_HANDLER(Tankist, HandlePostRenderUpdate));
+        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Tankist, HandleKeyDown));
+        SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Tankist, HandleKeyUp));
+        SubscribeToEvent(E_CHANGELANGUAGE, URHO3D_HANDLER(Tankist, HandleLanguageChanged));
+        SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Tankist, HandlePostRenderUpdate));
     }
 
-    SubscribeToEvent(Urho3D::E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
+    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
 }
 
 
@@ -288,13 +288,13 @@ void Tankist::CreateUI()
     SharedPtr<UIElement> container(gUIRoot->CreateChild<UIElement>());
     container->SetFixedSize(200, 300);
     container->SetPosition(0, 100);
-    container->SetLayoutMode(Urho3D::LM_VERTICAL);
+    container->SetLayoutMode(LM_VERTICAL);
     container->SetStyleAuto();
 
     statisticsWindow = gUIRoot->CreateChild<Text>();
     statisticsWindow->SetStyleAuto();
     statisticsWindow->SetPosition(gUIRoot->GetWidth() - 200, 0);
-    statisticsWindow->SetColor(Urho3D::Color::BLACK);
+    statisticsWindow->SetColor(Color::BLACK);
 
     gWindowGameESC = new WindowGameESC(context_);
 
@@ -408,16 +408,16 @@ void Tankist::CreateInstructions()
     instructionText->SetText("Press F12 to help");
     instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 10);
 
-    instructionText->SetHorizontalAlignment(Urho3D::HA_LEFT);
-    instructionText->SetVerticalAlignment(Urho3D::VA_TOP);
+    instructionText->SetHorizontalAlignment(HA_LEFT);
+    instructionText->SetVerticalAlignment(VA_TOP);
     instructionText->SetPosition(0, 0);
 
     instructionText = gUIRoot->CreateChild<Text>(INSTRUCTION);
 
     instructionText->SetFont(gCache->GetResource<Font>("Fonts/CRL.ttf"), 15);
-    instructionText->SetTextAlignment(Urho3D::HA_CENTER);
-    instructionText->SetHorizontalAlignment(Urho3D::HA_CENTER);
-    instructionText->SetVerticalAlignment(Urho3D::VA_CENTER);
+    instructionText->SetTextAlignment(HA_CENTER);
+    instructionText->SetHorizontalAlignment(HA_CENTER);
+    instructionText->SetVerticalAlignment(VA_CENTER);
     instructionText->SetPosition(0, gUI->GetRoot()->GetHeight() / 4);
     instructionText->SetVisible(false);
 }
@@ -425,7 +425,7 @@ void Tankist::CreateInstructions()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::UpdateStatisticWindow()
 {
-    statisticsWindow->SetText(Urho3D::ToString("%d users online\n\n", numClients) +
+    statisticsWindow->SetText(ToString("%d users online\n\n", numClients) +
                               String("speed in = ") + String((int)(bytesInPerSec / 1024.0f + 0.5f)) + String(" kB/s\n") +
                               String("speed out = ") + String((int)(bytesOutPerSec / 1024.0f + 0.5f)) + String(" kB/s\n") +
                               String("ping = ") + String((int)(ping * 1000.0f)) + String(" ms\n\n") +

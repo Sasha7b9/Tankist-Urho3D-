@@ -15,7 +15,7 @@ CameraUni::CameraUni(Context *context) : Object(context)
     camera = this->node->CreateComponent<Camera>();
     camera->SetFarClip(5000.0f);
     camera->SetFov(45.0f);
-    //camera->SetFillMode(Urho3D::FILL_WIREFRAME);
+    //camera->SetFillMode(FILL_WIREFRAME);
     GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, gScene, camera));
     node->SetPosition({0.0f, 0.0f, 50.0f});
 }

@@ -15,13 +15,13 @@ Chat::Chat(Context *context, Type type) : Object(context)
         SharedPtr<UIElement> container(gUIRoot->CreateChild<UIElement>());
         container->SetFixedSize(200, 300);
         container->SetPosition(0, 30);
-        container->SetLayoutMode(Urho3D::LM_VERTICAL);
+        container->SetLayoutMode(LM_VERTICAL);
         container->SetStyleAuto();
 
         Font *font = gCache->GetResource<Font>("Fonts/CRL.ttf");
 
         historyText = container->CreateChild<Text>();
-        historyText->SetColor(Urho3D::Color::WHITE);
+        historyText->SetColor(Color::WHITE);
         historyText->SetFont(font, 10);
         historyText->SetMaxHeight(100);
         historyText->SetMaxWidth(300);

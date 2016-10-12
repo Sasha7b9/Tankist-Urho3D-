@@ -20,11 +20,11 @@ Governor::Governor(Context *context, UIElement *parent, char *nameGovernor, int 
 
     scale = (float)(btnDirect->GetWidth() - slider->GetWidth()) / (max - min);
 
-    SubscribeToEvent(btnLess, Urho3D::E_CLICK, URHO3D_HANDLER(Governor, HandleButtonLess));
-    SubscribeToEvent(btnMore, Urho3D::E_CLICK, URHO3D_HANDLER(Governor, HandleButtonMore));
-    SubscribeToEvent(slider, Urho3D::E_CLICK, URHO3D_HANDLER(Governor, HandleMouseDown));
-    SubscribeToEvent(Urho3D::E_CLICKEND, URHO3D_HANDLER(Governor, HandleMouseUp));
-    SubscribeToEvent(Urho3D::E_MOUSEMOVE, URHO3D_HANDLER(Governor, HandleMouseMove));
+    SubscribeToEvent(btnLess, E_CLICK, URHO3D_HANDLER(Governor, HandleButtonLess));
+    SubscribeToEvent(btnMore, E_CLICK, URHO3D_HANDLER(Governor, HandleButtonMore));
+    SubscribeToEvent(slider, E_CLICK, URHO3D_HANDLER(Governor, HandleMouseDown));
+    SubscribeToEvent(E_CLICKEND, URHO3D_HANDLER(Governor, HandleMouseUp));
+    SubscribeToEvent(E_MOUSEMOVE, URHO3D_HANDLER(Governor, HandleMouseMove));
 
     SetValue(min);
 }
@@ -107,7 +107,7 @@ void Governor::HandleMouseMove(StringHash, VariantMap &eventData)
 {
     if(mousePressed)
     {
-        using namespace Urho3D::MouseMove;
+        using namespace MouseMove;
 
         int newPos = slider->GetPosition().x_ + eventData[P_DX].GetInt();
 

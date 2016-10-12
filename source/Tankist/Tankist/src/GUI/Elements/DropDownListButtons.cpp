@@ -12,8 +12,8 @@ DropDownListButtons::DropDownListButtons(Context *context, UIElement *parent, ch
     Button *btnLess = (Button*)ddlb->GetChild("ButtonLess", true);
     Button *btnMore = (Button*)ddlb->GetChild("ButtonMore", true);
     
-    SubscribeToEvent(btnLess, Urho3D::E_RELEASED, URHO3D_HANDLER(DropDownListButtons, HandleButtonLess));
-    SubscribeToEvent(btnMore, Urho3D::E_RELEASED, URHO3D_HANDLER(DropDownListButtons, HandleButtonMore));
+    SubscribeToEvent(btnLess, E_RELEASED, URHO3D_HANDLER(DropDownListButtons, HandleButtonLess));
+    SubscribeToEvent(btnMore, E_RELEASED, URHO3D_HANDLER(DropDownListButtons, HandleButtonMore));
 
     list = (DropDownList*)ddlb->GetChild("DropDownList", true);
 }

@@ -160,11 +160,11 @@ void Client::RequestSystemInformation()
 
     if(connection)
     {
-        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, true, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, false, VectorBuffer());
         timePing = gTime->GetElapsedTime();
-        gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, true, VectorBuffer());
-        gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, true, VectorBuffer());
-        gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, true, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, false, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, false, VectorBuffer());
+        gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, false, VectorBuffer());
 
 
         gTankist->SetBytesInPerSec(connection->GetBytesInPerSec() + gCounters->GetClientIn());
@@ -179,7 +179,7 @@ void Client::MessageControl(Control control, TypeControl type)
     VectorBuffer buffer;
     buffer.WriteInt(control);
     buffer.WriteInt(type);
-    gNetwork->GetServerConnection()->SendMessage(MSG_CONTROL, true, true, buffer);
+    gNetwork->GetServerConnection()->SendMessage(MSG_CONTROL, true, false, buffer);
 }
 
 

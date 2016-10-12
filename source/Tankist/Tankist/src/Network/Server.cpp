@@ -133,7 +133,7 @@ void Server::SendStringMessage(Tank *tank, const String &var, const String &valu
 
     if(connection)
     {
-        connection->SendRemoteEvent(E_STRING_MESSAGE, true, eventData);
+        connection->SendRemoteEvent(E_STRING_MESSAGE, false, eventData);
     }
     else
     {

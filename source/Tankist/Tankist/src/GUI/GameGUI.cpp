@@ -8,6 +8,7 @@ GameGUI::GameGUI(Context *context) : Object(context)
 {
     window = gUIRoot->CreateChild<Text>();
     window->SetStyleAuto();
+    window->SetFontSize(20);
     window->SetPosition(0, gUIRoot->GetHeight() - 200);
     window->SetColor(Color::BLACK);
 

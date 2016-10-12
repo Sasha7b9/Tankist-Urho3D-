@@ -7,6 +7,7 @@
 
 
 #define SEND_CONTROL(k, ctrl)   if(key == k && !repeat) { gClient->MessageControl(ctrl, CTRL_ON); }
+#define SEND_CONTROL_MODECAMERA(k, mode, ctrl) if(key == k && mode) { gClient->MessageControl(ctrl, CTRL_ON); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
@@ -19,10 +20,25 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 
     if(!gUI->GetFocusElement())
     {
+        bool modeShooter = gCamera->GetMode() == ModeShooter;
+        bool modeCommander = gCamera->GetMode() == ModeCommander;
+
         SEND_CONTROL(KEY_W, CTRL_FORWARD)
         else SEND_CONTROL(KEY_S, CTRL_BACK)
         else SEND_CONTROL(KEY_A, CTRL_LEFT)
         else SEND_CONTROL(KEY_D, CTRL_RIGHT)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_2, modeShooter, CTRL_TRUNK_DOWN)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_2, modeCommander, CTRL_TRUNK_DOWN_FAST)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_8, modeShooter, CTRL_TRUNK_UP)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_8, modeCommander, CTRL_TRUNK_UP_FAST)
+        else SEND_CONTROL_MODECAMERA(KEY_E, modeShooter, CTRL_TOWER_RIGHT)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_6, modeShooter, CTRL_TOWER_RIGHT)
+        else SEND_CONTROL_MODECAMERA(KEY_E, modeCommander, CTRL_TOWER_RIGHT_FAST)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_6, modeCommander, CTRL_TOWER_RIGHT_FAST)
+        else SEND_CONTROL_MODECAMERA(KEY_Q, modeShooter, CTRL_TOWER_LEFT)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_4, modeShooter, CTRL_TOWER_LEFT)
+        else SEND_CONTROL_MODECAMERA(KEY_Q, modeCommander, CTRL_TOWER_LEFT_FAST)
+        else SEND_CONTROL_MODECAMERA(KEY_KP_4, modeCommander, CTRL_TOWER_LEFT_FAST)
     }
 
     // Close console (if open) or exit when ESC is pressed
@@ -224,6 +240,8 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
 #endif
 }
 
+#define SEND_CONTROL_OFF(k, ctrl) if(key == k) { gClient->MessageControl(ctrl, CTRL_OFF); }
+#define SEND_CONTROL_MODECAMERA_OFF(k, mode, ctrl) if(key == k && mode) { gClient->MessageControl(ctrl, CTRL_OFF); }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
@@ -233,14 +251,23 @@ void Tankist::HandleKeyUp(StringHash, VariantMap& eventData)
 
     int key = eventData[P_KEY].GetInt();
 
-    if(key == KEY_A)
-    {
-        gClient->MessageControl(CTRL_LEFT, CTRL_OFF);
-    }
-    else if(key == KEY_D)
-    {
-        gClient->MessageControl(CTRL_RIGHT, CTRL_OFF);
-    }
+    bool modeShooter = gCamera->GetMode() == ModeShooter;
+    bool modeCommander = gCamera->GetMode() == ModeCommander;
+
+    SEND_CONTROL_OFF(KEY_A, CTRL_LEFT)
+    else SEND_CONTROL_OFF(KEY_D, CTRL_RIGHT)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_2, modeShooter, CTRL_TRUNK_DOWN)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_2, modeCommander, CTRL_TRUNK_DOWN_FAST)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_8, modeShooter, CTRL_TRUNK_UP)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_8, modeCommander, CTRL_TRUNK_UP_FAST)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_E, modeShooter, CTRL_TOWER_RIGHT)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_6, modeShooter, CTRL_TOWER_RIGHT)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_E, modeCommander, CTRL_TOWER_RIGHT_FAST)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_6, modeCommander, CTRL_TOWER_RIGHT_FAST)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_Q, modeShooter, CTRL_TOWER_LEFT)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_4, modeShooter, CTRL_TOWER_LEFT)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_Q, modeCommander, CTRL_TOWER_LEFT_FAST)
+    else SEND_CONTROL_MODECAMERA_OFF(KEY_KP_4, modeCommander, CTRL_TOWER_LEFT_FAST)
 
     if(key == KEY_KP_ENTER)
     {

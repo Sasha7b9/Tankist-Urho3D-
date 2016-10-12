@@ -51,13 +51,9 @@ void Tank::SetControl(Control control, TypeControl type)
         }
         gServer->SendStringMessage(this, "Speed", String(speed));
     }
-    else if(control == CTRL_LEFT)
+    else
     {
-        controls.Set(CTRL_LEFT, type == CTRL_ON);
-    }
-    else if(control == CTRL_RIGHT)
-    {
-        controls.Set(CTRL_RIGHT, type == CTRL_ON);
+        controls.Set(control, type == CTRL_ON);
     }
 }
 
@@ -149,10 +145,6 @@ void Tank::FixedUpdate(float timeStep)
     }
 
     Vector3 localVelocity = hullRot.Inverse() * hullBody->GetLinearVelocity();
-
-    if(controls.buttons_ & CTRL_STOP)
-    {
-    }
 
     if(controls.buttons_ & CTRL_TOWER_RIGHT)
     {

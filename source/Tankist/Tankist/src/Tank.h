@@ -15,8 +15,7 @@ enum Control
     CTRL_TOWER_LEFT_FAST    = 1 << 8,
     CTRL_TOWER_RIGHT_FAST   = 1 << 9,
     CTRL_TRUNK_UP_FAST      = 1 << 10,
-    CTRL_TRUNK_DOWN_FAST    = 1 << 11,
-    CTRL_STOP               = 1 << 12
+    CTRL_TRUNK_DOWN_FAST    = 1 << 11
 };
 
 enum TypeControl

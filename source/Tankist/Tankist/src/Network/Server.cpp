@@ -205,6 +205,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             {
                 Tank *tank = tanks[i];
                 tank->SetControl(cntrl, type);
+                break;
             }
         }
     }

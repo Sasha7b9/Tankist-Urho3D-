@@ -38,23 +38,6 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 
         if(serverConnection)
         {
-            if(!gUI->GetFocusElement())
-            {
-                controls.Set(CTRL_STOP, gInput->GetKeyDown(KEY_KP_ENTER));
-                controls.Set(CTRL_TOWER_RIGHT, (gInput->GetKeyDown('E') | gInput->GetKeyDown(KEY_KP_6)) && gCamera->GetMode() == ModeShooter);
-                controls.Set(CTRL_TOWER_RIGHT_FAST, (gInput->GetKeyDown('E') || gInput->GetKeyDown(KEY_KP_6)) && gCamera->GetMode() == ModeCommander);
-                controls.Set(CTRL_TOWER_LEFT, (gInput->GetKeyDown('Q') | gInput->GetKeyDown(KEY_KP_4)) && gCamera->GetMode() == ModeShooter);
-                controls.Set(CTRL_TOWER_LEFT_FAST, (gInput->GetKeyDown('Q') || gInput->GetKeyDown(KEY_KP_4)) && gCamera->GetMode() == ModeCommander);
-                controls.Set(CTRL_TRUNK_DOWN, gInput->GetKeyDown(KEY_KP_2) && gCamera->GetMode() == ModeShooter);
-                controls.Set(CTRL_TRUNK_DOWN_FAST, gInput->GetKeyDown(KEY_KP_2) && gCamera->GetMode() == ModeCommander);
-                controls.Set(CTRL_TRUNK_UP, gInput->GetKeyDown(KEY_KP_8) && gCamera->GetMode() == ModeShooter);
-                controls.Set(CTRL_TRUNK_UP_FAST, gInput->GetKeyDown(KEY_KP_8) && gCamera->GetMode() == ModeCommander);
-            }
-
-            serverConnection->SetControls(controls);
-            //serverConnection->SetPosition(cameraNode->GetPosition());
-
-            controls.buttons_ = 0;
         }
     }
     // Server
@@ -66,24 +49,6 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 
             for(uint i = 0; i < connections.Size(); ++i)
             {
-                Connection *connection = connections[i];
-                WeakPtr<Tank> tank = objects[connection];
-                if(!tank)
-                {
-                    continue;
-                }
-
-                const Controls &controls = connection->GetControls();
-
-                tank->controls.Set(CTRL_STOP, ((controls.buttons_ & CTRL_STOP) > 0));
-                tank->controls.Set(CTRL_TOWER_LEFT, ((controls.buttons_ & CTRL_TOWER_LEFT) != 0));
-                tank->controls.Set(CTRL_TOWER_RIGHT, ((controls.buttons_ & CTRL_TOWER_RIGHT) != 0));
-                tank->controls.Set(CTRL_TRUNK_UP, ((controls.buttons_ & CTRL_TRUNK_UP) != 0));
-                tank->controls.Set(CTRL_TRUNK_DOWN, ((controls.buttons_ & CTRL_TRUNK_DOWN) != 0));
-                tank->controls.Set(CTRL_TOWER_LEFT_FAST, ((controls.buttons_ & CTRL_TOWER_LEFT_FAST) != 0));
-                tank->controls.Set(CTRL_TOWER_RIGHT_FAST, ((controls.buttons_ & CTRL_TOWER_RIGHT_FAST) != 0));
-                tank->controls.Set(CTRL_TRUNK_UP_FAST, ((controls.buttons_ & CTRL_TRUNK_UP_FAST) != 0));
-                tank->controls.Set(CTRL_TRUNK_DOWN_FAST, ((controls.buttons_ & CTRL_TRUNK_DOWN_FAST) != 0));
             }
         }
     }

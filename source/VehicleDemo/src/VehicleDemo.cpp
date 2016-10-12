@@ -318,7 +318,6 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             tank_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
             tank_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
             tank_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
-//            tank_->controls_.Set(CTRL_STOP, input->GetKeyDown(KEY_KP_ENTER));
 
             // Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
             if (touchEnabled_)

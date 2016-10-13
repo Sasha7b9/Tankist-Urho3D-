@@ -237,7 +237,7 @@ void Tankist::CreateScene()
     terrain->SetViewMask(VIEW_MASK_TERRAIN);
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 1.0f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
-    terrain->SetSmoothing(false);
+    terrain->SetSmoothing(true);
     terrain->SetHeightMap(gCache->GetResource<Image>("Landscape/land1.png"));
     terrain->SetMaterial(gCache->GetResource<Material>("Landscape/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all

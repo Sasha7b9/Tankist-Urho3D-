@@ -3,7 +3,7 @@
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "defines.h"
-#include "Tank.h"
+#include "Objects/Tank.h"
 
 
 #define SEND_CONTROL(k, ctrl)   if(key == k && !repeat) { gClient->MessageControl(ctrl, CTRL_ON); }

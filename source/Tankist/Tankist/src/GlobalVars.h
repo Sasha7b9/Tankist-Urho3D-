@@ -2,12 +2,12 @@
 
 
 #include "Tankist.h"
-#include "CameraUni.h"
+#include "Objects/CameraUni.h"
 #include "Network/Client.h"
 #include "Network/Chat.h"
 #include "Network/Server.h"
 #include "Game.h"
-#include "ChatLog.h"
+#include "Network/ChatLog.h"
 #include "Audio/AudioCapturer.h"
 #include "GUI/WindowGameESC.h"
 #include "GUI/WindowSettings.h"

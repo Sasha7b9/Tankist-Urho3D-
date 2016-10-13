@@ -34,8 +34,6 @@
     <ClCompile Include="src\Audio\AudioCapturer.cpp" />
     <ClCompile Include="src\Audio\AudioChat.cpp" />
     <ClCompile Include="src\Audio\AudioPlayer.cpp" />
-    <ClCompile Include="src\CameraUni.cpp" />
-    <ClCompile Include="src\ChatLog.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -45,14 +43,17 @@
     <ClCompile Include="src\GUI\GameGUI.cpp" />
     <ClCompile Include="src\GUI\WindowGameESC.cpp" />
     <ClCompile Include="src\GUI\WindowSettings.cpp" />
+    <ClCompile Include="src\Network\ChatLog.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Chat.cpp" />
     <ClCompile Include="src\Network\Messenger.cpp" />
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Objects\CameraUni.cpp" />
+    <ClCompile Include="src\Objects\Sight.cpp" />
+    <ClCompile Include="src\Objects\Tank.cpp" />
     <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="src\Sight.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -62,7 +63,6 @@
     <ClCompile Include="src\TankistHandlers.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\CommonFunctions.h" />
@@ -77,8 +77,6 @@
     <ClInclude Include="src\Audio\AudioCapturer.h" />
     <ClInclude Include="src\Audio\AudioChat.h" />
     <ClInclude Include="src\Audio\AudioPlayer.h" />
-    <ClInclude Include="src\CameraUni.h" />
-    <ClInclude Include="src\ChatLog.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />
@@ -86,16 +84,18 @@
     <ClInclude Include="src\GUI\GameGUI.h" />
     <ClInclude Include="src\GUI\WindowGameESC.h" />
     <ClInclude Include="src\GUI\WindowSettings.h" />
+    <ClInclude Include="src\Network\ChatLog.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
     <ClInclude Include="src\Network\Messenger.h" />
     <ClInclude Include="src\Network\NetworkEvents.h" />
     <ClInclude Include="src\Network\Server.h" />
+    <ClInclude Include="src\Objects\CameraUni.h" />
+    <ClInclude Include="src\Objects\Sight.h" />
+    <ClInclude Include="src\Objects\Tank.h" />
     <ClInclude Include="src\Settings.h" />
-    <ClInclude Include="src\Sight.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />
-    <ClInclude Include="src\Tank.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{02B4EDF3-3C95-4AD2-B1FF-F8D92AD04992}</ProjectGuid>

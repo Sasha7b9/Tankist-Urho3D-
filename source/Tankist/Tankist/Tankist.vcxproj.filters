@@ -19,9 +19,6 @@
     <ClCompile Include="src\Network\Chat.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="src\CameraUni.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -35,9 +32,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\TankistHandlers.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChatLog.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\Messenger.cpp">
@@ -82,14 +76,20 @@
     <ClCompile Include="..\common\Core\Math.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sight.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tank.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\GameGUI.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Tank.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\ChatLog.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\CameraUni.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Sight.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +114,6 @@
     <ClInclude Include="src\Network\Chat.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="src\CameraUni.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -127,9 +124,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Tankist.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChatLog.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\Messenger.h">
@@ -174,17 +168,23 @@
     <ClInclude Include="..\common\Core\Math.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="src\Sight.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Network\NetworkEvents.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tank.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\GameGUI.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Tank.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\ChatLog.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\CameraUni.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Sight.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +211,9 @@
     </Filter>
     <Filter Include="common\Graphics">
       <UniqueIdentifier>{e3e006dd-7ba9-43fa-879d-812c33cdd152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{8bb93e43-1a22-493f-8dc1-091670bd5066}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

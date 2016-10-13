@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Server::Server(Context *context) : Object(context)
 {
-    gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
+    //gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
     gNetwork->RegisterRemoteEvent(E_SHOOT);
     SubscribeToEvent(E_SHOOT, URHO3D_HANDLER(Server, HandleShoot));
 

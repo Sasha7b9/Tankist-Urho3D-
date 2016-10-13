@@ -23,7 +23,6 @@ public:
     bool ConnectToServer();
     void Disconnect();
     bool AttachCameraToNode();
-    //void TranslateChatMessage(const String &message);
 
     // Request ping, load cpu, number clients
     void RequestSystemInformation();
@@ -42,13 +41,6 @@ private:
     void HandleConnectFailed(StringHash, VariantMap &);
     void HandleNetworkMessage(StringHash, VariantMap &);
     void HandleClientConnected(StringHash, VariantMap &);
-    void HandleClientDisconnected(StringHash, VariantMap &);
-    void HandleClientIdentity(StringHash, VariantMap &);
-    void HandleClientSceneLoaded(StringHash, VariantMap &);
-    void HandleNetworkUpdate(StringHash, VariantMap &);
-    void HandleNetworkUpdateSent(StringHash, VariantMap &);
-    void HandleNetworkSceneLoadFailed(StringHash, VariantMap &);
-    void HandleRemoteEventData(StringHash, VariantMap &);
 
     bool serverIsConnected = false;
 

@@ -46,7 +46,6 @@
     <ClCompile Include="src\Network\ChatLog.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Chat.cpp" />
-    <ClCompile Include="src\Network\Messenger.cpp" />
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -87,7 +86,6 @@
     <ClInclude Include="src\Network\ChatLog.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
-    <ClInclude Include="src\Network\Messenger.h" />
     <ClInclude Include="src\Network\NetworkEvents.h" />
     <ClInclude Include="src\Network\Server.h" />
     <ClInclude Include="src\Objects\CameraUni.h" />

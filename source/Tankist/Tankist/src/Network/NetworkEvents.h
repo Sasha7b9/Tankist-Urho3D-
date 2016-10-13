@@ -1,7 +1,6 @@
 #pragma once
 
 
-
 static const int MSG_CHAT = 32;         // Chat message
 static const int MSG_PING = 33;         // Request ping, return float
 static const int MSG_LOAD_CPU = 34;     // Request full load cpu - [0...1] ([0...2]/2) for 2-cpu server, [0...1] ([0...4]/4) for 4-cpu server, return float

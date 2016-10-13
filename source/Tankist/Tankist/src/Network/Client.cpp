@@ -17,14 +17,7 @@ Client::Client(Context *context) : Object(context)
     SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(Client, HandleServerDisconnected));
     SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(Client, HandleConnectFailed));
     SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(Client, HandleClientObjectID));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(Client, HandleClientDisconnected));
-    SubscribeToEvent(E_CLIENTIDENTITY, URHO3D_HANDLER(Client, HandleClientIdentity));
-    SubscribeToEvent(E_CLIENTSCENELOADED, URHO3D_HANDLER(Client, HandleClientSceneLoaded));
     SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
-    //SubscribeToEvent(E_NETWORKUPDATE, URHO3D_HANDLER(Client, HandleNetworkUpdate));
-    //SubscribeToEvent(E_NETWORKUPDATESENT, URHO3D_HANDLER(Client, HandleNetworkUpdateSent));
-    SubscribeToEvent(E_NETWORKSCENELOADFAILED, URHO3D_HANDLER(Client, HandleNetworkSceneLoadFailed));
-    SubscribeToEvent(E_REMOTEEVENTDATA, URHO3D_HANDLER(Client, HandleRemoteEventData));
 }
 
 
@@ -180,61 +173,4 @@ void Client::MessageControl(Control control, TypeControl type)
     buffer.WriteInt(control);
     buffer.WriteInt(type);
     gNetwork->GetServerConnection()->SendMessage(MSG_CONTROL, true, false, buffer);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleClientConnected(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleClientDisconnected(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleClientIdentity(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleClientSceneLoaded(StringHash, VariantMap &)
-{
-    gPhysicsWorld = gScene->GetComponent<PhysicsWorld>();
-    LOG_INFOF("gPhysicsWorld = %d", gPhysicsWorld);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleNetworkUpdate(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleNetworkUpdateSent(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
-}
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-void Client::HandleRemoteEventData(StringHash, VariantMap &)
-{
-    LOG_INFOF("%s", __FUNCTION__);
 }

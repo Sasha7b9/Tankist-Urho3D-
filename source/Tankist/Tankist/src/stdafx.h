@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4100 4127 4251 4265 4266 4275 4312 4365 4571 4625 4626 4640)
+#pragma warning(disable:4100 4127 4251 4263 4264 4265 4266 4275 4312 4365 4571 4625 4626 4640)
 
 #include <Bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.h>
 

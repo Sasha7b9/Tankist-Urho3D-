@@ -1,9 +1,6 @@
 #include <stdafx.h>
-
-
 #include "Tank.h"
-
-#include <CommonFunctions.h>
+#include "common/CommonFunctions.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,9 +103,9 @@ void Tank::FixedUpdate(float timeStep)
     {
         direction.y_ = 1.0f;
         results.Clear();
-        Ray ray(position, direction);
-        RayOctreeQuery query(results, ray, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
-        GetScene()->GetComponent<Octree>()->Raycast(query);
+        Ray ray_(position, direction);
+        RayOctreeQuery query_(results, ray_, RAY_TRIANGLE, M_INFINITY, DRAWABLE_GEOMETRY, VIEW_MASK_TERRAIN);
+        GetScene()->GetComponent<Octree>()->Raycast(query_);
 
         if(results.Size())
         {

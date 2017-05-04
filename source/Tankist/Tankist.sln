@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tankist", "Tankist\Tankist.vcxproj", "{02B4EDF3-3C95-4AD2-B1FF-F8D92AD04992}"
 EndProject
@@ -66,7 +66,6 @@ Global
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|Win32.Build.0 = Debug|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|x64.ActiveCfg = Debug|x64
-		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.Debug|x64.Build.0 = Debug|x64
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Mixed Platforms.Build.0 = Release|Win32
 		{AA9E7AAC-1CEB-46F1-86BD-2166B76B3354}.MinSizeRel|Win32.ActiveCfg = Release|Win32
@@ -195,7 +194,6 @@ Global
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|Mixed Platforms.Build.0 = Debug|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|Win32.ActiveCfg = Debug|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|x64.ActiveCfg = Debug|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|x64.Build.0 = Debug|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Mixed Platforms.Build.0 = Release|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Win32.ActiveCfg = Release|x64

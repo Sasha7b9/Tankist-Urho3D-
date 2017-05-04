@@ -1,8 +1,7 @@
 #include <stdafx.h>
-
 #include "Tankist.h"
 #include "GlobalVars.h"
-#include "defines.h"
+#include "common/defines.h"
 #include "Objects/Tank.h"
 
 

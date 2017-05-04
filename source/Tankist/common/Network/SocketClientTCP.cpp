@@ -19,10 +19,11 @@ SocketClientTCP::~SocketClientTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketClientTCP::Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *clientTCP)
+bool SocketClientTCP::Init(TypeSocket type_, pFuncVpVpVI funcOnRecieve_, void *clientTCP_)
 {
-    this->type = type;
-    this->clientTCP = clientTCP;
+    type = type_;
+    funcOnRecieve = funcOnRecieve_;
+    clientTCP = clientTCP_;
 
     if(type == Socket_Synch && funcOnRecieve)
     {
@@ -35,9 +36,6 @@ bool SocketClientTCP::Init(TypeSocket type, pFuncVpVpVI funcOnRecieve, void *cli
         LOG_ERROR("Error create SocketClientTCP - an asynch type socket has to use funcOnRecieve");
         return false;
     }
-
-
-    this->funcOnRecieve = funcOnRecieve;
 
 #ifdef WIN32
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))

@@ -1,12 +1,10 @@
 #include "stdafx.h"
-
-
 #include "Objects/Tank.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
-#include "../../common/CommonFunctions.h"
+#include "common/CommonFunctions.h"
 #include "Network/Chat.h"
-#include "Graphics/lImage.h"
+#include "common/Graphics/lImage.h"
 
 
 #pragma warning(disable:4100)
@@ -445,33 +443,33 @@ void Tankist::SetPing(float pingMS)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::SetLoadCPU(float loadCPU)
+void Tankist::SetLoadCPU(float loadCPU_)
 {
-    this->loadCPU = loadCPU;
+    loadCPU = loadCPU_;
     UpdateStatisticWindow();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::SetNumClients(int numClients)
+void Tankist::SetNumClients(int numClients_)
 {
-    this->numClients = numClients;
+    numClients = numClients_;
     UpdateStatisticWindow();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::SetBytesInPerSec(float bytesInPerSec)
+void Tankist::SetBytesInPerSec(float bytesInPerSec_)
 {
-    this->bytesInPerSec = bytesInPerSec;
+    bytesInPerSec = bytesInPerSec_;
     UpdateStatisticWindow();
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::SetBytesOutPerSec(float bytesOutPerSec)
+void Tankist::SetBytesOutPerSec(float bytesOutPerSec_)
 {
-    this->bytesOutPerSec = bytesOutPerSec;
+    bytesOutPerSec = bytesOutPerSec_;
     UpdateStatisticWindow();
 }
 

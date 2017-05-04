@@ -7,9 +7,9 @@ public:
     AudioCapturer();
 
     bool Start();
-    void Pause(bool pause)
+    void Pause(bool pause_)
     {
-        this->pause = pause;
+        this->pause = pause_;
     };
     bool InPause()
     {

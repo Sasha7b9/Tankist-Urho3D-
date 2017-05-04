@@ -51,9 +51,9 @@ static void ProcessingNextByte(void *clientTCP, uint8 byte)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-static void CallbackOnRecieve(void *clientTCP, void *buffer, int sizeBuffer)
+static void CallbackOnRecieve(void *clientTCP, void *buffer_, int sizeBuffer)
 {
-    uint8 *pointer = (uint8*)buffer;
+    uint8 *pointer = (uint8*)buffer_;
 
     for(int i = 0; i < sizeBuffer; i++)
     {

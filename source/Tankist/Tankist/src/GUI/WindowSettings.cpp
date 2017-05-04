@@ -44,9 +44,9 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::FillDropDownListResolutions()
 {
-    PODVector<IntVector2> resolutions = gGraphics->GetResolutions();
+    PODVector<IntVector3> resolutions = gGraphics->GetResolutions(0);   // \todo –азобратьс€ с несколькими мониторами
 
-    for(IntVector2 &resolution : resolutions)
+    for(IntVector3 &resolution : resolutions)
     {
         String res = String(resolution.x_) + " x " + String(resolution.y_);
         ddlbResolution->AddItem(res);
@@ -117,7 +117,7 @@ void WindowSettings::HandleButtonApplyChanges(StringHash, VariantMap&)
 
         if(!gGraphics->GetFullscreen())
         {
-            IntVector2 desktopResolution = gGraphics->GetDesktopResolution();
+            IntVector2 desktopResolution = gGraphics->GetDesktopResolution(0);
 
             int posX = desktopResolution.x_ / 2 - gSet->Get(WINDOW_WIDTH) / 2;
             int posY = desktopResolution.y_ / 2 - gSet->Get(WINDOW_HEIGHT) / 2;

@@ -179,12 +179,12 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     }
     else if(msgID == MSG_SERVER_SPEED)
     {
-        Vector<SharedPtr<Connection>> connections = gNetwork->GetClientConnections();
+        Vector<SharedPtr<Connection>> connections_ = gNetwork->GetClientConnections();
 
         float speedIn = 0.0f;
         float speedOut = 0.0f;
 
-        for(Connection *conn : connections)
+        for(Connection *conn : connections_)
         {
             speedIn += conn->GetBytesInPerSec();
             speedOut += conn->GetBytesOutPerSec();

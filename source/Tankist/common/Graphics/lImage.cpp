@@ -1,31 +1,34 @@
 #include <stdafx.h>
-
-
 #include "lImage.h"
-#include "Core/Math.h"
+#include "common/Core/Math.h"
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 lImage::lImage(Context *context) :
     Image(context)
 {
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 lImage::~lImage()
 {
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::SetSize(int width, int height)
 {
     Image::SetSize(width, height, 4);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::RegisterObject(Context* context)
 {
     context->RegisterFactory<lImage>();
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::SetPoint(int x, int y, const Color& color)
 {
     if(x < GetWidth() && y < GetHeight())
@@ -34,6 +37,7 @@ void lImage::SetPoint(int x, int y, const Color& color)
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::DrawLine(int x0, int y0, int x1, int y1, const Color &color)
 {
     if((x1 - x0) == 0 && (y1 - y0) == 0)
@@ -88,6 +92,7 @@ void lImage::DrawLine(int x0, int y0, int x1, int y1, const Color &color)
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::DrawRectangle(int x, int y, int width, int height, const Color &color)
 {
     DrawLine(x, y, x + width, y, color);
@@ -96,6 +101,7 @@ void lImage::DrawRectangle(int x, int y, int width, int height, const Color &col
     DrawLine(x, y, x, y + height, color);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::FillRectangle(int x0, int y0, int width, int height, const Color &color)
 {
     for(int x = x0; x < x0 + width; x++)
@@ -104,6 +110,7 @@ void lImage::FillRectangle(int x0, int y0, int width, int height, const Color &c
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::FillRegion(int x, int y, const Color &color)
 {
     replacedColor = GetPixel(x, y);
@@ -113,6 +120,7 @@ void lImage::FillRegion(int x, int y, const Color &color)
     Replace4Points(x, y, color);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::Replace4Points(int x, int y, const Color &color)
 {
     if(y > 0)                       // upper pixel
@@ -149,6 +157,7 @@ void lImage::Replace4Points(int x, int y, const Color &color)
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::FillRegion(int x, int y, const Color &color, const Color &colorBound)
 {
     boundingColor = colorBound;
@@ -160,6 +169,7 @@ void lImage::FillRegion(int x, int y, const Color &color, const Color &colorBoun
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::CopyImage(int x0, int y0, lImage &inImage)
 {
     int xMin = x0;
@@ -192,7 +202,7 @@ void lImage::CopyImage(int x0, int y0, lImage &inImage)
     }
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 #define FILL(a, b)                              \
     Color col = GetPixel(a, b);                 \
     if(col != boundingColor && col != color)    \
@@ -201,7 +211,7 @@ void lImage::CopyImage(int x0, int y0, lImage &inImage)
         Replace4PointsBound(a, b, color);       \
     }
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::Replace4PointsBound(int x, int y, const Color &color)
 {
     if(y > 0)
@@ -222,6 +232,7 @@ void lImage::Replace4PointsBound(int x, int y, const Color &color)
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::DrawPolyline(const Color &color, int numPoints, int *xy)
 {
     int numLines = numPoints - 1;
@@ -232,6 +243,7 @@ void lImage::DrawPolyline(const Color &color, int numPoints, int *xy)
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::DrawCircle(float x, float y, float radius, const Color &color, float step)
 {
     for (float angle = 0.0f; angle < 360.0f; angle += step)
@@ -240,11 +252,13 @@ void lImage::DrawCircle(float x, float y, float radius, const Color &color, floa
     }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 IntVector2 lImage::GetHotSpot() const
 {
     return hotSpot;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::SetHotSpot(int x, int y)
 {
     hotSpot.x_ = x;

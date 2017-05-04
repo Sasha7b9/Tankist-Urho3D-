@@ -38,8 +38,10 @@ int Governor::GetValue()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Governor::SetValue(int value)
+void Governor::SetValue(int value_)
 {
+    value = value_;
+
     if(value < min)
     {
         value = min;
@@ -49,7 +51,6 @@ void Governor::SetValue(int value)
         value = max;
     }
 
-    this->value = value;
     UpdateSlider();
     UpdateText();
 }

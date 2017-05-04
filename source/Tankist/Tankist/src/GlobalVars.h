@@ -12,7 +12,7 @@
 #include "GUI/WindowGameESC.h"
 #include "GUI/WindowSettings.h"
 #include "Settings.h"
-#include "Counters.h"
+#include "common/Counters.h"
 #include "GUI/GameGUI.h"
 
 

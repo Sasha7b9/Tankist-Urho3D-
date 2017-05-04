@@ -1,7 +1,5 @@
 #pragma once
-
-
-#include "../Objects/Tank.h"
+#include "Objects/Tank.h"
 
 
 class ThreadConnection;

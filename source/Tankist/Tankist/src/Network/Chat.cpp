@@ -269,9 +269,9 @@ void Chat::SendToAll(uint8 typeMessage, const String &message)
         gChatLog->WriteMessage(message);
     }
 
-    for (DataClient &client : clients)
+    for (DataClient &cl : clients)
     {
-        server.SendMessage(client.clientID, typeMessage, (void*)message.CString(), message.Length());
+        server.SendMessage(cl.clientID, typeMessage, (void*)message.CString(), message.Length());
     }
 }
 
@@ -279,11 +279,11 @@ void Chat::SendToAll(uint8 typeMessage, const String &message)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToAllExcept(uint8 typeMessage, const String &message, SOCKET except)
 {
-    for(DataClient &client : clients)
+    for(DataClient &cl : clients)
     {
-        if(client.clientID != except)
+        if(cl.clientID != except)
         {
-            server.SendMessage(client.clientID, typeMessage, (void*)message.CString(), message.Length());
+            server.SendMessage(cl.clientID, typeMessage, (void*)message.CString(), message.Length());
         }
     }
 }

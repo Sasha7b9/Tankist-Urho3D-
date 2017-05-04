@@ -12,9 +12,9 @@ SocketServerTCP::SocketServerTCP()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-bool SocketServerTCP::Init(SocketParam *sockParam)
+bool SocketServerTCP::Init(SocketParam *sockParam_)
 {
-    this->sockParam = sockParam;
+    sockParam = sockParam_;
 
 #ifdef WIN32
 

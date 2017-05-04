@@ -31,9 +31,9 @@ public:
         return state;
     }
 
-    void SetState(StateGame state)
+    void SetState(StateGame state_)
     {
-        this->state = state;
+        this->state = state_;
     }
 
     void Shot();

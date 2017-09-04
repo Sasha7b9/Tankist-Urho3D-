@@ -278,9 +278,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="C:/Urho3D-dbg/build/ZERO_CHECK.vcxproj">
       <Project>98F5376D-39D9-3A2E-A5C3-E0898006F07E</Project>
     </ProjectReference>
-    <ProjectReference Include="C:/Urho3D-dbg/build/Source/Urho3D/Urho3D.vcxproj">
-      <Project>23250E20-DBDC-3888-98B0-5DA5D66F272A</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Sample.h" />

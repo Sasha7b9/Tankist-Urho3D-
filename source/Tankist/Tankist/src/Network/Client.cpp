@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "Client.h"
 #include "Network/NetworkEvents.h"
 

@@ -15,7 +15,9 @@
 *.exp
 *.*~
 *.*~
+*.db
 *.sqlite3
+*.ilb
 log.txt
 out/launcher/files.txt
 files.txt
@@ -26,6 +28,8 @@ source/Tankist/ipch
 source/Tankist/x64
 source/Tankist/Tankist/x64
 source/Tankist/Launcher/x64
+
+source/ThirdParty/opus/win32
 
 out/CoreData/
 out/Data/

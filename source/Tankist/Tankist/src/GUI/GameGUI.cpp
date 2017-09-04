@@ -14,7 +14,7 @@ GameGUI::GameGUI(Context *context) : Object(context)
 
     SubscribeToEvent(E_NEW_VAR, URHO3D_HANDLER(GameGUI, HandleNewVar));
 
-    window->SetText(gLocale->Get("Speed"));
+    window->SetText(gLocale->Get("tSpeed"));
 }
 
 

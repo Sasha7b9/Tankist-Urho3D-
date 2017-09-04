@@ -113,11 +113,45 @@ void lImage::FillRectangle(int x0, int y0, int width, int height, const Color &c
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 void lImage::FillRegion(int x, int y, const Color &color)
 {
-    replacedColor = GetPixel(x, y);
+    /// \todo Посмотреть в интернете, как правильно это делается. https://habrahabr.ru/post/116398/ https://habrahabr.ru/post/116374/
 
     SetPixel(x, y, color);
 
-    Replace4Points(x, y, color);
+    // Чертим горизонтальную линию
+    int x0 = x - 1;
+    while (x0 > 0 && GetPixel(x0, y) != color)
+    {
+        SetPixel(x0, y, color);
+        --x0;
+    }
+    x0 = x + 1;
+    while (x0 < GetWidth() && GetPixel(x0, y) != color)
+    {
+        SetPixel(x0, y, color);
+        ++x0;
+    }
+
+    // Чертим вертикальную линию
+    int y0 = y - 1;
+    while (y0 > 0 && GetPixel(x, y0) != color)
+    {
+        SetPixel(x, y0, color);
+        --y0;
+    }
+    y0 = y + 1;
+    while (y0 < GetHeight() && GetPixel(x, y0) != color)
+    {
+        SetPixel(x, y0, color);
+        ++y0;
+    }
+
+    Replace4Points(x - 1, y - 1, color);
+
+    Replace4Points(x + 1, y - 1, color);
+
+    Replace4Points(x + 1, y + 1, color);
+
+    Replace4Points(x - 1, y + 1, color);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------

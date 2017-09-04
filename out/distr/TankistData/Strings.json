@@ -12,5 +12,6 @@
     "tFullscreen":      { "en":"Fullscreen",        "ru":"Полный экран" },
     "tGameVolume":      { "en":"Game volume",       "ru":"Громкость игры" },
     "tChatVolume":      { "en":"Chat volume",       "ru":"Громкость чата" },
-    "tMicLevel":        { "en":"Microphone level",  "ru":"Уровень микрофона" }
+    "tMicLevel":        { "en":"Microphone level",  "ru":"Уровень микрофона" },
+    "tSpeed":           { "en":"Speed",             "ru":"Скорость" }
 }

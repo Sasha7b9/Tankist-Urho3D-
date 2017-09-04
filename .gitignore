@@ -25,6 +25,8 @@ files.txt
 out/distr/run.exp
 out/distr/Settings
 
+doc/doxygen/Tankist
+
 source/Tankist/ipch
 source/Tankist/x64
 source/Tankist/Tankist/x64

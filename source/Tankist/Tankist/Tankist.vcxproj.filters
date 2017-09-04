@@ -180,6 +180,9 @@
     <ClInclude Include="src\Objects\Sight.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\dox\01 Compiling.h">
+      <Filter>dox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -208,6 +211,9 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{8bb93e43-1a22-493f-8dc1-091670bd5066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dox">
+      <UniqueIdentifier>{d1872df9-9968-4fe5-953c-d908cede36f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,14 +1,3 @@
-***** Compilation *****
-
-0. Install Visual Studion 2013
-
-1. Unzip Urho3D-master.zip to c:\Urho3D (its for debug version)
-
-2. Goto Urho3D directory and create build.bat:
-    call cmake_vs2013.bat build -DURHO3D_64BIT=1 -DURHO3D_LUA=1 -DURHO3D_LUAJIT=1 -DURHO3D_SAMPLES=1 
-                                -DURHO3D_D3D11=1 -DURHO3D_LIB_TYPE=SHARED -DURHO3D_DATABASE_ODBC=1 -DURHO3D_PCH=1 -DURHO3D_C++11=1
-    and run it
-
 3. Unzip Urho3D-master.zip to c:\Urho3Drelease (its for release version)
 
 4. Goto Urho3Drelease directory and create build.bat:

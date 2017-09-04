@@ -76,6 +76,7 @@
     <ClInclude Include="src\Audio\AudioCapturer.h" />
     <ClInclude Include="src\Audio\AudioChat.h" />
     <ClInclude Include="src\Audio\AudioPlayer.h" />
+    <ClInclude Include="src\dox\01 Compiling.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />

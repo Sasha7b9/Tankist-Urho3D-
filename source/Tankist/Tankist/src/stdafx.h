@@ -101,7 +101,7 @@
 #define WSAGetLastError() errno
 #endif
 
-#include "common/defines.h"
+#include "defines.h"
 
 using namespace Urho3D;
 

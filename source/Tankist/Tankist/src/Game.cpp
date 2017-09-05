@@ -1,7 +1,7 @@
 #include <stdafx.h>
 #include "Game.h"
 #include "GlobalVars.h"
-#include "common/defines.h"
+#include "defines.h"
 #include "Network/NetworkEvents.h"
 
 

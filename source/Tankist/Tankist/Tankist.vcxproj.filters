@@ -1,20 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\common\CommonFunctions.cpp">
-      <Filter>common</Filter>
-    </ClCompile>
     <ClCompile Include="src\Network\Client.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\Server.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\ClientTCP.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\ServerTCP.cpp">
-      <Filter>common\Network</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\Chat.cpp">
       <Filter>Network</Filter>
@@ -37,12 +28,6 @@
     <ClCompile Include="src\Audio\AudioCapturer.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\Network\SocketClientTCP.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\SocketServerTCP.cpp">
-      <Filter>common\Network</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\WindowGameESC.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -57,15 +42,6 @@
     </ClCompile>
     <ClCompile Include="src\GUI\Elements\Governor.cpp">
       <Filter>GUI\Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Counters.cpp">
-      <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Graphics\lImage.cpp">
-      <Filter>common\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\Core\Math.cpp">
-      <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="src\GUI\GameGUI.cpp">
       <Filter>GUI</Filter>
@@ -82,25 +58,55 @@
     <ClCompile Include="src\Objects\Sight.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\Audio\Capture\main.cpp">
+      <Filter>Audio\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Capture\TWTSound.cpp">
+      <Filter>Audio\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Capture\TWTThreads.cpp">
+      <Filter>Audio\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Player\main.cpp">
+      <Filter>Audio\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Math.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\lImage.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\lSprite.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ProgressBar.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\ClientTCP.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\ServerTCP.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\SocketClientTCP.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\SocketServerTCP.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CommonFunctions.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Counters.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\CommonFunctions.h">
-      <Filter>common</Filter>
-    </ClInclude>
     <ClInclude Include="src\Network\Client.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\Server.h">
       <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\defines.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Network\ClientTCP.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Network\ServerTCP.h">
-      <Filter>common\Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\Chat.h">
       <Filter>Network</Filter>
@@ -120,12 +126,6 @@
     <ClInclude Include="src\Audio\AudioCapturer.h">
       <Filter>Audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\Network\SocketClientTCP.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Network\SocketServerTCP.h">
-      <Filter>common\Network</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\WindowGameESC.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -140,15 +140,6 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Elements\Governor.h">
       <Filter>GUI\Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Counters.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Graphics\lImage.h">
-      <Filter>common\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\Core\Math.h">
-      <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\NetworkEvents.h">
       <Filter>Network</Filter>
@@ -171,16 +162,58 @@
     <ClInclude Include="src\dox\01 Compiling.h">
       <Filter>dox</Filter>
     </ClInclude>
+    <ClInclude Include="src\Audio\Capture\defines.h">
+      <Filter>Audio\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\Capture\TWTAudio.h">
+      <Filter>Audio\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\Capture\TWTPrefixWindows.h">
+      <Filter>Audio\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\Capture\TWTSound.h">
+      <Filter>Audio\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\Capture\TWTThreads.h">
+      <Filter>Audio\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Math.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\lImage.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\lSprite.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\ProgressBar.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\ClientTCP.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\ServerTCP.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\SocketClientTCP.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\SocketServerTCP.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommonFunctions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Counters.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="common">
-      <UniqueIdentifier>{81afbd66-d8a1-455c-8c7e-11f1fec0f3ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{a1773823-5867-488d-93c1-f3fc7c797076}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="common\Network">
-      <UniqueIdentifier>{bf14e1d3-541b-49f2-afc3-d516e8c163fe}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{59ba811c-a0e0-4214-bebe-7036cda8608c}</UniqueIdentifier>
@@ -194,14 +227,28 @@
     <Filter Include="GUI\Elements">
       <UniqueIdentifier>{ee3d8181-5b6a-4b98-bffb-43997907c563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common\Graphics">
-      <UniqueIdentifier>{e3e006dd-7ba9-43fa-879d-812c33cdd152}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{8bb93e43-1a22-493f-8dc1-091670bd5066}</UniqueIdentifier>
     </Filter>
     <Filter Include="dox">
       <UniqueIdentifier>{d1872df9-9968-4fe5-953c-d908cede36f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio\Capture">
+      <UniqueIdentifier>{e966dbe7-d292-4741-b830-b38451f5486c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Player">
+      <UniqueIdentifier>{9fc40ba8-5be7-4821-8689-834627d57936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{80d2db3e-767b-420f-9e3c-e3bb21ee7ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{04bc1f36-f3ba-4c0c-a3eb-b52f1d7ad4ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Audio\Player\wavViewer.py">
+      <Filter>Audio\Player</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -2,9 +2,9 @@
 #include "Objects/Tank.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
-#include "common/CommonFunctions.h"
+#include "CommonFunctions.h"
 #include "Network/Chat.h"
-#include "common/Graphics/lImage.h"
+#include "Graphics/lImage.h"
 
 
 #pragma warning(disable:4100)

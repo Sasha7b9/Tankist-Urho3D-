@@ -19,23 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\CommonFunctions.cpp" />
-    <ClCompile Include="..\common\Core\Math.cpp" />
-    <ClCompile Include="..\common\Counters.cpp" />
-    <ClCompile Include="..\common\Graphics\lImage.cpp" />
-    <ClCompile Include="..\common\Network\ClientTCP.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\ServerTCP.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\common\Network\SocketClientTCP.cpp" />
-    <ClCompile Include="..\common\Network\SocketServerTCP.cpp" />
     <ClCompile Include="src\Audio\AudioCapturer.cpp" />
+    <ClCompile Include="src\Audio\Capture\main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Capture\TWTSound.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Capture\TWTThreads.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Audio\Player\main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\CommonFunctions.cpp" />
+    <ClCompile Include="src\Core\Math.cpp" />
+    <ClCompile Include="src\Counters.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp" />
+    <ClCompile Include="src\Graphics\lImage.cpp" />
+    <ClCompile Include="src\Graphics\lSprite.cpp" />
+    <ClCompile Include="src\Graphics\ProgressBar.cpp" />
     <ClCompile Include="src\GUI\Elements\DropDownListButtons.cpp" />
     <ClCompile Include="src\GUI\Elements\Governor.cpp" />
     <ClCompile Include="src\GUI\GameGUI.cpp" />
@@ -44,9 +50,13 @@
     <ClCompile Include="src\Network\ChatLog.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Chat.cpp" />
+    <ClCompile Include="src\Network\ClientTCP.cpp" />
     <ClCompile Include="src\Network\Server.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Network\ServerTCP.cpp" />
+    <ClCompile Include="src\Network\SocketClientTCP.cpp" />
+    <ClCompile Include="src\Network\SocketServerTCP.cpp" />
     <ClCompile Include="src\Objects\CameraUni.cpp" />
     <ClCompile Include="src\Objects\Sight.cpp" />
     <ClCompile Include="src\Objects\Tank.cpp" />
@@ -62,19 +72,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\CommonFunctions.h" />
-    <ClInclude Include="..\common\Core\Math.h" />
-    <ClInclude Include="..\common\Counters.h" />
-    <ClInclude Include="..\common\defines.h" />
-    <ClInclude Include="..\common\Graphics\lImage.h" />
-    <ClInclude Include="..\common\Network\ClientTCP.h" />
-    <ClInclude Include="..\common\Network\ServerTCP.h" />
-    <ClInclude Include="..\common\Network\SocketClientTCP.h" />
-    <ClInclude Include="..\common\Network\SocketServerTCP.h" />
     <ClInclude Include="src\Audio\AudioCapturer.h" />
+    <ClInclude Include="src\Audio\Capture\defines.h" />
+    <ClInclude Include="src\Audio\Capture\TWTAudio.h" />
+    <ClInclude Include="src\Audio\Capture\TWTPrefixWindows.h" />
+    <ClInclude Include="src\Audio\Capture\TWTSound.h" />
+    <ClInclude Include="src\Audio\Capture\TWTThreads.h" />
+    <ClInclude Include="src\CommonFunctions.h" />
+    <ClInclude Include="src\Core\Math.h" />
+    <ClInclude Include="src\Counters.h" />
+    <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\dox\01 Compiling.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
+    <ClInclude Include="src\Graphics\lImage.h" />
+    <ClInclude Include="src\Graphics\lSprite.h" />
+    <ClInclude Include="src\Graphics\ProgressBar.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />
     <ClInclude Include="src\GUI\Elements\Governor.h" />
     <ClInclude Include="src\GUI\GameGUI.h" />
@@ -83,14 +96,21 @@
     <ClInclude Include="src\Network\ChatLog.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\Chat.h" />
+    <ClInclude Include="src\Network\ClientTCP.h" />
     <ClInclude Include="src\Network\NetworkEvents.h" />
     <ClInclude Include="src\Network\Server.h" />
+    <ClInclude Include="src\Network\ServerTCP.h" />
+    <ClInclude Include="src\Network\SocketClientTCP.h" />
+    <ClInclude Include="src\Network\SocketServerTCP.h" />
     <ClInclude Include="src\Objects\CameraUni.h" />
     <ClInclude Include="src\Objects\Sight.h" />
     <ClInclude Include="src\Objects\Tank.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Audio\Player\wavViewer.py" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{02B4EDF3-3C95-4AD2-B1FF-F8D92AD04992}</ProjectGuid>

@@ -1,6 +1,4 @@
-#include "stdafx.h"
-
-
+#include <stdafx.h>
 #include "DropDownListButtons.h"
 
 
@@ -18,7 +16,6 @@ DropDownListButtons::DropDownListButtons(Context *context, UIElement *parent, ch
     list = (DropDownList*)ddlb->GetChild("DropDownList", true);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void DropDownListButtons::AddItem(const String &item)
 {
@@ -28,7 +25,6 @@ void DropDownListButtons::AddItem(const String &item)
     list->AddItem(text);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 uint DropDownListButtons::CurrentItem(String &item)
 {
@@ -36,7 +32,6 @@ uint DropDownListButtons::CurrentItem(String &item)
 
     return list->GetSelection();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void DropDownListButtons::SetCurrentItem(const String &item)
@@ -50,7 +45,6 @@ void DropDownListButtons::SetCurrentItem(const String &item)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void DropDownListButtons::HandleButtonLess(StringHash, VariantMap&)
 {
@@ -61,7 +55,6 @@ void DropDownListButtons::HandleButtonLess(StringHash, VariantMap&)
 
     list->SetSelection(newSelection);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void DropDownListButtons::HandleButtonMore(StringHash, VariantMap&)

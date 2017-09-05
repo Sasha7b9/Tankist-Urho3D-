@@ -1,6 +1,6 @@
 #include <stdafx.h>
-
 #include "CommonFunctions.h"
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void CreateListFiles()
@@ -34,7 +34,6 @@ void CreateListFiles()
     file.Close();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Node *GetNodeByName(Scene *scene, char *name)
 {
@@ -58,7 +57,6 @@ Node *GetNodeByName(Scene *scene, char *name)
     return nullptr;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 StaticModel *GetStaticModel(Scene *scene, char *name)
 {
@@ -72,7 +70,6 @@ StaticModel *GetStaticModel(Scene *scene, char *name)
     return nullptr;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void AddModelToNode(Node *node, char *nameModel, const Vector3 &offset)
 {
@@ -81,7 +78,6 @@ void AddModelToNode(Node *node, char *nameModel, const Vector3 &offset)
     model->SetModel(gCache->GetResource<Model>(nameModel));
     nodeModel->SetPosition(offset);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void GetDimensionsCenter(const BoundingBox &box, Vector3 &dimensions, Vector3 &center, float scale)

@@ -1,6 +1,4 @@
 #include "stdafx.h"
-
-
 #include <bass.h>
 #include <opus.h>
 #include "AudioCapturer.h"
@@ -13,6 +11,7 @@
 #pragma comment(lib, "celt.lib")
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define SAMPLERATE 8000
 //#define ADJUSTRATE      // Adjust the output rate (in case input and output devices are going at slightly different speeds)
 
@@ -79,7 +78,7 @@ void DisplayDeviceInfo(BASS_DEVICEINFO *di)
     LOG_INFOF(" (%x)\n", di->flags);
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 AudioCapturer::AudioCapturer()
 {
     /*
@@ -107,7 +106,6 @@ AudioCapturer::AudioCapturer()
     CreateEncodeDecode();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void CreateEncodeDecode()
 {
@@ -126,7 +124,6 @@ void CreateEncodeDecode()
     //opus_decoder_ctl(dec, OPUS_SET_SIGNAL(OPUS_SIGNAL_VOICE));
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
 {
@@ -142,7 +139,6 @@ void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
     *sizeInOut = numBytes * 4;
     return buffer;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void* OPUS_Encode(void *buffIn, int *sizeInOut)
@@ -188,7 +184,6 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
 
     return bufferOut;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, DWORD length, void *user)
@@ -245,7 +240,6 @@ static BOOL CALLBACK RecordingCallback(HRECORD /*handle*/, const void *buffer, D
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void AudioCapturer::PlayData(void *buffer, uint length)
 {
@@ -264,7 +258,6 @@ void AudioCapturer::PlayData(void *buffer, uint length)
         }
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool AudioCapturer::Start()
@@ -294,7 +287,6 @@ bool AudioCapturer::Start()
 
     return true;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool AudioCapturer::Init()
@@ -332,10 +324,21 @@ bool AudioCapturer::Init()
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void AudioCapturer::Stop()
 {
     BASS_RecordFree();
     BASS_Free();
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+void AudioCapturer::Pause(bool pause_)
+{
+    this->pause = pause_;
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+bool AudioCapturer::InPause()
+{
+    return pause;
 }

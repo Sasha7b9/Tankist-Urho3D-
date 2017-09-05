@@ -1,5 +1,4 @@
 #include <stdafx.h>
-
 #include "ClientTCP.h"
 
 
@@ -10,7 +9,6 @@ static StateRecieve stateRecieve = WAIT_MSG;
 static uint8 typeMessage = 0;
 static int recvBytes = 0;
 static BitSet32 lengthBuffer;
-
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +47,6 @@ static void ProcessingNextByte(void *clientTCP, uint8 byte)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackOnRecieve(void *clientTCP, void *buffer_, int sizeBuffer)
 {
@@ -62,13 +59,11 @@ static void CallbackOnRecieve(void *clientTCP, void *buffer_, int sizeBuffer)
     }
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ClientTCP::ClientTCP()
 {
 
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool ClientTCP::Init(pFuncVU8pVI funcOnRecieve)
@@ -77,13 +72,11 @@ bool ClientTCP::Init(pFuncVU8pVI funcOnRecieve)
     return socket.Init(SocketClientTCP::Socket_Asynch, CallbackOnRecieve, this);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool ClientTCP::Connect(const char *address, uint16 port)
 {
     return socket.Connect(address, port);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ClientTCP::SendMessage(uint8 numMessage, void *data, uint size)
@@ -92,7 +85,6 @@ void ClientTCP::SendMessage(uint8 numMessage, void *data, uint size)
     socket.Transmit((void*)&size, 4);
     socket.Transmit(data, (int)size);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ClientTCP::Close()

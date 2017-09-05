@@ -37,12 +37,6 @@
     <ClCompile Include="src\Audio\AudioCapturer.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Audio\AudioChat.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\AudioPlayer.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\Network\SocketClientTCP.cpp">
       <Filter>common\Network</Filter>
     </ClCompile>
@@ -124,12 +118,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\AudioCapturer.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\AudioChat.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\AudioPlayer.h">
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\common\Network\SocketClientTCP.h">

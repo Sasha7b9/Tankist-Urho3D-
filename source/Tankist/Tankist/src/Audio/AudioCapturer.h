@@ -7,14 +7,8 @@ public:
     AudioCapturer();
 
     bool Start();
-    void Pause(bool pause_)
-    {
-        this->pause = pause_;
-    };
-    bool InPause()
-    {
-        return pause;
-    };
+    void Pause(bool pause);
+    bool InPause();
     void Stop();
     void PlayData(void *buffer, uint length);
 

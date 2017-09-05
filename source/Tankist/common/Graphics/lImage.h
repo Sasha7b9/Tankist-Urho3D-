@@ -38,5 +38,4 @@ private:
     IntVector2 hotSpot;
 
     lImage(lImage const&) : Image(nullptr) {};
-
 };

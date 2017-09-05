@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "ServerTCP.h"
 
 
@@ -43,7 +41,6 @@ static void CallbackOnConnect(void *server, SOCKET numClient, char *address, uin
     ((ServerTCP*)server)->param.funcOnConnect(numClient, address, port);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ProcessNextByte(ClientData &data, uint8 b)
 {
@@ -80,7 +77,6 @@ static void ProcessNextByte(ClientData &data, uint8 b)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackOnReceive(void *server, SOCKET numClient, void *buffer, int size)
 {
@@ -94,7 +90,6 @@ static void CallbackOnReceive(void *server, SOCKET numClient, void *buffer, int 
         pointer++;
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackOnDisconnect(void *server, SOCKET numClient)
@@ -110,7 +105,6 @@ ServerTCP::ServerTCP()
 {
     socket = new SocketServerTCP();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool ServerTCP::Init(const ServerParam &servParam)
@@ -138,7 +132,6 @@ bool ServerTCP::Init(const ServerParam &servParam)
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ServerTCP::SendMessage(SOCKET numClient, uint8 typeMessage, void* data, uint size)
 {
@@ -148,7 +141,6 @@ void ServerTCP::SendMessage(SOCKET numClient, uint8 typeMessage, void* data, uin
 
     gCounters->AddServerOut(1 + 4 + (int)size);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void ServerTCP::Close()

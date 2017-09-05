@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "SocketClientTCP.h"
 
 
@@ -10,13 +8,11 @@ SocketClientTCP::SocketClientTCP()
 
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 SocketClientTCP::~SocketClientTCP()
 {
     Close();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool SocketClientTCP::Init(TypeSocket type_, pFuncVpVpVI funcOnRecieve_, void *clientTCP_)
@@ -58,7 +54,6 @@ bool SocketClientTCP::Init(TypeSocket type_, pFuncVpVpVI funcOnRecieve_, void *c
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackOnRecieve(SOCKET sock, void *buffer, int sizeBuffer, bool *run, pFuncVpVpVI funcOnRecieve, void *clientTCP)
 {
@@ -69,7 +64,6 @@ static void CallbackOnRecieve(SOCKET sock, void *buffer, int sizeBuffer, bool *r
         gCounters->AddClientIn(numBytes);
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool SocketClientTCP::Connect(const char *address, uint16 port)
@@ -101,7 +95,6 @@ bool SocketClientTCP::Connect(const char *address, uint16 port)
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketClientTCP::Transmit(void *data, int size)
 {
@@ -109,7 +102,6 @@ void SocketClientTCP::Transmit(void *data, int size)
 
     gCounters->AddClientOut(size);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 int SocketClientTCP::Recieve(char *buffer, int sizeBuffer)
@@ -122,7 +114,6 @@ int SocketClientTCP::Recieve(char *buffer, int sizeBuffer)
 
     return recv((SOCKET)sockClient, buffer, sizeBuffer, 0);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketClientTCP::Close()

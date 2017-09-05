@@ -1,6 +1,4 @@
 #include "stdafx.h"
-
-
 #include "SocketServerTCP.h"
 
 
@@ -9,7 +7,6 @@ SocketServerTCP::SocketServerTCP()
 {
 
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool SocketServerTCP::Init(SocketParam *sockParam_)
@@ -47,7 +44,6 @@ bool SocketServerTCP::Init(SocketParam *sockParam_)
     return true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ExchangeTaks(SOCKET sock, SocketParam *sockParam)
 {
@@ -73,7 +69,6 @@ static void ExchangeTaks(SOCKET sock, SocketParam *sockParam)
 
     delete[] buffer;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void AcceptTask(SOCKET sockServer, SocketParam *sockParam)
@@ -117,7 +112,6 @@ static void AcceptTask(SOCKET sockServer, SocketParam *sockParam)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool SocketServerTCP::Listen(uint16 port)
 {
@@ -150,7 +144,6 @@ bool SocketServerTCP::Listen(uint16 port)
 
     return true;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void SocketServerTCP::Transmit(const void *data, uint size)

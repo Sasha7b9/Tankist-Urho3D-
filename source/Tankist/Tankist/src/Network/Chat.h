@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include "common/Network/ClientTCP.h"
 #include "common/Network/ServerTCP.h"
 

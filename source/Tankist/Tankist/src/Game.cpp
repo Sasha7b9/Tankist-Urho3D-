@@ -11,20 +11,17 @@ Game::Game(Context *context) : Object(context)
 
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::Start()
 {
     SubscribeToEvents();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::SubscribeToEvents()
 {
     SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(Game, HandlePhysicsPreStep));
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
@@ -52,7 +49,6 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::ClientDisconnected(Connection *connection)
 {
@@ -73,7 +69,6 @@ void Game::ClientDisconnected(Connection *connection)
 #endif
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Tank* Game::ClientConnected(Connection *connection)
 {
@@ -81,7 +76,6 @@ Tank* Game::ClientConnected(Connection *connection)
     objects[connection] = tank;
     return tank;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Tank* Game::CreateTank()
@@ -94,7 +88,6 @@ Tank* Game::CreateTank()
 
     return tank;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::Shot()

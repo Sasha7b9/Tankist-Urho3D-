@@ -3,7 +3,7 @@
 #include "Network/NetworkEvents.h"
 
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Client::Client(Context *context) : Object(context)
 {
     gNetwork->RegisterRemoteEvent(E_CLIENTOBJECTID);
@@ -18,13 +18,11 @@ Client::Client(Context *context) : Object(context)
     SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Client, HandleNetworkMessage));
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 Client::~Client()
 {
     Disconnect();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Client::ConnectToServer()
@@ -33,7 +31,6 @@ bool Client::ConnectToServer()
 
     return GetSubsystem<Network>()->Connect(gIPAddress, gNumPort, gScene);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::Disconnect()
@@ -47,7 +44,6 @@ void Client::Disconnect()
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
 {
@@ -55,7 +51,6 @@ void Client::HandleClientObjectID(StringHash, VariantMap &eventData)
     trunkID = eventData[P_ID_TRUNK].GetUInt();
     caseID = eventData[P_ID_CASE].GetUInt();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleStringMessage(StringHash, VariantMap& eventData)
@@ -66,13 +61,11 @@ void Client::HandleStringMessage(StringHash, VariantMap& eventData)
     gGameGUI->SetVar(var, value);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Client::AttachCameraToNode()
 {
     return gCamera->SetCameraMode(ModeCommander, gScene->GetNode(towerID));
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerConnected(StringHash, VariantMap &)
@@ -80,13 +73,11 @@ void Client::HandleServerConnected(StringHash, VariantMap &)
     serverIsConnected = true;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerDisconnected(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleConnectFailed(StringHash, VariantMap &)
@@ -97,7 +88,6 @@ void Client::HandleConnectFailed(StringHash, VariantMap &)
     static int count = 0;
     LOG_ERRORF("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
@@ -132,7 +122,6 @@ void Client::HandleNetworkMessage(StringHash, VariantMap &eventData)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 /*
 void Client::TranslateChatMessage(const String &message)
@@ -142,7 +131,6 @@ void Client::TranslateChatMessage(const String &message)
     gNetwork->GetServerConnection()->SendMessage(MSG_CHAT, true, true, buffer);
 }
 */
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::RequestSystemInformation()
@@ -162,7 +150,6 @@ void Client::RequestSystemInformation()
         gTankist->SetBytesOutPerSec(connection->GetBytesOutPerSec() + gCounters->GetClientOut());
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::MessageControl(Control control, TypeControl type)

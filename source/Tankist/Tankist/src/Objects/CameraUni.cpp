@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "CameraUni.h"
 #include "Sight.h"
 
@@ -20,7 +18,6 @@ CameraUni::CameraUni(Context *context) : Object(context)
     node->SetPosition({0.0f, 0.0f, 50.0f});
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void CameraUni::SetupViewport()
 {
@@ -32,7 +29,6 @@ void CameraUni::SetupViewport()
     SharedPtr<Viewport> viewport(new Viewport(context_, gScene, node->GetComponent<Camera>()));
     GetSubsystem<Renderer>()->SetViewport(0, viewport);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void CameraUni::MoveFromMouse()
@@ -48,7 +44,6 @@ void CameraUni::MoveFromMouse()
         node->SetRotation(Quaternion(pitch, yaw, 0.0f));
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool CameraUni::SetCameraMode(CameraMode mode_, Node *node_)

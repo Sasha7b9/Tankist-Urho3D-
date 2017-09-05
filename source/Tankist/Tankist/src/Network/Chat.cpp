@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "Chat.h"
 #include "NetworkEvents.h"
 
@@ -34,7 +32,6 @@ Chat::Chat(Context *context, Type type) : Object(context)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int sizeBuffer)
 {
@@ -50,7 +47,6 @@ static void CallbackClientOnRecieve(uint8 typeMessage, void *buffer, int sizeBuf
 #endif
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Chat::Connect(const char *address, uint16 port)
@@ -74,13 +70,11 @@ bool Chat::Connect(const char *address, uint16 port)
     return false;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Chat::IsActive()
 {
     return messageEdit->HasFocus();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SetActive(bool active)
@@ -88,7 +82,6 @@ void Chat::SetActive(bool active)
     messageEdit->SetVisible(active);
     messageEdit->SetFocus(active);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::PressEnter()
@@ -105,20 +98,17 @@ void Chat::PressEnter()
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToServer(const String &message)
 {
     client.SendMessage(MSG_CHAT, (void*)message.CString(), message.Length());
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendAudioData(void *buffer, uint sizeBuffer)
 {
     client.SendMessage(MSG_VOICE_CHAT, buffer, sizeBuffer);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::UpdateChat()
@@ -145,7 +135,6 @@ void Chat::UpdateChat()
 
     } while(historyText->GetHeight() > 0.8f * gUIRoot->GetHeight());
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::AddMessage(const String &message)
@@ -182,9 +171,8 @@ struct DataClient
     }
 };
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 static Vector<DataClient> clients;
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnConnect(SOCKET clientID, char *address, uint16 port)
@@ -193,7 +181,6 @@ static void ServerCallbackOnConnect(SOCKET clientID, char *address, uint16 port)
 
     clients.Push(DataClient(clientID, address, port));
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnRecieve(SOCKET clientID, uint8 typeMessage, void *data, int sizeData)
@@ -209,7 +196,6 @@ static void ServerCallbackOnRecieve(SOCKET clientID, uint8 typeMessage, void *da
         gChat->SendToAllExcept(MSG_VOICE_CHAT, message, clientID);
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 static void ServerCallbackOnDisconnect(SOCKET clientID)
@@ -231,7 +217,6 @@ static void ServerCallbackOnDisconnect(SOCKET clientID)
 
     LOG_FUNC_LEAVE
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Chat::Listen(uint16 port)
@@ -260,7 +245,6 @@ bool Chat::Listen(uint16 port)
     return false;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToAll(uint8 typeMessage, const String &message)
 {
@@ -274,7 +258,6 @@ void Chat::SendToAll(uint8 typeMessage, const String &message)
         server.SendMessage(cl.clientID, typeMessage, (void*)message.CString(), message.Length());
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Chat::SendToAllExcept(uint8 typeMessage, const String &message, SOCKET except)

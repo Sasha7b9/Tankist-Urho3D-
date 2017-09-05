@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include "Tankist.h"
 #include "Objects/CameraUni.h"
 #include "Network/Client.h"

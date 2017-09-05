@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include <GlobalVars.h>
 
 

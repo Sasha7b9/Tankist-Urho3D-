@@ -1,6 +1,4 @@
 #include <stdafx.h>
-
-
 #include "NetworkEvents.h"
 
 
@@ -28,7 +26,6 @@ Server::Server(Context *context) : Object(context)
 
     SubscribeToEvent(E_PHYSICSPOSTSTEP, URHO3D_HANDLER(Server, HandlePhysicsPostStep));
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::Start(unsigned short port)
@@ -70,7 +67,6 @@ void Server::HandleShoot(StringHash, VariantMap& eventData)
     boxNodes.Push(boxNode);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
 {
@@ -84,7 +80,6 @@ void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
         }
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientConnected(StringHash, VariantMap &eventData)
@@ -113,7 +108,6 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
     gChat->SendToAll(MSG_CHAT, newConnection->GetAddress() + " enter");
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::SendStringMessage(Tank *tank, const String &var, const String &value)
 {
@@ -140,7 +134,6 @@ void Server::SendStringMessage(Tank *tank, const String &var, const String &valu
         LOG_INFOF("Can not message - not find *tank");
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
@@ -211,7 +204,6 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
 {
@@ -230,13 +222,11 @@ void Server::HandleClientDisconnected(StringHash, VariantMap &eventData)
     gChat->SendToAll(MSG_CHAT, conn->GetAddress() + " leave");
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleControlMessage(StringHash, VariantMap&)
 {
 
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleCloseConnection(StringHash, VariantMap &eventData)
@@ -246,13 +236,11 @@ void Server::HandleCloseConnection(StringHash, VariantMap &eventData)
     gGame->ClientDisconnected(connection);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleServerConnected(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleServerDisconnected(StringHash, VariantMap &)
@@ -260,13 +248,11 @@ void Server::HandleServerDisconnected(StringHash, VariantMap &)
     LOG_INFOF("%s", __FUNCTION__);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleConnectFailed(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientIdentity(StringHash, VariantMap &)
@@ -274,13 +260,11 @@ void Server::HandleClientIdentity(StringHash, VariantMap &)
 
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientSceneLoaded(StringHash, VariantMap &)
 {
 
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkUpdate(StringHash, VariantMap &)
@@ -288,20 +272,17 @@ void Server::HandleNetworkUpdate(StringHash, VariantMap &)
     LOG_INFOF("%s", __FUNCTION__);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkUpdateSent(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
 {
     LOG_INFOF("%s", __FUNCTION__);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleRemoteEventData(StringHash, VariantMap &)

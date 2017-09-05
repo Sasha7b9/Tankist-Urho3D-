@@ -1,6 +1,4 @@
-#include "stdafx.h"
-
-
+#include <stdafx.h>
 #include "WindowSettings.h"
 
 
@@ -40,7 +38,6 @@ WindowSettings::WindowSettings(Context *context) : Object(context)
     window->SetOpacity(0.75f);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::FillDropDownListResolutions()
 {
@@ -52,7 +49,6 @@ void WindowSettings::FillDropDownListResolutions()
         ddlbResolution->AddItem(res);
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::FillControlsFromSettings()
@@ -69,20 +65,17 @@ void WindowSettings::FillControlsFromSettings()
     gMicLevel->SetValue(gSet->Get(MIC_LEVEL));
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::Hide()
 {
     window->SetVisible(false);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::Show()
 {
     window->SetVisible(true);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::HandleButtonApplyChanges(StringHash, VariantMap&)
@@ -127,13 +120,11 @@ void WindowSettings::HandleButtonApplyChanges(StringHash, VariantMap&)
     }
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::HandleButtonReturnToGame(StringHash, VariantMap&)
 {
     Hide();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void WindowSettings::HandleChangedScreenMode(StringHash, VariantMap&)

@@ -1,9 +1,8 @@
 #include "stdafx.h"
-
-
 #include "GameGUI.h"
  
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 GameGUI::GameGUI(Context *context) : Object(context)
 {
     window = gUIRoot->CreateChild<Text>();
@@ -17,13 +16,13 @@ GameGUI::GameGUI(Context *context) : Object(context)
     window->SetText(gLocale->Get("tSpeed"));
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void GameGUI::HandleNewVar(StringHash, VariantMap&)
 {
 
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 void GameGUI::SetVar(const String &var, const String &value)
 {
     window->SetText(var + " : " + value);

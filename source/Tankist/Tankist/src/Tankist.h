@@ -1,6 +1,7 @@
 #pragma once
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define VIEW_MASK_TERRAIN 1 << 10
 
 enum TypeApplication
@@ -14,6 +15,7 @@ enum TypeApplication
 class Tank;
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Tankist : public Application
 {
 
@@ -55,8 +57,6 @@ private:
     void HandlePostUpdate(StringHash, VariantMap&);
     void HandleLanguageChanged(StringHash, VariantMap&);
     void HandlePostRenderUpdate(StringHash, VariantMap&);
-    // Server functions
-    void HandleCloseConnection(StringHash, VariantMap&);
 
     void SubscribeToEvents();
 

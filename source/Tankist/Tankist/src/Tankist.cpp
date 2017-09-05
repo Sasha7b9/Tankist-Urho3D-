@@ -23,7 +23,6 @@ Tankist::Tankist(Context* context) :
     gSet = new Settings();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Setup()
 {
@@ -93,7 +92,6 @@ void Tankist::Setup()
         engineParameters_["ResourcePrefixPaths"] = ";../share/Resources;../share/Urho3D/Resources";
     }
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Start()
@@ -165,7 +163,6 @@ void Tankist::Start()
     gGame->Start();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Stop()
 {
@@ -195,7 +192,6 @@ void Tankist::Stop()
     SAFE_DELETE(gChat);
     SAFE_DELETE(gChatLog);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateScene()
@@ -251,7 +247,6 @@ void Tankist::CreateScene()
     //gScene->GetComponent<PhysicsWorld>()->SetFps(300);
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SubscribeToEvents()
 {
@@ -265,7 +260,6 @@ void Tankist::SubscribeToEvents()
 
     SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Tankist, HandlePostUpdate));
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateUI()
@@ -302,7 +296,6 @@ void Tankist::CreateUI()
 #endif
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::MoveCamera()
 {
@@ -330,7 +323,6 @@ void Tankist::SetWindowTitleAndIcon()
     //gGraphics->SetWindowTitle("Tankist WaT");
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateConsoleAndDebugHud()
 {
@@ -344,7 +336,6 @@ void Tankist::CreateConsoleAndDebugHud()
     gDebugHud = engine_->CreateDebugHud();
     gDebugHud->SetDefaultStyle(xmlFile);
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Tankist::ParseArguments(Vector<String> &arguments, TypeApplication &type, String &address, unsigned short &port)
@@ -380,7 +371,6 @@ bool Tankist::ParseArguments(Vector<String> &arguments, TypeApplication &type, S
     return false;
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Tankist::GetNumPort(String &str, unsigned short &port)
 {
@@ -397,7 +387,6 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 
     return true;
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::CreateInstructions()
@@ -433,14 +422,12 @@ void Tankist::UpdateStatisticWindow()
                               );
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetPing(float pingMS)
 {
     this->ping = pingMS;
     UpdateStatisticWindow();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetLoadCPU(float loadCPU_)
@@ -449,14 +436,12 @@ void Tankist::SetLoadCPU(float loadCPU_)
     UpdateStatisticWindow();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetNumClients(int numClients_)
 {
     numClients = numClients_;
     UpdateStatisticWindow();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetBytesInPerSec(float bytesInPerSec_)
@@ -465,14 +450,12 @@ void Tankist::SetBytesInPerSec(float bytesInPerSec_)
     UpdateStatisticWindow();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetBytesOutPerSec(float bytesOutPerSec_)
 {
     bytesOutPerSec = bytesOutPerSec_;
     UpdateStatisticWindow();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetBytesInPerSecServer(float bytes)
@@ -481,14 +464,12 @@ void Tankist::SetBytesInPerSecServer(float bytes)
     UpdateStatisticWindow();
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::SetBytesOutPerSecServer(float bytes)
 {
     bytesOutPerSecServer = bytes;
     UpdateStatisticWindow();
 }
-
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Tankist::Exit()

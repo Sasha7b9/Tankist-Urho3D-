@@ -38,13 +38,13 @@ ProgressBar::~ProgressBar()
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void ProgressBar::SetParameters(float progress, float timePassed, float timeElapsed, float speed, String currentFile)
+void ProgressBar::SetParameters(float progress_, float timePassed_, float timeElapsed_, float speed_, String currentFile_)
 {
-    this->currentFile = currentFile;
-    this->progress = progress;
-    this->timePassed = timePassed;
-    this->timeElapsed = timeElapsed;
-    this->speed = speed;
+    this->currentFile = currentFile_;
+    this->progress = progress_;
+    this->timePassed = timePassed_;
+    this->timeElapsed = timeElapsed_;
+    this->speed = speed_;
 
     DrawProgress();
 }

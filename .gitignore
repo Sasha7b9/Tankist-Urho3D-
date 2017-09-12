@@ -1,53 +1,19 @@
-*.ilk
-*.pdb
+*.db
+*.dll
+*.exe
+*.exp
 *.idb
-*.*log
+*.ilk
+*.lib
 *.log
 *.obj
-*.*pch
-*.exe
-*.sdf
-*.cache
-*.opensdf
-*.suo
-*.dll
-*.pyc
-*.exp
-*.*~
-*.*~
-*.db
-*.opendb
-*.sqlite3
-*.lib
-log.txt
-out/launcher/files.txt
-files.txt
-out/distr/run.exp
-out/distr/Settings
+*.pdb
+*.tlog
 
-doc/doxygen/Tankist
 
-source/Tankist/ipch
-source/Tankist/x64
-source/Tankist/Tankist/x64
-source/Tankist/Launcher/x64
-source/Tankist/.vs
+out/files.txt
+out/TankistData/*
 
-out/CoreData/
-out/Data/
-out/TankistData/
-out/CoreData/Shaders/HLSL/Cache/
-out/distr/CoreData/Shaders/HLSL/Cache/
-out/distr/files.txt
-out/launcher/CoreData/Shaders/HLSL/Cache/
 
-site/venv/
-site/tankistwat/venv/
+source/Tankist/.vs/*.*
 
-site/tankistwat/.idea/
-
-site/tankistwat/forum/migrations/
-site/tankistwat/newsletter/migrations/
-site/tankistwat/books/migrations/
-
-server/build/

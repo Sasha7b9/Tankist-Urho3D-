@@ -12,8 +12,8 @@ static const int SIZE_BUFFER = 1024 * 10;
 
 struct ClientData
 {
-    ClientData() : server(nullptr), stateRecieve(WAIT_MSG) {};
-    ClientData(void *serv, SOCKET num) : numClient(num), server(serv), recvBytes(0), stateRecieve(WAIT_MSG) {};
+    ClientData() : stateRecieve(WAIT_MSG), server(nullptr) {};
+    ClientData(void *serv, SOCKET num) : numClient(num), stateRecieve(WAIT_MSG), recvBytes(0), server(serv) {};
     uint8 data[SIZE_BUFFER];
     SOCKET numClient;
     StateRecieve stateRecieve;

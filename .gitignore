@@ -15,5 +15,5 @@ out/files.txt
 out/TankistData/*
 
 
-source/Tankist/.vs/*.*
-
+source/Tankist/.vs/*
+source/Tankist/Tankist/x64/*

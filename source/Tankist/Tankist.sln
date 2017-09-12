@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tankist", "Tankist\Tankist.vcxproj", "{02B4EDF3-3C95-4AD2-B1FF-F8D92AD04992}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -192,7 +192,6 @@ Global
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|Mixed Platforms.Build.0 = Debug|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|Win32.ActiveCfg = Debug|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|x64.ActiveCfg = Debug|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|x64
@@ -221,5 +220,8 @@ Global
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782} = {54764866-AE3D-45E4-A1E1-B50F352ADC55}
 		{245603E3-F580-41A5-9632-B25FE3372CBF} = {54764866-AE3D-45E4-A1E1-B50F352ADC55}
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7} = {54764866-AE3D-45E4-A1E1-B50F352ADC55}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B87BDC6-6C9C-4919-B998-E08F2FABC44A}
 	EndGlobalSection
 EndGlobal

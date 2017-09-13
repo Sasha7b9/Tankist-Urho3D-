@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma warning(push)
-#pragma warning(disable:4251)
+#pragma warning(disable:4251 4668)
 
 #include <Urho3D/Math/StringHash.h>
 #include <Urho3D/Container/Str.h>

@@ -1,4 +1,5 @@
-#include "stdafx.h"
+/* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
+#include <stdafx.h>
 #include "Objects/Tank.h"
 #include "Tankist.h"
 #include "GlobalVars.h"

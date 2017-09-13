@@ -1,3 +1,4 @@
+/* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
 #include <stdafx.h>
 #include "CameraUni.h"
 #include "Sight.h"

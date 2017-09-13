@@ -1,4 +1,4 @@
-
+/* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
 #define STRICT
 #include <windows.h>
 #include <mmsystem.h>

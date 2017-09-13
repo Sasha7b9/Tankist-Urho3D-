@@ -294,7 +294,7 @@ void Tankist::HandlePostUpdate(StringHash, VariantMap &)
 
     if(gTypeApplication == Type_Client)
     {
-        MoveCamera();
+        UpdateCamera();
     }
 
     if(exit)

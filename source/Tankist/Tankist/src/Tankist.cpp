@@ -298,7 +298,7 @@ void Tankist::CreateUI()
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Tankist::MoveCamera()
+void Tankist::UpdateCamera()
 {
     if (gTypeApplication != Type_Server)
     gUI->GetCursor()->SetVisible(!gInput->GetMouseButtonDown(MOUSEB_RIGHT));

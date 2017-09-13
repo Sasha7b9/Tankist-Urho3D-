@@ -10,6 +10,7 @@
 *.pdb
 *.tlog
 
+doc/doxygen/Tankist/*
 
 out/files.txt
 out/TankistData/*

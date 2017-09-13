@@ -17,10 +17,7 @@ class Sight;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CameraUni : public Object
 {
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(CameraUni, Object)
-#pragma warning(pop)
 
 public:
     CameraUni(Context *context);

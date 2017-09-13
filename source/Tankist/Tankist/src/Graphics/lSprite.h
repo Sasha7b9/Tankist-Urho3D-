@@ -6,11 +6,7 @@
 
 class lSprite : public Sprite
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(lSprite, Sprite);
-#pragma warning(pop)
 
 public:
     lSprite(Context *context);

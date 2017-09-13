@@ -12,10 +12,7 @@ URHO3D_EVENT(E_CLOSECONNECTION, CloseConnection)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Server : public Object
 {
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(Server, Object)
-#pragma warning(pop)
 
 public:
     Server(Context *context);

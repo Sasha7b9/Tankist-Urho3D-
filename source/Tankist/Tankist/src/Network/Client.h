@@ -10,10 +10,7 @@ class Client : public Object
 {
 friend class ThreadConnection;
 
-#pragma warning(push)
-#pragma warning(disable:4640)
-    URHO3D_OBJECT(Client, Object)
-#pragma warning(pop)
+URHO3D_OBJECT(Client, Object)
 
 public:
     Client(Context *context);

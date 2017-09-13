@@ -18,11 +18,7 @@ class Tank;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Tankist : public Application
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(Tankist, Application);
-#pragma warning(pop)
 
 public:
     Tankist(Context* context);

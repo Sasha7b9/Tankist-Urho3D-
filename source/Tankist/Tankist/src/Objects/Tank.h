@@ -36,11 +36,7 @@ const float SPEED_TRUNK_ROTATION = 2.5f;
 // Tank component, responsible for physical movement according to controls.
 class Tank : public LogicComponent
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(Tank, LogicComponent);
-#pragma warning(pop)
 
 public:
     /// Construct.

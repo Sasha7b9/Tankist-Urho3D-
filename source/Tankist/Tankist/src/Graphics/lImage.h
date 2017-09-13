@@ -3,11 +3,7 @@
 
 class lImage : public Image
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(lImage, Image);
-#pragma warning(pop)
 
 public:
     lImage(Context *context);

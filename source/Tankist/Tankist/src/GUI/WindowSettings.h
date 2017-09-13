@@ -4,11 +4,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class WindowSettings : public Object
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(WindowSettings, Object)
-#pragma warning(pop)
 
 public:
     WindowSettings(Context *context);

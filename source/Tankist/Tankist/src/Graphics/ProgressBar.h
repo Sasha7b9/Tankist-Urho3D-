@@ -6,11 +6,7 @@
 
 class ProgressBar : public UIElement
 {
-
-#pragma warning(push)
-#pragma warning(disable:4640)
     URHO3D_OBJECT(ProgressBar, UIElement);
-#pragma warning(pop)
 
 public:
     ProgressBar(Context *context);

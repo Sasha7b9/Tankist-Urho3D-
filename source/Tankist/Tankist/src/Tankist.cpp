@@ -372,7 +372,7 @@ bool Tankist::GetNumPort(String &str, unsigned short &port)
 {
     String strPort = str.Substring(6);
 
-    long int numPort = strtol(strPort.CString(), 0, 10);
+    long int numPort = strtol(strPort.CString(), nullptr, 10);
 
     if (numPort == 0L)
     {

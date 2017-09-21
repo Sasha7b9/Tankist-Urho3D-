@@ -47,16 +47,16 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="src\Objects\Tank.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\ChatLog.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="src\Objects\CameraUni.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Objects\Sight.cpp">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\Capture\main.cpp">
       <Filter>Audio\Capture</Filter>
@@ -145,16 +145,16 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\Tank.h">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\ChatLog.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\CameraUni.h">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\Sight.h">
-      <Filter>src\Objects</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\dox\01 Compiling.h">
       <Filter>dox</Filter>
@@ -239,7 +239,7 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{04bc1f36-f3ba-4c0c-a3eb-b52f1d7ad4ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Objects">
+    <Filter Include="Objects">
       <UniqueIdentifier>{8bb93e43-1a22-493f-8dc1-091670bd5066}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

@@ -1,24 +1,24 @@
 /* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
 #include <stdafx.h>
-#include "lSprite.h"
+#include "SpriteT.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-lSprite::lSprite(Context *context) : Sprite(context)
+SpriteT::SpriteT(Context *context) : Sprite(context)
 {
-    image = new lImage(context);
+    image = new ImageT(context);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-lSprite::~lSprite()
+SpriteT::~SpriteT()
 {
 
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void lSprite::SetSize(int width, int height)
+void SpriteT::SetSize(int width, int height)
 {
     SetFixedSize(width, height);
     image->SetSize(width, height);
@@ -26,14 +26,14 @@ void lSprite::SetSize(int width, int height)
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void lSprite::Clear(const Color &color)
+void SpriteT::Clear(const Color &color)
 {
     FillRectangle(0, 0, GetWidth(), GetHeight(), color);
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void lSprite::FillRectangle(int x, int y, int width, int height, const Color &color)
+void SpriteT::FillRectangle(int x, int y, int width, int height, const Color &color)
 {
     image->FillRectangle(x, y, width, height, color);
 

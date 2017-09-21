@@ -42,8 +42,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GlobalVars.cpp" />
-    <ClCompile Include="src\Graphics\lImage.cpp" />
-    <ClCompile Include="src\Graphics\lSprite.cpp" />
+    <ClCompile Include="src\Graphics\ImageT.cpp" />
+    <ClCompile Include="src\Graphics\SpriteT.cpp" />
     <ClCompile Include="src\Graphics\ProgressBar.cpp" />
     <ClCompile Include="src\GUI\Elements\DropDownListButtons.cpp" />
     <ClCompile Include="src\GUI\Elements\Governor.cpp" />
@@ -88,8 +88,8 @@
     <ClInclude Include="src\dox\01 Compiling.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
-    <ClInclude Include="src\Graphics\lImage.h" />
-    <ClInclude Include="src\Graphics\lSprite.h" />
+    <ClInclude Include="src\Graphics\ImageT.h" />
+    <ClInclude Include="src\Graphics\SpriteT.h" />
     <ClInclude Include="src\Graphics\ProgressBar.h" />
     <ClInclude Include="src\GUI\Elements\DropDownListButtons.h" />
     <ClInclude Include="src\GUI\Elements\Governor.h" />

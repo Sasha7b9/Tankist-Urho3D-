@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ProgressBar::ProgressBar(Context *context) : UIElement(context)
 {
-    sprite = new lSprite(context);
+    sprite = new SpriteT(context);
     sprite->SetSize((int)width, (int)height);
     AddChild(sprite);
 

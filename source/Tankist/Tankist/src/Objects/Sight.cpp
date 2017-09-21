@@ -1,11 +1,11 @@
 /* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
 #include <stdafx.h>
 #include "Sight.h"
-#include "Graphics/lImage.h"
+#include "Graphics/ImageT.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void DrawTriangle(lImage *image, int x, int y)
+static void DrawTriangle(ImageT *image, int x, int y)
 {
     image->DrawLine(x - 5, y + 10, x, y, Color::WHITE);
     image->DrawLine(x, y, x + 5, y + 10, Color::WHITE);
@@ -15,7 +15,7 @@ static void DrawTriangle(lImage *image, int x, int y)
 Sight::Sight(Context *context) : Window(context)
 {
 #ifdef WIN32
-    lImage *imageSight = new lImage(context_);
+    ImageT *imageSight = new ImageT(context_);
     imageSight->SetSize(gUIRoot->GetWidth(), gUIRoot->GetHeight());
     imageSight->Clear({0.0f, 0.0f, 0.0f, 1.0f});
 

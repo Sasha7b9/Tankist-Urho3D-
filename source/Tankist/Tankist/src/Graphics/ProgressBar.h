@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "lSprite.h"
+#include "SpriteT.h"
 
 
 class ProgressBar : public UIElement
@@ -23,7 +23,7 @@ private:
     ProgressBar(const ProgressBar&) : UIElement(nullptr)
     {};
 
-    SharedPtr<lSprite> sprite;
+    SharedPtr<SpriteT> sprite;
     SharedPtr<Text> textPercents;
     SharedPtr<Text> text;
 

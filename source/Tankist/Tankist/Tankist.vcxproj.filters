@@ -70,12 +70,6 @@
     <ClCompile Include="src\Audio\Player\main.cpp">
       <Filter>Audio\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\lImage.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\lSprite.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\ProgressBar.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -96,6 +90,12 @@
     </ClCompile>
     <ClCompile Include="src\Counters.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ImageT.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\SpriteT.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,12 +177,6 @@
     <ClInclude Include="src\Core\Math.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\lImage.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\lSprite.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Graphics\ProgressBar.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -206,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="src\defines.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\ImageT.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\SpriteT.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

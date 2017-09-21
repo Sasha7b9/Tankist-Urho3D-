@@ -5,7 +5,7 @@
 #include "GlobalVars.h"
 #include "CommonFunctions.h"
 #include "Network/Chat.h"
-#include "Graphics/lImage.h"
+#include "Graphics/ImageT.h"
 
 
 #pragma warning(disable:4100)

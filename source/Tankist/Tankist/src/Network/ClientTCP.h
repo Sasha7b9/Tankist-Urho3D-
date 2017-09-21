@@ -2,10 +2,11 @@
 #include "SocketClientTCP.h"
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ClientTCP
 {
 public:
-    ClientTCP();
+    ClientTCP() = default;
 
     bool Init(pFuncVU8pVI funcOnRecieve);
     bool Connect(const char *address, uint16 port);

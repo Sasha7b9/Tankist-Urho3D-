@@ -10,6 +10,7 @@ public:
     WindowGameESC(Context *context);
 
     void Hide();
+
     void Show();
 
 private:
@@ -19,6 +20,8 @@ private:
     SharedPtr<UIElement> window;
 
     void HandleButtonExit(StringHash, VariantMap&);
+
     void HandleButtonSettings(StringHash, VariantMap&);
+
     void HandleButtonLanguage(StringHash, VariantMap&);
 };

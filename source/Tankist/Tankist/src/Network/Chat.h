@@ -18,12 +18,12 @@ public:
 
     Chat(Context *context, Type type);
 
-    // Functions server
+    // *** Функции сервера ***
     bool Listen(uint16 port);
     void SendToAll(uint8 typeMessage, const String &message);
     void SendToAllExcept(uint8 typeMessage, const String &message, SOCKET except);
 
-    // Functions client
+    // *** Функции клиента ***
     bool Connect(const char *address, uint16 port);
     bool IsActive();
     void SetActive(bool active);
@@ -36,13 +36,16 @@ public:
 private:
     Type type;
 
-    // For server
+    // *** Для сервера ***
     ServerTCP server;
 
-    // For client
+    // *** Для клиента ***
     ClientTCP client;
+
     SharedPtr<Text> historyText;
+
     SharedPtr<LineEdit> messageEdit;
+
     Vector<String> messages;
 
     Chat(Chat const&) : Object(nullptr) {};

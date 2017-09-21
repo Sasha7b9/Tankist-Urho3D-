@@ -29,12 +29,11 @@ private:
     SharedPtr<Text> window;
 
     Vector<String> vars;
+
     Vector<String> values;
 
     void HandleNewVar(StringHash, VariantMap&);
 
-    GameGUI(GameGUI const&) : GameGUI(nullptr)
-    {};
-    GameGUI operator=(GameGUI const &)
-    {};
+    GameGUI(GameGUI const&) : GameGUI(nullptr) {};
+    GameGUI operator=(GameGUI const &)  {};
 };

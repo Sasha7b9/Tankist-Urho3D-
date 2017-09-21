@@ -10,6 +10,7 @@ public:
     WindowSettings(Context *context);
 
     void Hide();
+
     void Show();
 
 private:
@@ -19,14 +20,20 @@ private:
     SharedPtr<UIElement> window;
 
     DropDownListButtons *ddlbResolution = nullptr;
+
     Governor *gGameVolume = nullptr;
+
     Governor *gChatVolume = nullptr;
+
     Governor *gMicLevel = nullptr;
 
     void FillDropDownListResolutions();
+
     void FillControlsFromSettings();
 
     void HandleButtonApplyChanges(StringHash, VariantMap&);
+
     void HandleButtonReturnToGame(StringHash, VariantMap&);
+
     void HandleChangedScreenMode(StringHash, VariantMap&);
 };

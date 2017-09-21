@@ -61,12 +61,6 @@ static void CallbackOnRecieve(void *clientTCP, void *buffer_, int sizeBuffer)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-ClientTCP::ClientTCP()
-{
-
-}
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
 bool ClientTCP::Init(pFuncVU8pVI funcOnRecieve)
 {
     FuncOnRecieve = funcOnRecieve;

@@ -37,7 +37,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\CommonFunctions.cpp" />
-    <ClCompile Include="src\Core\Math.cpp" />
     <ClCompile Include="src\Counters.cpp" />
     <ClCompile Include="src\Game.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>

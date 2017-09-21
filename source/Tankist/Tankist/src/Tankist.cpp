@@ -341,12 +341,7 @@ void Tankist::CreateConsoleAndDebugHud()
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 bool Tankist::ParseArguments(Vector<String> &arguments, TypeApplication &type, String &address, unsigned short &port)
 {
-    if (arguments.Size() == 0)
-    {
-        return false;
-    }
-
-    if (arguments[0] == "-server" && arguments.Size() == 2)
+    if (arguments.Size() == 2 && arguments[0] == "-server")
     {
         if (arguments[1].Length() > 6 && GetNumPort(arguments[1], port))     // "-port:"
         {
@@ -355,7 +350,7 @@ bool Tankist::ParseArguments(Vector<String> &arguments, TypeApplication &type, S
         }
     }
 
-    if (arguments[0] == "-client" && arguments.Size() == 3)
+    if (arguments.Size() == 3 && arguments[0] == "-client")
     {
         if (arguments[1].Length() > 9)   // "-address:"
         {

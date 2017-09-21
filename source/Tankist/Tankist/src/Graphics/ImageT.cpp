@@ -187,51 +187,6 @@ void ImageT::Replace4Points(int x, int y, const Color &color)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-void ImageT::FillRegion(int x, int y, const Color &color, const Color &colorBound)
-{
-    boundingColor = colorBound;
-
-    if(GetPixel(x, y) != colorBound)
-    {
-        SetPixel(x, y, color);
-        Replace4PointsBound(x, y, color);
-    }
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-void ImageT::CopyImage(int x0, int y0, ImageT &inImage)
-{
-    int xMin = x0;
-    int xMax = xMin + inImage.GetWidth();
-    if (xMax >= GetWidth())
-    {
-        xMax = GetWidth() - 1;
-    }
-
-    int yMin = y0;
-    int yMax = yMin + inImage.GetHeight();
-    if (yMax >= GetHeight())
-    {
-        yMax = GetHeight() - 1;
-    }
-
-    for (int x = x0; x < xMax; x++)
-    {
-        for (int y = y0; y < yMax; y++)
-        {
-            int curX = x - x0;
-            int curY = y - y0;
-            Color color = inImage.GetPixel(curX, curY);
-
-            if (color.a_ > 0.5f)
-            {
-                SetPoint(x, y, color);
-            }
-        }
-    }
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 #define FILL(a, b)                              \
     Color col = GetPixel(a, b);                 \
     if(col != boundingColor && col != color)    \
@@ -258,17 +213,6 @@ void ImageT::Replace4PointsBound(int x, int y, const Color &color)
     if(x > 0)
     {
         FILL(x - 1, y);
-    }
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-void ImageT::DrawPolyline(const Color &color, int numPoints, int *xy)
-{
-    int numLines = numPoints - 1;
-
-    for(int i = 0; i < numLines; i++)
-    {
-        DrawLine(xy[i * 2], xy[i * 2 + 1], xy[i * 2 + 2], xy[i * 2 + 3], color);
     }
 }
 

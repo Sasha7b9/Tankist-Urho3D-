@@ -31,7 +31,7 @@ void Tankist::Setup()
 
     if (!ParseArguments(argumensts, gTypeApplication, gIPAddress, gNumPort))
     {
-#ifdef _WINDOWS
+#ifdef WIN32
         LOG_ERROR("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
 #else
         LOG_ERROR("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");

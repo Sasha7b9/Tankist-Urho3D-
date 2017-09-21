@@ -20,8 +20,11 @@ public:
     Game(Context *context);
 
     void Start();
+
     void ClientDisconnected(Connection *connection);
+
     Tank* ClientConnected(Connection *connection);
+
     StateGame GetState()
     {
         return state;
@@ -43,7 +46,6 @@ private:
     void SubscribeToEvents();
 
     void HandlePhysicsPreStep(StringHash, VariantMap&);
-    void HandleCommandControl(StringHash, VariantMap&);
 
     Tank* CreateTank();
 

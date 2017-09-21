@@ -60,7 +60,7 @@ void Game::ClientDisconnected(Connection *connection)
     }
     objects.Erase(connection);
 
-#ifdef _WINDOWS
+#ifdef WIN32
 
     if (objects.Size() == 0)
     {

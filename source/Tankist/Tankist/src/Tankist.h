@@ -32,7 +32,7 @@ public:
     virtual void Start();
     /// Функция вызывается движком
     virtual void Stop();
-
+    /// Функция вызывается для закрытия игры
     void Exit();
     
 private:

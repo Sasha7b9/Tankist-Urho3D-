@@ -23,8 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "silk_float", "..\ThirdParty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "celt", "..\ThirdParty\opus\win32\VS2010\celt.vcxproj", "{245603E3-F580-41A5-9632-B25FE3372CBF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VehicleDemo", "..\VehicleDemo\19_VehicleDemo.vcxproj", "{1F0EC0A1-71AB-3600-9049-26471420AD32}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Urho3D", "..\..\..\..\Urho3D-dbg\generated\Source\Urho3D\Urho3D.vcxproj", "{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}"
 EndProject
 Global
@@ -109,7 +107,6 @@ Global
 		{219EC965-228A-1824-174D-96449D05F88A}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{219EC965-228A-1824-174D-96449D05F88A}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Debug|Win32.Build.0 = Debug|Win32
@@ -130,7 +127,6 @@ Global
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Debug|Win32.Build.0 = Debug|Win32
@@ -151,7 +147,6 @@ Global
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Debug|Win32.Build.0 = Debug|Win32
@@ -172,25 +167,6 @@ Global
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{245603E3-F580-41A5-9632-B25FE3372CBF}.RelWithDebInfo|x64.Build.0 = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|Win32.ActiveCfg = Debug|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Debug|x64.ActiveCfg = Debug|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Mixed Platforms.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Mixed Platforms.Build.0 = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|Win32.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|x64.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.MinSizeRel|x64.Build.0 = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Release|Mixed Platforms.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Release|Mixed Platforms.Build.0 = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Release|Win32.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Release|x64.ActiveCfg = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.Release|x64.Build.0 = Release|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|Mixed Platforms.ActiveCfg = RelWithDebInfo|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|Mixed Platforms.Build.0 = RelWithDebInfo|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{1F0EC0A1-71AB-3600-9049-26471420AD32}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|Win32.ActiveCfg = Debug|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.Debug|x64.ActiveCfg = Debug|x64
@@ -209,7 +185,6 @@ Global
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.RelWithDebInfo|Mixed Platforms.Build.0 = RelWithDebInfo|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|x64
 		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{50A3F196-2B9A-3F75-BE77-F8DD07FB56A7}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

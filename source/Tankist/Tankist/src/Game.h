@@ -2,7 +2,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "Objects/Tank.h"
+#include "Objects/Vehicle.h"
 
 enum StateGame
 {
@@ -23,7 +23,7 @@ public:
 
     void ClientDisconnected(Connection *connection);
 
-    Tank* ClientConnected(Connection *connection);
+    Vehicle* ClientConnected(Connection *connection);
 
     StateGame GetState()
     {
@@ -41,13 +41,13 @@ private:
     Game(Game const&) : Object(nullptr) {};
     Game operator=(Game const&) {};
 
-    HashMap<Connection*, WeakPtr<Tank>> objects;
+    HashMap<Connection*, WeakPtr<Vehicle>> objects;
 
     void SubscribeToEvents();
 
     void HandlePhysicsPreStep(StringHash, VariantMap&);
 
-    Tank* CreateTank();
+    Vehicle* CreateTank();
 
     StateGame state = InProcess;
 

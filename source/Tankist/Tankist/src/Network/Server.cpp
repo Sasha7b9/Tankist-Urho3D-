@@ -93,7 +93,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 
     newConnection->SetScene(gScene);
 
-    Tank* tank = gGame->ClientConnected(newConnection);
+    Vehicle* tank = gGame->ClientConnected(newConnection);
 
     tanks.Push(tank);
     connections.Push(newConnection);
@@ -110,7 +110,7 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-void Server::SendStringMessage(Tank *tank, const String &var, const String &value)
+void Server::SendStringMessage(Vehicle *tank, const String &var, const String &value)
 {
     VariantMap eventData;
     eventData[P_STRING_VAR] = var;
@@ -197,7 +197,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
         {
             if(connection == connections[i])
             {
-                Tank *tank = tanks[i];
+                Vehicle *tank = tanks[i];
                 tank->SetControl(cntrl, type);
                 break;
             }

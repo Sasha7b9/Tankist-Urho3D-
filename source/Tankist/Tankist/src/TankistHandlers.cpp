@@ -3,7 +3,7 @@
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "defines.h"
-#include "Objects/Tank.h"
+#include "Objects/Vehicle.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,7 +359,7 @@ void Tankist::HandlePostRenderUpdate(StringHash, VariantMap&)
 
             if(node->GetName() == "Tank")
             {
-                Tank *tank = node->GetComponent<Tank>();
+                Vehicle *tank = node->GetComponent<Vehicle>();
                 if(tank)
                 {
                     tank->Logging();

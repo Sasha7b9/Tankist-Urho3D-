@@ -53,7 +53,7 @@ void Game::HandlePhysicsPreStep(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Game::ClientDisconnected(Connection *connection)
 {
-    Tank *object = objects[connection];
+    Vehicle *object = objects[connection];
     if(object)
     {
         object->Delete();
@@ -71,20 +71,20 @@ void Game::ClientDisconnected(Connection *connection)
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Tank* Game::ClientConnected(Connection *connection)
+Vehicle* Game::ClientConnected(Connection *connection)
 {
-    Tank *tank = CreateTank();
+    Vehicle *tank = CreateTank();
     objects[connection] = tank;
     return tank;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
-Tank* Game::CreateTank()
+Vehicle* Game::CreateTank()
 {
     Node* tankNode = gScene->CreateChild("Tank");
     tankNode->SetPosition(Vector3(0.0f, 110.0f, 0.0f));
 
-    Tank *tank = tankNode->CreateComponent<Tank>();
+    Vehicle *tank = tankNode->CreateComponent<Vehicle>();
     tank->Init();
 
     return tank;

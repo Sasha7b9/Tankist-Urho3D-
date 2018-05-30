@@ -46,9 +46,6 @@
     <ClCompile Include="src\GUI\GameGUI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="src\Objects\Tank.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\Network\ChatLog.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -97,6 +94,12 @@
     <ClCompile Include="src\Graphics\SpriteT.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Objects\Vehicle.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\_Tank.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Network\Client.h">
@@ -143,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="src\GUI\GameGUI.h">
       <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Objects\Tank.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\ChatLog.h">
       <Filter>Network</Filter>
@@ -206,6 +206,12 @@
     </ClInclude>
     <ClInclude Include="src\Graphics\SpriteT.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Vehicle.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\_Tank.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 /* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
 #include <stdafx.h>
-#include "Objects/Tank.h"
+#include "Objects/Vehicle.h"
 #include "Tankist.h"
 #include "GlobalVars.h"
 #include "CommonFunctions.h"
@@ -17,7 +17,7 @@ URHO3D_DEFINE_APPLICATION_MAIN(Tankist)
 Tankist::Tankist(Context* context) :
     Application(context)
 {
-    Tank::RegisterObject(context);
+    Vehicle::RegisterObject(context);
 
     gContext = context_;
 

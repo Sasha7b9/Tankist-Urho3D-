@@ -1,5 +1,5 @@
 #pragma once
-#include "Objects/Tank.h"
+#include "Objects/Vehicle.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ public:
 
     void Start(unsigned short port);
 
-    void SendStringMessage(Tank *tank, const String &var, const String &value);
+    void SendStringMessage(Vehicle *tank, const String &var, const String &value);
 
 private:
     void HandleCloseConnection(StringHash, VariantMap&);
@@ -41,7 +41,7 @@ private:
 
     int numClients = 0;
 
-    Vector<Tank*>       tanks;          // Это танки - по одному от каждого клиента
+    Vector<Vehicle*>       tanks;          // Это танки - по одному от каждого клиента
     Vector<Connection*> connections;    // А это соответствующие им соединения к клиентам
 
     Server(Server const&) : Object(nullptr) {};

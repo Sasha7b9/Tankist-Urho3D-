@@ -1,5 +1,5 @@
 #pragma once
-#include "Objects/Tank.h"
+#include "Objects/Vehicle.h"
 
 
 class ThreadConnection;

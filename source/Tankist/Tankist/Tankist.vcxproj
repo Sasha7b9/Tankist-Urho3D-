@@ -67,7 +67,12 @@
     <ClCompile Include="src\Network\SocketServerTCP.cpp" />
     <ClCompile Include="src\Objects\CameraUni.cpp" />
     <ClCompile Include="src\Objects\Sight.cpp" />
-    <ClCompile Include="src\Objects\Tank.cpp" />
+    <ClCompile Include="src\Objects\Vehicle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Objects\_Tank.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -112,7 +117,8 @@
     <ClInclude Include="src\Network\SocketServerTCP.h" />
     <ClInclude Include="src\Objects\CameraUni.h" />
     <ClInclude Include="src\Objects\Sight.h" />
-    <ClInclude Include="src\Objects\Tank.h" />
+    <ClInclude Include="src\Objects\Vehicle.h" />
+    <ClInclude Include="src\Objects\_Tank.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Tankist.h" />

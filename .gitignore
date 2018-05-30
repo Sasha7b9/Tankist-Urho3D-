@@ -9,6 +9,8 @@
 *.obj
 *.pdb
 *.tlog
+*.iobj
+*.ipdb
 
 doc/doxygen/Tankist/*
 

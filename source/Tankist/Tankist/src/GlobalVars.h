@@ -12,6 +12,7 @@
 #include "Settings.h"
 #include "Counters.h"
 #include "GUI/GameGUI.h"
+#include <Urho3D/UI/UI.h>
 
 
 /** @defgroup GlovalVars Глобальные переменные

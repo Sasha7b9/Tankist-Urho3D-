@@ -23,18 +23,23 @@
     <ClCompile Include="src\Audio\Capture\main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Audio\Capture\TWTSound.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Audio\Capture\TWTThreads.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Audio\Player\main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\CommonFunctions.cpp" />
     <ClCompile Include="src\Counters.cpp" />
@@ -183,7 +188,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\..\out\distr\</OutDir>
     <TargetName>run</TargetName>
-    <LibraryPath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\win32\VS2010\x64\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\win32\VS2010\x64\Release;C:\Urho3D-dbg\generated\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Urho3D-dbg\Source\ThirdParty;C:\Urho3D-dbg\Source;C:\Urho3D-dbg\Source\ThirdParty\Bullet\src;C:\Urho3D-dbg\generated\Source;C:\Urho3D-dbg\generated\include\Urho3D\ThirdParty;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -256,7 +262,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\My\Tankist\source\Tankist\Tankist\src;C:\Urho3D-rel\build\include;C:\Urho3D-rel\build\include\Urho3D\ThirdParty;C:\My\Tankist\source\Tankist\common;C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\include;C:\Urho3D-dbg\build\include\Urho3D\ThirdParty\Bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4668;4820;4514;4710;4711;4099</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4099;4100;4189;4251;4365;4464;4514;4571;4623;4625;4626;4668;4710;4711;4774;4820;5026;5027;5039</DisableSpecificWarnings>
       <AdditionalOptions>-MP %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessToFile>false</PreprocessToFile>

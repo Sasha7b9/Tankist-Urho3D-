@@ -176,7 +176,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\include;C:\Urho3D-dbg\Source\ThirdParty;$(IncludePath)</IncludePath>
     <OutDir>..\..\..\out\</OutDir>
     <TargetName>Tankist_d</TargetName>
     <LibraryPath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\win32\VS2010\x64\Debug;$(LibraryPath)</LibraryPath>
@@ -214,7 +214,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;URHO3D_ANGELSCRIPT;URHO3D_FILEWATCHER;URHO3D_IK;URHO3D_LOGGING;URHO3D_MINIDUMPS;URHO3D_NAVIGATION;URHO3D_NETWORK;URHO3D_PHYSICS;URHO3D_PROFILING;URHO3D_THREADING;URHO3D_URHO2D;URHO3D_WEBP;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Urho3D-dbg\build\include;src\;C:\Urho3D-dbg\build\include\Urho3D\ThirdParty;C:\Urho3D-dbg\build\include\Urho3D\ThirdParty\Bullet;C:\Urho3D-dbg\build\include\Urho3D\ThirdParty\LuaJIT;..\;C:\Urho3D-dbg\generated\include\Urho3D\ThirdParty;C:\Urho3D-dbg\Source\ThirdParty\Bullet\src;C:\Urho3D-dbg\generated\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4514;4710;4820</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4514;4710;4820</DisableSpecificWarnings>
       <AdditionalOptions>-MP %(AdditionalOptions)</AdditionalOptions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>

@@ -99,8 +99,8 @@ void Server::HandleClientConnected(StringHash, VariantMap &eventData)
     connections.Push(newConnection);
 
     VariantMap remoteEventData;
-    remoteEventData[P_ID_TOWER] = tank->towerID;
-    remoteEventData[P_ID_TRUNK] = tank->trunkID;
+    //remoteEventData[P_ID_TOWER] = tank->towerID;
+//    remoteEventData[P_ID_TRUNK] = tank->trunkID;
     remoteEventData[P_ID_CASE] = 0;
     newConnection->SendRemoteEvent(E_CLIENTOBJECTID, true, remoteEventData);
 
@@ -198,7 +198,7 @@ void Server::HandleNetworkMessage(StringHash, VariantMap &eventData)
             if(connection == connections[i])
             {
                 Vehicle *tank = tanks[i];
-                tank->SetControl(cntrl, type);
+//                tank->SetControl(cntrl, type);
                 break;
             }
         }

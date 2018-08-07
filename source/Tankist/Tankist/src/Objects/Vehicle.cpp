@@ -163,10 +163,12 @@ void Vehicle::FixedUpdate(float timeStep)
     {
         accelerator = -0.5f;
     }
+    /*
     if (controls_.buttons_ & CTRL_BRAKE)
     {
         brake = true;
     }
+    */
     // When steering, wake up the wheel rigidbodies so that their orientation is updated
     if (newSteering != 0.0f)
     {

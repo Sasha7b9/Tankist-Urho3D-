@@ -153,25 +153,25 @@ void Tankist::HandleKeyDown(StringHash, VariantMap& eventData)
         // Texture quality
         if(key == '1')
         {
-            int quality = gRenderer->GetTextureQuality();
+            uint quality = gRenderer->GetTextureQuality();
             ++quality;
             if(quality > QUALITY_HIGH)
             {
                 quality = QUALITY_LOW;
             }
-            gRenderer->SetTextureQuality(quality);
+            gRenderer->SetTextureQuality((MaterialQuality)quality);
         }
 
         // Material quality
         else if(key == '2')
         {
-            int quality = gRenderer->GetMaterialQuality();
+            uint quality = gRenderer->GetMaterialQuality();
             ++quality;
             if(quality > QUALITY_HIGH)
             {
                 quality = QUALITY_LOW;
             }
-            gRenderer->SetMaterialQuality(quality);
+            gRenderer->SetMaterialQuality((MaterialQuality)quality);
         }
 
         // Specular lighting

@@ -1,5 +1,7 @@
-
 #include "Vehicle.h"
+
+#pragma warning(push)
+#pragma warning(disable:4244 4305)
 #include <Urho3D/Core/Context.h>
 #include <Urho3D/Graphics/DebugRenderer.h>
 #include <Urho3D/Graphics/DecalSet.h>
@@ -16,6 +18,7 @@
 #include <Urho3D/Physics/RaycastVehicle.h>
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Scene/Scene.h>
+#pragma warning(pop)
 
 using namespace Urho3D;
 

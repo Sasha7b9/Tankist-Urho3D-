@@ -1,4 +1,5 @@
 /* (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by */
+
 #include <stdafx.h>
 #include "Client.h"
 #include "Network/NetworkEvents.h"
@@ -140,11 +141,12 @@ void Client::RequestSystemInformation()
 
     if(connection)
     {
-        gNetwork->GetServerConnection()->SendMessage(MSG_PING, true, false, VectorBuffer());
+        VectorBuffer buffer;
+        connection->SendMessage(MSG_PING, true, false, buffer);
         timePing = gTime->GetElapsedTime();
-        gNetwork->GetServerConnection()->SendMessage(MSG_LOAD_CPU, true, false, VectorBuffer());
-        gNetwork->GetServerConnection()->SendMessage(MSG_NUM_CLIENTS, true, false, VectorBuffer());
-        gNetwork->GetServerConnection()->SendMessage(MSG_SERVER_SPEED, true, false, VectorBuffer());
+        connection->SendMessage(MSG_LOAD_CPU, true, false, buffer);
+        connection->SendMessage(MSG_NUM_CLIENTS, true, false, buffer);
+        connection->SendMessage(MSG_SERVER_SPEED, true, false, buffer);
 
 
         gTankist->SetBytesInPerSec(connection->GetBytesInPerSec() + gCounters->GetClientIn());

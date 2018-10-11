@@ -3,9 +3,6 @@
 #include "Transform.hlsl"
 
 void VS(float4 iPos : POSITION,
-    #ifdef INSTANCED
-        float4x3 iModelInstance : TEXCOORD4,
-    #endif
     out float3 oTexCoord : TEXCOORD0,
     out float4 oPos : OUTPOSITION)
 {

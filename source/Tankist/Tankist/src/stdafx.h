@@ -1,4 +1,5 @@
 #pragma once
+
 #pragma warning(push)
 #pragma warning(disable:4100 4127 4244 4251 4263 4264 4265 4266 4275 4305 4312 4365 4464 4571 4514 4582 4583 4625 4626 4640 4668 4710 4777 4820 5026 5027)
 
@@ -53,6 +54,10 @@
 #include <Urho3D/IO/MemoryBuffer.h>
 
 #include <Urho3D/Math/Ray.h>
+
+#ifdef SendMessage
+#undef SendMessage
+#endif
 
 #include <Urho3D/Network/Network.h>
 #include <Urho3D/Network/NetworkEvents.h>

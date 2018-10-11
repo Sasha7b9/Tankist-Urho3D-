@@ -93,15 +93,7 @@ void PS(
     const float4 projWorldPos = float4(worldPos, 1.0);
 
     float3 lightDir;
-     float atten = 1;
-
-        #if defined(DIRLIGHT)
-            atten = GetAtten(normal, worldPos, lightDir);
-        #elif defined(SPOTLIGHT)
-            atten = GetAttenSpot(normal, worldPos, lightDir);
-        #else
-            atten = GetAttenPoint(normal, worldPos, lightDir);
-        #endif
+    float atten = GetAtten(normal, worldPos, lightDir);
 
     float shadow = 1;
     #ifdef SHADOW
@@ -121,7 +113,7 @@ void PS(
     const float3 lightVec = normalize(lightDir);
     const float ndl = clamp(abs(dot(normal, lightVec)), M_EPSILON, 1.0);
 
-    float3 BRDF = GetBRDF(worldPos, lightDir, lightVec, toCamera, normal, roughness, albedoInput.rgb, specColor);
+    float3 BRDF = GetBRDF(lightDir, lightVec, toCamera, normal, roughness, albedoInput.rgb, specColor);
 
     oColor.a = 1;
     oColor.rgb  = BRDF * lightColor * shadow * atten / M_PI;

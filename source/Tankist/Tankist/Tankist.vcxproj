@@ -182,7 +182,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\include;C:\Urho3D-dbg\Source\ThirdParty;$(IncludePath)</IncludePath>
+    <IncludePath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\include;C:\Urho3D-dbg\Source\ThirdParty;C:\Urho3D-dbg\Source;$(IncludePath)</IncludePath>
     <OutDir>..\..\..\out\</OutDir>
     <TargetName>Tankist_d</TargetName>
     <LibraryPath>C:\My\Tankist\source\ThirdParty\bass;C:\My\Tankist\source\ThirdParty\opus\win32\VS2010\x64\Debug;$(LibraryPath)</LibraryPath>
@@ -226,6 +226,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -13,7 +13,7 @@ friend class ThreadConnection;
 URHO3D_OBJECT(Client, Object)
 
 public:
-    Client(Context *context);
+    explicit Client(Context *context);
     ~Client();
 
     bool ConnectToServer();

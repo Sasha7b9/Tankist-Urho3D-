@@ -63,8 +63,8 @@ void Tankist::Setup()
     gCache = GetSubsystem<ResourceCache>();
 
     gCache->AddResourceDir(gFileSystem->GetProgramDir() + "TankistData");
-    gCache->AddResourceDir(gFileSystem->GetProgramDir() + "distr\\TankistData");
-    gCache->AddResourceDir(gFileSystem->GetProgramDir() + "..\\..\\out\\distr\\TankistData");
+    //gCache->AddResourceDir(gFileSystem->GetProgramDir() + "distr\\TankistData");
+    //gCache->AddResourceDir(gFileSystem->GetProgramDir() + "..\\..\\out\\distr\\TankistData");
 
     gTime = GetSubsystem<Time>();
 

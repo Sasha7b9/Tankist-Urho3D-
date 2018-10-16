@@ -123,10 +123,10 @@ void Vehicle::CreateEmitter(Vector3 place)
     auto* cache = GetSubsystem<ResourceCache>();
     Node* emitter = GetScene()->CreateChild();
     emitter->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * place + Vector3(0, -wheelRadius_, 0));
-    auto* particleEmitter = emitter->CreateComponent<ParticleEmitter>();
-    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Dust.xml"));
-    particleEmitter->SetEmitting(false);
-    particleEmitterNodeList_.Push(emitter);
+    //auto* particleEmitter = emitter->CreateComponent<ParticleEmitter>();
+    //particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Dust.xml"));
+    //particleEmitter->SetEmitting(false);
+    //particleEmitterNodeList_.Push(emitter);
     emitter->SetTemporary(true);
 }
 

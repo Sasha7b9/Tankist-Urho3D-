@@ -32,9 +32,9 @@ void Tankist::Setup()
     if (!ParseArguments(argumensts, gTypeApplication, gIPAddress, gNumPort))
     {
 #ifdef WIN32
-        LOG_ERROR("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+        URHO3D_LOGERROR("To rum application type tankist.exe -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
 #else
-        LOG_ERROR("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
+        URHO3D_LOGERROR("To rum application type ./tankist -{client|server} [-ip:xxx.xxx.xxx.xxx] -port:xxx");
 #endif
         exit = true;
     }
@@ -182,7 +182,7 @@ void Tankist::Stop()
     //engine_->DumpResources(true);
     //engine_->DumpProfiler();
     //engine_->DumpMemory();
-    gLog->Write(0, "out");
+    gLog->Write(__FILE__, __LINE__, 0, "out");
     gLog->Close();
 
     SAFE_DELETE(gCounters);

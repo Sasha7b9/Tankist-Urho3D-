@@ -86,7 +86,7 @@ void Server::HandlePhysicsPostStep(StringHash, VariantMap&)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleClientConnected(StringHash, VariantMap &eventData)
 {
-    LOG_INFO("New client connected");
+    URHO3D_LOGINFO("New client connected");
 
     using namespace ClientConnected;
 
@@ -133,7 +133,7 @@ void Server::SendStringMessage(Vehicle *tank, const String &var, const String &v
     }
     else
     {
-        LOG_INFOF("Can not message - not find *tank");
+        URHO3D_LOGINFOF("Can not message - not find *tank");
     }
 }
 
@@ -241,19 +241,19 @@ void Server::HandleCloseConnection(StringHash, VariantMap &eventData)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleServerConnected(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleServerDisconnected(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleConnectFailed(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -271,23 +271,23 @@ void Server::HandleClientSceneLoaded(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkUpdate(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkUpdateSent(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleNetworkSceneLoadFailed(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Server::HandleRemoteEventData(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }

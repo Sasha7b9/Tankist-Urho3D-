@@ -63,18 +63,5 @@ union BitSet32
     if(x) delete x;     \
     x = nullptr;
 
-#define LOG_INFO(message) Log::Write(LOG_INFO, message + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-#define LOG_INFOF(format, ...) Log::Write(LOG_INFO, ToString(format, ##__VA_ARGS__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-
-#define LOG_DEBUG(message) Log::Write(LOG_DEBUG, message + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-#define LOG_DEBUGF(format, ...) Log::Write(LOG_DEBUG, ToString(format, ##__VA_ARGS__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-
-#define LOG_WARNING(message) Log::Write(LOG_WARNING, message + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-#define LOG_WARNINGF(format, ...) Log::Write(LOG_WARNING, ToString(format, ##__VA_ARGS__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-
-#define LOG_ERROR(message) Log::Write(LOG_ERROR, message + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-#define LOG_ERRORF(format, ...) Log::Write(LOG_ERROR, ToString(format, ##__VA_ARGS__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-
-#define LOG_FUNC_ENTER Log::Write(LOG_INFO, ToString("%s enter", __FUNCTION__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
-
-#define LOG_FUNC_LEAVE Log::Write(LOG_INFO, ToString("%s leave", __FUNCTION__) + ToString("  .  .  .  .  .  .  .  .  .  .  %s:%d", __FILE__, __LINE__));
+#define LOG_FUNC_ENTER Log::Write(__FILE__, __LINE__, LOG_INFO, ToString("%s enter", __FUNCTION__));
+#define LOG_FUNC_LEAVE Log::Write(__FILE__, __LINE__, LOG_INFO, ToString("%s leave", __FUNCTION__));

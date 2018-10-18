@@ -120,13 +120,13 @@ bool ServerTCP::Init(const ServerParam &servParam)
 
     if (!socket->Init(&socketParam))
     {
-        LOG_ERROR("Can not init socket");
+        URHO3D_LOGERROR("Can not init socket");
         return false;
     }
 
     if (!socket->Listen(servParam.port))
     {
-        LOG_ERROR("Can not connect socket to port");
+        URHO3D_LOGERROR("Can not connect socket to port");
         return false;
     }
 

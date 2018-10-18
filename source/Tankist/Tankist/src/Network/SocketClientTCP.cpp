@@ -24,20 +24,20 @@ bool SocketClientTCP::Init(TypeSocket type_, pFuncVpVpVI funcOnRecieve_, void *c
 
     if(type == Socket_Synch && funcOnRecieve)
     {
-        LOG_ERROR("Error create SocketClientTCP - an synch type socket funcOnRecieve it isn't used");
+        URHO3D_LOGERROR("Error create SocketClientTCP - an synch type socket funcOnRecieve it isn't used");
         return false;
     }
 
     if(type == Socket_Asynch && funcOnRecieve == 0)
     {
-        LOG_ERROR("Error create SocketClientTCP - an asynch type socket has to use funcOnRecieve");
+        URHO3D_LOGERROR("Error create SocketClientTCP - an asynch type socket has to use funcOnRecieve");
         return false;
     }
 
 #ifdef WIN32
     if(WSAStartup(0x202, (WSADATA*)&buff[0]))
     {
-        LOG_ERRORF("Winsock not initialized with error %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Winsock not initialized with error %d", WSAGetLastError());
         return false;
     }
 #endif
@@ -47,7 +47,7 @@ bool SocketClientTCP::Init(TypeSocket type_, pFuncVpVpVI funcOnRecieve_, void *c
 #ifdef WIN32
     if(sockClient == INVALID_SOCKET)
     {
-        LOG_ERRORF("socket() error %d", WSAGetLastError());
+        URHO3D_LOGERRORF("socket() error %d", WSAGetLastError());
         return false;
     }
 #endif
@@ -78,13 +78,13 @@ bool SocketClientTCP::Connect(const char *address, uint16 port)
     }
     else
     {
-        LOG_ERRORF("Invalid address %s", address);
+        URHO3D_LOGERRORF("Invalid address %s", address);
         return false;
     }
 
     if(connect(sockClient, (sockaddr*)&destAddr, sizeof(destAddr)))
     {
-        LOG_ERRORF("Connect error %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Connect error %d", WSAGetLastError());
         return false;
     }
 
@@ -109,7 +109,7 @@ int SocketClientTCP::Recieve(char *buffer, int sizeBuffer)
 {
     if(type == Socket_Asynch)
     {
-        LOG_ERROR("Call Recieve method for asynch socket");
+        URHO3D_LOGERROR("Call Recieve method for asynch socket");
         return 0;
     }
 

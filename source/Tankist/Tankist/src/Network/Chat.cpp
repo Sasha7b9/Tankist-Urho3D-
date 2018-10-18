@@ -61,11 +61,11 @@ bool Chat::Connect(const char *address, uint16 port)
             return true;
         }
 
-        LOG_ERRORF("Can not connect chat on %s:%d", address, (int)port);
+        URHO3D_LOGERRORF("Can not connect chat on %s:%d", address, (int)port);
     }
     else
     {
-        LOG_WARNING("Call Chat::Client() for server");
+        URHO3D_LOGWARNING("Call Chat::Client() for server");
     }
 
     return false;
@@ -236,11 +236,11 @@ bool Chat::Listen(uint16 port)
             return true;
         }
 
-        LOG_ERRORF("Can not start chat on port %d", (int)port);
+        URHO3D_LOGERRORF("Can not start chat on port %d", (int)port);
     }
     else
     {
-        LOG_WARNING("Call Listen() for Chat in client mode");
+        URHO3D_LOGWARNING("Call Listen() for Chat in client mode");
     }
 
     return false;

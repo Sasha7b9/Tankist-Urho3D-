@@ -78,17 +78,17 @@ void Client::HandleServerConnected(StringHash, VariantMap &)
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleServerDisconnected(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void Client::HandleConnectFailed(StringHash, VariantMap &)
 {
-    LOG_INFOF("%s", __FUNCTION__);
+    URHO3D_LOGINFOF("%s", __FUNCTION__);
     float timeStart = gTime->GetElapsedTime();
     ConnectToServer();
     static int count = 0;
-    LOG_ERRORF("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
+    URHO3D_LOGERRORF("Failed connection %d, time %f ms", count++, (gTime->GetElapsedTime() - timeStart) * 1000.0f);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

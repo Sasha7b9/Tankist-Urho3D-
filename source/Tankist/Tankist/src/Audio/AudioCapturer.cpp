@@ -34,49 +34,49 @@ static void* OPUS_Encode(void *bufIn, int *sizeInOut);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void DisplayDeviceInfo(BASS_DEVICEINFO *di)
 {
-    LOG_INFOF("%s\n\tdriver: %s\n\ttype: ", di->name, di->driver);
+    URHO3D_LOGINFOF("%s\n\tdriver: %s\n\ttype: ", di->name, di->driver);
     switch(di->flags&BASS_DEVICE_TYPE_MASK)
     {
         case BASS_DEVICE_TYPE_NETWORK:
-            LOG_INFO("Remote Network");
+            URHO3D_LOGINFO("Remote Network");
             break;
         case BASS_DEVICE_TYPE_SPEAKERS:
-            LOG_INFO("Speakers");
+            URHO3D_LOGINFO("Speakers");
             break;
         case BASS_DEVICE_TYPE_LINE:
-            LOG_INFO("Line");
+            URHO3D_LOGINFO("Line");
             break;
         case BASS_DEVICE_TYPE_HEADPHONES:
-            LOG_INFO("Headphones");
+            URHO3D_LOGINFO("Headphones");
             break;
         case BASS_DEVICE_TYPE_MICROPHONE:
-            LOG_INFO("Microphone");
+            URHO3D_LOGINFO("Microphone");
             break;
         case BASS_DEVICE_TYPE_HEADSET:
-            LOG_INFO("Headset");
+            URHO3D_LOGINFO("Headset");
             break;
         case BASS_DEVICE_TYPE_HANDSET:
-            LOG_INFO("Handset");
+            URHO3D_LOGINFO("Handset");
             break;
         case BASS_DEVICE_TYPE_DIGITAL:
-            LOG_INFO("Digital");
+            URHO3D_LOGINFO("Digital");
             break;
         case BASS_DEVICE_TYPE_SPDIF:
-            LOG_INFO("SPDIF");
+            URHO3D_LOGINFO("SPDIF");
             break;
         case BASS_DEVICE_TYPE_HDMI:
-            LOG_INFO("HDMI");
+            URHO3D_LOGINFO("HDMI");
             break;
         case BASS_DEVICE_TYPE_DISPLAYPORT:
-            LOG_INFO("DisplayPort");
+            URHO3D_LOGINFO("DisplayPort");
             break;
         default:
-            LOG_INFO("Unknown");
+            URHO3D_LOGINFO("Unknown");
     }
-    LOG_INFO("\n\tflags:");
-    if(di->flags&BASS_DEVICE_ENABLED) LOG_INFO(" enabled");
-    if(di->flags&BASS_DEVICE_DEFAULT) LOG_INFO(" default");
-    LOG_INFOF(" (%x)\n", di->flags);
+    URHO3D_LOGINFO("\n\tflags:");
+    if(di->flags&BASS_DEVICE_ENABLED) URHO3D_LOGINFO(" enabled");
+    if(di->flags&BASS_DEVICE_DEFAULT) URHO3D_LOGINFO(" default");
+    URHO3D_LOGINFOF(" (%x)\n", di->flags);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ AudioCapturer::AudioCapturer()
 
     if(HIWORD(BASS_GetVersion()) != BASSVERSION)
     {
-        LOG_ERRORF("An incorrect version of bass.dll. Required %d, available %d", BASSVERSION, BASS_GetVersion());
+        URHO3D_LOGERRORF("An incorrect version of bass.dll. Required %d, available %d", BASSVERSION, BASS_GetVersion());
     }
 
     CreateEncodeDecode();
@@ -134,7 +134,7 @@ void* AudioCapturer::OPUS_Decode(void *bufIn, int *sizeInOut)
 
     if(numBytes < 0)
     {
-        LOG_ERRORF("Error decode with code %d", numBytes);
+        URHO3D_LOGERRORF("Error decode with code %d", numBytes);
     }
     
     *sizeInOut = numBytes * 4;
@@ -164,7 +164,7 @@ void* OPUS_Encode(void *buffIn, int *sizeInOut)
         int nextBytes = opus_encode(enc, (opus_int16*)pointerIn, SIZE_BUFFER, bufferOut + encodeBytes, 5000);
         if(nextBytes < 0)
         {
-            LOG_ERRORF("Error encode %d", nextBytes);
+            URHO3D_LOGERRORF("Error encode %d", nextBytes);
         }
         encodeBytes += nextBytes;
         pointerIn += LENGTH;
@@ -269,7 +269,7 @@ bool AudioCapturer::Start()
     {
         if(!BASS_RecordInit(-1))
         {
-            LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+            URHO3D_LOGERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
             BASS_RecordFree();
             BASS_Free();
             return false;
@@ -279,7 +279,7 @@ bool AudioCapturer::Start()
 
         if(rchan == 0)
         {
-            LOG_ERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
+            URHO3D_LOGERRORF("Can't initialize recording with error %d", BASS_ErrorGetCode());
             BASS_RecordFree();
             BASS_Free();
             return false;
@@ -298,7 +298,7 @@ bool AudioCapturer::Init()
 
     if(!BASS_Init(-1, SAMPLERATE, BASS_DEVICE_LATENCY, 0, NULL))
     {
-        LOG_ERROR("Can't initialize audio output");
+        URHO3D_LOGERROR("Can't initialize audio output");
         return false;
     }
 
@@ -308,7 +308,7 @@ bool AudioCapturer::Init()
 
     if(chan == 0)
     {
-        LOG_ERRORF("Can't create stream with error code %d", BASS_ErrorGetCode());
+        URHO3D_LOGERRORF("Can't create stream with error code %d", BASS_ErrorGetCode());
         return false;
     }
 
@@ -318,7 +318,7 @@ bool AudioCapturer::Init()
 
     if(prebuf == -1)
     {
-        LOG_ERRORF("Error %d", BASS_ErrorGetCode());
+        URHO3D_LOGERRORF("Error %d", BASS_ErrorGetCode());
         return false;
     }
 

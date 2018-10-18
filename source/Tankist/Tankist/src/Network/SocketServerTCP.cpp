@@ -18,14 +18,14 @@ bool SocketServerTCP::Init(SocketParam *sockParam_)
 
     if(WSAStartup(0x0202, (WSADATA*)&buff[0]))
     {
-        LOG_ERRORF("Error WSAStartup %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Error WSAStartup %d", WSAGetLastError());
         return false;
     }
 
     sockServer = socket(AF_INET, SOCK_STREAM, 0);
     if(sockServer == 0)
     {
-        LOG_ERRORF("Erorr socket() %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Erorr socket() %d", WSAGetLastError());
         WSACleanup();
         return false;
     }
@@ -108,7 +108,7 @@ static void AcceptTask(SOCKET sockServer, SocketParam *sockParam)
         }
         else
         {
-            LOG_ERRORF("Failed accept() with error %d", WSAGetLastError());
+            URHO3D_LOGERRORF("Failed accept() with error %d", WSAGetLastError());
         }
     }
 }
@@ -122,7 +122,7 @@ bool SocketServerTCP::Listen(uint16 port)
 
     if(bind(sockServer, (sockaddr*)&address, sizeof(address)))
     {
-        LOG_ERRORF("Error bind() %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Error bind() %d", WSAGetLastError());
 #ifdef WIN32
         WSACleanup();
 #endif
@@ -131,7 +131,7 @@ bool SocketServerTCP::Listen(uint16 port)
 
     if(listen(sockServer, 100))
     {
-        LOG_ERRORF("Error listen() %d", WSAGetLastError());
+        URHO3D_LOGERRORF("Error listen() %d", WSAGetLastError());
         closesocket(sockServer);
 #ifdef WIN32
         WSACleanup();

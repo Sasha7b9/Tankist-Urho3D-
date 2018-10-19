@@ -96,6 +96,7 @@
     <ClInclude Include="src\Counters.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\dox\01 Compiling.h" />
+    <ClInclude Include="src\dox\02 Plan.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GlobalVars.h" />
     <ClInclude Include="src\Graphics\ImageT.h" />

@@ -18,7 +18,5 @@ doc/doxygen/Tankist/*
 out/files.txt
 out/TankistData/*
 
-out/distr/
-
 source/Tankist/.vs/*
 source/Tankist/Tankist/x64/*

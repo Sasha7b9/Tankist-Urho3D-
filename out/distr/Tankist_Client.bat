@@ -1,0 +1,1 @@
+Tankist_d.exe -client -address:127.0.0.1 -port:30000

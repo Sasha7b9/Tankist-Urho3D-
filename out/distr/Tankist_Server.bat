@@ -1,0 +1,1 @@
+Tankist_d.exe -server -port:30000

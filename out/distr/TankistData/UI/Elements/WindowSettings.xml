@@ -1,0 +1,346 @@
+<?xml version="1.0"?>
+<element type="Window">
+	<attribute name="Name" value="WindowsSettings" />
+	<attribute name="Position" value="584 218" />
+	<attribute name="Size" value="600 500" />
+	<attribute name="Is Movable" value="true" />
+	<element type="Text">
+		<attribute name="Name" value="tSettings" />
+		<attribute name="Position" value="0 50" />
+		<attribute name="Horiz Alignment" value="Center" />
+		<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+		<attribute name="Font Size" value="20" />
+		<attribute name="Text" value="НАСТРОЙКИ" />
+	</element>
+	<element>
+		<attribute name="Name" value="lSettings" />
+		<attribute name="Position" value="75 110" />
+		<attribute name="Size" value="500 150" />
+		<attribute name="Min Size" value="500 0" />
+		<attribute name="Max Size" value="500 2147483647" />
+		<attribute name="Is Enabled" value="true" />
+		<attribute name="Layout Mode" value="Horizontal" />
+		<attribute name="Layout Spacing" value="10" />
+		<element>
+			<attribute name="Name" value="lNames" />
+			<attribute name="Min Size" value="175 0" />
+			<attribute name="Max Size" value="175 2147483647" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="6" />
+			<element type="Text">
+				<attribute name="Name" value="tResolution" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Разрешение" />
+				<attribute name="Text Alignment" value="Right" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tFullscreen" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Полн. экран" />
+				<attribute name="Text Alignment" value="Right" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tGameVolume" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Громкость игры" />
+				<attribute name="Text Alignment" value="Right" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tChatVolume" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Громкость связи" />
+				<attribute name="Text Alignment" value="Right" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="tMicLevel" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Уровень микрофона" />
+				<attribute name="Text Alignment" value="Right" />
+			</element>
+		</element>
+		<element>
+			<attribute name="Name" value="lElements" />
+			<attribute name="Min Size" value="350 0" />
+			<attribute name="Max Size" value="350 2147483647" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="3" />
+			<element>
+				<attribute name="Name" value="ddlbResolution" />
+				<attribute name="Max Size" value="2147483647 22" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="3" />
+				<element type="DropDownList">
+					<attribute name="Name" value="DropDownList" />
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Image Rect" value="0 64 16 80" />
+					<attribute name="Hover Image Offset" value="16 0" />
+					<attribute name="Tiled" value="true" />
+					<attribute name="Pressed Image Offset" value="0 0" />
+					<attribute name="Selection" value="-1" />
+					<attribute name="Resize Popup" value="true" />
+					<element internal="true" style="none">
+						<element type="Text" internal="true" style="none">
+							<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+							<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						</element>
+					</element>
+					<element popup="true" type="Window" internal="true" style="none">
+						<attribute name="Priority" value="2147483647" />
+						<element type="ListView" internal="true" style="none">
+							<element type="BorderImage" internal="true" style="none">
+								<element internal="true" style="none" />
+							</element>
+						</element>
+					</element>
+				</element>
+				<element>
+					<attribute name="Name" value="layerButtons" />
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Layout Mode" value="Horizontal" />
+					<attribute name="Layout Spacing" value="1" />
+					<element type="Button">
+						<attribute name="Name" value="ButtonLess" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 2147483647" />
+						<attribute name="Image Rect" value="212 106 234 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+						<attribute name="Repeat Rate" value="1" />
+					</element>
+					<element type="Button">
+						<attribute name="Name" value="ButtonMore" />
+						<attribute name="Min Size" value="22 22" />
+						<attribute name="Max Size" value="22 22" />
+						<attribute name="Image Rect" value="234 106 256 128" />
+						<attribute name="Hover Image Offset" value="-44 0" />
+						<attribute name="Pressed Image Offset" value="0 -22" />
+						<attribute name="Repeat Rate" value="1" />
+					</element>
+				</element>
+			</element>
+			<element type="CheckBox">
+				<attribute name="Name" value="chbFullscreen" />
+			</element>
+			<element>
+				<attribute name="Name" value="gGameVolume" />
+				<attribute name="Min Size" value="273 22" />
+				<attribute name="Max Size" value="273 22" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="1" />
+				<element type="Button">
+					<attribute name="Name" value="ButtonDirect" />
+					<attribute name="Min Size" value="50 0" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<attribute name="Pressed Child Offset" value="0 0" />
+					<element type="Button">
+						<attribute name="Name" value="Slider" />
+						<attribute name="Size" value="10 22" />
+						<attribute name="Min Size" value="10 22" />
+						<attribute name="Max Size" value="10 22" />
+						<attribute name="Image Rect" value="16 64 32 80" />
+						<attribute name="Hover Image Offset" value="0 0" />
+					</element>
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonLess" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="212 106 234 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonMore" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="234 106 256 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Min Size" value="50 22" />
+					<attribute name="Max Size" value="50 22" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<element type="Text">
+						<attribute name="Name" value="TextValue" />
+						<attribute name="Horiz Alignment" value="Center" />
+						<attribute name="Vert Alignment" value="Center" />
+						<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Font Size" value="15" />
+					</element>
+				</element>
+			</element>
+			<element>
+				<attribute name="Name" value="gChatVolume" />
+				<attribute name="Min Size" value="273 22" />
+				<attribute name="Max Size" value="273 22" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="1" />
+				<element type="Button">
+					<attribute name="Name" value="ButtonDirect" />
+					<attribute name="Min Size" value="50 0" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<attribute name="Pressed Child Offset" value="0 0" />
+					<element type="Button">
+						<attribute name="Name" value="Slider" />
+						<attribute name="Size" value="10 22" />
+						<attribute name="Min Size" value="10 22" />
+						<attribute name="Max Size" value="10 22" />
+						<attribute name="Image Rect" value="16 64 32 80" />
+						<attribute name="Hover Image Offset" value="0 0" />
+					</element>
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonLess" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="212 106 234 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonMore" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="234 106 256 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Min Size" value="50 22" />
+					<attribute name="Max Size" value="50 22" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<element type="Text">
+						<attribute name="Name" value="TextValue" />
+						<attribute name="Horiz Alignment" value="Center" />
+						<attribute name="Vert Alignment" value="Center" />
+						<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Font Size" value="15" />
+					</element>
+				</element>
+			</element>
+			<element>
+				<attribute name="Name" value="gLevelMic" />
+				<attribute name="Min Size" value="273 22" />
+				<attribute name="Max Size" value="273 22" />
+				<attribute name="Layout Mode" value="Horizontal" />
+				<attribute name="Layout Spacing" value="1" />
+				<element type="Button">
+					<attribute name="Name" value="ButtonDirect" />
+					<attribute name="Min Size" value="50 0" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<attribute name="Pressed Child Offset" value="0 0" />
+					<element type="Button">
+						<attribute name="Name" value="Slider" />
+						<attribute name="Size" value="10 22" />
+						<attribute name="Min Size" value="10 22" />
+						<attribute name="Max Size" value="10 22" />
+						<attribute name="Image Rect" value="16 64 32 80" />
+						<attribute name="Hover Image Offset" value="0 0" />
+					</element>
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonLess" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="212 106 234 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Name" value="ButtonMore" />
+					<attribute name="Min Size" value="22 22" />
+					<attribute name="Max Size" value="22 22" />
+					<attribute name="Image Rect" value="234 106 256 128" />
+					<attribute name="Hover Image Offset" value="-44 0" />
+					<attribute name="Pressed Image Offset" value="0 -22" />
+					<attribute name="Repeat Rate" value="1" />
+				</element>
+				<element type="Button">
+					<attribute name="Min Size" value="50 22" />
+					<attribute name="Max Size" value="50 22" />
+					<attribute name="Hover Image Offset" value="0 0" />
+					<element type="Text">
+						<attribute name="Name" value="TextValue" />
+						<attribute name="Horiz Alignment" value="Center" />
+						<attribute name="Vert Alignment" value="Center" />
+						<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+						<attribute name="Font Size" value="15" />
+					</element>
+				</element>
+			</element>
+		</element>
+	</element>
+	<element type="Button">
+		<attribute name="Name" value="bReturnToGame" />
+		<attribute name="Position" value="350 400" />
+		<attribute name="Size" value="200 50" />
+		<attribute name="Pressed Child Offset" value="1 1" />
+		<element type="Text">
+			<attribute name="Name" value="tReturnToGame" />
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Vert Alignment" value="Center" />
+			<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Font Size" value="15" />
+			<attribute name="Text" value="Вернуться в игру" />
+		</element>
+	</element>
+	<element type="Button">
+		<attribute name="Name" value="bApplyChanges" />
+		<attribute name="Position" value="60 400" />
+		<attribute name="Size" value="200 50" />
+		<element type="Text">
+			<attribute name="Name" value="tApplyChanges" />
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Vert Alignment" value="Center" />
+			<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+			<attribute name="Font Size" value="15" />
+			<attribute name="Text" value="Применить изменения" />
+		</element>
+	</element>
+</element>

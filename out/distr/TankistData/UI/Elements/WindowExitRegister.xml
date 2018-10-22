@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<element type="Window">
+	<attribute name="Position" value="500 500" />
+	<attribute name="Size" value="600 330" />
+	<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+	<element type="Text">
+		<attribute name="Position" value="0 40" />
+		<attribute name="Horiz Alignment" value="Center" />
+		<attribute name="Color" value="1 1 1 1" />
+		<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+		<attribute name="Font Size" value="20" />
+		<attribute name="Text" value="Если вам понравилась игра, можете зарегистрироваться" />
+	</element>
+	<element>
+		<attribute name="Position" value="0 100" />
+		<attribute name="Size" value="270 200" />
+		<attribute name="Horiz Alignment" value="Center" />
+		<attribute name="Indent Spacing" value="0" />
+		<element>
+			<attribute name="Position" value="70 0" />
+			<attribute name="Size" value="200 85" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="11" />
+			<attribute name="Indent Spacing" value="4" />
+			<element type="LineEdit">
+				<attribute name="Name" value="LineEditLogin" />
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<element type="Text" internal="true" style="none">
+					<attribute name="Top Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Top Right Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Right Color" value="0.9 1 0.9 1" />
+				</element>
+				<element type="BorderImage" internal="true" style="none">
+					<attribute name="Size" value="4 15" />
+				</element>
+			</element>
+			<element type="LineEdit">
+				<attribute name="Name" value="LineEditPassword" />
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<element type="Text" internal="true" style="none">
+					<attribute name="Top Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Top Right Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Right Color" value="0.9 1 0.9 1" />
+				</element>
+				<element type="BorderImage" internal="true" style="none">
+					<attribute name="Size" value="4 15" />
+				</element>
+			</element>
+			<element type="LineEdit">
+				<attribute name="Name" value="LineEditEMail" />
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<element type="Text" internal="true" style="none">
+					<attribute name="Top Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Top Right Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Left Color" value="0.9 1 0.9 1" />
+					<attribute name="Bottom Right Color" value="0.9 1 0.9 1" />
+					<attribute name="Text" value="Sasha7b9@Tut.by" />
+				</element>
+				<element type="BorderImage" internal="true" style="none">
+					<attribute name="Size" value="4 15" />
+				</element>
+			</element>
+		</element>
+		<element>
+			<attribute name="Size" value="64 83" />
+			<attribute name="Layout Mode" value="Vertical" />
+			<attribute name="Layout Spacing" value="10" />
+			<attribute name="Indent Spacing" value="0" />
+			<element type="Text">
+				<attribute name="Name" value="TextLogin" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Логин" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="TextPassword" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Пароль" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="TextEMail" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+				<attribute name="Font Size" value="15" />
+				<attribute name="Text" value="Эл. почта" />
+			</element>
+		</element>
+		<element>
+			<attribute name="Position" value="0 100" />
+			<attribute name="Size" value="169 30" />
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Layout Mode" value="Horizontal" />
+			<attribute name="Layout Spacing" value="4" />
+			<element type="CheckBox">
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<attribute name="Is Checked" value="true" />
+			</element>
+			<element type="Text">
+				<attribute name="Name" value="TextRecieveNews" />
+				<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+				<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+				<attribute name="Font Size" value="12" />
+				<attribute name="Text" value="Получать новости о проекте" />
+			</element>
+		</element>
+		<element>
+			<attribute name="Position" value="0 140" />
+			<attribute name="Size" value="450 60" />
+			<attribute name="Horiz Alignment" value="Center" />
+			<attribute name="Layout Mode" value="Horizontal" />
+			<attribute name="Layout Spacing" value="7" />
+			<attribute name="Indent Spacing" value="0" />
+			<element type="Button">
+				<attribute name="Name" value="ButtonRegisterAgree" />
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<element type="Text">
+					<attribute name="Position" value="0 -2" />
+					<attribute name="Horiz Alignment" value="Center" />
+					<attribute name="Vert Alignment" value="Center" />
+					<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+					<attribute name="Font Size" value="13" />
+					<attribute name="Text" value="ЗАРЕГИСТРИРОВАТЬСЯ" />
+				</element>
+			</element>
+			<element type="Button">
+				<attribute name="Name" value="ButtonRegisterDesagree" />
+				<attribute name="Texture" value="Texture2D;UI/TankistUI.png" />
+				<element type="Text">
+					<attribute name="Position" value="0 10" />
+					<attribute name="Horiz Alignment" value="Center" />
+					<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+					<attribute name="Font Size" value="13" />
+					<attribute name="Text" value="НЕТ, СПАСИБО" />
+				</element>
+				<element type="Text">
+					<attribute name="Position" value="0 33" />
+					<attribute name="Horiz Alignment" value="Center" />
+					<attribute name="Top Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Top Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Left Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Bottom Right Color" value="0.85 0.85 0.85 1" />
+					<attribute name="Font" value="Font;Fonts/CRL.ttf" />
+					<attribute name="Font Size" value="10" />
+					<attribute name="Text" value="СДЕЛАЙТЕ МЕНЯ РАЗВИДЕТЬ ЭТО!" />
+				</element>
+			</element>
+		</element>
+	</element>
+</element>

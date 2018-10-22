@@ -1,0 +1,17 @@
+{
+    "tExit":            { "en":"Exit",              "ru":"Выход" },
+    "tLanguage":        { "en":"Язык : EN",         "ru":"Language : RU" },
+    "tSettings":        { "en":"Settings",          "ru":"Настройки" },
+    "tTankistWaT":      { "en":"Tankist WaT",       "ru":"Танкист МК" },
+    "tInstructions":    { "en":"W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - controls\nSpace - firing mode, R_CTRL - shot\nF9 - commander mode, RBM - camera\nEnter - chat, NUM_Enter - voice chat\nEsc - menu",
+                          "ru":"W,A,S,D,Q,E,NUM_4,NUM_8,NUM_6,NUM_2 - управление\nПробел - режим стрельбы, R_CTRL - выстрел\nF9 - режим командира, ПКМ - камера\nEnter - чат, NUM_Enter - голосовой чат\nEsc - меню" },
+    "tApplyChanges":    { "en":"Apply changes",     "ru":"Применить изменения" },
+    "tReturnToGame":    { "en":"Return to game",    "ru":"Вернуться в игру" },
+    "tBrightness":      { "en":"Brightness",        "ru":"Яркость" },
+    "tResolution":      { "en":"Resolution",        "ru":"Разрешение" },
+    "tFullscreen":      { "en":"Fullscreen",        "ru":"Полный экран" },
+    "tGameVolume":      { "en":"Game volume",       "ru":"Громкость игры" },
+    "tChatVolume":      { "en":"Chat volume",       "ru":"Громкость чата" },
+    "tMicLevel":        { "en":"Microphone level",  "ru":"Уровень микрофона" },
+    "tSpeed":           { "en":"Speed",             "ru":"Скорость" }
+}
